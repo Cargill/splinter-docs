@@ -10,6 +10,9 @@ from [adam-p/markdown-here](https://github.com/adam-p/markdown-here).
 
 The documentation files are stored in the following subdirectories:
 
+* ``community``: Topics that describe how to participate in the Splinter
+  community and contribute to the Splinter repositories.
+
 * ``concepts``: Topics that explain Splinter concepts, architecture, features,
   and other non-procedure information. File names should reflect the topic
   title, using all lowercase and optional underscores between words; for
