@@ -15,6 +15,9 @@ and transactions between organizations.
   * [Splinter glossary](glossary/glossary.md): Definitions for _circuit_, _scabbard_,
     _state delta export_, and more
 
+  * [About Canopy](concepts/about_canopy.md): Splinter's distributed-application
+    UI framework that dynamically loads saplings (application UI components)
+
 ## Example Applications
 
   * [Gameroom](https://github.com/Cargill/splinter/blob/master/examples/gameroom/README.md):
