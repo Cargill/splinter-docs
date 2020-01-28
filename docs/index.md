@@ -1,0 +1,53 @@
+# Splinter Documentation
+
+Splinter is a privacy-focused platform for distributed applications that
+provides a blockchain-inspired networking environment for private communication
+and transactions between organizations.
+
+## Getting Started
+
+  * [About Splinter](https://github.com/Cargill/splinter/blob/master/README.md)
+
+  * [Splinter FAQ](faq/faq.md)
+
+## Concepts
+
+  * [Splinter glossary](glossary/glossary.md): Definitions for _circuit_, _scabbard_,
+    _state delta export_, and more
+
+## Example Applications
+
+  * [Gameroom](https://github.com/Cargill/splinter/blob/master/examples/gameroom/README.md):
+    Complete application that uses the scabbard service
+
+  * [Private XO](https://github.com/Cargill/splinter/blob/master/examples/private_xo/README.md)
+    and
+    [Private Counter](https://github.com/Cargill/splinter/blob/master/examples/private_counter/README.md):
+    Low-level examples of how to write a service
+
+## For Developers
+
+Splinter is an open-source project hosted at
+[github.com/Cargill/splinter](https://github.com/Cargill/splinter).
+This project operates under the [Cargill Code of
+Conduct](https://github.com/Cargill/code-of-conduct/blob/master/code-of-conduct.md).
+
+  * [Splinter release
+    notes](https://github.com/Cargill/splinter/blob/master/RELEASE_NOTES.md)
+
+  * [Stable feature checklist](community/stable_feature_checklist.md)
+
+## License
+
+Splinter software is licensed under the [Apache License Version
+2.0](https://github.com/Cargill/splinter/blob/master/LICENSE) software license.
+
+The Splinter documentation in the
+[splinter-docs repository](https://github.com/Cargill/splinter-docs)
+is licensed under a Creative Commons Attribution 4.0 International License
+(CC BY 4.0). You can obtain a copy of the license at
+<http://creativecommons.org/licenses/by/4.0/>.
+
+The Splinter documentation tools and associated content in this repository are
+licensed under the [Apache License Version
+2.0](https://github.com/Cargill/splinter/blob/master/LICENSE) software license.
