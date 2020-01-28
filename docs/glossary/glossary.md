@@ -1,5 +1,12 @@
 # Splinter Glossary
 
+## Canopy
+
+Application interface for Splinter that can provide apps dynamically.
+Canopy is a distributed-application UI framework that dynamically loads saplings
+(application UI components) based on circuit configuration, user permissions,
+and enterprise requirements.
+
 ## circuit
 
 Virtual network within the broader Splinter network that safely and securely
@@ -17,6 +24,13 @@ the future.)
 
 Foundational runtime software that allows an organization to participate
 in the network.
+
+## sapling
+
+Plug-in app for Canopy that can customize the UI, access Splinter or external
+functionality, or communicate with back-end platforms and software.
+Splinter includes a growing set of reusable saplings for common functionality
+and interfaces with related products.
 
 ## Sawtooth Sabre
 
