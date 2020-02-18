@@ -40,6 +40,11 @@ Conduct](https://github.com/Cargill/code-of-conduct/blob/master/code-of-conduct.
 
   * [Stable feature checklist](community/stable_feature_checklist.md)
 
+## Reference Guides
+
+  * [Splinter API Reference](https://docs.rs/splinter):
+    Documentation for the Rust `splinter` crate
+
 ## License
 
 Splinter software is licensed under the [Apache License Version
