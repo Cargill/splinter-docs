@@ -8,6 +8,8 @@ and transactions between organizations.
 
   * [About Splinter](https://github.com/Cargill/splinter/blob/master/README.md)
 
+  * [Planning a Splinter deployment](howto/planning_splinter_deployment.md)
+
   * [Splinter FAQ](faq/faq.md)
 
 ## Concepts
