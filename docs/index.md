@@ -40,6 +40,12 @@ Conduct](https://github.com/Cargill/code-of-conduct/blob/master/code-of-conduct.
 
   * [Stable feature checklist](community/stable_feature_checklist.md)
 
+  * [Building Splinter](https://github.com/Cargill/splinter/blob/master/README.md#building-splinter)
+
+  * [Generating insecure certificates for development](howto/generating_insecure_certificates_for_development.md)
+
+  * [Uploading a smart contract](howto/uploading_smart_contract.md)
+
 ## Reference Guides
 
   * [Splinter API Reference](https://docs.rs/splinter):
