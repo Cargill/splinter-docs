@@ -23,8 +23,8 @@ two nodes and upload a smart contract via the circuit.
         --key <path_to_alpha_private_key> \
         --node alpha-node-000::tls://splinterd-alpha:8044 \
         --node beta-node-000::tls://splinterd-beta:8044 \
-        --service scabbard-service-alpha::alpha-node-000,beta-node-000
-        --service scabbard-service-beta::beta-node-000,alpha-node-000
+        --service scabbard-service-alpha::alpha-node-000 \
+        --service scabbard-service-beta::beta-node-000 \
         --service-peer-group beta-node-000,alpha-node-000 \
         --service-arg *::admin_keys=<alpha_node_pub_key> \
         --service-arg scabbard-service-beta::peer_services=alpha-node-000 \
@@ -39,13 +39,23 @@ two nodes and upload a smart contract via the circuit.
     identify who is allowed to add permissions to a contract and `peer_services`
     is for identifying which parties are needed for consensus.
 
-    b. The circuit id can be obtained by running the `proposals` command.
+    b. The circuit ID can be obtained by running the `proposals` command. The
+    following example sets the CIRCUIT_ID environment variable; this
+    environment variable is for the purposes of this procedure and is not
+    used directly by the `splinter` CLI commands.
+
+    Set CIRCUIT_ID based on the output of the `proposals` subcommand; for
+    example:
 
     ```
     $ splinter circuit proposals --url http://splinterd-beta:8085
 
-    ID           MANAGEMENT MEMBERS
-    <circuit-id> tutorial   alpha-node-000;beta-node-000
+    ID                                   MANAGEMENT MEMBERS
+    01234567-0123-0123-0123-012345678901 tutorial   alpha-node-000;beta-node-000
+    ```
+
+    ```
+    $ export CIRCUIT_ID=01234567-0123-0123-0123-012345678901
     ```
 
     c. Vote to accept the circuit on node beta.
@@ -53,7 +63,7 @@ two nodes and upload a smart contract via the circuit.
     ```
     $ splinter circuit vote \
         --key <path_to_beta_private_key> \
-        --url http://splinterd-beta:8085 <circuit_id> --accept
+        --url http://splinterd-beta:8085 $CIRCUIT_ID --accept
     ```
 
     You have now established a circuit between node alpha and node beta based
@@ -64,8 +74,8 @@ two nodes and upload a smart contract via the circuit.
     ```
     $ splinter circuit list --url http://splinterd-alpha:8085
 
-    ID            MANAGEMENT MEMBERS
-    <circuit_id>  tutorial   alpha-node-000;beta-node-000
+    ID                                   MANAGEMENT MEMBERS
+    01234567-0123-0123-0123-012345678901 tutorial   alpha-node-000;beta-node-000
     ```
 
 2. Package smart contract.
@@ -101,7 +111,7 @@ two nodes and upload a smart contract via the circuit.
         --owner <alpha_node_public_key> \
         --key <path_to_alpha_node_private_key> \
         --url http://splinterd-alpha:8085 \
-        --service-id my-circuit::scabbard-service-a
+        --service-id $CIRCUIT_ID::scabbard-service-alpha
     ```
 
 4. Upload the smart contract.
@@ -110,7 +120,7 @@ two nodes and upload a smart contract via the circuit.
    $ scabbard contract upload ./my_contract.scar \
        --key <path_to_alpha_node_private_key> \
        --url http://splinterd-alpha:8085 \
-       --service-id my-circuit::scabbard-service-a
+       --service-id $CIRCUIT_ID::scabbard-service-alpha
    ```
 
 5. Create the namespace registry for the smart contract.
@@ -125,7 +135,7 @@ two nodes and upload a smart contract via the circuit.
        --owner <alpha_node_public_key> \
        --key <path_to_alpha_node_private_key> \
        --url http://splinterd-alpha:8085 \
-       --service-id my-circuit::scabbard-service-a
+       --service-id $CIRCUIT_ID::scabbard-service-alpha
     ```
 
 6. Create contract permissions.
@@ -138,14 +148,14 @@ two nodes and upload a smart contract via the circuit.
    $ scabbard perm 5b7349 my_contract --read --write \
        --key <path_to_alpha_node_private_key> \
        --url http://splinterd-alpha:8085 \
-       --service-id my-circuit::scabbard-service-a
+       --service-id $CIRCUIT_ID::scabbard-service-alpha
    ```
 
 7. List uploaded smart contracts.
 
     ```
     $ scabbard contract list -U 'http://splinterd-beta:8085' \
-        --service-id <circuit_id>::scabbard-service-beta
+        --service-id $CIRCUIT_ID::scabbard-service-beta
 
     NAME        VERSIONS OWNERS
     sawtooth_xo  1.0     <owner_public_key> 
@@ -156,7 +166,7 @@ two nodes and upload a smart contract via the circuit.
     ```
     $ scabbard contract show my_contract:1.0 \
         -U 'http://splinterd-beta:8085' \
-        --service-id <circuit_id>::scabbard-service-beta
+        --service-id $CIRCUIT_ID::scabbard-service-beta
 
     name: my_contract
     version: '1.0'
