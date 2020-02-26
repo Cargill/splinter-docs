@@ -40,3 +40,6 @@ The documentation is organized as follows:
 
 * ``tutorials/``: In-depth, multi-section procedures for complex tasks, such as
   creating an application.
+
+* ``upgrading/``: In-depth guides for upgrading from one version of Splinter
+  to another version.
