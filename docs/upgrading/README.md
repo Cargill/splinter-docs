@@ -4,6 +4,7 @@ changes which are important (such as breaking changes). Many versions
 do not require extra work to upgrade. The release notes in each
 section give an overview of all releases.
 
-Splinter:
+Splinter
 
-    * [Release Notes](https://github.com/Cargill/splinter/blob/master/RELEASE_NOTES.md)
+  * [Release Notes](https://github.com/Cargill/splinter/blob/master/RELEASE_NOTES.md)
+  * [Upgrading to Splinter v0.3.12 from Splinter v0.3.11](splinter-v0.3.12-from-v0.3.11.md)
