@@ -5,6 +5,7 @@
 * [The CLI command to create a circuit was updated](#the-CLI-command-to-create-a-circuit-was-updated)
 * [The circuits, node registry and key registry REST API routes now begin with admin](#the-circuits-node-registry-and-key-registry-rest-api-routes-now-begin-with-admin)
 * [The Sabre version used by scabbard has been updated](#the-sabre-version-used-by-scabbard-has-been-updated)
+* [The scabbard CLI's upload command has been changed](#the-scabbard-clis-upload-command-has-been-changed)
 
 ## The generate-cert features has been removed
 If you are using the --generate-cert option to splinterd, you need to update
@@ -209,3 +210,35 @@ building pattern that's enabled by the Sabre, Sawtooth, and Transact SDKs. This
 is the recommended approach because it greatly simplifies the process of
 creating Sabre transactions and batches. For an example of this pattern, see the
 [scabbard CLI](https://github.com/Cargill/splinter/blob/v0.3.12/services/scabbard/src/cli/main.rs)
+
+## The scabbard CLI's upload command has been changed
+If you are using the experimental scabbard CLI to upload smart contracts, you
+need to update your procedure.
+
+In v0.3.11, you could upload a smart contract to scabbard using the experimental
+`scabbard upload` command and supplying the path to a smart contract archive
+(.scar) file.
+
+In v0.3.12, the upload command has been moved to `scabbard contract upload`;
+this change was made to accommodate other contract-related subcommands (such as
+`list` and `show`). Additionally, the way a .scar file is specified has been
+updated. To use the new upload subcommand, you will need to specify a `--path`
+argument for a directory that contains the desired .scar file, and provide the
+name and minimum version requirement of the .scar file in the format
+`name:version`. Here is an example for using the new command to upload a file
+called `xo_0.4.2.scar` in the current working directory:
+
+```
+    $ scabbard contract upload \
+    -k gridd \
+    -U 'http://splinterd-alpha:8085' \
+    --service-id $CIRCUIT_ID::grid-scabbard-a \
+    --path . \
+    xo:0.4.2
+```
+
+For more information, check the command's help text:
+
+```
+    $ scabbard contract upload --help
+```
