@@ -6,6 +6,7 @@
 * [The circuits, node registry and key registry REST API routes now begin with admin](#the-circuits-node-registry-and-key-registry-rest-api-routes-now-begin-with-admin)
 * [The Sabre version used by scabbard has been updated](#the-sabre-version-used-by-scabbard-has-been-updated)
 * [The scabbard CLI's upload command has been changed](#the-scabbard-clis-upload-command-has-been-changed)
+* [The scabbard client's submit method has been changed](#the-scabbard-clients-submit-method-has-been-changed)
 
 ## The generate-cert features has been removed
 If you are using the --generate-cert option to splinterd, you need to update
@@ -242,3 +243,23 @@ For more information, check the command's help text:
 ```
     $ scabbard contract upload --help
 ```
+
+## The scabbard client's submit method has been changed
+If you are using the experimental scabbard client to submit batches, you will
+need to update your code.
+
+In v0.3.12, the scabbard client's `upload` method has undergone some changes:
+
+- The `circuit_id` and `service_id` arguments have been replaced with a single
+  `service_id` argument, which takes a `ServiceId` struct that represents a
+  fully-qualified service ID (both circuit and service IDs). This can easily be
+  updated by constructing a `ServiceId` from the individual circuit and service
+  IDs, or by parsing a string of the format `circuit::service_id` using the
+  `ServiceId` constructors.
+- The type of the `batches` argument has been updated. It used to be a
+  `BatchList` from the Sawtooth SDK, but is now a `Vec<Batch>`, where `Batch` is
+  provided by the Transact library. This change requires updating the code that
+  calls the scabbard client to use Transact for batch building rather than the
+  Sawtooth SDK.
+
+For an example of how to use the new `upload` method, see the [scabbard CLI](https://github.com/Cargill/splinter/blob/v0.3.12/services/scabbard/src/cli/main.rs).
