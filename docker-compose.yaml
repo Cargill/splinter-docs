@@ -44,3 +44,13 @@ services:
         cd /project/api
         redoc-cli serve openapi.yml -w -p 4001
       "
+
+  splinter-docs-apache:
+    image: splinter-docs-apache
+    build:
+      dockerfile: docker/splinter-docs-apache
+      context: .
+    ports:
+      - 8080:80
+    volumes:
+      - .:/project
