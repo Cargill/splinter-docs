@@ -29,3 +29,18 @@ services:
         rm -rf  _site .jekyll-cache
         jekyll serve
       "
+
+  splinter-docs-redoc:
+    image: splinter-docs-redoc
+    build:
+      dockerfile: docker/splinter-docs-redoc
+      context: .
+    ports:
+      - 4001:4001
+    volumes:
+      - .:/project
+    entrypoint: |
+      bash -c "
+        cd /project/api
+        redoc-cli serve openapi.yml -w -p 4001
+      "
