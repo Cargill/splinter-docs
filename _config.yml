@@ -30,6 +30,7 @@ include:
 
 exclude:
   - CODEOWNERS
+  - ci
   - docker*
   - LICENSE
   - MAINTAINERS.md
