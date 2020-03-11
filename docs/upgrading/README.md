@@ -7,4 +7,5 @@ section give an overview of all releases.
 Splinter
 
   * [Release Notes](https://github.com/Cargill/splinter/blob/master/RELEASE_NOTES.md)
+  * [Upgrading to Splinter v0.3.13 from Splinter v0.3.12](splinter-v0.3.13-from-v0.3.12.md)
   * [Upgrading to Splinter v0.3.12 from Splinter v0.3.11](splinter-v0.3.12-from-v0.3.11.md)
