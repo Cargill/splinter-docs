@@ -55,6 +55,9 @@ Conduct](https://github.com/Cargill/code-of-conduct/blob/master/code-of-conduct.
   * [Splinter API Reference](https://docs.rs/splinter):
     Documentation for the Rust `splinter` crate
 
+  * [Splinter CLI Command Reference](references/cli/cli_command_reference.md):
+    Documentation for the Splinter CLIs
+
 ## License
 
 Splinter software is licensed under the [Apache License Version

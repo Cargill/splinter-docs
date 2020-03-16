@@ -17,6 +17,8 @@ The documentation is organized as follows:
 * ``community/``: Topics that describe how to participate in the Splinter
   community and contribute to the Splinter repositories.
 
+* ``references/``: Reference guides for Splinter.
+
 * ``concepts/``: Topics that explain Splinter concepts, architecture, features,
   and other non-procedure information. File names should reflect the topic
   title, using all lowercase and optional underscores between words; for
