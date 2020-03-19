@@ -15,9 +15,9 @@
 openapi: '3.0.0'
 
 info:
-  version: 0.3.13
-  title: SplinterD API
-  description: REST API for SplinterD
+  version: 0.3.14
+  title: splinterd API
+  description: REST API for the Splinter daemon
 
 servers:
   - url: http://localhost:9000/api
@@ -46,9 +46,15 @@ paths:
 
   /admin/proposals:
     get:
+      summary: Fetches a list of pending circuit proposals for this node
+      description: |
+        This endpoint can be used to view all of the circuit proposals that the
+        node is a proposed member of. If a circuit management type is provided
+        via the "filter" query parameter, only circuit proposals that have the
+        given circuit management type will be returned; if no filter is
+        provided, all of the node's circuit proposals will be returned.
       tags:
-          - Proposals
-      description: Experimental - List of proposals in Admin Service state
+        - Proposals
       parameters:
         - $ref: "#/components/parameters/protocol_version"
         - name: offset
@@ -67,14 +73,13 @@ paths:
             default: 100
         - name: filter
           in: query
-          description: circuit management type of the proposed circuit
+          description: Circuit management type of the proposed circuits
           required: false
           schema:
             type: string
-          example: "my-type"
       responses:
         200:
-          description: list of proposals
+          description: Successfully retrieved the list of proposals
           content:
             application/json:
               schema:
@@ -92,32 +97,44 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+        500:
+          description: An internal server error occurrred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
 
   /admin/proposals/{circuit_id}:
     get:
+      summary: Fetches a circuit proposal by the circuit's ID
+      description: |
+        This endpoint can be used to view a specific circuit proposal that the
+        node is a proposed member of.
       tags:
         - Proposals
-      description: Experimental - Fetch a proposal in Admin Service state by its circuit id
       parameters:
         - $ref: "#/components/parameters/protocol_version"
         - name: circuit_id
           in: path
-          description: circuit id of the proposal to fetch
+          description: Circuit ID of the proposal to fetch
           required: true
           schema:
             type: string
       responses:
         200:
-          description: Proposal
+          description: Successfully retrieved the requested proposal
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  data:
-                    $ref: "#/components/schemas/Proposal"
+                $ref: "#/components/schemas/Proposal"
         404:
-          description: The proposal with {circuit_id} was not found
+          description: The requested circuit proposal was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: An internal server error occurrred
           content:
             application/json:
               schema:
@@ -806,6 +823,8 @@ paths:
                   message:
                     type: string
                     example: "User created successfully"
+                  data:
+                    ref: '#/components/schemas/BiomeNewUser'
         400:
           description: Invalid request
           content:
@@ -1204,7 +1223,9 @@ paths:
                 properties:
                   message:
                     type: string
-                    example: "User deleted successfully"
+                    example: "Key added successfully"
+                  data:
+                    $ref: '#/components/schemas/BiomeUserKey'
         400:
           description: Invalid request
           content:
@@ -1213,6 +1234,119 @@ paths:
                   $ref: '#/components/schemas/ErrorBiome'
         401:
           description: User not authorized
+          content:
+            application/json:
+                schema:
+                  $ref: '#/components/schemas/ErrorBiome'
+        500:
+          description: Internal server error occurred
+          content:
+            application/json:
+                schema:
+                  $ref: '#/components/schemas/ErrorBiome'
+
+  /biome/users/{user_id}/keys/{public_key}:
+    get:
+      tags:
+      - Biome
+      description: Fetch key of a user
+      parameters:
+        - $ref: "#/components/parameters/protocol_version"
+        - name: user_id
+          in: path
+          description: ID of the user
+          required: true
+          schema:
+            type: string
+            example: "f35aacc1-a9cd-4eda-b6d0-2efaddf0c8a4"
+        - name: public_key
+          in: path
+          description: Public key of the user
+          required: true
+          schema:
+            type: string
+            example: "026c889058c2d22558ead2c61b321634b74e705c42f890e6b7bc2c80abb4713118"
+      responses:
+        200:
+          description: User's key
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/BiomeUserKey'
+        400:
+          description: Invalid request
+          content:
+            application/json:
+                schema:
+                  $ref: '#/components/schemas/ErrorBiome'
+        401:
+          description: User not authorized
+          content:
+            application/json:
+                schema:
+                  $ref: '#/components/schemas/ErrorBiome'
+        404:
+          description: Resource not found
+          content:
+            application/json:
+                schema:
+                  $ref: '#/components/schemas/ErrorBiome'
+        500:
+          description: Internal server error occurred
+          content:
+            application/json:
+                schema:
+                  $ref: '#/components/schemas/ErrorBiome'
+    delete:
+      tags:
+      - Biome
+      description: Delete key of a user
+      parameters:
+        - $ref: "#/components/parameters/protocol_version"
+        - name: user_id
+          in: path
+          description: ID of the user
+          required: true
+          schema:
+            type: string
+            example: "f35aacc1-a9cd-4eda-b6d0-2efaddf0c8a4"
+        - name: public_key
+          in: path
+          description: Public key of the user
+          required: true
+          schema:
+            type: string
+            example: "026c889058c2d22558ead2c61b321634b74e705c42f890e6b7bc2c80abb4713118"
+      responses:
+        200:
+          description: User's key deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "User deleted successfully"
+                  data:
+                    $ref: '#/components/schemas/BiomeUserKey'
+        400:
+          description: Invalid request
+          content:
+            application/json:
+                schema:
+                  $ref: '#/components/schemas/ErrorBiome'
+        401:
+          description: User not authorized
+          content:
+            application/json:
+                schema:
+                  $ref: '#/components/schemas/ErrorBiome'
+        404:
+          description: Resource not found
           content:
             application/json:
                 schema:
@@ -1268,7 +1402,7 @@ components:
         version:
           description: Rest API version
           type: string
-          example: "0.3.13"
+          example: "0.3.14"
         node_id:
           description: Node id
           type: string
@@ -1371,53 +1505,39 @@ components:
                       type: array
                       items:
                         type: integer
+
     Circuit:
       type: object
       properties:
-        circuit_id:
+        id:
           type: string
-          example: alpha
-        authorization_type:
-          type: string
-          example: Trust
-        persistence:
-          type: string
-          example: Any
-        routes:
-          type: string
-          example: Any
-        circuit_management_type:
-          type: string
-          example: Gameroom
+          example: 01234-ABCDE
         members:
+          description: Node IDs of the circuit's members
           type: array
           items:
-            $ref: '#/components/schemas/CircuitMember'
+            type: string
+            example: alpha-node-000
         roster:
+          description: All services defined for the circuit
           type: array
           items:
             $ref: '#/components/schemas/CircuitService'
-
-    CircuitMember:
-      type: object
-      properties:
-        node_id:
+        management_type:
           type: string
-          example: node-000
-        endpoint:
-          type: string
-          example: tls://127.0.0.1:8080
+          example: gameroom
 
     CircuitService:
       type: object
       properties:
         service_id:
           type: string
-          example: service-a
+          example: abcd
         service_type:
           type: string
           example: scabbard
         allowed_nodes:
+          description: IDs of the nodes that are allowed to run this service
           type: array
           items:
             type: string
@@ -1426,56 +1546,104 @@ components:
       type: object
       properties:
         proposal_type:
-          type: object
-          description: The type of circuit proposal
-          properties:
-            statusType:
-              type: string
-              enum:
-                - Create
-                - UpdateRoster
-                - AddNode
-                - RemoveNode
-                - Destroy
+          type: string
+          enum:
+            - Create
+            - UpdateRoster
+            - AddNode
+            - RemoveNode
+            - Destroy
         circuit_id:
           type: string
-          example: "circuit-000"
-        ciircuit_hash:
+          example: 01234-ABCDE
+        circuit_hash:
           type: string
-          example: "8ce518770b962429a953b10220905ac9adf86a855f0b085695f444edf991b8ca"
-        circuit_proposal:
+          example: 8ce518770b962429a953b10220905ac9adf86a855f0b085695f444edf991b8ca
+        circuit:
             type: object
             properties:
-              data:
-                $ref: "#/components/schemas/Circuit"
+              circuit_id:
+                type: string
+                example: 01234-ABCDE
+              members:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProposedCircuitMember'
+              roster:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProposedCircuitService'
+              management_type:
+                type: string
+                example: gameroom
+              application_metadata:
+                type: string
+                format: binary
+              comments:
+                description: Arbitrary comments to describe the proposed circuit
+                type: string
         votes:
           type: array
           items:
-            $ref: '#/components/schemas/VoteRecord'
+            $ref: '#/components/schemas/Vote'
         requester:
           type: string
-          example: "026c889058c2d22558ead2c61b321634b74e705c42f890e6b7bc2c80abb4713118"
+          example: 026c889058c2d22558ead2c61b321634b74e705c42f890e6b7bc2c80abb4713118
         requester_node_id:
           type: string
-          example: "node-000"
+          example: alpha-node-000
 
-    VoteRecord:
+    ProposedCircuitMember:
+      type: object
+      properties:
+        node_id:
+          type: string
+          example: alpha-node-000
+        endpoint:
+          type: string
+          example: tls://12.0.0.123:8431
+
+    ProposedCircuitService:
+      type: object
+      properties:
+        service_id:
+          type: string
+          example: abcd
+        service_type:
+          type: string
+          example: scabbard
+        allowed_nodes:
+          description: List of node IDs that are allowed to run this service
+          type: array
+          items:
+            type: string
+            example: alpha-node-000
+        arguments:
+          description: |-
+            Arbitrary arguments to be passed to this service on initialization,
+            formatted as an array of (key, value) pairs
+          type: array
+          items:
+            type: array
+            items:
+              type: string
+            minItems: 2
+            maxItems: 2
+
+    Vote:
       type: object
       properties:
         public_key:
           type: string
-          example: "026c889058c2d22558ead2c61b321634b74e705c42f890e6b7bc2c80abb4713118"
+          example: 026c889058c2d22558ead2c61b321634b74e705c42f890e6b7bc2c80abb4713118
         vote:
-          type: object
-          properties:
-            voteType:
-              type: string
-              enum:
-                - Accept
-                - Reject
+          type: string
+          enum:
+            - Accept
+            - Reject
         voter_node_id:
           type: string
-          example: "node-000"
+          example: alpha-node-000
 
     Paging:
       type: object
@@ -1526,6 +1694,19 @@ components:
           type: string
           description: "Internal unique identifier for the user"
           example: "f35aacc1-a9cd-4eda-b6d0-2efaddf0c8a4"
+
+    BiomeCredentials:
+      type: object
+      properties:
+        user_id:
+          type: string
+          description: "Internal unique identifier for the user"
+          example: "f35aacc1-a9cd-4eda-b6d0-2efaddf0c8a4"
+        username:
+          type: string
+          description: "Username of a user"
+          example: "bob@biome.com"
+
 
 tags:
   - name: Biome
