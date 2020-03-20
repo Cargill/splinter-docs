@@ -1,3 +1,4 @@
+#!/bin/bash
 # Copyright 2020 Cargill Incorporated
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,25 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-plugins:
-- jekyll-default-layout
-- jekyll-optional-front-matter
-- jekyll-readme-index
+set -e
 
-optional_front_matter:
-  remove_originals: true
-
-readme_index:
-  enabled:          true
-  remove_originals: true
-  with_frontmatter: false
-
-include:
-  - ../README.md
-
-exclude:
-  - CODEOWNERS
-  - ci
-  - docker*
-  - LICENSE
-  - MAINTAINERS.md
+docker build -t splintercommunity/splinter.dev -f ci/website.dockerfile .
+docker push -t splintercommunity/splinter.dev
