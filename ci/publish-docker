@@ -16,4 +16,4 @@
 set -e
 
 docker build -t splintercommunity/splinter.dev -f ci/website.dockerfile .
-docker push -t splintercommunity/splinter.dev
+docker push splintercommunity/splinter.dev
