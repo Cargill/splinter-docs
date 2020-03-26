@@ -1,5 +1,11 @@
 # Splinter Glossary
 
+## Biome
+
+Biome is a module in libsplinter containing several submodules that provide
+support for user management, user credential management, and private key
+management.
+
 ## Canopy
 
 Application interface for Splinter that can provide apps dynamically.
