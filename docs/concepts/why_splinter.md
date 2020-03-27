@@ -19,11 +19,11 @@ application interfaces, and transaction processing.
 This topic describes Splinter's key benefits:
 
 * [True privacy with circuits](#bookmark-private-circuits)
-* [Distributed ledger platform as a service](#bookmark-ledger-as-service)
-* [Flexibility with Splinter's modular architecture](#bookmark-modular-architecture)
-* [Smart contracts that can share state](#bookmark-contracts-share-state)
-* [Quick startup for application development](#bookmark-quick-dev-startup)
-* [Event subscription for state changes](#bookmark-event-subscription)
+* [Distributed ledger platform as a service](#bookmark-dl-service)
+* [Flexibility with Splinter's modular architecture](#bookmark-arch)
+* [Smart contracts that can share state](#bookmark-sm-share-state)
+* [Quick startup for application development](#bookmark-dev-startup)
+* [Event subscription for state changes](#bookmark-event-sub)
 * [Complex patterns for data flow](#bookmark-complex-data-flow)
 * [Auditable open source](#bookmark-open-source)
 
@@ -52,20 +52,20 @@ participants to be hidden from each other.
   separate management node is needed to order, preprocess, notarize, endorse, or
   validate transactions.
 
-* Circuits are **dynamic** &mdash; they can be created as needed with a secure set of
-  messages between participant nodes. Splinter nodes accept peer connections
-  through a locked-down network management circuit. Nodes use this management
-  circuit to propose a new circuit and agree to join a circuit.
+* Circuits are **dynamic** &mdash; they can be created as needed with a secure
+  set of messages between participant nodes. Splinter nodes accept peer
+  connections through a locked-down network management circuit. Nodes use this
+  management circuit to propose a new circuit and agree to join a circuit.
 
 * Circuit control can be **delegated to end users**, instead of being controlled
   by IT teams or centralized circuit managers. The nodes themselves use
   consensus to agree to the new circuit; no external administrator or
   "pre-peering" process is needed to create and manage circuits.
 
-* Splinter circuits **share state privately** &mdash; with circuit members only. No
-  central database is required for storing data changes or state information.
+* Splinter circuits **share state privately** &mdash; with circuit members only.
+  No central database is required for storing data changes or state information.
 
-## <a name="bookmark-ledger-as-service"></a> Distributed Ledger Platform as a Service
+## <a name="bookmark-dl-service"></a> Distributed Ledger Platform as a Service
 
 Splinter uses services to provide distributed ledger functionality, including
 transaction processing, a consensus mechanism or other agreement protocol, and
@@ -137,7 +137,7 @@ nodes. Because Splinter doesn't embed a specific distributed ledger in its core
 architecture, adding a different style of distributed ledger is possible by
 replacing the Scabbard service with a different service or set of services.
 
-## <a name="bookmark-modular-architecture"></a> Flexibility with Splinter's Modular Architecture
+## <a name="bookmark-arch"></a> Flexibility with Splinter's Modular Architecture
 
 Splinter supports both single and multiple processes for distributed ledger
 components. Other blockchain platforms have separate processes for the
@@ -162,7 +162,7 @@ communication mechanisms.
   layers, such as TCP or TLS, it can easily be extended to additional transport
   layers by implementing a few simple Rust traits.
 
-## <a name="bookmark-contracts-share-state"></a> Smart Contracts That Can Share State
+## <a name="bookmark-sm-share-state"></a> Smart Contracts That Can Share State
 
 [Sawtooth Sabre](https://github.com/hyperledger/sawtooth-sabre), which is
 included in the Scabbard service, implements **in-ledger smart contracts** that
@@ -188,7 +188,7 @@ Sawtooth transaction processor (Sawtooth's version of a smart contract) in Rust,
 then convert it to a Sabre smart contract that can be used for a Splinter
 circuit.
 
-## <a name="bookmark-quick-dev-startup"></a> Quick Startup for Application Development
+## <a name="bookmark-dev-startup"></a> Quick Startup for Application Development
 
 Splinter includes several APIs for application development:
 
@@ -232,7 +232,7 @@ Splinter provides
 as a complete example for building smart-contract-based applications with the
 Splinter platform.
 
-## <a name="bookmark-event-subscription"></a> Event Subscription for State Changes
+## <a name="bookmark-event-sub"></a> Event Subscription for State Changes
 
 As described earlier, the Scabbard service includes Hyperledger Transact for
 transaction processing and state management. State agreement is achieved with

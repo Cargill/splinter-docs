@@ -50,7 +50,7 @@ If the explanation gets too long, include a summary in this topic and move the
 details into the other item's concept topic. Then link each topic to the other.
 -->
 
-## Other Heading (Like "Options" or "Configuring {Concept}" or "Using {Concept}" or ...)
+## Other Heading (Like "About {Concept}" or "Understanding {Concept}")
 
 <!--
 Describe any externally visible behavior and explain what matters to others,

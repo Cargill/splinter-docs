@@ -9,7 +9,8 @@ effort of getting valid X.509 certificates from a certificate authority. If so,
 you can use the `splinter` CLI to generate insecure certificates and the
 associated keys.
 
-The `splinter cert generate` command creates the following certificates and keys:
+The `splinter cert generate` command creates the following certificates and
+keys:
   - `client.crt`
   - `client.key`
   - `server.crt`
