@@ -30,7 +30,8 @@ use the `splinter` CLI to generate the development certificates. The `splinter`
 CLI provides a subcommand called `splinter cert generate` which will generate
 development certificates and keys files.
 
-The `splinter cert generate` command creates the following certificates and keys:
+The `splinter cert generate` command creates the following certificates and
+keys:
   - `client.crt`
   - `client.key`
   - `server.crt`
@@ -90,7 +91,8 @@ location by setting the `SPLINTER_CERT_DIR` environment variable or using the
 For more information see [Generating Insecure Certificates for Development](https://github.com/Cargill/splinter-docs/blob/master/docs/howto/generating_insecure_certificates_for_development.md)
 
 For an example of how this could be handled in a docker-compose.yaml file look
-at the [Gameroom](https://github.com/Cargill/splinter/blob/v0.3.12/examples/gameroom/docker-compose-dockerhub.yaml) example
+at the [Gameroom](https://github.com/Cargill/splinter/blob/v0.3.12/examples/gameroom/docker-compose-dockerhub.yaml)
+example
 
 ## The CLI command to create a circuit was updated
 If you are creating circuits with the experimental splinter CLI, you must update
@@ -197,7 +199,7 @@ For more information, check the command's help text:
     $ scabbard contract upload --help
 ```
 
-## The circuits, node registry and key registry REST API routes now begin with admin
+## Circuits, node registry and key registry REST API routes now begin with admin
 If you are using /keys, /nodes, or /circuits REST APIs directly in your
 application, you need to update the endpoints in your code.
 

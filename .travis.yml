@@ -27,6 +27,10 @@ addons:
 
 jobs:
   include:
+    - stage: Run Lint
+      script:
+        - docker-compose -f docker/compose/run-lint.yaml up --abort-on-container-exit lint-splinter-docs
+
     - stage: Publish docker image
       language: generic
       before_deploy:

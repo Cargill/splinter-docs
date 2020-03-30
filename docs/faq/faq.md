@@ -30,7 +30,7 @@ Demos](https://github.com/Cargill/splinter/blob/master/README.md#demos).
 
 We encourage interest in and contributions for this exciting new project! Please
 contact the
-[Splinter maintainers]( https://github.com/Cargill/splinter/blob/master/MAINTAINERS.md)
+[Splinter maintainers](https://github.com/Cargill/splinter/blob/master/MAINTAINERS.md)
 for more information.
 
 ## Can I run the Splinter daemon behind a firewall without opening up a port?

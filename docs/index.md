@@ -16,8 +16,8 @@ and transactions between organizations.
 
 ## Splinter Concepts
 
-  * [Splinter glossary](glossary/glossary.md): Definitions for _circuit_, _scabbard_,
-    _state delta export_, and more
+  * [Splinter glossary](glossary/glossary.md): Definitions for _circuit_,
+    _scabbard_, _state delta export_, and more
 
   * [About Canopy](concepts/about_canopy.md): Splinter's distributed-application
     UI framework that dynamically loads saplings (application UI components)

@@ -37,11 +37,13 @@ A Splinter deployment usually has the following items:
 
 *   A web UI (brower-based user interface) for interacting with the application.
 
-<img src="../images/splinter-deployment-overview.png" alt="Splinter deployment overview" width="300"/>
+![](../images/splinter-deployment-overview.png "Splinter deployment overview")
 
 # Splinter Architecture
 
-Splinter is a privacy-focused platform for distributed applications that provides a blockchain-inspired networking environment for communication and transactions between organizations.
+Splinter is a privacy-focused platform for distributed applications that
+provides a blockchain-inspired networking environment for communication and
+transactions between organizations.
 
 Splinter provides a networking layer and services for running smart contracts so
 that applications can build upon this functionality. A Splinter network allows
@@ -90,7 +92,7 @@ Communication over this connection is encrypted with TLS.
 We recommend redirecting web server traffic from port 80 to port 443, which
 sends all HTTP requests to the TLS port.
 
-<img src="../images/splinter-deployment-network-config.png" alt="Splinter network configuration" width="600"/>
+![](../images/splinter-deployment-network-config.png "Splinter network configuration")
 
 # Application Pattern
 
@@ -113,7 +115,7 @@ must be persisted across restarts.
 > Kubernetes persistent volume) for `/var/lib/splinter`, which contains circuit
 > definitions and shared state.
 
-<img src="../images/splinter-deployment-application-pattern.png" alt="Splinter application pattern" width="540"/>
+![](../images/splinter-deployment-application-pattern.png 'Splinter application pattern')
 
 # Docker Deployment
 
@@ -126,7 +128,7 @@ can use the Splinter command-line interface (CLI) to interact with splinterd.
 * If your application requires persistent data across restarts, configure a
   Docker data volume for the database container.
 
-<img src="../images/splinter-deployment-docker.png" alt="Splinter Docker deployment" width="500"/>
+![](../images/splinter-deployment-docker.png "Splinter Docker deployment")
 
 # Basic Kubernetes Deployment
 
@@ -139,7 +141,7 @@ this pattern has been tested with the Splinter examples.
 * If your application requires persistent data across restarts, configure a
   persistent volume  for the database container.
 
-<img src="../images/splinter-deployment-kubernetes.png" alt="Splinter Kubernetes deployment" width="525"/>
+![](../images/splinter-deployment-kubernetes.png "Splinter Kubernetes deployment")
 
 # Amazon EKS Deployment
 
@@ -153,7 +155,7 @@ has been tested with the Splinter examples.
 * If your application requires persistent data across restarts, configure an EBS
   persistent volume  for the database container.
 
-<img src="../images/splinter-deployment-amazonEKS.png" alt="Splinter Amazon EKS deployment" width="525"/>
+![](../images/splinter-deployment-amazonEKS.png "Splinter Amazon EKS deployment")
 
 # Summary
 
