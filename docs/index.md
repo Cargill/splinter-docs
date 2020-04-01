@@ -22,6 +22,9 @@ and transactions between organizations.
   * [About Canopy](concepts/about_canopy.md): Splinter's distributed-application
     UI framework that dynamically loads saplings (application UI components)
 
+  * [About Biome](concepts/about_biome.md): User management, private key
+    management, and credential management
+
 ## Example Applications
 
   * [Gameroom](https://github.com/Cargill/splinter/blob/master/examples/gameroom/README.md):
