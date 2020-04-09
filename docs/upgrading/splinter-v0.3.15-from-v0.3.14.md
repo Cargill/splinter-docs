@@ -1,45 +1,47 @@
 # Upgrading to Splinter v0.3.15 from Splinter v0.3.14
 
-## Changes
+Breaking changes in this release:
 
-## The routes for keys endpoint have changed
+* [The routes for the Biome keys endpoints have
+  changed](#the-routes-for-the-biome-keys-endpoints-have-changed)
 
-In v0.3.14 the following endpoints required a user id
+* [The splinter circuit create subcommand has been renamed to
+  propose](the-splinter-circuit-create-subcommand-has-been-renamed-to-propose)
+
+## The routes for the Biome keys endpoints have changed
+
+In release v0.3.14, the following endpoints required a user ID:
 
 * `biome/users/{user_id}/keys`
 * `biome/user/{user_id}/keys/{public_key}`
 
-In v0.3.15 the above endpoints no longer require a user id and have been
-changed to
+In this release, these endpoints no longer require a user ID. The Biome keys
+endpoints have been changed to:
 
 * `biome/keys`
 * `biome/keys/{public_key}`
 
-With these changes, any instance of these endpoints must be updated, otherwise
-requests to these endpoints will result in a 404 NOT FOUND HTTP error as the
-v0.3.14 endpoints no longer exist.
+All instances of these endpoints must be updated. Requests to the previous
+endpoints will result in a `404 NOT FOUND` error.
 
-The functionality for these endpoints has remained the same, and more
-information on the functionality may be found in the [openapi documentation](https://github.com/Cargill/splinter/blob/v0.3.15/splinterd/api/static/openapi.yml).
+The functionality for these endpoints has remained the same. For more
+information, see the [splinterd OpenAPI
+documentation](https://github.com/Cargill/splinter/blob/v0.3.15/splinterd/api/static/openapi.yml).
 
-## The splinter create command has been renamed to propose
+## The splinter circuit create subcommand has been renamed to propose
 
-In v0.3.14 in order to propose a circuit, one would run the following command.
+In previous releases, the command `splinter circuit create` was used to propose
+a new circuit.
 
-```
-$ splinter circuit create \
-    --url http://splinterd-alpha:8085 \
-    --key <path_to_alpha_private_key> \
-    --node alpha-node-000::tls://splinterd-alpha:8044 \
-```
-
-In v0.3.15 "create" has been changed to "propose".
+In release v0.3.15, the `create` subcommand has been changed to `propose`.
+Use `splinter circuit propose` for a new circuit, as shown in the following
+example:
 
 ```
 $ splinter circuit propose \
     --url http://splinterd-alpha:8085 \
     --key <path_to_alpha_private_key> \
-    --node alpha-node-000::tls://splinterd-alpha:8044 \
+    --node alpha-node-000::tls://splinterd-alpha:8044
 ```
 
-The functionality has not changed.
+The functionality of this subcommand has not changed.
