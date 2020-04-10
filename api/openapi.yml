@@ -15,7 +15,7 @@
 openapi: '3.0.0'
 
 info:
-  version: 0.3.14
+  version: 0.3.15
   title: splinterd API
   description: REST API for the Splinter daemon
 
@@ -50,8 +50,10 @@ paths:
       description: |
         This endpoint can be used to view all of the circuit proposals that the
         node is a proposed member of. If a circuit management type is provided
-        via the "filter" query parameter, only circuit proposals that have the
-        given circuit management type will be returned; if no filter is
+        via the "management_type" query parameter, only circuit proposals that
+        have the given circuit management type will be returned. If a node ID is
+        provided via the "member" query parameter, only circuit proposals that
+        have the given node as a member will be returned. If no filter is
         provided, all of the node's circuit proposals will be returned.
       tags:
         - Proposals
@@ -71,9 +73,19 @@ paths:
           schema:
             type: integer
             default: 100
-        - name: filter
+        - name: management_type
           in: query
-          description: Circuit management type of the proposed circuits
+          description: |-
+            Only show proposed circuits matching the given circuit management
+            type
+          required: false
+          schema:
+            type: string
+        - name: member
+          in: query
+          description: |-
+            Only show proposed circuits that have a member with the given node
+            ID
           required: false
           schema:
             type: string
@@ -824,7 +836,9 @@ paths:
                     type: string
                     example: "User created successfully"
                   data:
-                    ref: '#/components/schemas/BiomeNewUser'
+                    type: object
+                    example:
+                      ref: '#/components/schemas/BiomeNewUser'
         400:
           description: Invalid request
           content:
@@ -885,8 +899,172 @@ paths:
                       IjoiZjM1YWFjYzEtYTljZC00ZWRhLWI2ZDAtMmVmYWRkZjBjOGE0Iiwia\
                       XNzIjoic2VsZi1pc3N1ZWQiLCJleHAiOjE1ODAyMzkyMjh9.P8hA0ru_x\
                       riYX7qryl08ZEp86t5HD_AEVPEUXY70Ehc"
+                  refresh_token:
+                    type: string
+                    description: "JWT refresh token used for obtaining a new access to token"
+                    example: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lk\
+                      IjoiZjM1YWFjYzEtYTljZC00ZWRhLWI2ZDAtMmVmYWRkZjBjOGE0Iiwia\
+                      XNzIjoic2VsZi1pc3N1ZWQiLCJleHAiOjE1ODAyMzkyMjh9.P8hA0ru_x\
+                      riYX7qryl08ZEp86t5HD_AEVPEUXY70Ehc"
         400:
           description: Invalid request
+          content:
+            application/json:
+                schema:
+                  $ref: '#/components/schemas/ErrorBiome'
+        500:
+          description: Internal server error occurred
+          content:
+            application/json:
+                schema:
+                  $ref: '#/components/schemas/ErrorBiome'
+
+  /biome/logout:
+    patch:
+      tags:
+        - Biome
+      description: Removes access tokens associated with a user
+      parameters:
+        - $ref: "#/components/parameters/protocol_version"
+      responses:
+        200:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "User successfully logged out"
+        400:
+          description: Invalid request
+          content:
+            application/json:
+                schema:
+                  $ref: '#/components/schemas/ErrorBiome'
+        401:
+          description: Access token is invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBiome'
+        500:
+          description: Internal server error occurred
+          content:
+            application/json:
+                schema:
+                  $ref: '#/components/schemas/ErrorBiome'
+
+  /biome/token:
+    post:
+      tags:
+        - Biome
+      description: Issues a new access token
+      parameters:
+        - $ref: "#/components/parameters/protocol_version"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                refresh_token:
+                  description: a refresh token issues by biome
+
+              required:
+                - refresh_token
+              example:
+                refresh_token: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lk\
+                  IjoiZjM1YWFjYzEtYTljZC00ZWRhLWI2ZDAtMmVmYWRkZjBjOGE0Iiwia\
+                  XNzIjoic2VsZi1pc3N1ZWQiLCJleHAiOjE1ODAyMzkyMjh9.P8hA0ru_x\
+                  riYX7qryl08ZEp86t5HD_AEVPEUXY70Ehc"
+      responses:
+        200:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    description: "JWT access token used for authorizing access to protected resources"
+                    example: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lk\
+                      IjoiZjM1YWFjYzEtYTljZC00ZWRhLWI2ZDAtMmVmYWRkZjBjOGE0Iiwia\
+                      XNzIjoic2VsZi1pc3N1ZWQiLCJleHAiOjE1ODAyMzkyMjh9.P8hA0ru_x\
+                      riYX7qryl08ZEp86t5HD_AEVPEUXY70Ehc"
+        400:
+          description: Invalid request
+          content:
+            application/json:
+                schema:
+                  $ref: '#/components/schemas/ErrorBiome'
+        401:
+          description: Access token is invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBiome'
+        403:
+          description: Refresh token is invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBiome'
+        500:
+          description: Internal server error occurred
+          content:
+            application/json:
+                schema:
+                  $ref: '#/components/schemas/ErrorBiome'
+
+  /biome/verify:
+    post:
+      tags:
+        - Biome
+      description: Verifies a user with username and password credentials
+      parameters:
+        - $ref: "#/components/parameters/protocol_version"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                username:
+                  description: username of user
+                hashed_password:
+                  description: |
+                    Hashed password to be used for user authentication
+              required:
+                - username
+                - hashed_password
+              example:
+                username: alice@acme.com
+                hashed_password: |-
+                  8945622435187243046536949706b5272644c71336c7254563679727565494b376d4b3554696b734662685962652f6v52562e437a70462f6552489c8b
+      responses:
+        200:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Successful verification"
+                  user_id:
+                    type: string
+                    description: "Internal unique identifier for the user"
+                    example: "f35aacc1-a9cd-4eda-b6d0-2efaddf0c8a4"
+        400:
+          description: Invalid request
+          content:
+            application/json:
+                schema:
+                  $ref: '#/components/schemas/ErrorBiome'
+        401:
+          description: Unauthorized request
           content:
             application/json:
                 schema:
@@ -1004,9 +1182,16 @@ paths:
                 new_password:
                   description: |
                     Hash of the new password to be used for user authentication
+                new_key_pairs:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/BiomeNewUserKey'
               required:
                 - username
                 - hashed_password
+                - display_name
+                - public_key
+                - encrypted_private_key
               example:
                 username: alice@acme.com
                 hashed_password: |-
@@ -1021,9 +1206,19 @@ paths:
                 properties:
                   message:
                     type: string
-                    example: "User updated successfully"
+                    example: "Credentials and key updated successfully"
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/BiomeUserKey'
         400:
           description: Invalid request
+          content:
+            application/json:
+                schema:
+                  $ref: '#/components/schemas/ErrorBiome'
+        401:
+          description: Unauthorized request
           content:
             application/json:
                 schema:
@@ -1089,20 +1284,13 @@ paths:
                 schema:
                   $ref: '#/components/schemas/ErrorBiome'
 
-  /biome/users/{user_id}/keys:
+  /biome/keys:
     get:
       tags:
       - Biome
       description: List keys of a user
       parameters:
         - $ref: "#/components/parameters/protocol_version"
-        - name: user_id
-          in: path
-          description: ID of the user
-          required: true
-          schema:
-            type: string
-            example: "f35aacc1-a9cd-4eda-b6d0-2efaddf0c8a4"
       responses:
         200:
           description: User's keys
@@ -1136,13 +1324,6 @@ paths:
       description: Update a key's display name
       parameters:
         - $ref: "#/components/parameters/protocol_version"
-        - name: user_id
-          in: path
-          description: ID of the user
-          required: true
-          schema:
-            type: string
-            example: "f35aacc1-a9cd-4eda-b6d0-2efaddf0c8a4"
       requestBody:
         content:
           application/json:
@@ -1201,13 +1382,6 @@ paths:
       description: Add a new key for user
       parameters:
         - $ref: "#/components/parameters/protocol_version"
-        - name: user_id
-          in: path
-          description: ID of the user
-          required: true
-          schema:
-            type: string
-            example: "f35aacc1-a9cd-4eda-b6d0-2efaddf0c8a4"
       requestBody:
         content:
           application/json:
@@ -1245,20 +1419,13 @@ paths:
                 schema:
                   $ref: '#/components/schemas/ErrorBiome'
 
-  /biome/users/{user_id}/keys/{public_key}:
+  /biome/keys/{public_key}:
     get:
       tags:
       - Biome
       description: Fetch key of a user
       parameters:
         - $ref: "#/components/parameters/protocol_version"
-        - name: user_id
-          in: path
-          description: ID of the user
-          required: true
-          schema:
-            type: string
-            example: "f35aacc1-a9cd-4eda-b6d0-2efaddf0c8a4"
         - name: public_key
           in: path
           description: Public key of the user
@@ -1402,7 +1569,7 @@ components:
         version:
           description: Rest API version
           type: string
-          example: "0.3.14"
+          example: "0.3.15"
         node_id:
           description: Node id
           type: string
@@ -1694,6 +1861,23 @@ components:
           type: string
           description: "Internal unique identifier for the user"
           example: "f35aacc1-a9cd-4eda-b6d0-2efaddf0c8a4"
+
+    BiomeNewUserKey:
+      type: object
+      properties:
+        display_name:
+          type: string
+          description: "Display name for key"
+          example: "Biome Admin Key"
+        encrypted_private_key:
+          type: string
+          description: "Encrypted private key"
+          example: "XNzIjoic2VsZi1pc3N1ZWQiLCJleHAiOjE1ODAyMzkyMjh9.P8hA0ru_x\
+            riYX7qryl08ZEp86t5HD_AEVPEUXY70Ehc"
+        public_key:
+          type: string
+          description: "Public key"
+          example: "026c889058c2d22558ead2c61b321634b74e705c42f890e6b7bc2c80abb4713118"
 
     BiomeCredentials:
       type: object
