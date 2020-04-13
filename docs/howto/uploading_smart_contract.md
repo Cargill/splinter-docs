@@ -21,7 +21,7 @@ for details on how to create and compile a smart contract
     a. Propose the circuit on alpha node.
 
     ```
-    $ splinter circuit create \
+    $ splinter circuit propose \
         --url http://splinterd-alpha:8085 \
         --key <path_to_alpha_private_key> \
         --node alpha-node-000::tls://splinterd-alpha:8044 \
