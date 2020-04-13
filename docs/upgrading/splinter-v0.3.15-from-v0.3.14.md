@@ -6,7 +6,7 @@ Breaking changes in this release:
   changed](#the-routes-for-the-biome-keys-endpoints-have-changed)
 
 * [The splinter circuit create subcommand has been renamed to
-  propose](the-splinter-circuit-create-subcommand-has-been-renamed-to-propose)
+  propose](#the-splinter-circuit-create-subcommand-has-been-renamed-to-propose)
 
 ## The routes for the Biome keys endpoints have changed
 
