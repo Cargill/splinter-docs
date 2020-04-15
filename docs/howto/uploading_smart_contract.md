@@ -24,8 +24,8 @@ for details on how to create and compile a smart contract
     $ splinter circuit propose \
         --url http://splinterd-alpha:8085 \
         --key <path_to_alpha_private_key> \
-        --node alpha-node-000::tls://splinterd-alpha:8044 \
-        --node beta-node-000::tls://splinterd-beta:8044 \
+        --node alpha-node-000::tcps://splinterd-alpha:8044 \
+        --node beta-node-000::tcps://splinterd-beta:8044 \
         --service scabbard-service-alpha::alpha-node-000 \
         --service scabbard-service-beta::beta-node-000 \
         --service-peer-group beta-node-000,alpha-node-000 \

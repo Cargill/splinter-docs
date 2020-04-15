@@ -1610,7 +1610,7 @@ components:
           type: object
       example:
         identity: node-123123-asdf
-        endpoint: tls://12.0.0.123:8431
+        endpoint: tcps://12.0.0.123:8431
         display_name: Cargill - Node 1
         metadata:
           company: Cargill
