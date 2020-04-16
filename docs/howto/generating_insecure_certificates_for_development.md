@@ -109,8 +109,8 @@ This procedure requires a local development environment that includes the
    [2020-02-13 08:50:30.593] T["main"] DEBUG [splinterd::config] Config: state_dir: /var/lib/splinter/ (source: Default)
    [2020-02-13 08:50:30.593] T["main"] DEBUG [splinterd::config] Config: heartbeat_interval: 30 (source: Default)
    [2020-02-13 08:50:30.593] T["main"] DEBUG [splinterd::config] Config: admin_service_coordinator_timeout: 30s (source: Default)
-   [2020-02-13 08:50:30.615] T["main"] DEBUG [splinterd::daemon] Listening for peer connections on tls://127.0.0.1:8044
-   [2020-02-13 08:50:30.615] T["main"] DEBUG [splinterd::daemon] Listening for service connections on tls://127.0.0.1:8043
+   [2020-02-13 08:50:30.615] T["main"] DEBUG [splinterd::daemon] Listening for peer connections on tcps://127.0.0.1:8044
+   [2020-02-13 08:50:30.615] T["main"] DEBUG [splinterd::daemon] Listening for service connections on tcps://127.0.0.1:8043
    [2020-02-13 08:50:30.615] T["main"] INFO [splinterd::daemon] Starting SpinterNode with ID node-000
    .
    .
