@@ -71,7 +71,7 @@ This procedure requires a local development environment that includes the
    connect to another Splinter node.
 
    ```
-   $ splinterd --node-id node-000 --transport tls --insecure
+   $ splinterd --node-id node-000 --insecure --network-endpoint tcps://127.0.0.1:8044
    [2020-02-04 15:40:29.763] T["main"] WARN [splinterd] Starting TlsTransport in insecure mode
    ```
 
@@ -86,7 +86,7 @@ This procedure requires a local development environment that includes the
      keys were used, add `-vv` to increase the logging level.
 
    ```
-   $ splinterd --node-id node-000 --transport tls --insecure -vv
+   $ splinterd --node-id node-000 --insecure -vv --network-endpoint tcps://127.0.0.1:8044
 
    .
    .
@@ -99,8 +99,8 @@ This procedure requires a local development environment that includes the
    [2020-02-13 08:50:30.593] T["main"] DEBUG [splinterd::config] Config: client_key: /etc/splinter/certs/private/client.key (source: Default)
    [2020-02-13 08:50:30.593] T["main"] DEBUG [splinterd::config] Config: server_cert: /etc/splinter/certs/server.crt (source: Default)
    [2020-02-13 08:50:30.593] T["main"] DEBUG [splinterd::config] Config: server_key: /etc/splinter/certs/private/server.key (source: Default)
-   [2020-02-13 08:50:30.593] T["main"] DEBUG [splinterd::config] Config: service_endpoint: 127.0.0.1:8043 (source: Default)
-   [2020-02-13 08:50:30.593] T["main"] DEBUG [splinterd::config] Config: network_endpoint: 127.0.0.1:8044 (source: Default)
+   [2020-02-13 08:50:30.593] T["main"] DEBUG [splinterd::config] Config: service_endpoint: tcp://127.0.0.1:8043 (source: Default)
+   [2020-02-13 08:50:30.593] T["main"] DEBUG [splinterd::config] Config: network_endpoint: tcps://127.0.0.1:8044 (source: Default)
    [2020-02-13 08:50:30.593] T["main"] DEBUG [splinterd::config] Config: peers: [] (source: Default)
    [2020-02-13 08:50:30.593] T["main"] DEBUG [splinterd::config] Config: node_id: node-000 (source: CommandLine)
    [2020-02-13 08:50:30.593] T["main"] DEBUG [splinterd::config] Config: bind: 127.0.0.1:8080 (source: Default)
