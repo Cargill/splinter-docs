@@ -3,11 +3,11 @@
 This document describes how to use the `splinter` CLI to generate certificates
 for running the Splinter daemon in a development environment.
 
-The Splinter daemon can be run with raw TCP connections or with TLS connections.
-When developing against Splinter, you might want to run in TLS mode without the
-effort of getting valid X.509 certificates from a certificate authority. If so,
-you can use the `splinter` CLI to generate insecure certificates and the
-associated keys.
+The Splinter daemon can be run with raw TCP connections and with TLS
+connections. When developing against Splinter, you might want to run in TLS mode
+without the effort of getting valid X.509 certificates from a certificate
+authority. If so, you can use the `splinter` CLI to generate insecure
+certificates and the associated keys.
 
 The `splinter cert generate` command creates the following certificates and
 keys:
