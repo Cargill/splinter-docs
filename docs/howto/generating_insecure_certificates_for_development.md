@@ -71,7 +71,7 @@ This procedure requires a local development environment that includes the
    connect to another Splinter node.
 
    ```
-   $ splinterd --node-id node-000 --tls-insecure --network-endpoint tcps://127.0.0.1:8044
+   $ splinterd --node-id node-000 --tls-insecure --network-endpoints tcps://127.0.0.1:8044
    [2020-02-04 15:40:29.763] T["main"] WARN [splinterd] Starting TlsTransport in insecure mode
    ```
 
@@ -86,7 +86,7 @@ This procedure requires a local development environment that includes the
      keys were used, add `-vv` to increase the logging level.
 
    ```
-   $ splinterd --node-id node-000 --tls-insecure -vv --network-endpoint tcps://127.0.0.1:8044
+   $ splinterd --node-id node-000 --tls-insecure -vv --network-endpoints tcps://127.0.0.1:8044
 
    .
    .
@@ -100,15 +100,20 @@ This procedure requires a local development environment that includes the
    [2020-02-13 08:50:30.593] T["main"] DEBUG [splinterd::config] Config: tls_server_cert: /etc/splinter/certs/server.crt (source: Default)
    [2020-02-13 08:50:30.593] T["main"] DEBUG [splinterd::config] Config: tls_server_key: /etc/splinter/certs/private/server.key (source: Default)
    [2020-02-13 08:50:30.593] T["main"] DEBUG [splinterd::config] Config: service_endpoint: tcp://127.0.0.1:8043 (source: Default)
-   [2020-02-13 08:50:30.593] T["main"] DEBUG [splinterd::config] Config: network_endpoint: tcps://127.0.0.1:8044 (source: Default)
+   [2020-02-13 08:50:30.593] T["main"] DEBUG [splinterd::config] Config: network_endpoints: ["tcps://127.0.0.1:8044"] (source: Default)
+   [2020-02-13 08:50:30.593] T["main"] DEBUG [splinterd::config] Config: advertised_endpoints: ["tcps://127.0.0.1:8044"] (source: Default)
    [2020-02-13 08:50:30.593] T["main"] DEBUG [splinterd::config] Config: peers: [] (source: Default)
    [2020-02-13 08:50:30.593] T["main"] DEBUG [splinterd::config] Config: node_id: node-000 (source: CommandLine)
+   [2020-02-13 08:50:30.593] T["main"] DEBUG [splinterd::config] Config: display_name: Node node-000 (source: Default)
    [2020-02-13 08:50:30.593] T["main"] DEBUG [splinterd::config] Config: bind: 127.0.0.1:8080 (source: Default)
-   [2020-02-13 08:50:30.593] T["main"] DEBUG [splinterd::config] Config: registry_backend: FILE (source: Default)
-   [2020-02-13 08:50:30.593] T["main"] DEBUG [splinterd::config] Config: registry_file: /etc/splinter/nodes.yaml (source: Default)
+   [2020-02-13 08:50:30.593] T["main"] DEBUG [splinterd::config] Config: registries: [] (source: Default)
+   [2020-02-13 08:50:30.593] T["main"] DEBUG [splinterd::config] Config: registry_auto_refresh: 600 (source: Default)
+   [2020-02-13 08:50:30.593] T["main"] DEBUG [splinterd::config] Config: registry_forced_refresh: 10 (source: Default)
    [2020-02-13 08:50:30.593] T["main"] DEBUG [splinterd::config] Config: state_dir: /var/lib/splinter/ (source: Default)
-   [2020-02-13 08:50:30.593] T["main"] DEBUG [splinterd::config] Config: heartbeat_interval: 30 (source: Default)
-   [2020-02-13 08:50:30.593] T["main"] DEBUG [splinterd::config] Config: admin_service_coordinator_timeout: 30s (source: Default)
+   [2020-02-13 08:50:30.593] T["main"] DEBUG [splinterd::config] Config: heartbeat: 30 (source: Default)
+   [2020-02-13 08:50:30.593] T["main"] DEBUG [splinterd::config] Config: admin_timeout: 30s (source: Default)
+   [2020-02-13 08:50:30.593] T["main"] DEBUG [splinterd::config] Config: tls_insecure: true (source: CommandLine)
+   [2020-02-13 08:50:30.593] T["main"] DEBUG [splinterd::config] Config: no_tls: false (source: Default)
    [2020-02-13 08:50:30.615] T["main"] DEBUG [splinterd::daemon] Listening for peer connections on tcps://127.0.0.1:8044
    [2020-02-13 08:50:30.615] T["main"] DEBUG [splinterd::daemon] Listening for service connections on tcps://127.0.0.1:8043
    [2020-02-13 08:50:30.615] T["main"] INFO [splinterd::daemon] Starting SpinterNode with ID node-000
