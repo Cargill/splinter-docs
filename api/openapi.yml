@@ -15,7 +15,7 @@
 openapi: '3.0.0'
 
 info:
-  version: 0.3.16
+  version: 0.3.17
   title: splinterd API
   description: REST API for the Splinter daemon
 
@@ -321,89 +321,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 
-  /admin/keys:
-    get:
-      tags:
-        - Key Registry
-      description: List public key information in the Key Registry
-      parameters:
-        - $ref: "#/components/parameters/protocol_version"
-        - name: offset
-          in: query
-          description: paging offset
-          required: false
-          schema:
-            type: integer
-            default: 0
-        - name: limit
-          in: query
-          description: maximum number of items to return (max 100)
-          required: false
-          schema:
-            type: integer
-            default: 100
-      responses:
-        200:
-          description: list of public key data objects
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  data:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/PublicKeyInfo'
-                  paging:
-                    $ref: '#/components/schemas/Paging'
-        400:
-          description: Request was malformed
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-
-  /admin/keys/{public_key}:
-    get:
-      tags:
-        - Key Registry
-      description: Fetch public key information in the Key Registry by public key
-      parameters:
-        - $ref: "#/components/parameters/protocol_version"
-        - name: public_key
-          in: path
-          description: public key to query, in hex
-          required: true
-          schema:
-            type: string
-      responses:
-        200:
-          description: Node
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  data:
-                    $ref: "#/components/schemas/PublicKeyInfo"
-        400:
-          description: "{public_key} was malformed"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-        404:
-          description: The information for {public_key} was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-
-  /admin/nodes:
+  /registry/nodes:
     post:
+      summary: Add a node to the registry
+      description: |
+        This endpoint can be used to add a new node to the Splinter registry.
+        The node must be valid (see the Splinter registry documentation for
+        details on node validity).
       tags:
-        - Node Registry
-      description: Add node to the Node Registry
+        - Splinter Registry
       parameters:
         - $ref: "#/components/parameters/protocol_version"
       requestBody:
@@ -414,30 +340,29 @@ paths:
               $ref: '#/components/schemas/RegisteredNode'
       responses:
         200:
-          description: The node was added to the registry
+          description: The node was successfully added to the registry
         400:
-          description: The request was malformed
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-        403:
-          description: The node already exists or is invalid
+          description: The request was malformed or the node was invalid
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
         500:
-          description: Internal server error
+          description: An internal server error occurred
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
 
     get:
+      summary: List nodes in the registry
+      description: |
+        This endpoint can be used to view all or some of the nodes in the
+        registry. If metadata filters are provided via the "filter" query
+        parameter, only nodes that match the given filters will be returned. See
+        the Splinter registry documentation for details on metadata filters.
       tags:
-        - Node Registry
-      description: List nodes in the Node Registry
+        - Splinter Registry
       parameters:
         - $ref: "#/components/parameters/protocol_version"
         - name: offset
@@ -466,7 +391,7 @@ paths:
           example: "%7B%22company%22%3A%5B%22%3D%22%2C%22Cargill%22%5D%7D"
       responses:
         200:
-          description: list of nodes
+          description: The list of nodes was successfully retrieved
           content:
             application/json:
               schema:
@@ -479,23 +404,25 @@ paths:
                   paging:
                     $ref: '#/components/schemas/Paging'
         400:
-          description: Request was malformed
+          description: The request was malformed
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
         500:
-          description: Internal server error
+          description: An internal server error occurred
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
 
-  /admin/nodes/{identity}:
+  /registry/nodes/{identity}:
     get:
+      summary: Fetch a node in the registry by its identity
+      description: |
+        This endpoint can be used to view a specific nodes in the registry.
       tags:
-        - Node Registry
-      description: Fetch a nodes in the Node Registry by their identity
+        - Splinter Registry
       parameters:
         - $ref: "#/components/parameters/protocol_version"
         - name: identity
@@ -506,7 +433,7 @@ paths:
             type: string
       responses:
         200:
-          description: Node
+          description: The node was successfully retrieved
           content:
             application/json:
               schema:
@@ -515,16 +442,26 @@ paths:
                   data:
                     $ref: "#/components/schemas/RegisteredNode"
         404:
-          description: The node with {identity} was not found
+          description: The node was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: An internal server error occurred
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
 
     put:
+      summary: Add or replace a node in the registry
+      description: |
+        This endpoint can be used to add a new node to the registry, or replace
+        an existing node. When replacing an existing node, the node identity
+        cannot be changed. This action is idempotent.
       tags:
-        - Node Registry
-      description: Add a node to or replace a node in the Node Registry. This action is idempotent.
+        - Splinter Registry
       parameters:
         - $ref: "#/components/parameters/protocol_version"
         - name: identity
@@ -541,30 +478,25 @@ paths:
               $ref: '#/components/schemas/RegisteredNode'
       responses:
         200:
-          description: The node in the registry has been replaced
+          description: The node has been added or replaced
         400:
-          description: The request was malformed
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-        403:
-          description: The node was invalid
+          description: The request was malformed or the node was invalid
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
         500:
-          description: Internal server error
+          description: An internal server error occurred
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
 
     delete:
+      summary: Delete a node from the registry
+      description: This endpoint can be used to remove a node from the registry.
       tags:
-        - Node Registry
-      description: Delete a node from the Node Registry
+        - Splinter Registry
       parameters:
         - $ref: "#/components/parameters/protocol_version"
         - name: identity
@@ -577,13 +509,13 @@ paths:
         200:
           description: The node has been deleted from the registry
         404:
-          description: The node with {identity} was not found
+          description: The node was not found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
         500:
-          description: Internal server error
+          description: An internal server error occurred
           content:
             application/json:
               schema:
@@ -591,12 +523,19 @@ paths:
 
   /scabbard/{circuit}/{service_id}/batches:
     post:
-      description: Send a list of Sabre batches to the specified Scabbard service
+      summary: Submit a list of batches to the Scabbard service
+      description: |
+        This endpoint can be used to submit batches to a Scabbard service. The
+        body of the request must be a list of valid Sabre batches. If the
+        batches are submitted successfully, the response will contain a link for
+        checking the status of the submitted batches.
+      tags:
+        - Scabbard
       parameters:
         - $ref: "#/components/parameters/protocol_version"
         - name: circuit
           in: path
-          description: circuit the targeted service belongs to
+          description: Circuit the targeted service belongs to
           required: true
           schema:
             type: string
@@ -608,19 +547,27 @@ paths:
             type: string
       responses:
         202:
-          description: Batch has been submitted
+          description: Batch was submitted successfully
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/Link"
+        400:
+          description: No batches were provided
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         404:
-          description: The scabbard service was not found, or the circuit id or service id was not found
+          description: |
+            The scabbard service with the given circuit and service id was not
+            found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
         500:
-          description: Internal service error
+          description: An internal server error occurred
           content:
             application/json:
               schema:
@@ -628,12 +575,21 @@ paths:
 
   /scabbard/{circuit}/{service_id}/batch_statuses:
     get:
-      description: Fetches the statuses for a set of Sabre batches
+      summary: Get the statuses of a list of batches
+      description: |
+        This endpoint can be used to check the status of one or more batches
+        that were submitted to a Scabbard service. The IDs of the batches to
+        check should be specified with the `ids` query parameter. The `wait`
+        query parameter requests that the server wait for the given number of
+        seconds for the batches to be committed; however, this wait time is not
+        guaranteed.
+      tags:
+        - Scabbard
       parameters:
         - $ref: "#/components/parameters/protocol_version"
         - name: circuit
           in: path
-          description: circuit the targeted service belongs to
+          description: Circuit the targeted service belongs to
           required: true
           schema:
             type: string
@@ -645,46 +601,53 @@ paths:
             type: string
         - name: ids
           in: query
-          description: Comma separated list of batch ids
+          description: Comma-separated list of batch IDs
           required: true
           schema:
             type: string
         - name: wait
           in: query
-          description: time (in seconds) to wait for batches to be committed
+          description: |
+            Time (in seconds) to wait for batches to be committed. If not
+            provided, the server will return the batch statuses immediately. If
+            the parameter is provided without a value, the default time (300
+            seconds) will be used.
           required: false
           schema:
             type: integer
             default: 300
       responses:
         200:
-          description: A list with the batch statuses of the batches
+          description: The statuses of the batches were successfully retrieved
           content:
             application/json:
               schema:
                 type: array
                 items:
                   $ref: '#/components/schemas/BatchStatus'
-        404:
-          description: The scabbard service was not found, or the circuit id or service id was not found
+        400:
+          description: The request was malformed or no batch IDs were provided
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        400:
-          description: Malformed ids list
+        404:
+          description: |
+            The scabbard service with the given circuit and service id was not
+            found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
         408:
-          description: Batches did not complete before specified wait
+          description: |
+            The batches were not committed before the specified wait time
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
         500:
-          description: Internal service error
+          description: An internal server error occurred
           content:
             application/json:
               schema:
@@ -692,12 +655,18 @@ paths:
 
   /scabbard/{circuit}/{service_id}/state:
     get:
-      description: Experimental - Get a list of entries in state from the specified Scabbard service
+      summary: Get a list of entries from a Scabbard service's state
+      description: |
+        This endpoint can be used to fetch a list of entries from a Scabbard
+        service's state. The entries can be filtered using an address prefix
+        provided with the `prefix` query parameter.
+      tags:
+        - Scabbard
       parameters:
         - $ref: "#/components/parameters/protocol_version"
         - name: circuit
           in: path
-          description: circuit the targeted service belongs to
+          description: Circuit the targeted service belongs to
           required: true
           schema:
             type: string
@@ -709,14 +678,16 @@ paths:
             type: string
         - name: prefix
           in: query
-          description: The address prefix for filtering state entries
+          description: |
+            An address prefix for filtering state entries. If no prefix is
+            specified, all state entries will be returned.
           required: false
           schema:
             type: string
             example: 00ec01
       responses:
         200:
-          description: List of entries in state (under given address prefix, if specified)
+          description: The state entries were successfully retrieved
           content:
             application/json:
               schema:
@@ -731,19 +702,21 @@ paths:
                       items:
                         type: integer
         400:
-          description: Request was malformed
+          description: The request was malformed
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
         404:
-          description: The scabbard service was not found
+          description: |
+            The scabbard service with the given circuit and service id was not
+            found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
         500:
-          description: Internal server error
+          description: An internal server error occurred
           content:
             application/json:
               schema:
@@ -751,12 +724,17 @@ paths:
 
   /scabbard/{circuit}/{service_id}/state/{address}:
     get:
-      description: Experimental - Get the value at a given address in state from the specified Scabbard service
+      summary: Get the value at an address in a Scabbard service's state
+      description: |
+        This endpoint can be used to fetch the value at a specific address in a
+        Scabbard service's state.
+      tags:
+        - Scabbard
       parameters:
         - $ref: "#/components/parameters/protocol_version"
         - name: circuit
           in: path
-          description: circuit the targeted service belongs to
+          description: Circuit the targeted service belongs to
           required: true
           schema:
             type: string
@@ -775,7 +753,7 @@ paths:
             example: 000000a87cb5eafdcca6a814e4add97c4b517d3c530c2f44b31d18e3b0c44298fc1c14
       responses:
         200:
-          description: The value at the requested address
+          description: The value was successfully retrieved
           content:
             application/json:
               schema:
@@ -783,19 +761,21 @@ paths:
                 items:
                   type: integer
         400:
-          description: Request was malformed
+          description: The request was malformed
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
         404:
-          description: The scabbard service was not found, or there is no value at the given address
+          description: |
+            The scabbard service with the given circuit and service id was not
+            found, or there is no value at the given address
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
         500:
-          description: Internal server error
+          description: An internal server error occurred
           content:
             application/json:
               schema:
@@ -1569,7 +1549,7 @@ components:
         version:
           description: Rest API version
           type: string
-          example: "0.3.16"
+          example: "0.3.17"
         node_id:
           description: Node id
           type: string
@@ -1624,6 +1604,10 @@ components:
             type: string
         display_name:
           type: string
+        keys:
+          type: array
+          items:
+            type: string
         metadata:
           type: object
       example:
@@ -1631,38 +1615,26 @@ components:
         endpoints:
           - tcps://12.0.0.123:8431
         display_name: Cargill - Node 1
+        keys:
+          - "03e0e5086beffc640ec0d149d4f1197fdde0f338afac774541831281c6fd91cbe0"
         metadata:
           company: Cargill
           status: Up
-
-    PublicKeyInfo:
-      type: object
-      properties:
-        public_key:
-          type: string
-        node_id:
-          type: string
-        metadata:
-          type: object
-          additionalProperties: true
-          example:
-            name: Jane User
-            organization: Acme Corporation
 
     Link:
       type: object
       properties:
         link:
           type: string
-          description: link to batch_statuses endpoint
-          example: "/scabbard/{circuit_id}/{service_id}/batch_statuses?ids={ids}"
+          description: Link to get status of batches that were submitted
+          example: "/scabbard/abcde-01234/ABCD/batch_statuses?ids=6ff35474a572087e08fd6a54d563bd8172951b363e5c9731f1a40a855e14bba45dac515364a08d8403f4fb5d4a206174b7f63c29e4f4e425dc71b95494b8a798"
 
     BatchStatus:
       type: object
       properties:
         id:
           type: string
-          description: Batch header signature
+          description: The batch's ID
           example: 6ff35474a572087e08fd6a54d563bd8172951b363e5c9731f1a40a855e14bba45dac515364a08d8403f4fb5d4a206174b7f63c29e4f4e425dc71b95494b8a798
         status:
           type: object
@@ -1853,14 +1825,14 @@ components:
         last:
           type: string
       example:
-        current: /admin/nodes?offset=10&limit=10
+        current: /registry/nodes?offset=10&limit=10
         offset: 10
         limit: 10
         total: 50
-        first: /admin/nodes?offset=0&limit=10
-        prev: /admin/nodes?offset=0&limit=10
-        next: /admin/nodes?offset=20&limit=10
-        last: /admin/nodes?offset=40&limit=10
+        first: /registry/nodes?offset=0&limit=10
+        prev: /registry/nodes?offset=0&limit=10
+        next: /registry/nodes?offset=20&limit=10
+        last: /registry/nodes?offset=40&limit=10
 
     BiomeUserKey:
       type: object
