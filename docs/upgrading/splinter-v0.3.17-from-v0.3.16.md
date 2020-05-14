@@ -6,7 +6,7 @@ Breaking changes in this release:
 
 * [The key registry and node registry have been combined](#the-key-registry-and-node-registry-have-been-combined)
 
-* [Circuit connections start with agreement on protocol version](#circuit-connections-start-with-agreement-on-protocol-versions)
+* [Circuit connections start with agreement on protocol version](#circuit-connections-start-with-agreement-on-protocol-version)
 
 * [Scabbard has been moved to its own crate](#scabbard-has-been-moved-to-its-own-crate)
 
