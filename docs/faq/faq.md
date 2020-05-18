@@ -21,10 +21,11 @@ For more information, see the
 
 ## Does Splinter have any example applications?
 
-The [cargill/splinter repository](https://github.com/Cargill/splinter/tree/master/examples)
-includes several example applications that you can run as demos. For more
-information, see the [Splinter README:
-Demos](https://github.com/Cargill/splinter/blob/master/README.md#demos).
+Yes. [Gameroom](https://github.com/Cargill/splinter/tree/master/examples/gameroom)
+is a complete web application that allows you to set up private, multi-party
+circuits (called "gamerooms") and play tic tac toe with securely shared state.
+For more information, see the
+[Gameroom README](https://github.com/Cargill/splinter/blob/master/examples/gameroom/README.md).
 
 ## How can I learn more about Splinter?
 

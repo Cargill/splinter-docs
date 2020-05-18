@@ -28,12 +28,8 @@ and transactions between organizations.
 ## Example Applications
 
   * [Gameroom](https://github.com/Cargill/splinter/blob/master/examples/gameroom/README.md):
-    Complete application that uses the scabbard service
-
-  * [Private XO](https://github.com/Cargill/splinter/blob/master/examples/private_xo/README.md)
-    and
-    [Private Counter](https://github.com/Cargill/splinter/blob/master/examples/private_counter/README.md):
-    Low-level examples of how to write a service
+    Web application that allows you to set up private multi-party circuits and
+    play tic tac toe with securely shared state
 
 ## For Developers
 
