@@ -22,7 +22,7 @@ domains for two or more connected organizations.
 ## consensus
 
 Mechanism for ensuring agreement between Splinter services and nodes. Splinter
-currently supports two-phase-commit consensus, a basic consensus algorithm that
+currently supports two-phase commit consensus, a basic consensus algorithm that
 requires all participating parties to agree. (Other algorithms are planned for
 the future.)
 
