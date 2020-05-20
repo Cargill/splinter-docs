@@ -19,7 +19,7 @@ The documentation is organized as follows:
 
 * ``references/``: Reference guides for Splinter.
 
-* ``concepts/``: Topics that explain Splinter concepts, architecture, features,
+* ``0.4/concepts/``: Topics that explain Splinter concepts, architecture, features,
   and other non-procedure information. File names should reflect the topic
   title, using all lowercase and optional underscores between words; for
   example, ``circuits.md`` or ``state_delta_export.md``.
@@ -28,20 +28,20 @@ The documentation is organized as follows:
   introduces the FAQ and contains the first few questions. Other files can be
   added as necessary to divide the FAQ into sections.
 
-* ``glossary/``: Definitions of Splinter terms in the file ``glossary.md``.
+* ``0.4/glossary/``: Definitions of Splinter terms in the file ``glossary.md``.
 
-* ``howto/``: Procedures for specific tasks (such as configuring Splinter,
+* ``0.4/howto/``: Procedures for specific tasks (such as configuring Splinter,
   setting permissions, using a feature, or running example demos). File names
   should be verb phrases that reflect the topic title, using all lowercase and
   optional underscores between words; for example, ``upgrading_splinter.md``
   or ``creating_the_node_registry.md``.
 
-* ``images/``: Graphics, pictures, diagrams, icons and other images in the
+* ``0.4/images/``: Graphics, pictures, diagrams, icons and other images in the
   Splinter documentation. PNG format is preferred; GIF or JPG is allowed.
   (SVG files are not supported.)
 
-* ``tutorials/``: In-depth, multi-section procedures for complex tasks, such as
-  creating an application.
+* ``0.4/tutorials/``: In-depth, multi-section procedures for complex tasks,
+  such as creating an application.
 
 * ``upgrading/``: In-depth guides for upgrading from one version of Splinter
   to another version.
