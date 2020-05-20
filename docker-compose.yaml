@@ -16,6 +16,7 @@ version: "3.7"
 
 services:
   splinter-docs:
+    container_name: splinter-docs
     image: splinter-docs-jekyll
     build:
       dockerfile: docker/splinter-docs-jekyll
@@ -31,6 +32,7 @@ services:
       "
 
   splinter-docs-redoc:
+    container_name: splinter-docs-redoc
     image: splinter-docs-redoc
     build:
       dockerfile: docker/splinter-docs-redoc
@@ -46,6 +48,7 @@ services:
       "
 
   splinter-docs-apache:
+    container_name: splinter-docs-apache
     image: splinter-docs-apache
     build:
       dockerfile: docker/splinter-docs-apache
