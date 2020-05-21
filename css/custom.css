@@ -22,3 +22,12 @@
     overflow-y: auto;
     transition: all 0.5s ease;
 }
+
+.right-sidebar {
+    position: fixed;
+    width: 200px;
+    top: 100px;
+    bottom: 0px;
+    overflow-y: auto;
+    transition: all 0.5s ease-out;
+}
