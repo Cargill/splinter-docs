@@ -4,58 +4,17 @@ Splinter is a privacy-focused platform for distributed applications that
 provides a blockchain-inspired networking environment for private communication
 and transactions between organizations.
 
-## Getting Started
+## Splinter Versions
 
-  * [About Splinter](https://github.com/Cargill/splinter/blob/master/README.md)
+  * [v0.4](0.4)
 
-  * [Why use Splinter?](0.4/concepts/why_splinter.md)
-
-  * [Planning a Splinter deployment](0.4/howto/planning_splinter_deployment.md)
+## General Information
 
   * [Splinter FAQ](faq/faq.md)
 
-## Splinter Concepts
-
-  * [Splinter glossary](0.4/glossary/glossary.md): Definitions for _circuit_,
-    _scabbard_, _state delta export_, and more
-
-  * [About Canopy](0.4/concepts/about_canopy.md): Splinter's distributed-application
-    UI framework that dynamically loads saplings (application UI components)
-
-  * [About Biome](0.4/concepts/about_biome.md): User management, private key
-    management, and credential management
-
-## Example Applications
-
-  * [Gameroom](https://github.com/Cargill/splinter/blob/master/examples/gameroom/README.md):
-    Web application that allows you to set up private multi-party circuits and
-    play tic tac toe with securely shared state
-
 ## For Developers
 
-Splinter is an open-source project hosted at
-[github.com/Cargill/splinter](https://github.com/Cargill/splinter).
-This project operates under the [Cargill Code of
-Conduct](https://github.com/Cargill/code-of-conduct/blob/master/code-of-conduct.md).
-
-  * [Splinter release
-    notes](https://github.com/Cargill/splinter/blob/master/RELEASE_NOTES.md)
-
   * [Stable feature checklist](community/stable_feature_checklist.md)
-
-  * [Building Splinter](https://github.com/Cargill/splinter/blob/master/README.md#building-splinter)
-
-  * [Generating insecure certificates for development](0.4/howto/generating_insecure_certificates_for_development.md)
-
-  * [Uploading a smart contract](0.4/howto/uploading_smart_contract.md)
-
-## Reference Guides
-
-  * [Splinter API Reference](https://docs.rs/splinter):
-    Documentation for the Rust `splinter` crate
-
-  * [Splinter CLI Command Reference](0.4/references/cli/cli_command_reference.md):
-    Documentation for the Splinter CLIs
 
 ## License
 
