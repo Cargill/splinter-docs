@@ -53,6 +53,10 @@
     border-bottom: 2px solid var(--splinter-fuchsia);
 }
 
+a {
+    color: var(--splinter-fuchsia);
+}
+
 main {
     position: fixed;
     top: 20px;
