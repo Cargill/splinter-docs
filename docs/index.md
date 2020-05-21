@@ -8,21 +8,21 @@ and transactions between organizations.
 
   * [About Splinter](https://github.com/Cargill/splinter/blob/master/README.md)
 
-  * [Why use Splinter?](concepts/why_splinter.md)
+  * [Why use Splinter?](0.4/concepts/why_splinter.md)
 
-  * [Planning a Splinter deployment](howto/planning_splinter_deployment.md)
+  * [Planning a Splinter deployment](0.4/howto/planning_splinter_deployment.md)
 
   * [Splinter FAQ](faq/faq.md)
 
 ## Splinter Concepts
 
-  * [Splinter glossary](glossary/glossary.md): Definitions for _circuit_,
+  * [Splinter glossary](0.4/glossary/glossary.md): Definitions for _circuit_,
     _scabbard_, _state delta export_, and more
 
-  * [About Canopy](concepts/about_canopy.md): Splinter's distributed-application
+  * [About Canopy](0.4/concepts/about_canopy.md): Splinter's distributed-application
     UI framework that dynamically loads saplings (application UI components)
 
-  * [About Biome](concepts/about_biome.md): User management, private key
+  * [About Biome](0.4/concepts/about_biome.md): User management, private key
     management, and credential management
 
 ## Example Applications
@@ -45,16 +45,16 @@ Conduct](https://github.com/Cargill/code-of-conduct/blob/master/code-of-conduct.
 
   * [Building Splinter](https://github.com/Cargill/splinter/blob/master/README.md#building-splinter)
 
-  * [Generating insecure certificates for development](howto/generating_insecure_certificates_for_development.md)
+  * [Generating insecure certificates for development](0.4/howto/generating_insecure_certificates_for_development.md)
 
-  * [Uploading a smart contract](howto/uploading_smart_contract.md)
+  * [Uploading a smart contract](0.4/howto/uploading_smart_contract.md)
 
 ## Reference Guides
 
   * [Splinter API Reference](https://docs.rs/splinter):
     Documentation for the Rust `splinter` crate
 
-  * [Splinter CLI Command Reference](references/cli/cli_command_reference.md):
+  * [Splinter CLI Command Reference](0.4/references/cli/cli_command_reference.md):
     Documentation for the Splinter CLIs
 
 ## License
