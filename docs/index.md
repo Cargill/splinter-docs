@@ -14,7 +14,7 @@ and transactions between organizations.
 
 ## General Information
 
-  * [Splinter FAQ](faq/faq.md)
+  * [Splinter FAQ](faq)
 
 ## For Developers
 
