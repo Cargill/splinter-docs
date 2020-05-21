@@ -24,7 +24,7 @@ The documentation is organized as follows:
   title, using all lowercase and optional underscores between words; for
   example, ``circuits.md`` or ``state_delta_export.md``.
 
-* ``faq/``: Splinter FAQ in one or more files. The main page, ``faq.md``,
+* ``faq/``: Splinter FAQ in one or more files. The main page, ``index.md``,
   introduces the FAQ and contains the first few questions. Other files can be
   added as necessary to divide the FAQ into sections.
 
