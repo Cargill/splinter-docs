@@ -23,13 +23,13 @@
 {% include header.html %}
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-3 col-xl-2">
+                <div class="d-none d-md-block col-md-3 col-xl-2">
 {% include sidebar.html %}
                 </div>
                 <main class="col-md-9 col-xl-8" role="main">
                     {{ content }}
                 </main>
-                <div class="col-xl-2">
+                <div class="d-none d-xl-block col-xl-2">
 {% include right_sidebar.html %}
                 </div>
             </div>
