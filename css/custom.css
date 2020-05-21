@@ -53,6 +53,15 @@
     border-bottom: 2px solid var(--splinter-fuchsia);
 }
 
+.dropdown-header {
+    font-weight: bold;
+}
+
+.dropdown-item.active, .dropdown-item:hover {
+    background-color: inherit;
+    color: var(--splinter-fuchsia);
+}
+
 a {
     color: var(--splinter-fuchsia);
 }
