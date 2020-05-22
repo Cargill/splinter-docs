@@ -85,6 +85,17 @@
     padding-left: 26px; /* Reduce the padding to account for the border */
 }
 
+.main {
+    padding: 0;
+}
+
+.content {
+    box-sizing: content-box;
+    margin: auto;
+    max-width: 1280px;
+    padding: 20px 30px;
+}
+
 .right-sidebar {
     position: fixed;
     width: 200px;
@@ -112,9 +123,4 @@
 
 a {
     color: var(--splinter-fuchsia);
-}
-
-main {
-    position: fixed;
-    top: 20px;
 }
