@@ -21,7 +21,7 @@
 
 /* General Styles */
 
-a {
+a, a:hover {
     color: var(--splinter-fuchsia);
 }
 
