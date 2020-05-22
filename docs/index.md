@@ -16,6 +16,10 @@ and transactions between organizations.
 
   * [Splinter FAQ](faq)
 
+## Splinter Examples
+
+  * [Gameroom Walkthrough](gameroom_walkthrough)
+
 ## For Developers
 
   * [Stable feature checklist](community/stable_feature_checklist.md)
