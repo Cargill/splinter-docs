@@ -19,13 +19,70 @@
     --splinter-fuchsia: #ff2e74;
 }
 
+.sidebar-col {
+    background-color: #f7f7f7;
+    border-right: 1px solid #eaecef;
+    height: calc(100vh - 62px); /* 62px is the navbar height */
+    padding: 0;
+}
+
 .sidebar {
-    position: fixed;
-    top: 82px; /* The height of the navbar is 62px; this gives 20px padding */
-    width: 200px;
-    bottom: 0px;
-    overflow-y: auto;
-    transition: all 0.5s ease;
+    padding-top: 20px;
+    height: 100%;
+    overflow-y: scroll;
+}
+
+.sidebar > * {
+    margin-bottom: 10px;
+}
+
+.version-dropdown {
+    text-align: center;
+}
+
+.dropdown-toggle {
+    color: var(--text-color);
+}
+
+.dropdown-toggle:hover {
+    color: var(--splinter-fuchsia);
+    text-decoration: none;
+    transition: all 0.1s linear;
+}
+
+.dropdown-header {
+    font-weight: bold;
+}
+
+.dropdown-item.active, .dropdown-item:hover {
+    background-color: inherit;
+    color: var(--splinter-fuchsia);
+    transition: all 0.1s linear;
+}
+
+.sidebar-group .sidebar-header {
+    font-weight: bold;
+    padding-left: 20px;
+    padding-bottom: 5px;
+}
+
+.sidebar-group a {
+    color: var(--text-color);
+    display: block;
+    padding-left: 30px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.sidebar-group a.active, .sidebar-group a:hover {
+    color: var(--splinter-fuchsia);
+    text-decoration: none;
+    transition: all 0.1s linear;
+}
+
+.sidebar-group a.active {
+    border-left: 4px solid var(--splinter-fuchsia);
+    padding-left: 26px; /* Reduce the padding to account for the border */
 }
 
 .right-sidebar {
@@ -51,15 +108,6 @@
 
 .nav-link.active *, .nav-link:hover * {
     border-bottom: 2px solid var(--splinter-fuchsia);
-}
-
-.dropdown-header {
-    font-weight: bold;
-}
-
-.dropdown-item.active, .dropdown-item:hover {
-    background-color: inherit;
-    color: var(--splinter-fuchsia);
 }
 
 a {
