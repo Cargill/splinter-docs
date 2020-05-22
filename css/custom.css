@@ -19,20 +19,20 @@
     --splinter-fuchsia: #ff2e74;
 }
 
-.left-sidebar-col {
+#left-sidebar-col {
     background-color: #f7f7f7;
     border-right: 1px solid #eaecef;
     height: calc(100vh - 62px); /* 62px is the navbar height */
     padding: 0;
 }
 
-.left-sidebar {
+#left-sidebar {
     padding-top: 20px;
     height: 100%;
     overflow-y: scroll;
 }
 
-.left-sidebar > * {
+#left-sidebar > * {
     margin-bottom: 10px;
 }
 
@@ -85,7 +85,7 @@
     padding-left: 26px; /* Reduce the padding to account for the border */
 }
 
-.main {
+#main {
     padding: 0;
 }
 
@@ -96,7 +96,7 @@
     padding: 20px 30px;
 }
 
-.right-sidebar {
+#right-sidebar {
     position: fixed;
     width: 200px;
     top: 82px; /* The height of the navbar is 62px; this gives 20px padding */
@@ -105,7 +105,7 @@
     transition: all 0.5s ease-out;
 }
 
-.header {
+#header {
     position: sticky;
     top: 0;
     z-index: 1000;
