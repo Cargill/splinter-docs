@@ -88,16 +88,13 @@ a {
 
 .left-sidebar-group .left-sidebar-header {
     font-weight: bold;
-    padding-left: 20px;
-    padding-bottom: 5px;
+    padding: 0 20px 5px 20px;
 }
 
 .left-sidebar-group a {
     color: var(--text-color);
     display: block;
-    padding-left: 30px;
-    padding-top: 5px;
-    padding-bottom: 5px;
+    padding: 5px 20px 5px 30px;
 }
 
 .left-sidebar-group a.active, .left-sidebar-group a:hover {
