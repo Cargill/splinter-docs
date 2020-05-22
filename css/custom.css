@@ -19,20 +19,46 @@
     --splinter-fuchsia: #ff2e74;
 }
 
-.sidebar-col {
+/* General Styles */
+
+a {
+    color: var(--splinter-fuchsia);
+}
+
+/* Header */
+
+#header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background-color: rgba(250,250,250,.9);
+    box-shadow: 0 0 10px rgba(26,26,26,.25);
+}
+
+.nav-link * {
+    color: var(--text-color);
+}
+
+.nav-link.active *, .nav-link:hover * {
+    border-bottom: 2px solid var(--splinter-fuchsia);
+}
+
+/* Left Sidebar */
+
+#left-sidebar-col {
     background-color: #f7f7f7;
     border-right: 1px solid #eaecef;
     height: calc(100vh - 62px); /* 62px is the navbar height */
     padding: 0;
 }
 
-.sidebar {
+#left-sidebar {
     padding-top: 20px;
     height: 100%;
     overflow-y: scroll;
 }
 
-.sidebar > * {
+#left-sidebar > * {
     margin-bottom: 10px;
 }
 
@@ -60,13 +86,13 @@
     transition: all 0.1s linear;
 }
 
-.sidebar-group .sidebar-header {
+.left-sidebar-group .left-sidebar-header {
     font-weight: bold;
     padding-left: 20px;
     padding-bottom: 5px;
 }
 
-.sidebar-group a {
+.left-sidebar-group a {
     color: var(--text-color);
     display: block;
     padding-left: 30px;
@@ -74,47 +100,37 @@
     padding-bottom: 5px;
 }
 
-.sidebar-group a.active, .sidebar-group a:hover {
+.left-sidebar-group a.active, .left-sidebar-group a:hover {
     color: var(--splinter-fuchsia);
     text-decoration: none;
     transition: all 0.1s linear;
 }
 
-.sidebar-group a.active {
+.left-sidebar-group a.active {
     border-left: 4px solid var(--splinter-fuchsia);
     padding-left: 26px; /* Reduce the padding to account for the border */
 }
 
-.right-sidebar {
+/* Main Content */
+
+#main {
+    padding: 0;
+}
+
+.content {
+    box-sizing: content-box;
+    margin: auto;
+    max-width: 1280px;
+    padding: 20px 30px;
+}
+
+/* Right Sidebar */
+
+#right-sidebar {
     position: fixed;
     width: 200px;
     top: 82px; /* The height of the navbar is 62px; this gives 20px padding */
     bottom: 0px;
     overflow-y: auto;
     transition: all 0.5s ease-out;
-}
-
-.header {
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    background-color: rgba(250,250,250,.9);
-    box-shadow: 0 0 10px rgba(26,26,26,.25);
-}
-
-.nav-link * {
-    color: var(--text-color);
-}
-
-.nav-link.active *, .nav-link:hover * {
-    border-bottom: 2px solid var(--splinter-fuchsia);
-}
-
-a {
-    color: var(--splinter-fuchsia);
-}
-
-main {
-    position: fixed;
-    top: 20px;
 }
