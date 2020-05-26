@@ -1,0 +1,6 @@
+---
+layout: community
+---
+
+# Splinter Community
+

@@ -14,27 +14,10 @@ and transactions between organizations.
 
 ## General Information
 
+  * [Release notes](https://github.com/Cargill/splinter/blob/master/RELEASE_NOTES.md)
+  * [Upgrading](upgrading/)
   * [Splinter FAQ](faq)
 
 ## Splinter Examples
 
   * [Gameroom Walkthrough](gameroom_walkthrough)
-
-## For Developers
-
-  * [Stable feature checklist](community/stable_feature_checklist.md)
-
-## License
-
-Splinter software is licensed under the [Apache License Version
-2.0](https://github.com/Cargill/splinter/blob/master/LICENSE) software license.
-
-The Splinter documentation in the
-[splinter-docs repository](https://github.com/Cargill/splinter-docs)
-is licensed under a Creative Commons Attribution 4.0 International License
-(CC BY 4.0). You can obtain a copy of the license at
-<http://creativecommons.org/licenses/by/4.0/>.
-
-The Splinter documentation tools and associated content in this repository are
-licensed under the [Apache License Version
-2.0](https://github.com/Cargill/splinter/blob/master/LICENSE) software license.
