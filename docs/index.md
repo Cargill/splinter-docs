@@ -22,10 +22,6 @@ and transactions between organizations.
 
   * [Gameroom Walkthrough](gameroom_walkthrough)
 
-## For Developers
-
-  * [Stable feature checklist](community/stable_feature_checklist.md)
-
 ## License
 
 Splinter software is licensed under the [Apache License Version
