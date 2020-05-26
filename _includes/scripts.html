@@ -5,11 +5,15 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        // Set the active links in the navbar and left sidebar
+        // Set the active links in the navbar, left sidebar, and left
+        // sidebar's version dropdown
         $('.navbar-nav a').filter(function() {
             return window.location.pathname.startsWith(this.getAttribute("href"));
         }).addClass('active');
         $('.left-sidebar-group a').filter(function() {
+            return window.location.pathname.startsWith(this.getAttribute("href"));
+        }).addClass('active');
+        $('#left-sidebar .dropdown-item').filter(function() {
             return window.location.pathname.startsWith(this.getAttribute("href"));
         }).addClass('active');
     });

@@ -25,6 +25,15 @@ a, a:hover {
     color: var(--splinter-fuchsia);
 }
 
+code {
+    color: var(--text-color);
+    padding: 4px 8px;
+    margin: 0;
+    font-size: .85rem;
+    background-color: rgba(27,31,35,.05);
+    border-radius: 3px;
+}
+
 /* Header */
 
 #header {
@@ -173,3 +182,15 @@ h3 {
   */
   scroll-margin-top: 82px;
 }
+
+/* Code blocks */
+
+pre.highlight {
+    background-color: #282c34;
+    border-radius: 6px;
+    padding: 20px 24px;
+}
+
+pre.highlight code {
+    background-color: transparent;
+    color: white;
