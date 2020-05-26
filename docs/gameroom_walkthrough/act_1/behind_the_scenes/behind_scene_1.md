@@ -48,9 +48,9 @@ Alice's public and private key pair was created during registration and was
 added to the Acme Gameroom database (see The Prequel, section P.2).
 The database has the following entry:
 
-| email | hashed_password | public_key | encrypted_private_key |
-| :---: | :---: | :---: | :---: |
-|alice@acme.com|56ec82cb...480cad32|0384781f...5a7e4998|{\"iv\":...cgXrm\"}|
+| `email` | `hashed_password` | `public_key` | `encrypted_private_key` |
+| :--- | :--- | :--- | :--- |
+| `alice@acme.com` | `56ec82cb...480cad32` | `0384781f...5a7e4998` | `{\"iv\":...cgXrm\"}` |
 
 ### I-1.3. Gameroom REST API returns login success response
 
@@ -107,7 +107,7 @@ scenario, Alice has no invitations, so the list is empty. Later, the walkthrough
 will show what happens when a user has unaccepted invitations.
 
 1. When Alice logs in, the UI makes a call to the Gameroom REST API for the list
-of invitations (also called circuit proposals).
+of invitations (also called _circuit proposals_).
 
     `GET /proposals`
 
