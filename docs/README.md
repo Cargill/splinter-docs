@@ -45,3 +45,5 @@ The documentation is organized as follows:
 
 * ``upgrading/``: In-depth guides for upgrading from one version of Splinter
   to another version.
+
+* ``gameroom_walkthrough/``: In-depth walkthrough of the Gameroom application.
