@@ -1,3 +1,7 @@
+---
+layout: community
+---
+
 # Stable Feature Checklist
 
 New Splinter features are usually added to the code as experimental.
