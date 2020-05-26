@@ -265,7 +265,7 @@ Splinter is open source software, licensed under the [Apache License Version
 2.0](https://github.com/Cargill/splinter/blob/master/LICENSE) software license.
 The Splinter source code is freely available and auditable.
 
-# <a name="bookmark-why-not-splinter"></a> Why NOT Splinter?
+## <a name="bookmark-why-not-splinter"></a> Why NOT Splinter?
 
 Even with all of its benefits, Splinter isn't perfect for all uses.
 For example:

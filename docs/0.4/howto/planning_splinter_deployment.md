@@ -23,7 +23,7 @@ Kubernetes Services (Amazon EKS).
 <br>
 [Amazon EKS Deployment](#bookmark=id.ism06ku1ut2h)
 
-# Overview
+## Overview
 
 A Splinter deployment usually has the following items:
 
@@ -39,7 +39,7 @@ A Splinter deployment usually has the following items:
 
 ![](../images/splinter-deployment-overview.png "Splinter deployment overview")
 
-# Splinter Architecture
+## Splinter Architecture
 
 Splinter is a privacy-focused platform for distributed applications that
 provides a blockchain-inspired networking environment for communication and
@@ -65,7 +65,7 @@ nodes, by using **circuits** and **services**.
 For more information about Splinter, see the [Splinter
 documentation](https://github.com/Cargill/splinter-docs/blob/master/docs/index.md).
 
-# Network Configuration
+## Network Configuration
 
 The Splinter daemon, splinterd, communicates with other nodes on the network and
 provides a REST API to expose Splinter functions and data to your application.
@@ -94,7 +94,7 @@ sends all HTTP requests to the TLS port.
 
 ![](../images/splinter-deployment-network-config.png "Splinter network configuration")
 
-# Application Pattern
+## Application Pattern
 
 Users generally access the application with web-based apps that interact with
 Splinter through a web server and server-side application. Splinter includes
@@ -117,7 +117,7 @@ must be persisted across restarts.
 
 ![](../images/splinter-deployment-application-pattern.png 'Splinter application pattern')
 
-# Docker Deployment
+## Docker Deployment
 
 In a basic Docker deployment, each component runs in a separate Docker
 container. We recommend an additional container for terminal access, where you
@@ -130,7 +130,7 @@ can use the Splinter command-line interface (CLI) to interact with splinterd.
 
 ![](../images/splinter-deployment-docker.png "Splinter Docker deployment")
 
-# Basic Kubernetes Deployment
+## Basic Kubernetes Deployment
 
 For a basic deployment of Splinter on Kubernetes, one Pod contains the
 containers for each component. Although many deployment patterns are possible,
@@ -157,7 +157,7 @@ has been tested with the Splinter examples.
 
 ![](../images/splinter-deployment-amazonEKS.png "Splinter Amazon EKS deployment")
 
-# Summary
+## Summary
 
 This topic summarizes three basic approaches for deploying Splinter, but
 many other patterns are possible. You can customize a Splinter deployment for
