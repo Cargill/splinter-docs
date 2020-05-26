@@ -153,3 +153,23 @@ a, a:hover {
     max-width: 1280px;
     padding: 20px 30px;
 }
+
+/* Snap h2 and h3 links below the header. Without this, clicking a link on
+   the right sidebar would cause the contents to start at the top of the window,
+   behind the header.
+*/
+h2 {
+  /*
+    62px is the navbar height. Adds 20px to have the same space at the top as
+    content.
+  */
+  scroll-margin-top: 82px;
+}
+
+h3 {
+  /*
+    62px is the navbar height. Adds 20px to have the same space at the top as
+    content.
+  */
+  scroll-margin-top: 82px;
+}
