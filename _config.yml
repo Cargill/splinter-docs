@@ -16,6 +16,8 @@ plugins:
 - jekyll-default-layout
 - jekyll-optional-front-matter
 - jekyll-readme-index
+- jekyll-seo-tag
+- jekyll-titles-from-headings
 
 optional_front_matter:
   remove_originals: true
@@ -24,6 +26,11 @@ readme_index:
   enabled:          true
   remove_originals: true
   with_frontmatter: false
+
+titles_from_headings:
+  enabled:     true
+  strip_title: false
+  collections: false
 
 include:
   - ../README.md
