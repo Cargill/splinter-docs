@@ -182,3 +182,15 @@ h3 {
   */
   scroll-margin-top: 82px;
 }
+
+/* Code blocks */
+
+pre.highlight {
+    background-color: #282c34;
+    border-radius: 6px;
+    padding: 20px 24px;
+}
+
+pre.highlight code {
+    background-color: transparent;
+    color: white;
