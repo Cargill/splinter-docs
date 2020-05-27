@@ -31,7 +31,9 @@ RUN gem install \
     bundler \
     jekyll-default-layout \
     jekyll-optional-front-matter \
-    jekyll-readme-index
+    jekyll-readme-index \
+    jekyll-seo-tag \
+    jekyll-titles-from-headings
 
 COPY . /srv/jekyll
 
