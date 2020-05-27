@@ -49,12 +49,14 @@ defaults:
         path: "docs/0.4"
         type: "pages"
       values:
-        layout: "0.4"
+        layout: "sidebars"
+        sidebar: "0.4"
     - scope:
         path: "community"
         type: "pages"
       values:
-        layout: "community"
+        layout: "sidebars"
+        sidebar: "community"
     - scope:
         path: ""
         type: "pages"
