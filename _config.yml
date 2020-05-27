@@ -46,6 +46,12 @@ exclude:
 
 defaults:
     - scope:
+        path: "releases"
+        type: "pages"
+      values:
+        layout: "sidebars"
+        sidebar: "releases"
+    - scope:
         path: "docs/0.4"
         type: "pages"
       values:
