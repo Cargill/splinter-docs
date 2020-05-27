@@ -16,6 +16,7 @@ plugins:
 - jekyll-default-layout
 - jekyll-optional-front-matter
 - jekyll-readme-index
+- jekyll-redirect-from
 - jekyll-seo-tag
 - jekyll-titles-from-headings
 
@@ -41,6 +42,7 @@ exclude:
   - docker*
   - LICENSE
   - MAINTAINERS.md
+  - /docs/README.md
 
 defaults:
     - scope:
