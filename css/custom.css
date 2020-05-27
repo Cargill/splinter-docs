@@ -73,6 +73,52 @@ img {
 
 /* Left Sidebar */
 
+@media screen and (max-width: 768px) {
+    #header {
+        position: inherit;
+        background-color: #f7f7f7;
+    }
+
+    #left-sidebar-col {
+        height: auto;
+        position: inherit;
+        z-index: 1000;
+    }
+
+    #left-sidebar {
+        overflow-y: visible;
+        padding: 8px 16px 16px 16px;
+    }
+
+    #left-sidebar > * {
+        margin: 0 !important;
+    }
+
+    #left-sidebar #left-sidebar-links-toggle {
+        right: 0;
+    }
+
+    #left-sidebar #left-sidebar-links-toggle:hover {
+        color: var(--splinter-fuchsia);
+        transition: all 0.1s linear;
+    }
+
+    #left-sidebar .dropdown {
+        display: inline-block;
+        position: absolute;
+        right: 16px; /* Account for padding of bar */
+    }
+
+    #left-sidebar .dropdown-menu {
+        /* This ensures the menu doesn't appear off-screen */
+        transform: translate(-100px);
+    }
+
+    #left-sidebar #left-sidebar-links {
+        margin-top: 10px !important;
+    }
+}
+
 #left-sidebar-col {
     border-right: 1px solid #eaecef;
 }
@@ -103,6 +149,18 @@ img {
     background-color: inherit;
     color: var(--splinter-fuchsia);
     transition: all 0.1s linear;
+}
+
+#left-sidebar-links-toggle {
+    border: none;
+    background: none;
+}
+
+/* Overrides the collapsed sidebar links when the screen is not small */
+@media screen and (min-width: 768px) {
+    #left-sidebar-links {
+        display: block;
+    }
 }
 
 .left-sidebar-group .left-sidebar-header {
