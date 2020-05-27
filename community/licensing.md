@@ -1,7 +1,3 @@
----
-layout: community
----
-
 # Licensing
 
 ## Software

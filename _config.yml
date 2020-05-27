@@ -34,3 +34,20 @@ exclude:
   - docker*
   - LICENSE
   - MAINTAINERS.md
+
+defaults:
+    - scope:
+        path: "docs/0.4"
+        type: "pages"
+      values:
+        layout: "0.4"
+    - scope:
+        path: "community"
+        type: "pages"
+      values:
+        layout: "community"
+    - scope:
+        path: ""
+        type: "pages"
+      values:
+        layout: "default"

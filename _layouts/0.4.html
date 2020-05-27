@@ -21,17 +21,21 @@
     </head>
     <body>
 {% include header.html %}
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-3 col-xl-2"></div>
-        <main class="col-md-9 col-xl-8 main" role="main">
-            <div class="content">
-                {{ content }}
+        <div class="container-fluid">
+            <div class="row">
+                <div id="left-sidebar-col" class="d-none d-md-block col-md-3 col-xl-2 position-fixed sidebar-col">
+{% include left_sidebar.html %}
+                </div>
+                <main id="main" class="col-md-9 col-xl-8 offset-md-3 offset-xl-2" role="main">
+                    <div class="content" id="main-content">
+                        {{ content }}
+                    </div>
+                </main>
+                <div id="right-sidebar-col" class="d-none d-xl-block col-xl-2 offset-xl-10 position-fixed sidebar-col">
+                    <div id="right-sidebar" class="sidebar"></div">
+                </div>
             </div>
-        </main>
-        <div class="col-xl-2"></div>
-    </div>
-</div>
+        </div>
 {% include footer.html %}
     </body>
 {% include scripts.html %}

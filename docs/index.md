@@ -1,7 +1,3 @@
----
-layout: landing_page
----
-
 # Splinter Documentation
 
 Splinter is a privacy-focused platform for distributed applications that
