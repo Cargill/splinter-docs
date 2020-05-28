@@ -25,6 +25,14 @@ a, a:hover {
     color: var(--splinter-fuchsia);
 }
 
+a[target="_blank"]:after {
+    color: #aaa;
+    content: " \f08e";
+    font-family: 'FontAwesome';
+    font-size: .9em;
+    vertical-align: top;
+}
+
 code {
     color: var(--text-color);
     padding: 4px 8px;
