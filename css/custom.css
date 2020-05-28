@@ -265,3 +265,18 @@ pre.highlight {
 pre.highlight code {
     background-color: transparent;
     color: white;
+}
+
+/* Landing Page Styles */
+
+#landing-page-main {
+    padding: 50px;
+}
+
+#logo-container {
+    text-align: center;
+}
+
+#logo-container img {
+    height: 300px;
+}

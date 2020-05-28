@@ -36,9 +36,6 @@ titles_from_headings:
   strip_title: false
   collections: false
 
-include:
-  - ../README.md
-
 exclude:
   - CODEOWNERS
   - ci
