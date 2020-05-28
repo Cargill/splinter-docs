@@ -32,6 +32,7 @@ RUN gem install \
     jekyll-default-layout \
     jekyll-optional-front-matter \
     jekyll-readme-index \
+    jekyll-redirect-from \
     jekyll-seo-tag \
     jekyll-titles-from-headings
 
