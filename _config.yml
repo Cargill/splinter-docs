@@ -58,6 +58,12 @@ defaults:
         layout: "sidebars"
         sidebar: "0.4"
     - scope:
+        path: "examples"
+        type: "pages"
+      values:
+        layout: "sidebars"
+        sidebar: "examples"
+    - scope:
         path: "community"
         type: "pages"
       values:
