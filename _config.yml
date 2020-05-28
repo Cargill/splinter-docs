@@ -16,6 +16,7 @@ plugins:
 - jekyll-default-layout
 - jekyll-optional-front-matter
 - jekyll-readme-index
+- jekyll-redirect-from
 - jekyll-seo-tag
 - jekyll-titles-from-headings
 
@@ -41,18 +42,21 @@ exclude:
   - docker*
   - LICENSE
   - MAINTAINERS.md
+  - /docs/README.md
 
 defaults:
     - scope:
         path: "docs/0.4"
         type: "pages"
       values:
-        layout: "0.4"
+        layout: "sidebars"
+        sidebar: "0.4"
     - scope:
         path: "community"
         type: "pages"
       values:
-        layout: "community"
+        layout: "sidebars"
+        sidebar: "community"
     - scope:
         path: ""
         type: "pages"

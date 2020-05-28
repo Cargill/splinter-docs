@@ -12,13 +12,4 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM jekyll/jekyll:3.8
-
-RUN gem install \
-    bundler \
-    jekyll-default-layout \
-    jekyll-optional-front-matter \
-    jekyll-readme-index \
-    jekyll-redirect-from \
-    jekyll-seo-tag \
-    jekyll-titles-from-headings
+latest_version: 0.4
