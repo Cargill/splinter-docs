@@ -21,7 +21,7 @@ RUN npm install -g redoc-cli
 
 COPY . /project
 
-RUN redoc-cli bundle /project/api/openapi.yml -o index.html
+RUN redoc-cli bundle /project/docs/0.4/references/api/openapi.yml -o index_0.4.html
 
 # -------------=== jekyll build ===-------------
 
@@ -32,7 +32,9 @@ RUN gem install \
     jekyll-default-layout \
     jekyll-optional-front-matter \
     jekyll-readme-index \
+    jekyll-redirect-from \
     jekyll-seo-tag \
+    jekyll-target-blank \
     jekyll-titles-from-headings
 
 COPY . /srv/jekyll
@@ -57,7 +59,7 @@ RUN git rev-parse HEAD > /commit-hash
 FROM httpd:2.4
 
 COPY --from=jekyll /tmp/ /usr/local/apache2/htdocs/
-COPY --from=redoc /index.html /usr/local/apache2/htdocs/api/index.html
+COPY --from=redoc /index_0.4.html /usr/local/apache2/htdocs/docs/0.4/api/index.html
 COPY --from=git /commit-hash /commit-hash
 
 RUN echo "\

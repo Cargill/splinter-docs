@@ -12,12 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+url: https://www.splinter.dev
+
 plugins:
 - jekyll-default-layout
 - jekyll-optional-front-matter
 - jekyll-readme-index
 - jekyll-redirect-from
 - jekyll-seo-tag
+- jekyll-target-blank
 - jekyll-titles-from-headings
 
 optional_front_matter:
@@ -33,9 +36,6 @@ titles_from_headings:
   strip_title: false
   collections: false
 
-include:
-  - ../README.md
-
 exclude:
   - CODEOWNERS
   - ci
@@ -46,11 +46,23 @@ exclude:
 
 defaults:
     - scope:
+        path: "releases"
+        type: "pages"
+      values:
+        layout: "sidebars"
+        sidebar: "releases"
+    - scope:
         path: "docs/0.4"
         type: "pages"
       values:
         layout: "sidebars"
         sidebar: "0.4"
+    - scope:
+        path: "examples"
+        type: "pages"
+      values:
+        layout: "sidebars"
+        sidebar: "examples"
     - scope:
         path: "community"
         type: "pages"

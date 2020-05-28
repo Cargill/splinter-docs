@@ -1,7 +1,3 @@
----
-redirect_from: /docs
----
-
 # Overview
 
 Splinter is a privacy-focused platform for distributed applications that
