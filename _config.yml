@@ -18,6 +18,7 @@ plugins:
 - jekyll-readme-index
 - jekyll-redirect-from
 - jekyll-seo-tag
+- jekyll-target-blank
 - jekyll-titles-from-headings
 
 optional_front_matter:

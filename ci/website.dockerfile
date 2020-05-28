@@ -34,6 +34,7 @@ RUN gem install \
     jekyll-readme-index \
     jekyll-redirect-from \
     jekyll-seo-tag \
+    jekyll-target-blank \
     jekyll-titles-from-headings
 
 COPY . /srv/jekyll
