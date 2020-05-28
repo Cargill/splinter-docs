@@ -15,6 +15,8 @@ passwords are hashed by the Gameroom client so that they remain secret.
 
 ### I-1.1. Acme UI sends authorization request to Gameroom REST API
 
+![](./images/auth_login_acme1.svg "Gameroom daemon receives auth request")
+
 When Alice clicks Log in, the Acme Gameroom UI hashes the password, then sends
 an authorization request to the Acme Gameroom daemon, gameroomd. The Gameroom
 daemon then makes several requests to the Biome REST API to verify the user.
@@ -34,6 +36,8 @@ is used to encrypt signing keys (as described in section I-2.3, step 5).
 
 ### I-1.2. Gameroom daemon uses Biome REST API to verify password
 
+![](./images/auth_login_acme2.svg "Gameroom daemon forwards auth request")
+
 Once the Gameroom daemon receives the authentication request, the actual
 authentication is handled by the Biome REST API. This authentication request
 is sent from the Acme Gameroom daemon to the Biome REST API.
@@ -49,6 +53,10 @@ is sent from the Acme Gameroom daemon to the Biome REST API.
 When the Biome REST API receives the authorization request for Alice, it fetches
 the entry from the Acme Splinter daemon's local database associated with the
 username and verifies the hashed password sent in the request.
+
+
+![](./images/auth_login_acme3.svg "Splinter daemon verifies Alice's credentials")
+
 
 The `user_credentials` table in the Splinter database has the following schema:
 
@@ -66,6 +74,7 @@ The Splinter database has the following entry in the `user_credentials` table:
 | `user_id` | `username` | `password` |
 | :--- | :--- | :--- |
 | `06ff2de0...9243ae2cf3` | `alice@acme.com` | `56ec82cb...480cad32` |
+
 
 If the hashed password from the authentication request passes verification,
 the Biome REST API will respond with a success response. This response includes
@@ -106,6 +115,8 @@ following success response:
 
 ### I-1.3. Gameroom daemon uses Biome REST API to request Alice's key pairs
 
+![](./images/auth_login_acme4.svg "Gameroom daemon requests Alice's keys")
+
 Once the Gameroom daemon has verified Alice's password, it must then verify that
 Alice has a public and private key pair. Alice's public and private key pair was
 added to the Acme Splinter database during registration (see The Prequel,
@@ -120,8 +131,9 @@ JSON Web Token in an `Authorization` header, which will enable the Splinter
 daemon to authorize access to the user's key information, as well as extract the
 user ID from the token to fetch the keys from the Splinter daemon's database.
 
-Using the unique `user_id` from the access token, the keys associated with Alice
-are fetched from the Splinter daemon's database.
+
+![](./images/auth_login_acme5.svg "Splinter daemon retrieves Alice's keys")
+
 
 The `keys` table in the Splinter database has the following schema:
 
@@ -135,11 +147,15 @@ The `keys` table in the Splinter database has the following schema:
     );
 ```
 
+Using the unique `user_id` from the access token, the keys associated with Alice
+are fetched from the Splinter daemon's database.
+
 The Splinter database has the following entry in the `keys` table:
 
 | `display_name` | `user_id` | `public_key` | `encrypted_private_key` |
 | :--- | :--- | :--- | :--- |
 |`alice@acme.com`|`06ff2de0...9243ae2cf3`|`0384781f...5a7e4998`|`{\"iv\":...cgXrm\"}`|
+
 
 If the associated entry is found in the Splinter database `keys` table, a success
 response with the list of key information is sent back to the Gameroom daemon.

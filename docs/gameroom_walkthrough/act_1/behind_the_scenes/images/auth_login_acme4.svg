@@ -11,10 +11,10 @@
   <metadata> Produced by OmniGraffle 7.15.2 
     <dc:date>2020-05-28 14:47:03 +0000</dc:date>
   </metadata>
-  <g id="Gameroom_doc_(0_4)_-_login_auth_-_ACME_1" fill-opacity="1" stroke-dasharray="none" stroke-opacity="1" stroke="none" fill="none">
-    <title>Gameroom doc (0.4) - login auth - ACME 1</title>
+  <g id="Gameroom_doc_(0_4)_-_login_auth_-_ACME_3" fill-opacity="1" stroke-dasharray="none" stroke-opacity="1" stroke="none" fill="none">
+    <title>Gameroom doc (0.4) - login auth - ACME 3</title>
     <rect fill="white" x="-136" y="977" width="627" height="388"/>
-    <g id="Gameroom_doc_(0_4)_-_login_auth_-_ACME_1: Layer 1">
+    <g id="Gameroom_doc_(0_4)_-_login_auth_-_ACME_3: Layer 1">
       <title>Layer 1</title>
       <g id="Group_14">
         <g id="Graphic_19">
@@ -129,15 +129,9 @@
         </g>
       </g>
       <g id="Graphic_28">
-        <text transform="translate(246.219 1166)" fill="black">
-          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="22.907003" y="15">Forward Auth </tspan>
-          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="9.851003" y="33.448">request to Biome </tspan>
-          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="36.395003" y="51.895996">REST API</tspan>
-        </text>
-      </g>
-      <g id="Graphic_29">
-        <text transform="translate(146.97637 983.9148)" fill="black">
-          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="2.224" y="15"> </tspan>
+        <text transform="translate(262.625 1177.4508)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="4.387003" y="15">Request for Alice’s </tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="54.755" y="33.448">keys</tspan>
         </text>
       </g>
     </g>
