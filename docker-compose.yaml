@@ -43,7 +43,7 @@ services:
       - .:/project
     entrypoint: |
       bash -c "
-        cd /project/api
+        cd /project/docs/0.4/references/api
         redoc-cli serve openapi.yml -w -p 4001
       "
 

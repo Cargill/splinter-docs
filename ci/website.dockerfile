@@ -21,7 +21,7 @@ RUN npm install -g redoc-cli
 
 COPY . /project
 
-RUN redoc-cli bundle /project/api/openapi.yml -o index.html
+RUN redoc-cli bundle /project/docs/0.4/references/api/openapi.yml -o index.html
 
 # -------------=== jekyll build ===-------------
 
