@@ -14,6 +14,8 @@
 
 splinter_repo := "../splinter"
 
+build: docker-build
+
 copy-docs:
     #!/usr/bin/env sh
     set -e
@@ -37,5 +39,27 @@ copy-docs:
         echo "\033[1m$cmd\033[0m"
         $cmd
     else
-        echo "{{splinter_repo}}/VERSION was not found, cannot copy man pages"
+        echo "error: {{splinter_repo}}/VERSION was not found, aborting." 1>&2
+        exit 1
     fi
+
+docker-build:
+    docker build \
+        -t splintercommunity/splinter.dev \
+        -f ci/website.dockerfile \
+        .
+
+docker-lint:
+    docker-compose \
+        -f docker/compose/run-lint.yaml \
+        up \
+        --abort-on-container-exit \
+        --build \
+        lint-splinter-docs
+
+docker-run:
+    docker-compose up --build; docker-compose down
+
+lint: docker-lint
+
+run: docker-run
