@@ -56,4 +56,9 @@ docker-lint:
         --build \
         lint-splinter-docs
 
+docker-run:
+    docker-compose up --build; docker-compose down
+
 lint: docker-lint
+
+run: docker-run
