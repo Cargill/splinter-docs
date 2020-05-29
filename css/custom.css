@@ -287,3 +287,11 @@ pre.highlight code {
     width: 33%;
     margin: auto;
 }
+
+/* Without this class, the footer would not sit at the bottom of pages that
+   were very short. Minuses the required height of the footer and padding from
+   the full view height.
+*/
+.content-wrapper {
+    min-height: calc(100vh - 175px);
+}
