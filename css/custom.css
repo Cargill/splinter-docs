@@ -64,6 +64,11 @@ img {
     border-bottom: 2px solid var(--splinter-fuchsia);
 }
 
+/* Footer */
+#footer {
+  text-align: center;
+}
+
 /* Both Sidebars */
 
 .sidebar-col {
