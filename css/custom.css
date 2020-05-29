@@ -270,13 +270,15 @@ pre.highlight code {
 /* Landing Page Styles */
 
 #landing-page-main {
-    padding: 50px;
-}
-
-#logo-container {
     text-align: center;
 }
 
-#logo-container img {
-    height: 300px;
+#landing-page-main img {
+    width: 80%;
+    margin: 50px 0;
+}
+
+#landing-page-main p {
+    width: 33%;
+    margin: auto;
 }

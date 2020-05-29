@@ -43,6 +43,7 @@ exclude:
   - LICENSE
   - MAINTAINERS.md
   - /docs/README.md
+  - examples
 
 defaults:
     - scope:
@@ -57,12 +58,6 @@ defaults:
       values:
         layout: "sidebars"
         sidebar: "0.4"
-    - scope:
-        path: "examples"
-        type: "pages"
-      values:
-        layout: "sidebars"
-        sidebar: "examples"
     - scope:
         path: "community"
         type: "pages"
