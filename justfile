@@ -39,7 +39,8 @@ copy-docs:
         echo "\033[1m$cmd\033[0m"
         $cmd
     else
-        echo "{{splinter_repo}}/VERSION was not found, cannot copy man pages"
+        echo "error: {{splinter_repo}}/VERSION was not found, aborting." 1>&2
+        exit 1
     fi
 
 docker-build:
