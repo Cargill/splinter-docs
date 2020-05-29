@@ -31,8 +31,8 @@ services:
         jekyll serve
       "
 
-  splinter-docs-redoc:
-    container_name: splinter-docs-redoc
+  splinter-docs-redoc-0-4:
+    container_name: splinter-docs-redoc-0-4
     image: splinter-docs-redoc
     build:
       dockerfile: docker/splinter-docs-redoc
@@ -45,6 +45,22 @@ services:
       bash -c "
         cd /project/docs/0.4/references/api
         redoc-cli serve openapi.yml -w -p 4001
+      "
+
+  splinter-docs-redoc-0-5:
+    container_name: splinter-docs-redoc-0-5
+    image: splinter-docs-redoc
+    build:
+      dockerfile: docker/splinter-docs-redoc
+      context: .
+    ports:
+      - 4002:4002
+    volumes:
+      - .:/project
+    entrypoint: |
+      bash -c "
+        cd /project/docs/0.5/references/api
+        redoc-cli serve openapi.yml -w -p 4002
       "
 
   splinter-docs-apache:
