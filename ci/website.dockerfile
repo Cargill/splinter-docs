@@ -22,6 +22,7 @@ RUN npm install -g redoc-cli
 COPY . /project
 
 RUN redoc-cli bundle /project/docs/0.4/references/api/openapi.yml -o index_0.4.html
+RUN redoc-cli bundle /project/docs/0.5/references/api/openapi.yml -o index_0.5.html
 
 # -------------=== jekyll build ===-------------
 
@@ -60,6 +61,7 @@ FROM httpd:2.4
 
 COPY --from=jekyll /tmp/ /usr/local/apache2/htdocs/
 COPY --from=redoc /index_0.4.html /usr/local/apache2/htdocs/docs/0.4/api/index.html
+COPY --from=redoc /index_0.5.html /usr/local/apache2/htdocs/docs/0.5/api/index.html
 COPY --from=git /commit-hash /commit-hash
 
 RUN echo "\

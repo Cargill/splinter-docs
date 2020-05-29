@@ -59,6 +59,12 @@ defaults:
         layout: "sidebars"
         sidebar: "0.4"
     - scope:
+        path: "docs/0.5"
+        type: "pages"
+      values:
+        layout: "sidebars"
+        sidebar: "0.5"
+    - scope:
         path: "community"
         type: "pages"
       values:
