@@ -1,12 +1,14 @@
-Here are in-depth guides for upgrading from one version of Splinter
-to another version. Upgrade notes are only listed here if there are
-changes which are important (such as breaking changes). Many versions
-do not require extra work to upgrade. The release notes in each
-section give an overview of all releases.
+# Upgrading Guides
 
-Splinter
+The following guides explain how to upgrade from one Splinter release to the
+next release.
 
-  * [Release Notes](https://github.com/Cargill/splinter/blob/master/RELEASE_NOTES.md)
+**Note:** Upgrade guides are available for the releases that introduce breaking
+changes or significant differences. Some Splinter releases do not require
+upgrade steps.
+
+## Splinter v0.3
+
   * [Upgrading to Splinter v0.3.18 from Splinter v0.3.17](splinter-v0.3.18-from-v0.3.17.md)
   * [Upgrading to Splinter v0.3.17 from Splinter v0.3.16](splinter-v0.3.17-from-v0.3.16.md)
   * [Upgrading to Splinter v0.3.16 from Splinter v0.3.15](splinter-v0.3.16-from-v0.3.15.md)
