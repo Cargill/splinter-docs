@@ -1,6 +1,11 @@
 
 # Gameroom Technical Walkthrough
 
+***NOTE:*** This document is a work-in-progress! We are updating the
+walkthrough with details for Splinter 0.4 and converting it to markdown. For
+a complete version of the document, see the [Gameroom Technical Walkthrough
+PDF](https://files.splinter.dev/docs/Gameroom_Walkthrough-Splinter_v0.3.4.pdf).
+
 ## Act I: Alice and Bob Create a Gameroom
 
 ### Scene 1: Alice logs into Acme's Gameroom application
