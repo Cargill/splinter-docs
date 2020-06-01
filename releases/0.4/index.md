@@ -1,4 +1,4 @@
-# Splinter v0.4 Release Overview
+# Splinter v0.4 Release
 
 Splinter v0.4 is a major new release. Here's a summary of the new and noteworthy
 features in this release. For detailed changes related to the v0.4 release
