@@ -15,5 +15,5 @@
 
 set -e
 
-docker build -t splintercommunity/splinter.dev -f ci/website.dockerfile .
-docker push splintercommunity/splinter.dev
+docker build -t splintercommunity/splinter-docs -f ci/website.dockerfile .
+docker push splintercommunity/splinter-docs

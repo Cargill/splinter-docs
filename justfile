@@ -45,7 +45,7 @@ copy-docs:
 
 docker-build:
     docker build \
-        -t splintercommunity/splinter.dev \
+        -t splintercommunity/splinter-docs \
         -f ci/website.dockerfile \
         .
 
