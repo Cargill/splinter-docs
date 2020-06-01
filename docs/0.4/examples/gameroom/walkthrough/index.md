@@ -1,8 +1,8 @@
 
 # Gameroom Technical Walkthrough
 
-***NOTE:*** This document is a work-in-progress! We are updating the
-walkthrough with details for Splinter 0.4 and converting it to markdown. For
+***NOTE:*** This document is a work in progress! We are updating the
+walkthrough with details for Splinter 0.4 and converting it to Markdown. For
 a complete version of the document, see the [Gameroom Technical Walkthrough
 PDF](https://files.splinter.dev/docs/Gameroom_Walkthrough-Splinter_v0.3.4.pdf).
 
@@ -20,7 +20,7 @@ Success. The browser now displays the ACME GAMEROOM HOME SCREEN.
 
 ![](./images/acme_gameroom_home_screen.svg "Gameroom app Acme home screen")
 
-## Behind the Scenes: A Look at Act I, Alice and BobCreate a Gameroom
+## Behind the Scenes: A Look at Act I, Alice and Bob Create a Gameroom
 
 ### I-1. Behind scene 1: Alice logs into Acme's Gameroom UI
 
