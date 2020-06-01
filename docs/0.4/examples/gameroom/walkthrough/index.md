@@ -1,4 +1,9 @@
-## Scene 1: Alice logs into Acme's Gameroom application
+
+# Gameroom Technical Walkthrough
+
+## Act I: Alice and Bob Create a Gameroom
+
+### Scene 1: Alice logs into Acme's Gameroom application
 
 Alice looks at the GAMEROOM APP LOGIN SCREEN in her browser.
 
@@ -10,8 +15,9 @@ Success. The browser now displays the ACME GAMEROOM HOME SCREEN.
 
 ![](./images/acme_gameroom_home_screen.svg "Gameroom app Acme home screen")
 
+## Behind the Scenes: A Look at Act I, Alice and BobCreate a Gameroom
 
-## I-1. Behind scene 1: Alice logs into Acme's Gameroom UI
+### I-1. Behind scene 1: Alice logs into Acme's Gameroom UI
 
 Gameroom uses Biome for user management, including authentication. For more
 information on Biome, check out the Biome overview.
@@ -26,7 +32,7 @@ with the user. Biome is a part of the Acme Splinter daemon. Each Splinter daemon
 stores the user credentials and keys in a local PostgreSQL database; user
 passwords are hashed by the Gameroom client so that they remain secret.
 
-### I-1.1. Acme UI sends authorization request to Gameroom REST API
+#### I-1.1. Acme UI sends authorization request to Gameroom REST API
 
 ![](./images/auth_login_acme1.svg "Gameroom daemon receives auth request")
 
@@ -47,7 +53,7 @@ The following request is sent to Acme's Gameroom daemon:
 The UI does not reveal the user's password to the REST API because the password
 is used to encrypt signing keys (as described in section I-2.3, step 5).
 
-### I-1.2. Gameroom daemon uses Biome REST API to verify password
+#### I-1.2. Gameroom daemon uses Biome REST API to verify password
 
 ![](./images/auth_login_acme2.svg "Gameroom daemon forwards auth request")
 
@@ -126,7 +132,7 @@ following success response:
     }
 ```
 
-### I-1.3. Gameroom daemon uses Biome REST API to request Alice's key pairs
+#### I-1.3. Gameroom daemon uses Biome REST API to request Alice's key pairs
 
 ![](./images/auth_login_acme4.svg "Gameroom daemon requests Alice's keys")
 
@@ -186,7 +192,7 @@ response with the list of key information is sent back to the Gameroom daemon.
     }
 ```
 
-### I-1.4. Gameroom REST API returns login success response
+#### I-1.4. Gameroom REST API returns login success response
 
 If the Gameroom REST API gets a successful response from both requests sent to
 the Biome REST API to verify the user, then the authentication was successful.
@@ -205,7 +211,7 @@ public key and encrypted private key.
 Next, the UI must gather the information for the Acme Gameroom home screen that
 Alice will see after logging in.
 
-### I-1.5. Acme UI requests a list of gamerooms
+#### I-1.5. Acme UI requests a list of gamerooms
 
 After a user has been authenticated, the UI gathers user-specific information for
 the home screen. First, it requests the list of existing gamerooms for that user.
@@ -236,7 +242,7 @@ Gameroom's PostgreSQL database.
     }
 ```
 
-### I-1.6. Acme UI requests a list of invitations
+#### I-1.6. Acme UI requests a list of invitations
 Next, the Acme Gameroom UI requests the list of gameroom invitations. In this
 scenario, Alice has no invitations, so the list is empty. Later, the walkthrough
 will show what happens when a user has unaccepted invitations.
