@@ -15,11 +15,15 @@
 */
 
 :root {
-    --text-color: #212529;
+    --text-color: #2c3e50;
     --splinter-fuchsia: #ff2e74;
 }
 
 /* General Styles */
+
+body {
+    color: var(--text-color);
+}
 
 a, a:hover {
     color: var(--splinter-fuchsia);
@@ -34,7 +38,7 @@ a[target="_blank"]:after {
 }
 
 code {
-    color: var(--text-color);
+    color: #212529;
     padding: 4px 8px;
     margin: 0;
     font-size: .85rem;
