@@ -15,6 +15,7 @@
 */
 
 :root {
+    --light-gray: #eaecef;
     --text-color: #2c3e50;
     --splinter-fuchsia: #ff2e74;
 }
@@ -142,7 +143,7 @@ img {
 }
 
 #left-sidebar-col {
-    border-right: 1px solid #eaecef;
+    border-right: 1px solid var(--light-gray);
 }
 
 #left-sidebar > * {
@@ -211,7 +212,7 @@ img {
 /* Right Sidebar */
 
 #right-sidebar-col {
-    border-left: 1px solid #eaecef;
+    border-left: 1px solid var(--light-gray);
 }
 
 #right-sidebar a {
@@ -248,24 +249,37 @@ img {
     padding: 20px 30px;
 }
 
-/* Snap h2 and h3 links below the header. Without this, clicking a link on
-   the right sidebar would cause the contents to start at the top of the window,
-   behind the header.
-*/
+h1 {
+    font-size: 2.2rem;
+    margin-bottom: 30px;
+}
+
 h2 {
-  /*
-    62px is the navbar height. Adds 20px to have the same space at the top as
-    content.
-  */
-  scroll-margin-top: 82px;
+    border-bottom: 1px solid var(--light-gray);
+    font-size: 1.65rem;
+    margin-bottom: 20px;
+    padding-bottom: 5px;
+    padding-top: 10px;
+    /*
+        Snap h2 links below the header. Without this, clicking a link on the
+        right sidebar would cause the contents to start at the top of the
+        window, behind the header. 62px is the navbar height. Adds 10px (in
+        addition to the 10px top padding) to have the same space at the top as
+        content.
+    */
+    scroll-margin-top: 72px;
 }
 
 h3 {
-  /*
-    62px is the navbar height. Adds 20px to have the same space at the top as
-    content.
-  */
-  scroll-margin-top: 82px;
+    font-size: 1.35rem;
+    margin-bottom: 20px;
+    /*
+        Snap h3 links below the header. Without this, clicking a link on the
+        right sidebar would cause the contents to start at the top of the
+        window, behind the header. 62px is the navbar height. Adds 20px to have
+        the same space at the top as content.
+    */
+    scroll-margin-top: 82px;
 }
 
 /* Code blocks */
