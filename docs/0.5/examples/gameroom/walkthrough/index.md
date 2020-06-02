@@ -25,7 +25,8 @@ Success. The browser now displays the ACME GAMEROOM HOME SCREEN.
 ### I-1. Behind scene 1: Alice logs into Acme's Gameroom UI
 
 Gameroom uses Biome for user management, including authentication. For more
-information on Biome, check out the Biome overview.
+information, check out the [Biome
+overview](../../../concepts/biome_user_management.md).
 
 When a user logs in, the user interface (UI) component of the Gameroom client
 application works with the Gameroom REST API to check the user's email address

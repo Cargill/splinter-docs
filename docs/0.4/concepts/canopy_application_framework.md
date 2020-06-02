@@ -1,4 +1,4 @@
-# About Canopy
+# Canopy Application Framework
 
 Canopy is a JavaScript framework for building the client-side web portion of a
 full-stack [Splinter](https://github.com/Cargill/splinter) application. A

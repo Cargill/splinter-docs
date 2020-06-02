@@ -1,4 +1,4 @@
-# About Biome
+# Biome User Management
 
 Biome is a module in libsplinter containing several submodules that provide
 support for user management, user credential management, and private key
