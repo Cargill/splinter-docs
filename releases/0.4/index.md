@@ -1,7 +1,7 @@
 # Splinter v0.4 Release
 
 Splinter v0.4 is a major new release. Here's a summary of the new and noteworthy
-features in this release. For detailed changes related to the v0.4 release
+features in this release. For detailed changes related to the v0.4 release,
 see the [Splinter release
 notes](https://github.com/Cargill/splinter/blob/master/RELEASE_NOTES.md).
 
@@ -197,14 +197,21 @@ This release includes the following command-line tools:
 * `scabbard`: Command-line interface for the scabbard service, which manages and
   runs smart contracts.
 
+For more information, see the [Splinter CLI Command
+Reference](/docs/0.4/references/cli/cli_command_reference.html).
+Splinter also provides man pages for these CLI tools; view them by running
+`man {command-subcommand}` at a command-line prompt (for example,
+`man splinter-circuit-vote`).
+
 #### Documentation
 
 This release includes documentation for Splinter concepts, features, and tasks
 (under development), API reference guides, CLI man pages, and a comprehensive
 walkthrough for the Gameroom example application.
 
-* [Splinter documentation](/docs/0.4/) [splinterd REST API
-  Reference](/docs/0.4/api/)
+* [Splinter documentation](/docs/0.4/)
+
+* [splinterd REST API Reference](/docs/0.4/api/)
 
 * [Rust crate:splinter API
   documentation](https://docs.rs/splinter/latest/splinter/)
@@ -212,15 +219,12 @@ walkthrough for the Gameroom example application.
 * [Rust crate:scabbard API
   documentation](https://docs.rs.splinter/latest/scabbard)
 
-* Man pages for the `splinter`, `splinterd`, and `scabbard` CLI tools. To view
- these man pages, run `man {command}` at a command-line prompt (for example, `man
- splinter-circuit-vote`) or see the [Splinter CLI Command
- Reference](/docs/0.4/references/cli/cli_command_reference.html).
+* [Splinter CLI Command Reference](/docs/0.4/references/cli/cli_command_reference.html)
 
 * [Gameroom Walkthrough](/docs/0.4/examples/gameroom/):
   Example Splinter application
 
-# Splinter Software
+## Splinter Software
 
 Splinter is open-source software that is available on GitHub in
 [Cargill/splinter](https://github.com/Cargill/splinter). Prebuilt Docker images
