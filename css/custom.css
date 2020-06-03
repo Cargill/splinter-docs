@@ -88,7 +88,7 @@ img {
 
 /* Left Sidebar */
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 767px) {
     #header {
         position: inherit;
         background-color: #f7f7f7;
@@ -172,7 +172,7 @@ img {
 }
 
 /* Overrides the collapsed sidebar links when the screen is not small */
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 767px) {
     #left-sidebar-links {
         display: block;
     }
@@ -292,7 +292,7 @@ h3 {
 }
 
 /* Vertically arranges info and button when screen is small */
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 767px) {
     #release-info {
         display: block;
         margin-bottom: 10px;
@@ -329,7 +329,7 @@ h3 {
 }
 
 /* Overrides for small screens */
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 767px) {
     .landing-page-section {
         padding: 50px 20px; /* Decrease padding on sides */
     }
