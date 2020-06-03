@@ -143,7 +143,7 @@ this pattern has been tested with the Splinter examples.
 
 ![](../images/splinter-deployment-kubernetes.png "Splinter Kubernetes deployment")
 
-# Amazon EKS Deployment
+## Amazon EKS Deployment
 
 This example of Amazon EKS deployment uses a classic load balancer (CLB) as the
 ingress and Amazon Elastic Block Storage (EBS) as the backing store for
