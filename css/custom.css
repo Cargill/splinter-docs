@@ -275,25 +275,30 @@ h3 {
 
 /* Landing Page Styles */
 
-#landing-page-main {
+.landing-page-section {
+    padding: 50px;
     text-align: center;
 }
 
-#landing-page-main img {
-    width: 80%;
-    margin: 50px 0;
+#landing-page-top-section img {
+    max-width: 700px;
+    margin-bottom: 50px;
 }
 
-#landing-page-main p {
-    width: 33%;
+#landing-page-top-section p {
+    font-size: 1.5rem;
+    max-width: 500px;
     margin: auto;
 }
 
-/* Overrides the content width when the screen is small */
+/* Overrides for small screens */
 @media screen and (max-width: 768px) {
-    #landing-page-main p {
-        width: 75%;
-        margin: auto;
+    .landing-page-section {
+        padding: 50px 20px; /* Decrease padding on sides */
+    }
+
+    #landing-page-top-section p {
+        font-size: inherit; /* Decrease font size */
     }
 }
 
