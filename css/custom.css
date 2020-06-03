@@ -293,6 +293,14 @@ pre.highlight code {
     margin: auto;
 }
 
+/* Overrides the content width when the screen is small */
+@media screen and (max-width: 768px) {
+    #landing-page-main p {
+        width: 75%;
+        margin: auto;
+    }
+}
+
 /* 404 Page Styles */
 
 #main-404 {
