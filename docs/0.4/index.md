@@ -18,19 +18,19 @@ application interfaces, and transaction processing.
 
 This topic describes Splinter's key benefits:
 
-* [True privacy with circuits](#bookmark-private-circuits)
-* [Distributed ledger platform as a service](#bookmark-dl-service)
-* [Flexibility with Splinter's modular architecture](#bookmark-arch)
-* [Smart contracts that can share state](#bookmark-sm-share-state)
-* [Quick startup for application development](#bookmark-dev-startup)
-* [Event subscription for state changes](#bookmark-event-sub)
-* [Complex patterns for data flow](#bookmark-complex-data-flow)
-* [Auditable open source](#bookmark-open-source)
+* [True privacy with circuits](#true-privacy-with-circuits)
+* [Distributed ledger platform as a service](#distributed-ledger-platform-as-a-service)
+* [Flexibility with Splinter's modular architecture](#flexibility-with-splinters-modular-architecture)
+* [Smart contracts that can share state](#smart-contracts-that-can-share-state)
+* [Quick startup for application development](#quick-startup-for-application-development)
+* [Event subscription for state changes](#event-subscription-for-state-changes)
+* [Complex patterns for data flow](#complex-patterns-for-data-flow)
+* [Auditable open source](#auditable-open-source)
 
 You can also learn about [when Splinter might not be the right
-choice](#bookmark-why-not-splinter).
+choice](#why-not-splinter).
 
-## <a name="bookmark-private-circuits"></a> True Privacy with Circuits
+## True Privacy with Circuits
 
 Splinter was designed for privacy from the beginning, with a simple architecture
 that reduces operational complexity.
@@ -65,7 +65,7 @@ participants to be hidden from each other.
 * Splinter circuits **share state privately** &mdash; with circuit members only.
   No central database is required for storing data changes or state information.
 
-## <a name="bookmark-dl-service"></a> Distributed Ledger Platform as a Service
+## Distributed Ledger Platform as a Service
 
 Splinter uses services to provide distributed ledger functionality, including
 transaction processing, a consensus mechanism or other agreement protocol, and
@@ -137,7 +137,7 @@ nodes. Because Splinter doesn't embed a specific distributed ledger in its core
 architecture, adding a different style of distributed ledger is possible by
 replacing the Scabbard service with a different service or set of services.
 
-## <a name="bookmark-arch"></a> Flexibility with Splinter's Modular Architecture
+## Flexibility with Splinter's Modular Architecture
 
 Splinter supports both single and multiple processes for distributed ledger
 components. Other blockchain platforms have separate processes for the
@@ -162,7 +162,7 @@ communication mechanisms.
   layers, such as TCP or TLS, it can easily be extended to additional transport
   layers by implementing a few simple Rust traits.
 
-## <a name="bookmark-sm-share-state"></a> Smart Contracts That Can Share State
+## Smart Contracts That Can Share State
 
 [Sawtooth Sabre](https://github.com/hyperledger/sawtooth-sabre), which is
 included in the Scabbard service, implements **in-ledger smart contracts** that
@@ -188,7 +188,7 @@ Sawtooth transaction processor (Sawtooth's version of a smart contract) in Rust,
 then convert it to a Sabre smart contract that can be used for a Splinter
 circuit.
 
-## <a name="bookmark-dev-startup"></a> Quick Startup for Application Development
+## Quick Startup for Application Development
 
 Splinter includes several APIs for application development:
 
@@ -232,7 +232,7 @@ Splinter provides
 as a complete example for building smart-contract-based applications with the
 Splinter platform.
 
-## <a name="bookmark-event-sub"></a> Event Subscription for State Changes
+## Event Subscription for State Changes
 
 As described earlier, the Scabbard service includes Hyperledger Transact for
 transaction processing and state management. State agreement is achieved with
@@ -247,7 +247,7 @@ to another database, event stream, log, or other mechanism. This allows
 applications to query and analyze the smart contract state in their own
 business-specific databases.
 
-## <a name="bookmark-complex-data-flow"></a> Complex Patterns for Data Flow
+## Complex Patterns for Data Flow
 
 Splinter has clear benefits when compared to traditional EDI systems and ETL
 processes, which provide data- or outcome-focused data flows. Splinter enables
@@ -259,13 +259,13 @@ on changes (with verified state agreement), and export changes in the required
 format. Smart contracts allow even more elaborate patterns for data generation
 and updates.
 
-## <a name="bookmark-open-source"></a> Auditable Open Source
+## Auditable Open Source
 
 Splinter is open source software, licensed under the [Apache License Version
 2.0](https://github.com/Cargill/splinter/blob/master/LICENSE) software license.
 The Splinter source code is freely available and auditable.
 
-## <a name="bookmark-why-not-splinter"></a> Why NOT Splinter?
+## Why NOT Splinter?
 
 Even with all of its benefits, Splinter isn't perfect for all uses.
 For example:

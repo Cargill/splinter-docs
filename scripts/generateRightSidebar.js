@@ -15,21 +15,18 @@
 */
 
 function generateRightSidebar() {
-  var content = "";
-  var main = document.getElementById("main-content");
-  var i;
-  for (i = 0; i < main.children.length; i++) {
-    if (main.children[i].tagName.localeCompare("H2") == 0) {
-      content = content +
-        "<a href=#"+main.children[i].id +" class=\"right-sidebar-h2\">" +
-        main.children[i].innerText + "</a>";
-    }
-
-    if (main.children[i].tagName.localeCompare("H3") == 0) {
-      content = content +
-        "<a href=#"+main.children[i].id +" class=\"right-sidebar-h3\">" +
-        main.children[i].innerText + "</a>";
-    }
-  }
-  return content;
+  $("#main-content").children().each(function (idx, element) {
+      if ($(element).is("h2")) {
+          $("#right-sidebar").append(
+              "<a href=#" + element.id + " class=\"right-sidebar-h2\">" +
+              element.innerText + "</a>"
+          );
+      }
+      if ($(element).is("h3")) {
+          $("#right-sidebar").append(
+              "<a href=#" + element.id + " class=\"right-sidebar-h3\">" +
+              element.innerText + "</a>"
+          );
+      }
+  });
 }

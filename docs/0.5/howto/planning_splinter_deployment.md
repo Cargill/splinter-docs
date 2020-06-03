@@ -9,19 +9,19 @@ Kubernetes Services (Amazon EKS).
 
 **Contents**
 <br>
-[Overview](#bookmark=id.ls4meksnxna)
+[Overview](#overview)
 <br>
-[Splinter Architecture](#bookmark=id.qwe1rp9mdlx5)
+[Splinter Architecture](#splinter-architecture)
 <br>
-[Network Configuration](#bookmark=id.brrcajnirna1)
+[Network Configuration](#network-configuration)
 <br>
-[Application Pattern](#bookmark=id.w243im9kbun8)
+[Application Pattern](#application-pattern)
 <br>
-[Docker Deployment](#bookmark=id.i8nr28r242j4)
+[Docker Deployment](#docker-deployment)
 <br>
-[Basic Kubernetes Deployment](#bookmark=id.4gmpe3v077wl)
+[Basic Kubernetes Deployment](#basic-kubernetes-deployment)
 <br>
-[Amazon EKS Deployment](#bookmark=id.ism06ku1ut2h)
+[Amazon EKS Deployment](#amazon-eks-deployment)
 
 ## Overview
 
@@ -143,7 +143,7 @@ this pattern has been tested with the Splinter examples.
 
 ![](../images/splinter-deployment-kubernetes.png "Splinter Kubernetes deployment")
 
-# Amazon EKS Deployment
+## Amazon EKS Deployment
 
 This example of Amazon EKS deployment uses a classic load balancer (CLB) as the
 ingress and Amazon Elastic Block Storage (EBS) as the backing store for
