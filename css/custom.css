@@ -18,6 +18,7 @@
     --light-gray: #eaecef;
     --text-color: #2c3e50;
     --splinter-fuchsia: #ff2e74;
+    --light-splinter-fuchsia: #ff578f;
 }
 
 /* General Styles */
@@ -274,6 +275,42 @@ h3 {
 }
 
 /* Landing Page Styles */
+
+#release-banner {
+    background-color: var(--light-splinter-fuchsia);
+    color: white;
+    padding: 10px;
+    text-align: center;
+}
+
+#release-info {
+    display: inline-block;
+    font-size: 20px;
+    height: 100%;
+    margin-right: 20px;
+    vertical-align: middle;
+}
+
+/* Vertically arranges info and button when screen is small */
+@media screen and (max-width: 768px) {
+    #release-info {
+        display: block;
+        margin-bottom: 10px;
+        margin-right: 0;
+    }
+}
+
+#release-banner .btn {
+    background-color: transparent;
+    border-color: white;
+    border-width: 2px;
+    color: white;
+}
+
+#release-banner .btn:hover {
+    background-color: white;
+    color: rgba(255, 46, 116, .8);
+}
 
 .landing-page-section {
     padding: 50px;
