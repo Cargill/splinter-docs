@@ -43,7 +43,12 @@ img {
     max-width: 100%;
 }
 
-.btn-primary, .btn-primary:hover {
+.btn-primary {
+    background-color: var(--light-splinter-fuchsia);
+    border-color: var(--light-splinter-fuchsia);
+}
+
+.btn-primary:hover {
     background-color: var(--splinter-fuchsia);
     border-color: var(--splinter-fuchsia);
 }
