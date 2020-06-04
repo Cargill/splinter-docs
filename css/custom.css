@@ -377,6 +377,52 @@ h3 {
     margin-bottom: 20px;
 }
 
+#landing-page-examples-section {
+    background-color: var(--light-gray);
+}
+
+.splinter-example:not(:last-child) {
+    margin-bottom: 50px;
+}
+
+.splinter-example img {
+    height: 200px;
+    object-fit: contain;
+    width: 200px;
+}
+
+.splinter-example .example-details {
+    text-align: left;
+}
+
+.splinter-example .example-title {
+    font-size: 1.65rem;
+    line-height: 1;
+    margin-bottom: 20px;
+}
+
+.splinter-example .example-title img {
+    display: none;
+}
+
+.splinter-example .example-description {
+    margin-bottom: 40px;
+}
+
+/* Overrides for small screens */
+@media screen and (max-width: 767px) {
+    .splinter-example img {
+        display: none;
+    }
+
+    .splinter-example .example-title img {
+        display: inline;
+        height: 32px;
+        width: 32px;
+        margin-right: 10px;
+    }
+}
+
 /* 404 Page Styles */
 
 #main-404 {
