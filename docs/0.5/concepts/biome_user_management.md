@@ -19,25 +19,6 @@ examples for the Biome routes and request/response format.
 This topic explains Biome's architecture, then illustrates how Biome works with
 examples of using Biome endpoints.
 
-Quick links:
-
-* [Biome Architecture](#biome-architecture)
-    - [Biome REST API routes](#biome-rest-api-routes)
-    - [Key Management in Biome](#key-management-in-biome)
-    - [CanopyJS Library for Saplings](#canopyjs-library-for-saplings)
-    - [The libsplinter biome module](#the-libsplinter-biome-module)
-* [Examples: Using Biome Endpoints](#examples-using-biome-endpoints)
-    - [Registering a New User](#registering-a-new-user)
-    - [Logging In](#logging-in)
-    - [Storing New User Keys](#storing-new-user-keys)
-    - [Fetching a Private Key](#fetching-a-private-key)
-    - [Verifying User Credentials](#verifying-user-credentials)
-    - [Refreshing an Access Token](#refreshing-an-access-token)
-    - [Logging Out](#logging-out)
-* [Reference Information](#reference-information)
-    - [REST API Endpoints for Biome](#rest-api-endpoints-for-biome)
-    - [Biome Database Tables](#biome-database-tables)
-
 ## Biome Architecture
 
 Biome provides the following functions:
@@ -124,9 +105,8 @@ module in the `libsplinter` library includes the following submodules:
 * `refresh_tokens`
 * `rest_api`
 
-For more information, see the [`biome` module
-documentation](https://docs.rs/splinter/latest/splinter/biome/index.html)
-in the Rust `crate splinter` API reference guide.
+For more information, see the `biome` module in the [splinter Rust API
+Reference](https://docs.rs/splinter/latest/splinter/biome/index.html).
 
 ## Examples: Using Biome Endpoints
 
@@ -142,8 +122,7 @@ REST API endpoints for the following tasks:
 * Log a user out with `/biome/logout`
 
 For details on each request and response, see the `biome` routes in the
-[splinterd openapi.yml
-file](https://github.com/Cargill/splinter/blob/master/splinterd/api/static/openapi.yml).
+[splinterd REST API Reference](https://www.splinter.dev/docs/0.4/api/).
 
 ### Registering a New User
 
@@ -227,7 +206,7 @@ store the user's keys in the Biome database.
 
 This example assumes that the user's public and private key files already exist.
 For information on generating these keys, see the [splinter-keygen(1) man
-page](https://github.com/Cargill/splinter/blob/master/cli/man/splinter-keygen.1.md).
+page](../references/cli/splinter-keygen.1.html).
 
 **Important**: For security reasons, it is highly recommended to encrypt the
 private key.  The encryption method is left to the calling application; Biome
@@ -433,8 +412,8 @@ The `splinterd` REST API exposes the following Biome-specific endpoints.
 </table>
 
 <br>
-For more information, see the [Biome `openapi.yml`
-file](https://github.com/Cargill/splinter/blob/master/splinterd/api/static/openapi.yml).
+For more information, see the `biome` routes in the [splinterd REST API
+Reference](https://www.splinter.dev/docs/0.4/api/).
 
 ### Biome Database Tables
 
