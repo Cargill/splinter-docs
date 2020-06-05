@@ -25,6 +25,10 @@ code {
     border-radius: 3px;
 }
 
+h2 code {
+    font-size: 1.4rem;
+}
+
 /* Code blocks - Based on the monokai theme */
 
 pre.highlight {
