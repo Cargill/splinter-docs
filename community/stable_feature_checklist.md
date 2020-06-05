@@ -7,17 +7,17 @@ added to the list of experimental features. The name of the feature should be
 short and descriptive. For more information on the mechanics of features, see
 [Rust features](https://doc.rust-lang.org/cargo/reference/manifest.html#the-features-section).
 
-```
-  Cargo.toml:
+`Cargo.toml` excerpt with an experimental feature:
 
-  [features]
-  default = []
+``` toml
+[features]
+default = []
 
-  stable = []
+stable = []
 
-  experimental = ["new-feature"]
+experimental = ["new-feature"]
 
-  new-feature = []
+new-feature = []
 ```
 
 Once a feature has completed the following checklist, the feature may be moved
@@ -58,17 +58,17 @@ When all of the above items have been completed and merged, a final PR should be
 created that moves the features from experimental into stable. There should be
 no other changes included in this PR.
 
-```
-  Cargo.toml:
+`Cargo.toml` excerpt with a stable feature:
 
-  [features]
-  default = []
+``` toml
+[features]
+default = []
 
-  stable = ["new-feature"]
+stable = ["new-feature"]
 
-  experimental = []
+experimental = []
 
-  new-feature = []
+new-feature = []
 ```
 
 In some cases, the feature will also be added to default or removed from

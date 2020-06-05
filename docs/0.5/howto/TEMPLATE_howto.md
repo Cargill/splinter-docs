@@ -44,8 +44,8 @@ that don't have an order, such as optional values or settings.
    NOTE: Put essential info BEFORE the example command (anything you must
    know before running the command or performing the action).
 
-   ```
-   doohicky start --thingummy
+   ``` console
+   $ doohicky start --thingummy
    ```
 
    Explain the results or the details AFTER the code block.

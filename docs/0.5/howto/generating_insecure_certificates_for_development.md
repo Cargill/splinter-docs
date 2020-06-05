@@ -45,13 +45,13 @@ This procedure requires a local development environment that includes the
 
 1. Run the following command to generate certificates and keys.
 
-   ```
+   ``` console
    $ splinter cert generate
    ```
 
    The output shows the full path of each file.
 
-   ```
+   ``` console
    Writing file: /etc/splinter/certs/generated_ca.pem
    Writing file: /etc/splinter/certs/private/generated_ca.key
    Writing file: /etc/splinter/certs/client.crt
@@ -70,7 +70,7 @@ This procedure requires a local development environment that includes the
    Without this flag, the Splinter daemon will get a TLS error when it tries to
    connect to another Splinter node.
 
-   ```
+   ``` console
    $ splinterd --node-id node-000 --tls-insecure --network-endpoints tcps://127.0.0.1:8044
    [2020-02-04 15:40:29.763] T["main"] WARN [splinterd] Starting TlsTransport in insecure mode
    ```
@@ -85,9 +85,8 @@ This procedure requires a local development environment that includes the
      has started in insecure mode. To verify that the correct certificates and
      keys were used, add `-vv` to increase the logging level.
 
-   ```
+   ``` console
    $ splinterd --node-id node-000 --tls-insecure -vv --network-endpoints tcps://127.0.0.1:8044
-
    .
    .
    [2020-02-13 08:50:30.574] T["main"] DEBUG [splinterd] Loading configuration file
@@ -130,7 +129,7 @@ This procedure requires a local development environment that includes the
   If any certificate files already exist, `splinter cert generate` displays an
   error and stops. It does not create any new files.
 
-  ```
+  ``` console
   $ splinter cert generate
 
   Client certificate already exists: /etc/splinter/certs/client.crt
@@ -146,7 +145,7 @@ This procedure requires a local development environment that includes the
    exist, add the `--skip` flag. The command will ignore the existing
    files and create any files that are missing.
 
-  ```
+  ``` console
   $ splinter cert generate --skip
 
   Client certificate exists, skipping: /etc/splinter/certs/client.crt
@@ -160,7 +159,7 @@ This procedure requires a local development environment that includes the
   To recreate the certificates and keys from scratch, use the  `--force` flag to
   overwrite all existing files.
 
-  ```
+  ``` console
   $ splinter cert generate --force
 
   Overwriting file: /private/etc/splinter/certs/generated_ca.pem
