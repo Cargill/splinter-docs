@@ -99,8 +99,8 @@ sends all HTTP requests to the TLS port.
 Users generally access the application with web-based apps that interact with
 Splinter through a web server and server-side application. Splinter includes
 **Canopy**, a distributed-application UI framework that dynamically loads
-distributed UI components called _Saplings_. See [About
-Canopy](https://github.com/Cargill/splinter-docs/blob/master/docs/concepts/about_canopy.md)
+distributed UI components called _Saplings_. See [Canopy Application
+Framework](../concepts/canopy_application_framework.md)
 for more information.
 
 The server-side application (application server) is commonly a single

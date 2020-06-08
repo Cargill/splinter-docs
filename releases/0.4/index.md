@@ -105,8 +105,9 @@ information and provides the user keys that the rest of Splinter relies on.
 
 Splinter exposes several `/biome` REST API endpoints for registering users,
 accessing user information, updating passwords (or other access credentials) and
-more. See [About Biome](/docs/0.4/concepts/about_biome.html) and the `/biome`
-endpoints in the [splinterd REST API Reference](/docs/0.4/api/#tag/Biome).
+more. See [Biome User Management](/docs/0.4/concepts/biome_user_management.html)
+and the `/biome` endpoints in the [splinterd REST API
+Reference](/docs/0.4/api/#tag/Biome).
 
 ### Scabbard Service for Smart Contract Execution
 
