@@ -25,12 +25,16 @@ copy-docs:
         splinter_branch=$(cd {{splinter_repo}} && git name-rev --name-only HEAD)
         echo "Splinter repository branch is $splinter_branch"
 
-        # sync man pages from splinter cli and splinterd
+        # sync man pages from splinter cli, splinterd, and scabbard cli
         cmd="rsync -r -v {{splinter_repo}}/cli/man/ docs/$version/references/cli"
         echo "\033[1m$cmd\033[0m"
         $cmd
 
         cmd="rsync -r -v {{splinter_repo}}/splinterd/man/ docs/$version/references/cli"
+        echo "\033[1m$cmd\033[0m"
+        $cmd
+
+        cmd="rsync -r -v {{splinter_repo}}/services/scabbard/cli/man/ docs/$version/references/cli"
         echo "\033[1m$cmd\033[0m"
         $cmd
 
