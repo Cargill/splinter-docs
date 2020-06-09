@@ -1,4 +1,4 @@
-% SPLINTER-HEALTH(1) Cargill, Incorporated | Splinter Commands
+% SCABBARD-SP(1) Cargill, Incorporated | Splinter Commands
 <!--
   Copyright 2018-2020 Cargill Incorporated
 
@@ -18,45 +18,41 @@
 NAME
 ====
 
-**splinter-health** — Displays information about node and network health
+**scabbard-sp** — Provides management of Sabre smart permissions.
 
 SYNOPSIS
 ========
 
-**splinter** **health** \[**FLAGS**\] \[**OPTIONS**\]
+**scabbard ns** \[**FLAGS**\] \[**SUBCOMMAND**\]
 
 DESCRIPTION
 ===========
-
+This command provides management functionality for the Sabre smart permissions
+of a scabbard service.
 
 FLAGS
 =====
-
 `-h`, `--help`
-: Prints help information
-
-`-q`, `--quiet`
-: Decrease verbosity (the opposite of -v). When specified, only errors or
-  warnings will be output.
-
-`-V`, `--version`
-: Prints version information
+: Prints help information.
 
 `-v`
-: Increases verbosity (the opposite of -q). Specify multiple times for more
-  output.
-
+: Increases verbosity. Specify multiple times for more output.
 
 SUBCOMMANDS
 ===========
+`create`
+: Creates a smart permission in a scabbard service's state.
 
-`status`
-: Displays information about a Splinter node (version, endpoint, node ID,
-  and connected peers)
+`delete`
+: Deletes a smart permission from a scabbard service's state.
+
+`update`
+: Updates the an existing smart permission in a scabbard service's state.
 
 SEE ALSO
 ========
-| `splinter-health-status(1)`
-| 
-| Splinter documentation: https://github.com/Cargill/splinter-docs/blob/master/docs/index.md
-
+| `scabbard-ns-create(1)`
+| `scabbard-ns-delete(1)`
+| `scabbard-ns-update(1)`
+|
+| Splinter documentation: https://www.splinter.dev/docs/
