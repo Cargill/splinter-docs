@@ -9,9 +9,11 @@ provides a blockchain-inspired networking environment for private communication
 and transactions between organizations. The open-source Splinter software is
 hosted at [github.com/Cargill/splinter](https://github.com/Cargill/splinter).
 
-This repository contains the source files for the [Splinter
-documentation](docs/index.md), which is
-in [GitHub Flavored Markdown](https://github.github.com/gfm/) (GFM) format.
+See [splinter.dev](https://www.splinter.dev/docs/) for the published
+Splinter documentation.
+
+This repository contains the source files for the Splinter documentation, which
+is in [GitHub Flavored Markdown](https://github.github.com/gfm/) (GFM) format.
 For more information, see [docs/README.md](docs/README.md).
 
 ## License
