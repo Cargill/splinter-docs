@@ -35,15 +35,15 @@ connection, `tcps://127.0.0.1:8044`.
 If you are using the `--no-tls` flag, you must provide a valid TCP network
 endpoint. Otherwise, the following error will be returned:
 
-```
+``` console
 Failed to start daemon, required argument is invalid: TLS is disabled, thus endpoint tcps://127.0.0.1:8044 is invalid
 ```
 
 Add the TCP network endpoint when starting `splinter`, either on the command
 line or in the configuration file. For example:
 
-```
-splinterd --no-tls --network-endpoint tcp://127.0.0.1:8044
+``` console
+$ splinterd --no-tls --network-endpoint tcp://127.0.0.1:8044
 ```
 
 ## Changing the default service endpoint requires an experimental feature
@@ -68,7 +68,7 @@ In release 0.3.18, these components have been moved to `splinter::peer`. The
 If you are using these components, update the `use` statements to the
 following:
 
-```
+``` rust
 use splinter::peer::interconnect::{PeerInterconnect, NetworkMessageSender};
 use splinter::peer::PeerManager, PeerRef;
 use splinter::peer:PeerManagerConnector;

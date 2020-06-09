@@ -59,7 +59,7 @@ IMPORTANT:
 * Update existing `splinterd` TOML configuration files to use the changed
   options. For example:
 
-  ```
+  ``` toml
   # Config file format version
   version = "1"
 
@@ -93,7 +93,7 @@ All key registry-related configuration and CLI options are no longer supported.
 
 In the previous release, a node registry entry had the following format:
 
-```
+``` yaml
 - identity: '<NODE_ID>'
   endpoints:
     - '<PROTOCOL>://<HOSTNAME>:<PORT>'
@@ -103,13 +103,13 @@ In the previous release, a node registry entry had the following format:
 
 In this release, a registry entry has the following format:
 
-```
+``` yaml
 - identity: '<NODE_ID>'
   endpoints:
     - '<PROTOCOL>://<HOSTNAME>:<PORT>'
   display_name: '<NODE_NAME>'
   keys:
-      - '<KEY>'
+    - '<KEY>'
   metadata: {}
 ```
 
@@ -117,21 +117,21 @@ The following example shows Acme Corporation's registry entries for two nodes,
 `acme-node-000` and `acme-node-001`. Each entry includes the keys that are
 permitted to propose and modify circuits on behalf of that node.  
 
-```
+``` yaml
 - identity: 'acme-node-000'
   endpoints:
     - 'tcps://acme-node-000:8044'
   display_name: 'Acme Node 0'
   keys:
-'02381b606ac2bbe3bd374654cb7cb467ffb0225eb46038a5ec37b43e0c2f085dcb'
+    - '02381b606ac2bbe3bd374654cb7cb467ffb0225eb46038a5ec37b43e0c2f085dcb'
   metadata: {}
 - identity: 'acme-node-001'
   endpoints:
     - 'tcps://acme-node-001:8044'
   display_name: 'Acme Node 1'
   keys:
-'7b6c889058c2d22558ead2c61b321634b74e705c42f890e6b7bc2c80abb4713118'
-'02381b606ac2bbe3bd374654cb7cb467ffb0225eb46038a5ec37b43e0c2f085dcb'
+    - '7b6c889058c2d22558ead2c61b321634b74e705c42f890e6b7bc2c80abb4713118'
+    - '02381b606ac2bbe3bd374654cb7cb467ffb0225eb46038a5ec37b43e0c2f085dcb'
   metadata: {}
 ```
 

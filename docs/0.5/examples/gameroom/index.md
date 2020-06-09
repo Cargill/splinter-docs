@@ -49,9 +49,9 @@ below.
 1. To start Gameroom, run the following command from the Splinter root
    directory:
 
-    ```
-    docker-compose -f examples/gameroom/docker-compose.yaml up --build
-    ```
+   ``` console
+   $ docker-compose -f examples/gameroom/docker-compose.yaml up --build
+   ```
 
     **Note:** To run Gameroom with experimental features enabled, set an
     environment variable in your shell before running the command above. For
@@ -63,12 +63,12 @@ below.
    `generate-registry` image and read the private key.  For example, to get
    Alice's private key:
 
-    ```
-    $ docker-compose -f examples/gameroom/docker-compose.yaml run generate-registry bash
-    root@<container-id>:/# cat /registry/alice.priv
-    <the private key value>
-    root@<container-id>:/#
-    ```
+   ``` console
+   $ docker-compose -f examples/gameroom/docker-compose.yaml run generate-registry bash
+   root@<container-id>:/# cat /registry/alice.priv
+   <the private key value>
+   root@<container-id>:/#
+   ```
 
     The keys available are `alice` and `bob`.
 
@@ -80,6 +80,6 @@ below.
 
 1. When you are finished, shut down the demo with the following command:
 
-     ```
-     docker-compose -f examples/gameroom/docker-compose.yaml down
-     ```
+   ``` console
+   $ docker-compose -f examples/gameroom/docker-compose.yaml down
+   ```

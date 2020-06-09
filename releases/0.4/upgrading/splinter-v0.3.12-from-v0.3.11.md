@@ -34,10 +34,9 @@ In v0.3.11, the Splinter daemon could be built with the deprecated feature
 keys on startup that would be used for running TLS transports in insecure mode.
 If you are not using the `--generate-cert` flag nothing has changed.
 
-```
+``` console
 $ splinterd --node-id example-node-id --transport tls --generate-cert
 [2020-02-04 15:40:29.763] T["main"] WARN [splinterd] Starting TlsTransport in insecure mode
-
 ```
 
 This feature has been fully removed in version v0.3.12. Now it is required to
@@ -68,13 +67,13 @@ location by setting the `SPLINTER_CERT_DIR` environment variable or using the
 
 1. Run the following command to generate certificates and keys.
 
-   ```
+   ``` console
    $ splinter cert generate
    ```
 
    The output shows the full path of each file.
 
-   ```
+   ``` console
    Writing file: /etc/splinter/certs/generated_ca.pem
    Writing file: /etc/splinter/certs/private/generated_ca.key
    Writing file: /etc/splinter/certs/client.crt
@@ -88,7 +87,7 @@ location by setting the `SPLINTER_CERT_DIR` environment variable or using the
 
 2. Start the Splinter daemon in TLS mode with the following `splinterd` command.
 
-   ```
+   ``` console
    $ splinterd --node-id node-000 --transport tls --insecure
    [2020-02-04 15:40:29.763] T["main"] WARN [splinterd] Starting TlsTransport in insecure mode
    ```
@@ -116,64 +115,64 @@ your procedure.
 In v0.3.11, the Splinter CLI command for creating a circuit, took as an input a
 path to a yaml file with the circuit definition as in the example below.
 
-  ```
-  $ cat circuit.yaml
-  circuit_id: my-grid-circuit
-  roster:
-    - service_id: grid-scabbard-a
-      service_type: scabbard
-      allowed_nodes:
-        - alpha-node-000
-      arguments:
-        - ["admin_keys", "[\"<gridd-alpha public key>\"]"]
-        - ["peer_services", "[\"grid-scabbard-b\"]"]    
-    - service_id: grid-scabbard-b
-      service_type: scabbard
-      allowed_nodes:
-       - beta-node-000
-      arguments:
-        - ["admin_keys", "[\"<gridd-alpha public key>\"]"]
-        - ["peer_services", "[\"grid-scabbard-a\"]"]
-  members:
-    - node_id: alpha-node-000
-      endpoint: tls://splinterd-alpha:8044
-    - node_id: beta-node-000
-      endpoint: tls://splinterd-beta:8044
-  authorization_type: Trust
-  durability: NoDurability
-  circuit_management_type: grid
-  ```
+``` console
+$ cat circuit.yaml
+circuit_id: my-grid-circuit
+roster:
+  - service_id: grid-scabbard-a
+    service_type: scabbard
+    allowed_nodes:
+      - alpha-node-000
+    arguments:
+      - ["admin_keys", "[\"<gridd-alpha public key>\"]"]
+      - ["peer_services", "[\"grid-scabbard-b\"]"]    
+  - service_id: grid-scabbard-b
+    service_type: scabbard
+    allowed_nodes:
+     - beta-node-000
+    arguments:
+      - ["admin_keys", "[\"<gridd-alpha public key>\"]"]
+      - ["peer_services", "[\"grid-scabbard-a\"]"]
+members:
+  - node_id: alpha-node-000
+    endpoint: tls://splinterd-alpha:8044
+  - node_id: beta-node-000
+    endpoint: tls://splinterd-beta:8044
+authorization_type: Trust
+durability: NoDurability
+circuit_management_type: grid
+```
 
-  ```
-  $ splinter circuit create \
-    --key <path_to_alpha_private_key> \
-    --url http://splinterd-alpha:8085 \
-    circuit.yaml
-  ```
+``` console
+$ splinter circuit create \
+  --key <path_to_alpha_private_key> \
+  --url http://splinterd-alpha:8085 \
+  circuit.yaml
+```
 
 In v0.3.12, the `splinter circuit create` CLI command was updated to no longer
 take a YAML file. The user passes arguments to the command and the CLI will
 build the circuit definition based on those arguments.
 
-```
-    $ splinter circuit create \
-    --key <path_to_alpha_private_key> \
-    --url http://splinterd-alpha:8085  \
-    --node alpha-node-000::tls://splinterd-alpha:8044 \
-    --node beta-node-000::tls://splinterd-beta:8044 \
-    --service grid-scabbard-a::alpha-node-000 \
-    --service grid-scabbard-b::beta-node-000 \
-    --service-type *::scabbard \
-    --management grid \
-    --service-arg *::admin_keys=<alpha_public_key> \
-    --service-peer-group grid-scabbard-a,grid-scabbard-b
+``` console
+$ splinter circuit create \
+  --key <path_to_alpha_private_key> \
+  --url http://splinterd-alpha:8085  \
+  --node alpha-node-000::tls://splinterd-alpha:8044 \
+  --node beta-node-000::tls://splinterd-beta:8044 \
+  --service grid-scabbard-a::alpha-node-000 \
+  --service grid-scabbard-b::beta-node-000 \
+  --service-type *::scabbard \
+  --management grid \
+  --service-arg *::admin_keys=<alpha_public_key> \
+  --service-peer-group grid-scabbard-a,grid-scabbard-b
 ```
 
 With these changes the user can no longer set the circuit ID, the CLI auto
 generates the ID as it creates the circuit proposal. For a full description of
 all the arguments to create a circuit use:  
 
-```
+``` console
 $ splinter circuit create --help
 ```
 
@@ -199,19 +198,19 @@ name and minimum version requirement of the .scar file in the format
 `name:version`. Here is an example for using the new command to upload a file
 called `xo_0.4.2.scar` in the current working directory:
 
-```
-    $ scabbard contract upload \
-    -k gridd \
-    -U 'http://splinterd-alpha:8085' \
-    --service-id $CIRCUIT_ID::grid-scabbard-a \
-    --path . \
-    xo:0.4.2
+``` console
+$ scabbard contract upload \
+  -k gridd \
+  -U 'http://splinterd-alpha:8085' \
+  --service-id $CIRCUIT_ID::grid-scabbard-a \
+  --path . \
+  xo:0.4.2
 ```
 
 For more information, check the command's help text:
 
-```
-    $ scabbard contract upload --help
+``` console
+$ scabbard contract upload --help
 ```
 
 ## Circuits, node registry and key registry REST API routes now begin with admin

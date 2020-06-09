@@ -90,7 +90,7 @@ errors when binding to an address.  This is useful for notifying the caller of
 When starting the server and reacting to specific events, a new match arm is
 required:
 
-```rust
+``` rust
 let rest_api = RestApiBuilder::new()
     .add_resources(my_resource_provider.resources())
     .with_bind("localhost:8080")

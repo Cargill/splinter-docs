@@ -38,15 +38,6 @@ a[target="_blank"]:after {
     vertical-align: top;
 }
 
-code {
-    color: #212529;
-    padding: 4px 8px;
-    margin: 0;
-    font-size: .85rem;
-    background-color: rgba(27,31,35,.05);
-    border-radius: 3px;
-}
-
 img {
     max-width: 100%;
 }
@@ -280,19 +271,6 @@ h3 {
         the same space at the top as content.
     */
     scroll-margin-top: 82px;
-}
-
-/* Code blocks */
-
-pre.highlight {
-    background-color: #282c34;
-    border-radius: 6px;
-    padding: 20px 24px;
-}
-
-pre.highlight code {
-    background-color: transparent;
-    color: white;
 }
 
 /* Landing Page Styles */

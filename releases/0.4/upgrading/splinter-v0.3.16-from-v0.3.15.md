@@ -80,17 +80,17 @@ For example, the following `splinterd` command includes nodes from registry
 files located at `/tmp/nodes.yaml` and
 `https://www.github.com/org/repo/nodes.yaml`:
 
-```
-$ splinterd …
-     --registry file:///tmp/nodes.yaml \
-     --registry https://www.github.com/org/repo/nodes.yaml \
-     ...
+``` console
+$ splinterd ... \
+  --registry file:///tmp/nodes.yaml \
+  --registry https://www.github.com/org/repo/nodes.yaml \
+  ...
 ```
 
 To specify these registry files in a `splinterd` TOML config file, use the
 following syntax:
 
-```
+``` toml
 registries = ["file:///tmp/nodes.yaml", "https://www.github.com/org/repo/nodes.yaml"]
 ```
 
@@ -107,22 +107,22 @@ All commands and configuration files specifying an endpoint that starts with
 "tls://" should be updated to "tcps://".  For example, when proposing a circuit,
 the `-node` options should use the new prefix:
 
-    ```
-    $ splinter circuit propose \
-           … \
-           --node alpha-node-000::tcps://splinterd-alpha:8044 \
-           --node beta-node-000::tcps://splinterd-beta:8044 \
-           … \
-    ```
+``` console
+$ splinter circuit propose \
+  ... \
+  --node alpha-node-000::tcps://splinterd-alpha:8044 \
+  --node beta-node-000::tcps://splinterd-beta:8044 \
+  ...
+```
 
 Endpoints in the node registry should use the new prefix (as well as the new
 list format described elsewhere). For example:
 
-```
+``` yaml
 - identity: ...
   endpoints:
     - 'tcps://splinterd-node-alpha:8044'
-  ...
+...
 ```
 
 ### The transport option has been removed from splinterd
@@ -158,8 +158,8 @@ For example, if you started splinterd in a previous release with
 `--network-endpoint 127.0.0.1:804`, you should add the `tcps://` prefix, like
 this:  
 
-```
-splinterd ... --network-endpoint tcps://127.0.0.1:8084 …
+``` console
+$ splinterd ... --network-endpoint tcps://127.0.0.1:8084 ...
 ```
 
 As described above, `splinterd` now supports communication over multiple
@@ -167,15 +167,15 @@ transport types at the same time. For example, the following options would
 configure `splinterd` to accept connections on both the TLS connection at
 127.0.0.1:8084 and the TCP connection at 127.0.0.1:8094.
 
-```
-splinterd … --network-endpoint tcps://127.0.0.1:8084 -network-endpoint tcp://127.0.0.1:8094 ...
+``` console
+$ splinterd ... --network-endpoint tcps://127.0.0.1:8084 -network-endpoint tcp://127.0.0.1:8094 ...
 ```
 
 To configure `splinterd` to support only TCP connections, use the `tcp://`
 prefix and the `--no-tls` option, like this:
 
-```
-splinterd ... test --network-endpoint tcp://127.0.0.1:8084 --no-tls ...
+``` console
+$ splinterd ... test --network-endpoint tcp://127.0.0.1:8084 --no-tls ...
 ```
 
 ## Splinter nodes now have multiple endpoints
@@ -186,23 +186,23 @@ including the node registry, circuit proposals, circuit definitions, REST API
 responses, and `splinterd` configuration settings and options.
 
 * For existing node registries, each node entry must change the `endpoint` field
-to `endpoints` and update the contents of the field to a list. For example, if
-you had the following node definition in a registry YAML file:
+  to `endpoints` and update the contents of the field to a list. For example, if
+  you had the following node definition in a registry YAML file:
 
-    ```
-    - identity: ..
-      endpoint: "tcps://127.0.0.1:8080"
-      ...
-    ```
+  ``` yaml
+  - identity: ...
+    endpoint: "tcps://127.0.0.1:8080"
+  ...
+  ```
 
   Update the endpoint definition like this:
 
-    ```
-      - identity: ...
-        endpoints:
-          - "tcps://127.0.0.1:8080"
-      ...
-    ```
+  ``` yaml
+  - identity: ...
+    endpoints:
+      - "tcps://127.0.0.1:8080"
+  ...
+  ```
 
 * Existing circuit definitions do not need to be updated manually; Splinter
   handles this automatically.
@@ -217,7 +217,7 @@ you had the following node definition in a registry YAML file:
       directory. If using the default state directory (`/var/lib/splinter`),
       you can remove circuit proposals with this command:
 
-      ```
+      ``` console
       $ rm /var/lib/splinter/circuit_proposals.yaml
       ```
 
@@ -232,19 +232,19 @@ you had the following node definition in a registry YAML file:
   with the `network_endpoints` field in the correct format. For example, if you
   have the following entry:
 
-    ```
-    ...
-    network_endpoint = "127.0.0.1:8044"
-    ...
-    ```
+  ``` toml
+  ...
+  network_endpoint = "127.0.0.1:8044"
+  ...
+  ```
 
-Replace this entry with:
+  Replace this entry with:
 
-```
-...
-network_endpoints = ["127.0.0.1:8044"]
-...
-```
+  ``` toml
+  ...
+  network_endpoints = ["127.0.0.1:8044"]
+  ...
+  ```
 
 * The `splinterd` command option `--network-endpoint` has not changed. You can
 specify multiple endpoints in a comma-separated list or repeat the option for
@@ -274,7 +274,7 @@ Docker Compose files.
 Update existing `splinterd` TOML configuration files to use the changed options.
 For example:
 
-```
+``` toml
 # List of certificate authority certificates (*.pem files).
 tls_ca_file = "certs/ca.pem"
 

@@ -35,7 +35,7 @@ for details on how to create and compile a smart contract
 
     a. Propose the circuit on alpha node.
 
-    ```
+    ``` console
     $ splinter circuit propose \
         --url http://splinterd-alpha:8085 \
         --key <path_to_alpha_private_key> \
@@ -65,20 +65,20 @@ for details on how to create and compile a smart contract
     Set CIRCUIT_ID based on the output of the `proposals` subcommand; for
     example:
 
-    ```
+    ``` console
     $ splinter circuit proposals --url http://splinterd-beta:8085
 
     ID                                   MANAGEMENT MEMBERS
     01234567-0123-0123-0123-012345678901 tutorial   alpha-node-000;beta-node-000
     ```
 
-    ```
+    ``` console
     $ export CIRCUIT_ID=01234567-0123-0123-0123-012345678901
     ```
 
     c. Vote to accept the circuit on node beta.
 
-    ```
+    ``` console
     $ splinter circuit vote \
         --key <path_to_beta_private_key> \
         --url http://splinterd-beta:8085 $CIRCUIT_ID --accept
@@ -89,7 +89,7 @@ for details on how to create and compile a smart contract
 
     d. Verify the circuit has been established.
 
-    ```
+    ``` console
     $ splinter circuit list --url http://splinterd-alpha:8085
 
     ID                                   MANAGEMENT MEMBERS
@@ -103,7 +103,7 @@ for details on how to create and compile a smart contract
     The manifest contains the inputs, outputs, version, and the contract
     name. Below is a sample manifest.
 
-    ```
+    ``` yaml
     name: my_contract
     version: '1.0'
     inputs:
@@ -115,8 +115,8 @@ for details on how to create and compile a smart contract
     b. Bundle the manifest and the compiled wasm for the smart contract into a
        tarball that has the scar extension.
 
-    ```
-    $ tar -jcvf my_contract.scar my_contract.wasm manifest.yaml 
+    ``` console
+    $ tar -jcvf my_contract.scar my_contract.wasm manifest.yaml
     ```
 
 3. Create contract registry for smart contract.
@@ -124,7 +124,7 @@ for details on how to create and compile a smart contract
     Each contract needs a contract registry to be created that keeps track of
     versions of the smart contract as well as the contract's owners.
 
-    ```
+    ``` console
     $ scabbard cr create my_contract \
         --owner <alpha_node_public_key> \
         --key <path_to_alpha_node_private_key> \
@@ -134,7 +134,7 @@ for details on how to create and compile a smart contract
 
 4. Upload the smart contract.
 
-   ```
+   ``` console
    $ scabbard contract upload ./my_contract.scar \
        --key <path_to_alpha_node_private_key> \
        --url http://splinterd-alpha:8085 \
@@ -148,7 +148,7 @@ for details on how to create and compile a smart contract
     namespace, and the permissions given to that namespace. A namespace is a
     state address prefix used to identify a portion of state.
 
-    ```
+    ``` console
     $ scabbard ns create 5b7349 \
        --owner <alpha_node_public_key> \
        --key <path_to_alpha_node_private_key> \
@@ -162,7 +162,7 @@ for details on how to create and compile a smart contract
     access state. The below command gives the smart contract both read and
     write permissions.
 
-   ```
+   ``` console
    $ scabbard perm 5b7349 my_contract --read --write \
        --key <path_to_alpha_node_private_key> \
        --url http://splinterd-alpha:8085 \
@@ -171,7 +171,7 @@ for details on how to create and compile a smart contract
 
 7. List uploaded smart contracts.
 
-    ```
+    ``` console
     $ scabbard contract list -U 'http://splinterd-beta:8085' \
         --service-id $CIRCUIT_ID::scabbard-service-beta
 
@@ -181,7 +181,7 @@ for details on how to create and compile a smart contract
 
 8. Display uploaded smart contract.
 
-    ```
+    ``` console
     $ scabbard contract show my_contract:1.0 \
         -U 'http://splinterd-beta:8085' \
         --service-id $CIRCUIT_ID::scabbard-service-beta

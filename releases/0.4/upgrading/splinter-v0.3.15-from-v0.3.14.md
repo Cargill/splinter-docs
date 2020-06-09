@@ -52,11 +52,11 @@ In release v0.3.15, the `create` subcommand has been changed to `propose`.
 Use `splinter circuit propose` for a new circuit, as shown in the following
 example:
 
-```
+``` console
 $ splinter circuit propose \
-    --url http://splinterd-alpha:8085 \
-    --key <path_to_alpha_private_key> \
-    --node alpha-node-000::tls://splinterd-alpha:8044
+  --url http://splinterd-alpha:8085 \
+  --key <path_to_alpha_private_key> \
+  --node alpha-node-000::tls://splinterd-alpha:8044
 ```
 
 The functionality of this subcommand has not changed.
