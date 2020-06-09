@@ -45,8 +45,8 @@ Biome provides the following functions:
 * Key management: Encrypts and stores users' private keys.
 
 * Credential management: Registers and authenticates users.  The initial
-  implementation uses usernames and passwords for authentication (not
-  recommended for production use).
+  implementation uses usernames and passwords for authentication and is not
+  recommended for production use.
 
 * Token management: Stores a refresh token for each user that can be used to
   issue a new access token when the previous one expires.
@@ -74,7 +74,7 @@ environment.
 
 The design of Biome includes the following assumptions:
 
-* The front-end application is responsible for encrypting the user's private key
+* The client application is responsible for encrypting the user's private key
   (which is strongly recommended).
 
 * Biome does not enforce any correctness of the key pairs. The private key
