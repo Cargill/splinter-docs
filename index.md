@@ -18,7 +18,3 @@ title: Splinter
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
-
-Splinter is a privacy-focused platform for distributed applications that
-provides a blockchain-inspired networking environment for private communication
-and transactions between organizations.

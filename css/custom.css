@@ -18,6 +18,7 @@
     --light-gray: #eaecef;
     --text-color: #2c3e50;
     --splinter-fuchsia: #ff2e74;
+    --light-splinter-fuchsia: #ff578f;
 }
 
 /* General Styles */
@@ -42,7 +43,12 @@ img {
     max-width: 100%;
 }
 
-.btn-primary, .btn-primary:hover {
+.btn-primary {
+    background-color: var(--light-splinter-fuchsia);
+    border-color: var(--light-splinter-fuchsia);
+}
+
+.btn-primary:hover {
     background-color: var(--splinter-fuchsia);
     border-color: var(--splinter-fuchsia);
 }
@@ -87,7 +93,7 @@ img {
 
 /* Left Sidebar */
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 767px) {
     #header {
         position: inherit;
         background-color: #f7f7f7;
@@ -171,7 +177,7 @@ img {
 }
 
 /* Overrides the collapsed sidebar links when the screen is not small */
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 767px) {
     #left-sidebar-links {
         display: block;
     }
@@ -275,25 +281,150 @@ h3 {
 
 /* Landing Page Styles */
 
-#landing-page-main {
+#release-banner {
+    background-color: var(--light-splinter-fuchsia);
+    color: white;
+    padding: 10px;
     text-align: center;
 }
 
-#landing-page-main img {
-    width: 80%;
-    margin: 50px 0;
+#release-info {
+    display: inline-block;
+    font-size: 20px;
+    height: 100%;
+    margin-right: 20px;
+    vertical-align: middle;
 }
 
-#landing-page-main p {
-    width: 33%;
+/* Vertically arranges info and button when screen is small */
+@media screen and (max-width: 767px) {
+    #release-info {
+        display: block;
+        margin-bottom: 10px;
+        margin-right: 0;
+    }
+}
+
+#release-banner .btn {
+    background-color: transparent;
+    border-color: white;
+    border-width: 2px;
+    color: white;
+}
+
+#release-banner .btn:hover {
+    background-color: white;
+    color: rgba(255, 46, 116, .8);
+}
+
+.landing-page-section {
+    padding: 50px;
+    text-align: center;
+}
+
+.landing-page-section h1 {
+    line-height: 1;
+    margin-bottom: 50px;
+}
+
+#landing-page-top-section img {
+    max-width: 700px;
+    margin-bottom: 50px;
+}
+
+#landing-page-top-section p {
+    font-size: 1.5rem;
+    max-width: 500px;
     margin: auto;
 }
 
-/* Overrides the content width when the screen is small */
-@media screen and (max-width: 768px) {
-    #landing-page-main p {
-        width: 75%;
-        margin: auto;
+/* Overrides for small screens */
+@media screen and (max-width: 767px) {
+    .landing-page-section {
+        padding: 50px 20px; /* Decrease padding on sides */
+    }
+
+    .landing-page-section .container-fluid {
+        padding: 0; /* Decrease padding on sides */
+    }
+
+    #landing-page-top-section p {
+        font-size: inherit; /* Decrease font size */
+    }
+}
+
+#landing-page-features-section {
+    padding-bottom: 20px; /* 50px - 30px to account for .col padding */
+}
+
+#landing-page-features-section .col {
+    color: var(--text-color);
+    padding-bottom: 30px;
+    transition: all 0.15s linear;
+}
+
+#landing-page-features-section .col:hover {
+    margin-bottom: 10px;
+    margin-top: -10px;
+    text-decoration: none;
+}
+
+.splinter-feature {
+    background-color: var(--light-gray);
+    border-radius: 5px;
+    height: 100%;
+    padding: 20px 30px;
+}
+
+.splinter-feature .feature-title {
+    font-size: 1.65rem;
+    line-height: 1.1;
+    margin-bottom: 20px;
+}
+
+#landing-page-examples-section {
+    background-color: var(--light-gray);
+}
+
+.splinter-example:not(:last-child) {
+    margin-bottom: 50px;
+}
+
+.splinter-example img {
+    height: 200px;
+    object-fit: contain;
+    width: 200px;
+}
+
+.splinter-example .example-details {
+    text-align: left;
+}
+
+.splinter-example .example-title {
+    font-size: 1.65rem;
+    line-height: 1;
+    margin-bottom: 20px;
+}
+
+.splinter-example .example-title img {
+    display: none;
+}
+
+.splinter-example .example-description {
+    margin-bottom: 40px;
+}
+
+/* Overrides for small screens */
+@media screen and (max-width: 767px) {
+    .splinter-example img {
+        display: none;
+    }
+
+    .splinter-example .example-title img {
+        display: inline;
+        height: 32px;
+        width: 32px;
+        margin-right: 10px;
     }
 }
 

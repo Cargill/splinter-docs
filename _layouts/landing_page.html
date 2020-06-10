@@ -22,8 +22,128 @@
     <body>
 {% include header.html %}
         <main id="landing-page-main" role="main" class="content-wrapper">
-            <img src="logos/svg/splinter_logos_fulllogo_gradientblack.svg" alt="Splinter Logo">
-            {{ content }}
+            <div id="landing-page-top-section" class="landing-page-section">
+                <img src="logos/svg/splinter_logos_fulllogo_gradientblack.svg" alt="Splinter Logo">
+                <p>
+                    Splinter is a privacy-focused platform for distributed
+                    applications that provides a blockchain-inspired networking
+                    environment for private communication and transactions
+                    between organizations.
+                </p>
+            </div>
+            <div id="release-banner">
+                <div id="release-info">
+                    Splinter v{{ site.data.general.latest_version }} has been released!
+                </div>
+                <a href ="/releases/{{ site.data.general.latest_version }}/" type="button" class="btn">Learn More ➜</a>
+            </div>
+            <div id="landing-page-features-section" class="landing-page-section">
+                <h1>Features</h1>
+                <div class="container-fluid">
+                    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 justify-content-center">
+                        <a href="/docs/{{ site.data.general.latest_version }}/#true-privacy-with-circuits" class="col">
+                            <div class="splinter-feature">
+                                <div class="feature-title">Private Circuits</div>
+                                <div class="feature-description">
+                                    Splinter’s advanced privacy features are based on circuits, which create
+                                    distributed privacy domains within the larger Splinter network. Circuits are
+                                    fully distributed without compromise — no centralized nodes or administration.
+                                </div>
+                            </div>
+                        </a>
+                        <a href="/docs/{{ site.data.general.latest_version }}/#distributed-ledger-platform-as-a-service" class="col">
+                            <div class="splinter-feature">
+                                <div class="feature-title">Distributed Ledgers</div>
+                                <div class="feature-description">
+                                    Splinter’s architecture supports running multiple distributed ledgers. The
+                                    default ledger, Scabbard, executes WebAssembly smart contracts with Hyperledger
+                                    Transact and Hyperledger Sawtooth Sabre.
+                                </div>
+                            </div>
+                        </a>
+                        <a href="/docs/{{ site.data.general.latest_version }}/#flexibility-with-splinters-modular-architecture" class="col">
+                            <div class="splinter-feature">
+                                <div class="feature-title">Modular Architecture</div>
+                                <div class="feature-description">
+                                    No single distributed ledger works for all use cases, so Splinter provides a
+                                    modular platform that can run multiple distributed ledgers. You can design the
+                                    architecture you need, then build your solution by assembling the right pieces.
+                                </div>
+                            </div>
+                        </a>
+                        <a href="/docs/{{ site.data.general.latest_version }}/#smart-contracts-that-can-share-state" class="col">
+                            <div class="splinter-feature">
+                                <div class="feature-title">Smart Contracts</div>
+                                <div class="feature-description">
+                                    Business logic is defined with smart contracts, ensuring that all parties follow
+                                    the same rules when updating distributed data. Upload new smart contracts as
+                                    your business logic evolves, without additional server configuration.
+                                </div>
+                            </div>
+                        </a>
+                        <a href="/docs/{{ site.data.general.latest_version }}/#event-subscription-for-state-changes" class="col">
+                            <div class="splinter-feature">
+                                <div class="feature-title">Event Subscription</div>
+                                <div class="feature-description">
+                                    The sophisticated event subscription capability lets applications plug into
+                                    Splinter in real time. Applications can use events in many ways, such as
+                                    materializing data into an SQL database to enable standard web application
+                                    development.
+                                </div>
+                            </div>
+                        </a>
+                        <a href="/docs/{{ site.data.general.latest_version }}/concepts/about_canopy.html" class="col">
+                            <div class="splinter-feature">
+                                <div class="feature-title">Canopy Web App Framework</div>
+                                <div class="feature-description">
+                                    Speed up application UI development with Splinter's JavaScript framework for
+                                    distributed web applications.
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div id="landing-page-examples-section" class="landing-page-section">
+                <h1>Examples</h1>
+                <div class="container-fluid">
+                    <div class="splinter-example row align-items-center">
+                        <div class="col-md-4">
+                            <img src="/assets/xo.png" alt="Gameroom Logo">
+                        </div>
+                        <div class="example-details col-md-8">
+                            <div class="example-title">
+                                <img src="/assets/xo.png" alt="Gameroom Logo">
+                                Gameroom
+                            </div>
+                            <div class="example-description">
+                                Demonstrate Splinter with a full-stack web application that allows you to set up
+                                private, multi-party circuits (called “gamerooms”) and play tic tac toe with
+                                shared state.
+                            </div>
+                            <a href ="/docs/{{ site.data.general.latest_version }}/examples/gameroom/" type="button" class="btn btn-primary">Learn More ➜</a>
+                        </div>
+                    </div>
+                    <div class="splinter-example row align-items-center">
+                        <div class="col-md-4">
+                            <img src="/assets/grid_logo.svg" alt="Grid Logo">
+                        </div>
+                        <div class="example-details col-md-8">
+                            <div class="example-title">
+                                <img src="/assets/grid_logo.svg" alt="Grid Logo">
+                                Hyperledger Grid
+                            </div>
+                            <div class="example-description">
+                                Use Splinter as a backend for Hyperledger Grid, an extensible platform for
+                                supply chain solutions with distributed ledger components. Grid includes smart
+                                contracts for identity permissions, GS1-compatible product data, and product
+                                properties.
+                            </div>
+                            <a href ="/docs/{{ site.data.general.latest_version }}/examples/gameroom/" type="button" class="btn btn-primary">Learn More ➜</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </main>
 {% include footer.html %}
     </body>
