@@ -72,3 +72,76 @@ the Splinter daemon.
 
 [`splinterd`](splinterd.1.md)
 Starts the Splinter daemon
+
+## scabbard CLI
+The `scabbard` command-line interface (CLI) provides a set of commands to
+interact with scabbard services.
+
+[`scabbard`](scabbard.1.md)
+Command-line interface for scabbard
+
+### Smart Contract Management
+
+[`scabbard contract`](scabbard-contract.1.md)
+Provides contract management functionality
+
+[`scabbard contract list`](scabbard-contract-list.1.md)
+Displays a scabbard service's smart contracts
+
+[`scabbard contract show`](scabbard-contract-show.1.md)
+Displays the details of a scabbard smart contract
+
+[`scabbard contract upload`](scabbard-contract-upload.1.md)
+Uploads a smart contract to scabbard
+
+### Contract Registry Management
+
+[`scabbard cr`](scabbard-cr.1.md)
+Provides management of the Sabre contract registry
+
+[`scabbard cr create`](scabbard-cr-create.1.md)
+Creates a Sabre contract registry
+
+[`scabbard cr delete`](scabbard-cr-delete.1.md)
+Deletes a Sabre contract registry
+
+[`scabbard cr update`](scabbard-cr-update.1.md)
+Updates the owners of a Sabre contract registry
+
+### Smart Contract Execution
+
+[`scabbard exec`](scabbard-exec.1.md)
+Executes a Sabre smart contract
+
+### Namespace Management
+
+[`scabbard ns`](scabbard-ns.1.md)
+Provides management of Sabre namespaces
+
+[`scabbard ns create`](scabbard-ns-create.1.md)
+Creates a Sabre namespace
+
+[`scabbard ns delete`](scabbard-ns-delete.1.md)
+Deletes a Sabre namespace
+
+[`scabbard ns update`](scabbard-ns-update.1.md)
+Updates the owners of a Sabre namespace
+
+### Namespace Permissions Management
+
+[`scabbard perm`](scabbard-perm.1.md)
+Sets or deletes a Sabre namespace permission
+
+### Smart Permissions Management
+
+[`scabbard sp`](scabbard-sp.1.md)
+Provides management of Sabre smart permissions
+
+[`scabbard sp create`](scabbard-sp-create.1.md)
+Creates a Sabre smart permission
+
+[`scabbard sp delete`](scabbard-sp-delete.1.md)
+Deletes a Sabre smart permission
+
+[`scabbard sp update`](scabbard-sp-update.1.md)
+Updates an existing Sabre smart permission
