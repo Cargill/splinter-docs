@@ -43,7 +43,6 @@ exclude:
   - LICENSE
   - MAINTAINERS.md
   - /docs/README.md
-  - examples
 
 defaults:
     - scope:
