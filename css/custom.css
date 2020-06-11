@@ -462,6 +462,20 @@ h3 {
     margin-left: 50px;
 }
 
+.glossary-header {
+    line-height: 0px;
+    font-size: 20px;
+}
+
+.glossary-definition {
+    margin-left: 10px;
+    padding-bottom: 25px;
+}
+
+.glossary-entry {
+    color: var(--splinter-fuchsia);
+}
+
 /* Community Planning */
 
 #planning-disclaimer {

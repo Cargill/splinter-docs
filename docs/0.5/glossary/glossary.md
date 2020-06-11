@@ -6,79 +6,142 @@
   https://creativecommons.org/licenses/by/4.0/
 -->
 
-## Biome
+<h3 class="glossary-header" id="biome">
+Biome
+</h3>
 
-Biome is a module in libsplinter containing several submodules that provide
-support for user management, user credential management, and private key
-management.
+<p class="glossary-definition">
+Biome is a module in libsplinter containing
+several submodules that provide support for user management, user credential
+management, and private key management.
+</p>
 
-## Canopy
+<h3 class="glossary-header" id="canopy">
+Canopy
+</h3>
 
+<p class="glossary-definition">
 Application interface for Splinter that can provide apps dynamically.
 Canopy is a distributed-application UI framework that dynamically loads saplings
-(application UI components) based on circuit configuration, user permissions,
-and enterprise requirements.
+(application UI components) based on
+<a class="glossary-entry" href="#circuit">circuit</a> configuration, user
+permissions, and enterprise requirements.
+</p>
 
-## circuit
+<h3 class="glossary-header" id="circuit">
+circuit
+</h3>
 
+<p class="glossary-definition">
 Virtual network within the broader Splinter network that safely and securely
 enforces privacy scope boundaries. A circuit defines the scope and visibility
 domains for two or more connected organizations.
+</p>
 
-## consensus
+<h3 class="glossary-header" id="consensus">
+consensus
+</h3>
 
-Mechanism for ensuring agreement between Splinter services and nodes. Splinter
-currently supports two-phase commit consensus, a basic consensus algorithm that
-requires all participating parties to agree. (Other algorithms are planned for
-the future.)
+<p class="glossary-definition">
+Mechanism for ensuring agreement between Splinter
+<a class="glossary-entry" href="#service">services</a> and
+<a class="glossary-entry" href="#node">nodes</a>.
+Splinter currently supports two-phase commit consensus, a basic
+consensus algorithm that requires all participating parties to agree.
+(Other algorithms are planned for the future.)
+</p>
 
-## node
+<h3 class="glossary-header" id="node">
+node
+</h3>
 
-Foundational runtime software that allows an organization to participate
-in the network.
+<p class="glossary-definition">
+Foundational runtime software that allows an organization to participate in the
+network.
+</p>
 
-## sapling
+<h3 class="glossary-header" id="sapling">
+sapling
+</h3>
 
-Plug-in app for Canopy that can customize the UI, access Splinter or external
-functionality, or communicate with back-end platforms and software.
-Splinter includes a growing set of reusable saplings for common functionality
-and interfaces with related products.
+<p class="glossary-definition">
+Plug-in app for <a class="glossary-entry" href="#canopy">Canopy</a> that can
+customize the UI, access Splinter or external functionality, or communicate with
+back-end platforms and software. Splinter includes a growing set of reusable
+saplings for common functionality and interfaces with related products.
+</p>
 
-## Sawtooth Sabre
+<h3 class="glossary-header" id="sawtooth_sabre">
+Sawtooth Sabre
+</h3>
 
+<p class="glossary-definition">
 Smart contract engine: A distributed application that implements on-chain smart
 contracts that can be executed in a WebAssembly virtual machine.
+</p>
 
-## scabbard
+<h3 class="glossary-header" id="scabbard">
+scabbard
+</h3>
 
-Splinter service that runs Sawtooth Sabre smart contracts across nodes,
-coordinated with consensus.
+<p class="glossary-definition">
+Splinter <a class="glossary-entry" href="#service">service</a> that runs
+Sawtooth Sabre smart contracts across
+<a class="glossary-entry" href="#node">nodes</a>, coordinated with
+<a class="glossary-entry" href="#consensus">consensus</a>.
+</p>
 
-## service
+<h3 class="glossary-header" id="service">
+service
+</h3>
 
-Endpoint within a circuit that sends and receives private messages.
+<p class="glossary-definition">
+Endpoint within a <a class="glossary-entry" href="#circuit">circuit</a> that
+sends and receives private messages.
+</p>
 
-## shared state
+<h3 class="glossary-header" id="shared_state">
+shared state
+</h3>
 
-Distributed database that is visible only to the services within a circuit.
-Shared state is updated by smart contracts.
+<p class="glossary-definition">
+Distributed database that is visible only to the
+<a class="glossary-entry" href="#service">services</a> within a
+<a class="glossary-entry" href="#circuit">circuit</a>. Shared state is updated
+by smart contracts.
+</p>
 
-## smart contract
+<h3 class="glossary-header" id="smart_contract">
+smart contract
+</h3>
 
+<p class="glossary-definition">
 Business logic that processes transactions. Runtime deployment of smart
-contracts by the scabbard service means no need to upgrade the Splinter software
-stack to add business logic. Sandboxed WebAssembly smart contracts keep the
-network safe and ensure determinism.
+contracts by the <a class="glossary-entry" href="#scabbard">scabbard service</a>
+means no need to upgrade the Splinter software stack to add business logic.
+Sandboxed WebAssembly smart contracts keep the network safe and ensure
+determinism.
+</p>
 
-## splinterd
+<h3 class="glossary-header" id="splinterd">
+splinterd
+</h3>
 
-Splinter daemon that handles internal functionality such as circuit creation and
-management, consensus, and service coordination.
+<p class="glossary-definition">
+Splinter daemon that handles internal functionality such as
+<a class="glossary-entry" href="#circuit">circuit</a> creation and management,
+<a class="glossary-entry" href="#consensus">consensus</a>, and
+<a class="glossary-entry" href="#service">service</a> coordination.
+</p>
 
-## state delta export
+<h3 class="glossary-header" id="state_delta_export">
+state delta export
+</h3>
 
-Mechanism that provides changes to shared state as "state deltas" (state-change
-updates from Splinter as a result of processed transactions).
-Applications can subscribe to these changes to get current information that can
-be stored in a local database.
-
+<p class="glossary-definition">
+Mechanism that provides changes to
+<a class="glossary-entry" href="#shared_state">shared state</a> as "state
+deltas" (state-change updates from Splinter as a result of processed
+transactions). Applications can subscribe to these changes to get current
+information that can be stored in a local database.
+</p>
