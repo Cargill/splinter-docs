@@ -12,3 +12,10 @@ and services.
 
 We welcome discussion on these topics, either on Slack or during the engineering
 forum.
+
+## Features
+
+* [Canopy 0.2]({% link community/planning/canopy_0.2.md %})
+
+  A new design of the Canopy system that enables dynamic loading of saplings and
+  improved inter-sapling communication.
