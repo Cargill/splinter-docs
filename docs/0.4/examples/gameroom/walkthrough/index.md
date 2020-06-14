@@ -63,47 +63,62 @@ private key, and a password. The Prequel explains the details of node setup and
 user registration.
 
 ## Prologue: An Initial Conversation
-
-ALICE, sitting in an office chair at a desk. MACBOOK PRO. Aging
+<div class="gameroom-script-container">
+<em>ALICE, sitting in an office chair at a desk. MACBOOK PRO. Aging
 desk PHONE. Alice picks up the receiver. Dials a phone number.
+</em>
+<p class="gameroom-script-label">ALICE</p>
 
-ALICE
-
+<p class="gameroom-script-quote">
 Hi Bob.
-
+</p>
+<em>
 Long pause. Alice rolls her eyes.
+</em>
+<p class="gameroom-script-label">ALICE</p>
 
-ALICE
-
+<p class="gameroom-script-quote">
 Anyway, we need to get moving on setup -- yeah --
 sure, it is a bit silly, but we need to prove how our
 companies can use this new technology. We'll use the
 gameroom to play a few games of --
+</p>
 
+<em>
 Another pause. Alice sighs.
+</em>
+<p class="gameroom-script-label">ALICE</p>
 
-ALICE
-
+<p class="gameroom-script-quote">
 Yes, we have to show that we can create a private and
 secure connection between our two companies.
 How about I send you -- right, I'll create the
 gameroom and you'll see my invitation in your app.
+</p>
+
+<em>
 Alice logs into her Mac. Starts up the BROWSER and clicks on
 the ACME GAMEROOM bookmark. Browser displays a network error.
+</em>
 
-ALICE
+<p class="gameroom-script-label">ALICE</p>
 
+<p class="gameroom-script-quote">
 One second; I got this Mac from IT but it doesn’t
 have access to the corporate network -- yeah, I know.
 Actually, just let me know if you don't get my
 invitation in a few minutes -- Fine. OK, bye.
+</p>
 
+<em>
 Alice hangs up the phone.
 
 Alice pushes the Macbook aside. Reaches into her bag and heaves
 out a Windows notebook. It looks old. Alice opens it up. Logs
 in. Starts up the BROWSER and clicks on the ACME GAMEROOM
 bookmark. The app starts to load.
+</em>
+</div>
 
 ## Act I: Alice and Bob Create a Gameroom
 

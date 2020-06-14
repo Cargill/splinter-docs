@@ -446,3 +446,18 @@ h3 {
 .content-wrapper {
     min-height: calc(100vh - 175px);
 }
+
+/* Gameroom Walkthrough */
+
+.gameroom-script-container {
+    display: inline-block;
+}
+
+.gameroom-script-label {
+    text-align: center;
+}
+
+.gameroom-script-quote {
+    padding: 10px;
+    margin-left: 50px;
+}
