@@ -21,6 +21,90 @@ walkthrough with details for Splinter 0.4 and converting it to Markdown. For
 a complete version of the document, see the [Gameroom Technical Walkthrough
 PDF](https://files.splinter.dev/docs/Gameroom_Walkthrough-Splinter_v0.3.4.pdf).
 
+## Introduction
+
+Distributed ledger technologies have the potential to revolutionize how businesses
+communicate and transact. At Cargill, we are leading the revolution with
+involvement in several open-source projects, including Hyperledger Sawtooth,
+Hyperledger Transact, and Splinter. This document outlines an example application,
+Gameroom, that uses technologies from each of these projects to demonstrate our
+vision of using smart contracts to enhance business and customer relationships.
+
+Privacy and confidentiality between trading partners are important capabilities
+for (almost) all multi-party interactions. These capabilities are especially
+critical in distributed applications. As a result, the technology stack behind
+Gameroom differs from a common "shared-everything" blockchain design; instead,
+it sculpts the underlying blockchain-like distributed ledger technology into a
+sophisticated architecture that shares data only between the appropriate
+participants. Parts of this walkthrough are written as a script, in several acts,
+for which we recommend a dramatic reading (as if performed on stage by very
+amateur actors). Each act is followed by a "behind the scenes" chapter that
+describes the complex underlying technology and explains what really happens
+when running the deceptively simple Gameroom application. A glossary at the end
+defines the terms used by Splinter and the Gameroom application.
+
+**Note**: This document is based on Splinter version 0.4. As Splinter matures,
+some details may change (such as the exact format of messages).
+
+## The Cast
+
+**Alice**, an employee at Acme Corporation
+
+**Bob**, a project leader at Bubba Bakery
+
+**Yoda**, a VP at Yoyodyne Systems
+
+**Zixi**, head of IT at Zymogen Industries
+
+## The Setting
+Two Splinter nodes are set up, one at Acme Corporation and one at Bubba Bakery.
+Alice and Bob have each registered as a Gameroom user with an email address, a
+private key, and a password. The Prequel explains the details of node setup and
+user registration.
+
+## Prologue: An Initial Conversation
+
+ALICE, sitting in an office chair at a desk. MACBOOK PRO. Aging
+desk PHONE. Alice picks up the receiver. Dials a phone number.
+
+ALICE
+
+Hi Bob.
+
+Long pause. Alice rolls her eyes.
+
+ALICE
+
+Anyway, we need to get moving on setup -- yeah --
+sure, it is a bit silly, but we need to prove how our
+companies can use this new technology. We'll use the
+gameroom to play a few games of --
+
+Another pause. Alice sighs.
+
+ALICE
+
+Yes, we have to show that we can create a private and
+secure connection between our two companies.
+How about I send you -- right, I'll create the
+gameroom and you'll see my invitation in your app.
+Alice logs into her Mac. Starts up the BROWSER and clicks on
+the ACME GAMEROOM bookmark. Browser displays a network error.
+
+ALICE
+
+One second; I got this Mac from IT but it doesn’t
+have access to the corporate network -- yeah, I know.
+Actually, just let me know if you don't get my
+invitation in a few minutes -- Fine. OK, bye.
+
+Alice hangs up the phone.
+
+Alice pushes the Macbook aside. Reaches into her bag and heaves
+out a Windows notebook. It looks old. Alice opens it up. Logs
+in. Starts up the BROWSER and clicks on the ACME GAMEROOM
+bookmark. The app starts to load.
+
 ## Act I: Alice and Bob Create a Gameroom
 
 ### Scene 1: Alice logs into Acme's Gameroom application
