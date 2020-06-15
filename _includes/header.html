@@ -17,11 +17,14 @@
     <a class="navbar-brand" href="/"><img src="/logos/svg/splinter_logos_fulllogo_gradientblack.svg" height="36"></a>
     <div class="navbar-nav-scroll ml-md-auto">
         <ul class="navbar-nav flex-row"><li class="nav-item">
-            <a class="nav-link" href="/releases/{{ site.data.general.latest_version }}/"><span>Releases</span></a>
+            {% assign dir = page.dir | slice: 0, 10 %}
+            <a class="nav-link{% if dir == '/releases/' %} active{% endif %}" href="/releases/{{ site.data.general.latest_version }}/"><span>Releases</span></a>
         </li><li class="nav-item">
-            <a class="nav-link" href="/docs/{{ site.data.general.latest_version }}/"><span>Documentation</span></a>
+            {% assign dir = page.dir | slice: 0, 6 %}
+            <a class="nav-link{% if dir == '/docs/' %} active{% endif %}" href="/docs/{{ site.data.general.latest_version }}/"><span>Documentation</span></a>
         </li><li class="nav-item">
-            <a class="nav-link" href="/community/"><span>Community</span></a>
+            {% assign dir = page.dir | slice: 0, 11 %}
+            <a class="nav-link{% if dir == '/community/' %} active{% endif %}" href="/community/"><span>Community</span></a>
         </li></ul>
     </div>
 </header>
