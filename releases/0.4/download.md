@@ -24,6 +24,9 @@ files for starting up a Splinter network. Learn
 [how to build Splinter](/docs/0.4/howto/building_splinter.html) and more by
 browsing the [Splinter documentation](/docs/0.4/).
 
+See [Repositories](/community/repositories.md) for the other
+Splinter repositories in this project.
+
 ## Rust crates
 
 Use the following crates in your Rust project:
