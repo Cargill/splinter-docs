@@ -1,5 +1,11 @@
 # Gameroom
 
+<!--
+  Copyright 2018-2020 Cargill Incorporated
+  Licensed under Creative Commons Attribution 4.0 International License
+  https://creativecommons.org/licenses/by/4.0/
+-->
+
 Gameroom is an example Splinter application that allows you to set up private,
 multi-party circuits (called "gamerooms") and play tic tac toe with shared
 state, as managed by two-phase commit consensus between the participants. This
