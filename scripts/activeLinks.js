@@ -14,15 +14,10 @@
   limitations under the License.
 */
 
-// Set the active links in the navbar, left sidebar, and left
-// sidebar's version dropdown
+// Set the active links in the left sidebar and the left sidebar's version
+// dropdown
 function setActiveLinks() {
     $(document).ready(function () {
-        var navbar_links = $('.navbar-nav a').filter(function() {
-            return window.location.pathname.startsWith(this.getAttribute("href"));
-        }).addClass('active');
-        $(getElementWithLongestPath(navbar_links)).addClass('active');
-
         var left_sidebar_links = $('.left-sidebar-group a').filter(function() {
             return window.location.pathname.startsWith(this.getAttribute("href"));
         });
