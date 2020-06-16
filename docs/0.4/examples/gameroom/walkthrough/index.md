@@ -110,6 +110,7 @@ bookmark. The app starts to load.
 </em>
 </div>
 
+
 ## Act I: Alice and Bob Create a Gameroom
 
 ### Scene 1: Alice logs into Acme's Gameroom application
@@ -124,7 +125,44 @@ Success. The browser now displays the ACME GAMEROOM HOME SCREEN.
 
 ![](./images/acme_gameroom_home_screen.svg "Gameroom app Acme home screen")
 
-## Behind the Scenes: A Look at Act I, Alice and Bob Create a Gameroom
+### Scene 2: Alice creates a new gameroom
+
+Alice sees an empty MY GAMEROOMS sidebar (no gamerooms exist yet). Alice creates
+a new gameroom by clicking on the **+** button next to My Gamerooms.
+
+![](./images/scene2_1.svg "Gamerooms sidebar")
+
+Alice sees the NEW GAMEROOM DIALOG.
+
+![](./images/scene2_2.svg "New Gameroom dialog")
+
+Alice looks at the OTHER ORGANIZATION pulldown list. She
+selects BUBBA BAKERY.
+
+![](./images/scene2_3.svg "New Gameroom dialog organization pulldown list")
+
+Next, she enters a NAME for the new gameroom: Acme + Bubba.
+
+![](./images/scene2_4.svg "New Gameroom dialog completed")
+
+Alice clicks SEND.
+
+The New Gameroom dialog is replaced with the Acme Gameroom home
+screen. A TOAST NOTIFICATION tells Alice that her invitation
+has been sent to Bubba Bakery.
+
+![](./images/scene2_5.svg "Invitation successfully sent notification")
+
+### INTERMISSION
+
+Live performances should include an intermission at this point,
+because there is a lot that just happened (see
+<a href="#gameroom_behind">"Behind the
+Scenes: A Look at Act 1").
+
+<h2 class="gameroom_behind">
+Behind the Scenes: A Look at Act I, Alice and Bob Create a Gameroom
+</h2>
 
 ### I-1. Behind scene 1: Alice logs into Acme's Gameroom UI
 
@@ -233,7 +271,7 @@ The Splinter database has the following entry in the `refresh_tokens` table:
 If the credentials are verified, the Biome REST API will respond with the
 following success response:
 
-``` json
+```
 {
   "message": "Successful login",
   "user_id": "06ff2de0...9243ae2cf3",
@@ -291,7 +329,7 @@ The Splinter database has the following entry in the `keys` table:
 If the associated entry is found in the Splinter database `keys` table, a success
 response with the list of key information is sent back to the Gameroom daemon.
 
-``` json
+```
 {
   "data": [
     {
@@ -312,7 +350,7 @@ the Biome REST API to verify the user, then the authentication was successful.
 The Gameroom REST API sends a response to the Acme UI that contains Alice's
 public key and encrypted private key.
 
-``` json
+```
 {
   "email": "alice@acme.com",
   "public_key": "0384781f...5a7e4998",
@@ -340,7 +378,7 @@ GET /api/gamerooms
 2. This call returns an empty list, since there are no gamerooms in the Acme
 Gameroom's PostgreSQL database.
 
-``` json
+```
 {
   "data": [],
   "paging": {
@@ -370,7 +408,7 @@ GET /api/proposals
 
 2. Because Alice has no invitations, the Gameroom REST API returns an empty list.
 
-``` json
+```
 {
   "data": [],
   "paging": {
@@ -388,3 +426,1079 @@ GET /api/proposals
 
 At this point, Alice sees the Acme Gameroom home screen with no existing
 gamerooms or invitations.
+
+### I-2. Behind scene 2: Alice creates a new gameroom
+
+The Gameroom home screen includes a button to create a new gameroom. When a user
+clicks it, the UI requests the member list (possible other nodes) to use in the
+next dialog.
+
+After the Acme UI has the member list, it displays the "New
+Gameroom" dialog, where Alice can use the members list to select her opponent
+(called _Other organization_ in the dialog), and enter a name for the new
+gameroom. When she clicks **Send**, the Acme UI starts the process of sending
+Bob an invitation to the new gameroom.
+
+A gameroom is enabled by a Splinter _circuit_ that connects two or more systems,
+or _nodes_. A _node registry_ stores a list of nodes that can participate in a
+circuit; the Splinter daemon, `splinterd`, can provide this list of nodes upon
+request. (The Gameroom example creates a node registry that includes the Acme
+and Bubba Bakery nodes.) Splinter uses the term _members_ for the nodes that can
+be connected (or are connected) on a circuit.
+
+A gameroom invitation is also called a circuit proposal. Each gameroom proposal
+requires a vote (an _approval_) from each member, which is handled by two-phase
+commit consensus and a _consensus proposal_. When Alice creates a new gameroom,
+her action automatically includes a vote from her organization (Acme Corporation)
+that approves the creation of that gameroom. Her invitation to Bob, at Bubba's
+Bakery, is actually a request for his organization's vote to approve the new
+circuit.
+
+#### I-2.1. Acme UI loads members list for New Gameroom dialog
+
+First, the Acme Gameroom UI must load the list of members for the "New Gameroom"
+dialog. The general process looks like this:
+
+![](./images/get_nodes_diagram.svg "Splinter daemon loads member list")
+
+1. The UI makes this REST API call to the Gameroom REST API.
+
+    ```GET /nodes```
+
+2. The Gameroom REST API sends a GET request to the `/nodes` endpoint in the
+   Splinter REST API asking for the list of nodes.
+
+3. The Splinter daemon, `splinterd`, fetches the list of nodes from the node
+   registry and sends a response to the Gameroom REST API that includes the
+   requested data. The "list of nodes" response looks like this:
+
+    ```
+    {
+      "data": [
+      {
+        "identity": "bubba-node-000",
+        "metadata": {
+          "organization": "Bubba Bakery",
+          "endpoint": "tls://splinterd-node-bubba:8044"
+        }
+      },
+      {
+        "identity": "acme-node-000",
+        "metadata": {
+          "organization": "ACME Corporation",
+          "endpoint": "tls://splinterd-node-acme:8044",
+        }
+      }
+      ],
+      "paging": {
+        "current": "/nodes?limit=100&offset=0",
+        "offset": 0,
+        "limit": 100,
+        "total": 2,
+        "first": "/nodes?limit=100&offset=0",
+        "prev": "/nodes?limit=100&offset=0",
+        "next": "/nodes?limit=100&offset=0",
+        "last": "/nodes?limit=100&offset=0"
+      }
+    }
+    ```
+
+4. The Gameroom REST API forwards the response to the Acme Gameroom UI, which
+   uses the list of nodes to build the members list in the New Gameroom dialog.
+
+#### I-2.2. Acme UI sends Create Gameroom request to Gameroom REST API
+
+In the New Gameroom dialog, Alice enters a unique name for the gameroom
+(Acme + Bubba) and selects Bubba Bakery from the **Other Organizations** list.
+Then she clicks **Send** to forward her invitation to Bob.
+
+When Alice clicks on the **Send** button, the general process looks like this:
+
+![](./images/create_gameroom_diagram.svg "Splinter daemon retrieves nodes")
+
+The UI sends a "create new gameroom" request to the Gameroom REST API that
+includes the gameroom name (also called an alias) and list of members in the
+proposed gameroom. Each member entry includes the node ID, organization name,
+and endpoint for its Splinter REST API. The request (also called a _proposal_)
+looks like this:
+
+```
+POST /gamerooms/propose
+{
+  "alias": "Acme + Bubba",
+  "members": [
+      {
+      "identity": "bubba-node-000",
+      "metadata": {
+        "organization": "Bubba Bakery",
+        "endpoint": "tls://splinterd-node-bubba:8044",
+        }
+      }],
+}
+```
+
+#### I-2.3. Gameroom REST API sends a `CircuitManagementPayload`
+
+When the Acme Gameroom REST API receives the proposal request, it uses that
+information to create a `​CircuitManagementPayload​`, which will eventually be sent
+to the Acme Splinter daemon. Before sending the proposal request, the Gameroom
+REST API asks the Gameroom UI to sign it with Alice's information.
+
+1. The Gameroom daemon uses the information from the "create new gameroom"
+   request to create a new `​CircuitManagementPayload​`.
+
+    The following example shows a YAML representation of the
+    `CircuitManagementPayload​`.
+
+    ***Application metadata​***:
+    ``` yaml
+    alias: Acme + Bubba ​// Gameroom name chosen by Alice
+    scabbard_admin_keys:
+      - <acme gameroomd public key>
+    ```
+
+    ***Circuit definition​***:
+    ``` yaml
+    circuit_id: gameroom::acme-node-000::bubba-node-000::<UUIDv4>
+    authorization_type: Trust
+    members:
+      - node_id: acme-node-000
+        endpoint: tls://splinterd-node-acme:8044
+      - node_id: bubba-node-000
+        endpoint: tls://splinterd-node-bubba:8044
+    roster:
+      - service_id: gameroom_acme-node-000
+        service_type: scabbard
+        allowed_nodes:
+          - acme-node-000
+        arguments:
+          - peer_services:
+              - gameroom_bubba-node-000
+            admin_keys:
+              - <acme gameroomd public key>
+      - service_id: gameroom_bubba-node-000
+        service_type: scabbard
+        allowed_nodes:
+          - bubba-node-000
+        arguments:
+          - peer_services:
+              - gameroom_acme-node-000
+            admin_keys:
+              - <acme gameroomd public key>
+    circuit_management_type: gameroom
+    application_metadata: <bytes of the application metadata described above>
+    persistence: Any
+    durability: None
+    routes: Any
+    ```
+
+    **Header​**:
+    ``` yaml
+    Action: CIRCUIT_CREATE_REQUEST
+    requester: <public key of requester> ​// left empty by the REST API
+    payload_sha512: <sha512 hash of the circuit definition described above>
+    requester_node_id: acme-node-000
+    ```
+
+    CircuitManagmentPayload​:
+    ```
+    header: <bytes of header described above>
+    circuit_create_request: <circuit definition described above>
+    signature: <signature of bytes of the header> ​// left empty by the​ ​REST API
+    ```
+
+    Note​ that the Gameroom REST API does not fill in the ​requester​ field in the
+    header or the signature in the `​CircuitManagementPayload​`.
+
+2. Before the payload can be sent, the Acme UI must sign the bytes of the
+   CircuitManagementPayload ​header. The Acme Gameroom REST API serializes the
+   payload and sends the bytes as a response to the UI.
+
+    ```
+    {
+      "data": {
+        "payload_bytes": <bytes of the CircuitManagementPayload>
+      }
+    }
+    ```
+
+3. After receiving the response from the Gameroom REST API, the Acme UI
+   deserializes the `CircuitManagementPayload​`. It adds the requester’s public
+   key to the header (in this case, Alice is the requester), serializes the
+   header, signs the header bytes, and adds the signature to the payload.
+   Finally, the UI serializes the complete payload.
+
+4. The Acme UI submits the bytes of the signed payload to the Gameroom REST API.
+
+    ```
+    POST /submit
+    Content-Type: application/octet-stream
+
+    <bytes of the signed CircuitManagementPayload>
+    ```
+
+5. The Acme Gameroom REST API forwards the payload to the Acme Splinter REST API.
+
+    ```
+    POST /admin/submit
+    Content-Type: application/octet-stream
+
+    <bytes of the signed CircuitManagementPayload>
+    ```
+
+6. The Acme Splinter REST API calls the Acme admin service to forward the
+   proposed payload, a `​CircuitManagementPayload​` (described in the next
+   section).
+
+    The protobuf is represented in YAML format:
+    ``` yaml
+    CircuitManagmentPayload:
+      header: <bytes of header described above>
+      circuit_create_request:
+        circuit:
+          gameroom::acme-node-000::bubba-node-000::<UUIDv4>:
+            auth: trust
+            members:
+              acme-node-000:
+                endpoints:
+                  - tls://splinterd-node-acme:8044 bubba-node-000:
+                endpoints:
+                  - tls://splinterd-node-bubba:8044
+            roster:
+              gameroom_acme-node-000:
+                service_type: scabbard
+                allowed_nodes:
+                  - acme-node-000
+                arguments:
+                  - peer_services:
+                      - gameroom_bubba-node-000
+                    admin_keys:
+                      - <acme gameroomd public key>
+              gameroom_bubba-node-000:
+                service_type: scabbard
+                allowed_nodes:
+                  - bubba-node-000
+                arguments:
+                  - peer_services:
+                      - gameroom_acme-node-000
+                    admin_keys:
+                      - <acme gameroomd public key>
+            persistence: any
+            durability: none
+            routes: require_direct
+            circuit_management_type: gameroom
+    signature: <signature of bytes of requested circuit definition>
+    ```
+
+7. The Acme admin service checks that the `​CircuitManagementPayload​` signature
+   is valid by comparing it against the header bytes and the requester public
+   key stored in the header.
+
+8. Because the Acme and Bubba Bakery nodes are not yet peered (do not have an
+   authorized connection on the Splinter network), the ​`CircuitManagmentPayload​`
+   is placed in the "pending payloads" queue for unpeered nodes.
+
+#### I-2.4. Acme node peers with Bubba Bakery node
+
+Before the `​CircuitManagementPayload​` message can be validated, every member of
+the circuit must be connected (peered).
+
+The admin service on the Acme Splinter node (which has the service ID
+`admin::acme-node-000​`) uses a `​PeerConnector​` to request connections with the
+members. The `​PeerConnector​` joins a transport and a network in order to enable
+adding peers at runtime, without having knowledge of the underlying transport.
+
+1. Acme's admin service calls `​PeerConnector.connect​` with the node ID and the
+   endpoint listed in the proposed circuit. If the node is already connected, the
+   peer connector returns "​Ok​". If the node is not connected, the peer connector
+   creates the connection and, if successful, adds the connection to the Splinter
+   network.
+
+2. After the connection has been created, a message exchange starts for peer
+   authorization (described in ​Appendix A​).
+
+3. When peer authorization succeeds, the Acme admin service is notified that the
+   Bubba Bakery node (`​bubba-node-000​`) has been successfully authorized. Acme
+   and Bubba are now peers.
+
+4. The `​CircuitManagmentPayload​` is removed from the "pending payloads" queue
+   and is passed to the admin service handler for pending circuit payloads.
+
+#### I-2.5. Splinter daemons use consensus to process the circuit request
+
+At this point, the circuit proposal is ready to be validated and approved (voted
+on with two-phase commit consensus), as described in ​Appendix B.​
+
+During this process, the admin services on both nodes (`​admin::acme-node-000​`
+and `admin::bubba-node-000​`) must agree that the `​CircuitManagementPayload​`,
+which includes `CircuitCreateRequest​`, is a valid request. Consensus manages
+each node's approval of the proposal.
+
+##### I-2.5.1. Acme node validates the CircuitManagmentPayload
+
+1. The Acme admin service verifies that the `​CircuitManagementPayload​` and the
+   included `CircuitCreateRequest​` are valid.
+
+    a. A `​CircuitManagementPayload​` request is valid if the following things are
+       true:
+
+      * The `​CircuitManagementPayload​` must contain a header and signature in
+        bytes.
+
+      * The header in the payload must contain an action enum value, the public
+        key of the requester, and hash of the action associated with the payload.
+
+      * The action in the `​CircuitManagementPayload​` must match the enum action
+        in the payload.
+
+      * The signature must be valid for the bytes of the header and the requester
+        public key stored in the header.
+
+    b. The provided payload (a `​CircuitCreateRequest​`) is valid if the following
+       things are true:
+
+      * The new circuit has a unique name (the node is not part of an existing
+        circuit with that name). Circuit names do not need to be unique across
+        all Splinter nodes. Two sets of nodes can use the same circuit name if
+        there is no overlap in members in the circuit.
+
+      * The circuit definition includes the node ID in the circuit member list.
+
+      * For each service, every node in the service's allowed node list is also
+        present in the circuit member list.
+
+      * There is no other pending proposal for a circuit with the same name.
+
+      * The requester is registered for the Splinter node whose ID is in the
+        `requester_node_id​` field of the `​CircuitManagementPayload​` header. The
+        requester is identified by the public key of the person who requested
+        the new gameroom (in this example, Alice).
+
+      * The requester has permission to submit circuit proposals from that
+        Splinter node.
+
+      To verify the node's public key and proposal permission, the admin service
+      checks the key registry and key permissions manager.
+
+      * The key registry provides a way to look up details about a public key
+        used to sign a circuit proposal: the requester node ID (the "home node"
+        of the requester and location of that user's public key) and arbitrary
+        metadata (represented as key/value string pairs).
+
+      * The key permissions manager checks that a public key is authorized in a
+        specific role. In the case of "create circuit" requests, the signing
+        public key must be authorized for the "proposal" role.
+
+2. If the request is valid, the Acme admin service creates a `​CircuitProposal​`
+   and stores it in the `​AdminServiceShared.pending_changes​` field. The protobuf
+   is represented in YAML format.
+
+    ``` yaml
+    CircuitProposal:
+      proposal_type: CREATE
+      circuit_id: gameroom::acme-node-000::bubba-node-000::<UUIDv4>:
+      circuit_hash: <hash of circuit>
+      circuit_proposal:
+        circuit:
+          gameroom::acme-node-000::bubba-node-000::<UUIDv4>:
+            auth: trust
+            members:
+              acme-node-000:
+                endpoints:
+                  - tls://splinterd-node-acme:8044
+              bubba-node-000:
+                endpoints:
+                  - tls://splinterd-node-bubba:8044
+            roster:
+              gameroom_acme-node-000:
+                service_type: scabbard
+                allowed_nodes:
+                  - acme-node-000
+                arguments:
+                  - peer_services:
+                      - gameroom_bubba-node-000
+                    admin_keys:
+                      - <acme gameroomd public key>
+              gameroom_bubba-node-000:
+                service_type: scabbard
+                allowed_nodes:
+                  - acme-node-000
+                arguments:
+                  - peer_services:
+                      - gameroom_acme-node-000
+                    admin_keys:
+                      - <acme gameroomd public key>
+            persistence: any
+            durability: none
+            routes: require_direct
+    votes: []
+    requester: <public key of requester>
+    requester_node_id: acme-node-000
+    ```
+
+3. The Acme admin service creates a consensus proposal (a `​Proposal​` struct)
+  with the following contents:
+
+   * Proposal ID: the expected hash of the `​CircuitManagementPayload​` bytes
+
+   * Summary: the expected hash of the created `​CircuitProposal`
+
+   * List of required verifiers
+
+    An admin service running on a Splinter node does not have a fixed (static)
+    list of required verifiers (services that must agree on a proposal through
+    consensus). Instead, the admin service specifies the required verifiers as a
+    list of admin service IDs that belong to the members of the proposed circuit,
+    using a protobuf message called `​RequiredVerifiers​`. This list is stored in
+    the consensus data of the consensus proposal.
+
+    The following protobuf, which is represented in YAML format, shows the
+    consensus proposal.
+
+    ``` yaml
+    required_verifiers:
+      verifiers:
+        - <admin::acme-node-000asbytes>
+        - <admin::bubba-node-000asbytes>
+
+    proposal:
+       id: <hash of CircuitManagementPayload bytes>
+       summary: <expected hash of the create CircuitProposal>
+       consensus_data: <bytes of required verifiers>
+    ```
+
+##### I-2.5.2. Acme node sends Circuit Create request to Bubba Bakery node
+
+After the Acme node creates the `​CircuitProposal​`, the `​CircuitManagmentPayload​`
+is sent to the other members defined in the circuit. In this case, the only
+member is the admin service on the Bubba Bakery node.
+
+1. First, the Acme admin service wraps `​CircuitManagementPayload​` in a series of
+   messages to prepare it for sending across the Splinter network.
+
+    a. The payload is wrapped in an `​AdminMessage​`, which is a service-level
+       message. The protobuf is represented in YAML format.
+
+    ``` yaml
+    admin_message:
+      message_type: PROPOSED_CIRCUIT,
+      propose_circuit:
+        circuit_payload: <circuit_managment_payload>
+        expected_hash: <expected hash of CircuitProposal generated by payload>
+        required_verifiers: < bytes of the required verifiers from proposal>
+    ```
+
+    b. The `​AdminMessage` ​is then wrapped in an `​AdminDirectMessage​`, which
+       enables the message to be sent over the Splinter network from Acme's
+       admin service to the Bubba Bakery admin service (which has the service ID
+       `​admin::bubba-node-000​`).
+
+    ``` yaml
+    admin_direct_message:
+      circuit: admin
+      sender: admin::acme-node-000
+      recipient: admin::bubba-node-000
+      payload: <serialized admin message>
+      correlation_id: 6f04e471-f33a-4f9f-ad6f-5f80ab627133
+    ```
+
+    c. Next, the `​AdminDirectMessage​` is wrapped in a `​CircuitMessage​`, which
+       is the envelope that wraps all circuit-specific messages, such as direct
+       messages and service connections.
+
+    ``` yaml
+    circuit_message:
+      message_type: ADMIN_DIRECT_MESSAGE
+      payload: <serialized admin_direct_message>
+    ```
+
+    d. In order to hide circuits from the network layer, which can be used without
+       circuits, the `CircuitMessage​` is wrapped in a `​NetworkMessage​`.
+
+    ``` yaml
+    network_message:
+      message_type: CIRCUIT
+      payload: <serialized circuit_message>
+    ```
+
+2. The Acme admin service sends this message over the admin circuit to the Bubba
+   Bakery Splinter node.
+
+##### I-2.5.3. Bubba Bakery node receives Circuit Create request from Acme node
+
+The Bubba Bakery Splinter node receives the network message from the Acme node
+and starts the process of "unwrapping" the message with a series of dispatchers.
+
+1. A dispatcher takes the message and passes it to the correct message handler
+   based on the message type of the message. Each dispatcher either handles the
+   message or forwards the message onto the next dispatcher.
+
+    a. The Bubba Bakery Splinter node passes the `​NetworkMessage​` to the network
+       dispatcher.
+
+    b. The network dispatcher unwraps the `​NetworkMessage​` to get the
+       `CircuitMessage​`, then sends it to the circuit dispatcher.
+
+    c. The circuit dispatcher unwraps the `​CircuitMessage​` to get the
+       `AdminDirectMessage​`, then passes it to the circuit handler for this type
+       of message, `​AdminDirectMessageHandler​`.
+
+2. The `​AdminDirectMessageHandler​` checks whether the `​AdminDirectMessage​` is
+   valid. An `​AdminDirectMessage​` message is valid if both the sender and the
+   recipients of the message are admin services (the service ID of each is of
+   the form `​admin::<node_id>`​).
+
+3. If the `​AdminDirectMessage​` message is valid, the `A​dminDirectMessageHandler​`
+   forwards it to the Bubba Bakery admin service.
+
+4. The Bubba Bakery admin service takes the `​AdminMessage​` out of the
+   `​AdminDirectMessage` and inspects the `​AdminMessage​` to see if it contains
+   `​AdminMessage::ProposedCircuit​`.
+
+    If so, the admin service takes the `​CircuitManagmentPayload​` out of the
+    `​ProposedCircuit` message and passes it to
+    `​AdminServiceShared.pending_circuit_payloads`.
+
+##### I-2.5.4. Bubba Bakery node validates CircuitManagementPayload
+
+The Bubba Bakery admin service validates the `​CircuitManagementPayload​` using the
+same steps as in ​section I-2.5.1​.
+
+1. The admin service verifies that the `​CircuitManagementPayload​` and the
+   included `CircuitCreateRequest​` are valid. (For details, see ​section I-2.5.1,
+   step 1​.)
+
+2. If the request is valid, the admin service creates a `​CircuitProposal​` and
+   stores it in the `AdminServiceShared.pending_changes​` field (see ​section
+   I-2.5.1, step 2​).
+
+3. The admin service creates a consensus proposal (a `​Proposal​` struct) with the
+   proposal ID, summary, and the list of required verifiers. For more
+   information, see ​section I-2.5.1, step 3​.
+
+##### I-2.5.5. Acme and Bubba Bakery reach consensus
+
+When the admin services have validated the proposal and consensus has reached
+agreement, consensus will notify the admin services to commit the proposal. See ​
+Appendix B​ for more information about consensus.
+
+#### I-2.6. Admin services commit pending circuit proposal
+
+After the consensus notification, both admin services commit the
+`​CircuitProposal​`. Now the new circuit is officially pending, which means that
+the `​CircuitProposal​` is stored in the admin services' state but the circuit is
+not yet available for communication. A pending circuit proposal is also called
+an "open circuit proposal".
+
+In the Gameroom example, the pending circuit ID specifies the application, the
+member nodes, and a version 4 UUID, as in this example:
+
+`gameroom::​acme-node-000​::bubba-node-000::<UUIDv4>`
+
+#### I-2.7. Admin services notify authorization handler of pending circuit proposal
+
+1. After the circuit proposal has been committed, the admin service on each node
+   checks if there are any registered application authorization handlers for the
+   circuit management type in the proposed circuit
+   (​`gameroom::acme-node-000::bubba-node-000::<UUIDv4>`​). See The Prequel,
+   section P.3​, for more information on the registration process.
+
+   An application authorization handler manages the voting strategy for the
+   application and notifies the application of any events received from the
+   admin service of the local Splinter node. This handler registers with an
+   admin service for a specific circuit management type (also described in
+   ​The Prequel, section P.3​).
+
+2. If there are any registered application authorization handlers for the
+   proposed circuit management type, each admin service forwards the request
+   to the local connected Gameroom application authorization handler.
+
+   The notification is sent on a WebSocket connection.
+
+```
+{
+"eventType": "ProposalSubmitted",
+"message": {
+  "proposal_type": "Create",
+  "circuit_id": "gameroom::acme-node-000::bubba-node-000::<UUIDv4>",
+  "circuit_hash": "...",
+  "circuit": {
+    "circuit_id":"gameroom::acme-node-000::bubba-node-000::<UUIDv4>",
+    "authorization_type": "Trust",
+    "members": [{
+      "node_id": "acme-node-000",
+      "endpoint": "tls://splinterd-node-acme:8044"
+      },
+    {
+      "node_id": "bubba-node-000",
+      "endpoint": "tls://splinterd-node-bubba:8044"
+      }
+    ],
+    "roster": [{
+      "service_id": "gameroom_acme-node-000",
+      "service_type": "scabbard",
+      "allowed_nodes": [ "acme-node-000" ],
+      "arguments": {
+        "peer_services": [ "gameroom_bubba-node-000" ],
+        "admin_keys": [
+          <acme gameroomd public key>
+          ]
+        }
+      },
+      {
+        "service_id": "gameroom_bubba-node-000",
+        "service_type": "scabbard",
+        "allowed_nodes": [ "bubba-node-000" ],
+        "arguments": {
+          "peer_services": [ "gameroom_acme-node-000" ],
+          "admin_keys": [
+            <acme gameroomd public key>
+            ]
+          }
+        }
+      ],
+      "circuit_management_type": "gameroom",
+      "application_metadata":​ <metadata bytes defined by the application>​,
+      "persistence": "Any",
+      "durability": "None",
+      "routes": "Any",
+    },
+    "vote_record": [{}],
+    "requester": "public_key_of_requester",
+    "requester_node_id": "acme-node-000"
+  }
+}
+```
+
+#### I-2.8. Gameroom daemons write notification to Gameroom database
+
+When each Gameroom application authorization handler receives the gameroom
+proposal on the WebSocket connection, it parses the information and adds it to
+several tables in the Gameroom daemon's local database: `​gameroom​`, ​
+`gameroom_member​`, `​gameroom_service​`, `gameroom_proposal​`, and
+`​gameroom_notification​`.
+
+##### I-2.8.1. New `gameroom` table entry
+
+First, the Gameroom application authorization handler adds a new entry to the
+​gameroom​ table. This table contains the information about the circuit
+definition, including the data that was passed in the ​application_metadata​ field.
+
+``` sql
+CREATE TABLE IF NOT EXISTS  gameroom (
+  circuit_id TEXT PRIMARY KEY,
+  authorization_type TEXT NOT NULL,
+  persistence TEXT NOT NULL,
+  routes TEXT NOT NULL,
+  durability TEXT NOT NULL,
+  circuit_management_type TEXT NOT NULL,
+  alias TEXT NOT NULL,
+  status TEXT NOT NULL,
+  created_time TIMESTAMP NOT NULL,
+  updated_time TIMESTAMP NOT NULL,
+);
+```
+
+* `circuit_id`, `authorization_type`, `persistence`, `routes`, `durability`,​ and
+  `circuit_management_type` ​are extracted directly from the circuit proposal
+  message that is received from the Splinter daemon.
+
+* `alias​​` is extracted by deserializing the application metadata in the circuit
+  proposal message. The _alias_ is the gameroom name that Alice entered when
+  creating the gameroom in the Acme UI.
+
+* `status​` identifies the current status of the gameroom. In this case, it is
+  set to ​pending because the proposal to create this gameroom has not yet been
+  accepted.
+
+* `created_time` is when the gameroom entry was introduced in the table.
+
+* `updated_time` is when the gameroom entry was last updated.
+
+At the end of the operation, the `​gameroom​` table looks like this:
+
+<table class ="gameroom_db_table" border="1">
+  <tr class="gameroom_db_headers">
+    <th><code>circuit_id</code></th>
+    <th><code>authorization_type</code></th>
+    <th><code>persistence</code></th>
+    <th><code>routes</code></th>
+    <th><code>durability</code></th>
+  </tr>
+  <tr class="gameroom_db_data">
+    <td><code>gameroom::acme-node-000::bubba-node-000::<i>UUIDv4</i></code></td>
+    <td><code>Trust</code></td>
+    <td><code>Any</code></td>
+    <td><code>Any</code></td>
+    <td><code>None</code></td>
+  </tr>
+  <tr>
+    <th><code>circuit_management_type</code></th>
+    <th><code>alias</code></th>
+    <th><code>status</code></th>
+    <th><code>created_time</code></th>
+    <th><code>updated_time</code></th>
+  </tr>
+  <tr>
+    <td><code>gameroom</code></td>
+    <td><code>Acme + Bubba</code></td>
+    <td><code>pending</code></td>
+    <td class="gameroom_placeholder"><code>time entry was created</code></td>
+    <td class="gameroom_placeholder"><code>time entry was updated</code></td>
+  </tr>
+</table>
+
+##### I-2.8.2. New `gameroom_member` table entry
+
+Next, the Gameroom application authorization handler adds a new entry to the
+`gameroom_member​` table. This table contains the information about the members
+of the circuit.
+
+``` sql
+CREATE TABLE IF NOT EXISTS  gameroom_member (
+  id BIGSERIAL PRIMARY KEY,
+  circuit_id TEXT NOT NULL,
+  node_id TEXT NOT NULL,
+  endpoint TEXT NOT NULL,
+  status TEXT NOT NULL,
+  created_time TEXT NOT NULL,
+  updated_time TEXT NOT NULL,
+  status TEXT NOT NULL,
+  FOREIGN KEY (circuit_id) REFERENCES gameroom(circuit_id) ON DELETE CASCADE
+);
+```
+
+* `circuit_id`, `node_id`,​ and `e​ndpoint` ​are extracted directly from the
+  circuit proposal message received from the Splinter daemon.
+
+* `status` identifies the current status of the member. In this case, it is set
+  to `pending` because the proposal to create the gameroom has not yet been
+  accepted.
+
+* `created_time` is when the gameroom member entry was introduced in the table.
+
+* `updated_time` is when the gameroom member entry was last updated.
+
+At the end of the operation, the `​gameroom_member​` table looks like this:
+
+<table class ="gameroom_db_table" border="1">
+  <tr class="gameroom_db_headers">
+    <th><code>id</code></th>
+    <th><code>circuit_id</code></th>
+    <th><code>node_id</code></th>
+  </tr>
+  <tr class="gameroom_db_data">
+    <td class="gameroom_placeholder"><code>auto generated id</code></td>
+    <td><code>gameroom::acme-node-000::bubba-node-000::<i>UUIDv4</i></code></td>
+    <td><code>acme-node-000</code></td>
+  </tr>
+  <tr class="gameroom_db_data">
+    <td class="gameroom_placeholder"><code>auto generated id</code></td>
+    <td><code>gameroom::acme-node-000::bubba-node-000::<i>UUIDv4</i></code></td>
+    <td><code>bubba-node-000</code></td>
+  </tr>
+  <tr class="gameroom_db_headers">
+    <th><code>endpoint</code></th>
+    <th><code>status</code></th>
+    <th><code>created_time</code></th>
+  </tr>
+  <tr>
+    <td><code>tls://splinterd-node-acme:8044</code></td>
+    <td><code>pending</code></td>
+    <td class="gameroom_placeholder"><code>time entry was created</code></td>
+  </tr>
+  <tr>
+    <td><code>tls://splinterd-node-bubba:8044</code></td>
+    <td><code>pending</code></td>
+    <td class="gameroom_placeholder"><code>time entry was created</code></td>
+  </tr>
+  <tr class="gameroom_db_headers">
+    <th><code>updated_time</code></th>
+  </tr>
+  <tr>
+    <td class="gameroom_placeholder"><code>time entry was updated</code></td>
+  </tr>
+  <tr>
+    <td class="gameroom_placeholder"><code>time entry was updated</code></td>
+  </tr>
+</table>
+
+##### I-2.8.3. New `gameroom_service` table entry
+
+The Gameroom application authorization handler adds a new entry to the
+`​gameroom_service` table, which contains the information about the services of
+the circuit.
+
+``` sql
+CREATE TABLE IF NOT EXISTS  gameroom_service (
+  id BIGSERIAL PRIMARY KEY,
+  circuit_id TEXT NOT NULL,
+  service_id TEXT NOT NULL,
+  service_type TEXT NOT NULL,
+  allowed_nodes TEXT[][] NOT NULL,
+  arguments JSON [] NOT NULL,
+  status TEXT NOT NULL,
+  created_time TIMESTAMP NOT NULL,
+  updated_time TIMESTAMP NOT NULL,
+  FOREIGN KEY (circuit_id) REFERENCES gameroom(circuit_id) ON DELETE CASCADE
+);
+```
+
+* `circuit_id`, `service_id`, `service_type`, `arguments` and `allowed_nodes`
+  are extracted directly from the circuit proposal message received from the
+  Splinter daemon.
+
+* `status` identifies the current status of the service. In this case, it is set
+  to `pending` because the proposal to create the gameroom has not yet been
+  accepted.
+
+* `created_time` is when the gameroom service entry was introduced in the table.
+
+* `updated_time` is when the gameroom service entry was last updated.
+
+At the end of the operation, the `gameroom_service` table looks like this:
+
+<table class ="gameroom_db_table" border="1">
+  <tr class="gameroom_db_headers">
+    <th><code>id</code></th>
+    <th><code>circuit_id</code></th>
+    <th><code>service_type</code></th>
+  </tr>
+  <tr class="gameroom_db_data">
+    <td class="gameroom_placeholder"><code>auto generated id</code></td>
+    <td><code>gameroom::acme-node-000::bubba-node-000::<i>UUIDv4</i></code></td>
+    <td><code>scabbard</code></td>
+  </tr>
+  <tr class="gameroom_db_data">
+    <td class="gameroom_placeholder"><code>auto generated id</code></td>
+    <td><code>gameroom::acme-node-000::bubba-node-000::<i>UUIDv4</i></code></td>
+    <td><code>scabbard</code></td>
+  </tr>
+  <tr class="gameroom_db_headers">
+    <th><code>service_id</code></th>
+    <th><code>allowed_nodes</code></th>
+    <th><code>arguments</code></th>
+  </tr>
+  <tr>
+    <td><code>gameroom_acme-node-000</code></td>
+    <td><code>{"acme-node-000"}</code></td>
+    <td><code>"peer_services": [ "gameroom_bubba-node-000" ], "admin_keys": ....</code></td>
+  </tr>
+  <tr>
+    <td><code>gameroom_bubba-node-000</code></td>
+    <td><code>{"bubba-node-000"}</code></td>
+    <td><code>"peer_services": [ "gameroom_acme-node-000" ], "admin_keys": ....</code></td>
+  </tr>
+  <tr class="gameroom_db_headers">
+    <th><code>status</code></th>
+    <th><code>last_event</code></th>
+    <th><code>created_time</code></th>
+  </tr>
+  <tr>
+    <td><code>pending</code></td>
+    <td class="gameroom_placeholder"><code>last state change event</code></td>
+    <td class="gameroom_placeholder"><code>time entry was created</code></td>
+  </tr>
+  <tr>
+    <td><code>pending</code></td>
+    <td class="gameroom_placeholder"><code>last state change event</code></td>
+    <td class="gameroom_placeholder"><code>time entry was created</code></td>
+  </tr>
+  <tr class="gameroom_db_headers">
+    <th><code>updated_time</code></th>
+  </tr>
+  <tr>
+    <td class="gameroom_placeholder"><code>time entry was updated</code></td>
+  </tr>
+  <tr>
+    <td class="gameroom_placeholder"><code>time entry was updated</code></td>
+  </tr>
+</table>
+
+##### I-2.8.4. New `gamerooom_proposal` table entry
+
+The Gameroom application authorization handler adds a new entry to the
+`gameroom_proposal` table, which contains the information about the gameroom
+proposal.
+
+``` sql
+CREATE TABLE IF NOT EXISTS  gameroom_proposal (
+  id BIGSERIAL PRIMARY KEY,
+  proposal_type TEXT NOT NULL,
+  circuit_id TEXT NOT NULL,
+  circuit_hash TEXT NOT NULL,
+  requester TEXT NOT NULL,
+  requester_node_id TEXT NOT NULL,
+  status TEXT NOT NULL,
+  created_time TIMESTAMP NOT NULL,
+  updated_time TIMESTAMP NOT NULL,
+  FOREIGN KEY (circuit_id) REFERENCES gameroom(circuit_id) ON DELETE CASCADE
+);
+```
+
+* `circuit_id`, `proposal_type`, `circuit_hash`, `requester` and
+  `requester_node_id` are extracted directly from the circuit proposal message
+  received from the Splinter daemon.
+
+* `status` identifies the current status of the proposal. In this case, it is
+  set to `pending` because the proposal to create the gameroom has not yet been
+  accepted.
+
+* `created_time` is when the gameroom proposal entry was introduced in the table.
+
+* `updated_time` is when the gameroom proposal entry was last updated.
+
+At the end of the operation, the `​gameroom_proposal​` table looks like this:
+
+
+<table class ="gameroom_db_table" border="1">
+  <tr class="gameroom_db_headers">
+    <th><code>id</code></th>
+    <th><code>circuit_id</code></th>
+    <th><code>proposal_type</code></th>
+  </tr>
+  <tr class="gameroom_db_data">
+    <td class="gameroom_placeholder"><code>auto generated id</code></td>
+    <td><code>gameroom::acme-node-000::bubba-node-000::<i>UUIDv4</i></code></td>
+    <td><code>Create</code></td>
+  </tr>
+  <tr class="gameroom_db_headers">
+    <th><code>circuit_hash</code></th>
+    <th><code>requester</code></th>
+    <th><code>requester_node_id</code></th>
+  </tr>
+  <tr>
+    <td class="gameroom_placeholder"><code>hash of circuit definition</code></td>
+    <td class="gameroom_placeholder"><code>public key of requester</code></td>
+    <td><code>acme-node-000</code></td>
+  </tr>
+  <tr class="gameroom_db_headers">
+    <th><code>status</code></th>
+    <th><code>created_time</code></th>
+    <th><code>updated_time</code></th>
+  </tr>
+  <tr>
+    <td><code>pending</code></td>
+    <td class="gameroom_placeholder"><code>time entry was created</code></td>
+    <td class="gameroom_placeholder"><code>time entry was updated</code></td>
+  </tr>
+</table>
+
+##### I-2.8.5. New `gameroom_notification` table entry
+
+Finally, the Gameroom application authorization handler adds a new entry to the
+`gameroom_notification​` table. This table contains information about events that
+the UI would like to notify the users about.
+
+``` sql
+CREATE TABLE IF NOT EXISTS  gameroom_notification (
+  id BIGSERIAL PRIMARY KEY,
+  notification_type TEXT NOT NULL,
+  requester TEXT NOT NULL,
+  requester_node_id TEXT NOT NULL,
+  target TEXT NOT NULL,
+  created_time TIMESTAMP NOT NULL,
+  read BOOLEAN NOT NULL,
+);
+```
+
+* `notification_type` identifies the type of event that generated this
+  notification (in this case, a `gameroom_proposal` event).
+
+* `requester` identifies the public key of the user that generated the event
+  (in this case, Alice's public key).
+
+* `target` is the identifier for the resource that was affected by the event
+  (in this case, the `circuit_id`).
+
+* `created_time` is when the notification entry was introduced in the table.
+
+* `updated_time` is when the notification entry was last updated.
+
+At the end of the operation, the `gameroom_notification` table looks like this:
+
+
+<table class ="gameroom_db_table" border="1">
+  <tr class="gameroom_db_headers">
+    <th><code>id</code></th>
+    <th><code>notification_type</code></th>
+    <th><code>requester</code></th>
+    <th><code>requester_node_id</code></th>
+  </tr>
+  <tr class="gameroom_db_data">
+    <td class="gameroom_placeholder"><code>auto generated id</code></td>
+    <td><code>gameroom_proposal</code></td>
+    <td class="gameroom_placeholder"><code>Alice's public key</code></td>
+    <td><code>acme-node-000</code></td>
+  </tr>
+  <tr class="gameroom_db_headers">
+    <th><code>target</code></th>
+    <th><code>created_time</code></th>
+    <th><code>read</code></th>
+  </tr>
+  <tr>
+    <td><code>gameroom::acme-node-000::bubba-node-000::<i>UUIDv4</i></code></td>
+    <td class="gameroom_placeholder"><code>time entry was created</code></td>
+    <td><code>f</code></td>
+  </tr>
+</table>
+
+#### I-2.9. Alice sees notification that gameroom invitation was sent
+
+1. After the Acme Gameroom application authorization handler fills in the
+   `gameroom_notification​` table, the Acme Gameroom REST API uses a WebSocket
+   connection to tell the Acme UI about the new notification.
+
+    ```
+    {
+      "namespace": "notifications",
+      "action": "listNotifications"
+    }
+    ```
+
+2. When the Acme UI receives that message, it sends a request to the Gameroom
+   REST API to fetch a list of unread notifications from the database tables.
+
+    `GET /notifications`
+
+3. The Acme Gameroom REST API responds with the list of unread notifications.
+
+    ```
+    {
+      "data": [
+        {
+          "id": <auto generated id>,
+          "notification_type": "gameroom_proposal",
+          "requester": <Alice’s public key>,
+          "node_id": "acme-node-000",
+          "target": "gameroom::acme-node-000::bubba-node-000::<UUIDv4>",
+          "timestamp": <time entry was created>,
+          "read": false
+        }
+      ],
+      "paging": {
+        "current": "api/notifications?limit=100&offset=0",
+        "offset": 0,
+        "limit": 100,
+        "total": 1,
+        "first": "api/notifications?limit=100&offset=0",
+        "prev": "api/notifications?limit=100&offset=0",
+        "next": "api/notifications?limit=100&offset=0",
+        "last": "api/notifications?limit=100&offset=0"
+      }
+    }
+    ```
+
+4. The Acme UI updates its internal store with the new list of notifications.
+   The notification that the user sees depends on whether they're the requester
+   or an invitee.
+
+    * For the requester (Alice), the Acme UI displays a toast notification
+      saying that the invitation has been sent.
+
+    * An invitee sees a bell notification icon with number (a red badge that
+      shows the number of unread notifications). If an invitee is not logged in,
+      the notification will appear on the Gameroom home screen when the user
+      logs in. For example, when Bob logs in, the Bubba Bakery UI will request
+      the list so it can display the notification icon and the number on the
+      home screen.
