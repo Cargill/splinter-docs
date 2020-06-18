@@ -19,3 +19,8 @@ forum.
 
   A new design of the Canopy system that enables dynamic loading of saplings and
   improved inter-sapling communication.
+
+* [PeerManager]({% link community/planning/peer_manager.md %})
+
+  The `PeerManager` is in charge of keeping track of peers and their reference
+  counts, as well as requesting connections from the `ConnectionManager`.
