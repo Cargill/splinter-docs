@@ -279,6 +279,11 @@ h3 {
     scroll-margin-top: 82px;
 }
 
+h4 {
+    font-size: 1.15rem;
+    margin-bottom: 20px;
+}
+
 /* Landing Page Styles */
 
 #release-banner {
