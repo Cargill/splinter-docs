@@ -1,0 +1,454 @@
+<!--
+  Copyright 2018-2020 Cargill Incorporated
+  Licensed under Creative Commons Attribution 4.0 International License
+  https://creativecommons.org/licenses/by/4.0/
+-->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xl="http://www.w3.org/1999/xlink" xmlns:dc="http://purl.org/dc/elements/1.1/" version="1.1" viewBox="-794 -208 1985 1242" width="1985" height="1242">
+  <defs>
+    <font-face font-family="Helvetica Neue" font-size="16" panose-1="2 0 5 3 0 0 0 2 0 4" units-per-em="1000" underline-position="-100" underline-thickness="50" slope="0" x-height="517" cap-height="714" ascent="951.9958" descent="-212.99744" font-weight="400">
+      <font-face-src>
+        <font-face-name name="HelveticaNeue"/>
+      </font-face-src>
+    </font-face>
+    <marker orient="auto" overflow="visible" markerUnits="strokeWidth" id="FilledArrow_Marker" stroke-linejoin="miter" stroke-miterlimit="10" viewBox="-1 -2 5 4" markerWidth="5" markerHeight="4" color="black">
+      <g>
+        <path d="M 2.6666667 0 L 0 -1 L 0 1 Z" fill="currentColor" stroke="currentColor" stroke-width="1"/>
+      </g>
+    </marker>
+    <marker orient="auto" overflow="visible" markerUnits="strokeWidth" id="FilledArrow_Marker_2" stroke-linejoin="miter" stroke-miterlimit="10" viewBox="-4 -2 5 4" markerWidth="5" markerHeight="4" color="black">
+      <g>
+        <path d="M -2.6666667 0 L 0 1 L 0 -1 Z" fill="currentColor" stroke="currentColor" stroke-width="1"/>
+      </g>
+    </marker>
+    <marker orient="auto" overflow="visible" markerUnits="strokeWidth" id="FilledArrow_Marker_3" stroke-linejoin="miter" stroke-miterlimit="10" viewBox="-1 -4 10 8" markerWidth="10" markerHeight="8" color="black">
+      <g>
+        <path d="M 8 0 L 0 -3 L 0 3 Z" fill="currentColor" stroke="currentColor" stroke-width="1"/>
+      </g>
+    </marker>
+    <marker orient="auto" overflow="visible" markerUnits="strokeWidth" id="FilledArrow_Marker_4" stroke-linejoin="miter" stroke-miterlimit="10" viewBox="-9 -4 10 8" markerWidth="10" markerHeight="8" color="black">
+      <g>
+        <path d="M -8 0 L 0 3 L 0 -3 Z" fill="currentColor" stroke="currentColor" stroke-width="1"/>
+      </g>
+    </marker>
+    <font-face font-family="Helvetica Neue" font-size="25" panose-1="2 0 5 3 0 0 0 2 0 4" units-per-em="1000" underline-position="-100" underline-thickness="50" slope="0" x-height="517" cap-height="714" ascent="951.9958" descent="-212.99744" font-weight="400">
+      <font-face-src>
+        <font-face-name name="HelveticaNeue"/>
+      </font-face-src>
+    </font-face>
+    <font-face font-family="Helvetica Neue" font-size="11" panose-1="2 0 5 3 0 0 0 2 0 4" units-per-em="1000" underline-position="-100" underline-thickness="50" slope="0" x-height="517" cap-height="714" ascent="951.9958" descent="-212.99744" font-weight="400">
+      <font-face-src>
+        <font-face-name name="HelveticaNeue"/>
+      </font-face-src>
+    </font-face>
+  </defs>
+  <metadata> Produced by OmniGraffle 7.16
+    <dc:date>2020-06-17 16:14:14 +0000</dc:date>
+  </metadata>
+  <g id="Canvas_1" stroke-dasharray="none" fill="none" stroke-opacity="1" fill-opacity="1" stroke="none">
+    <title>Canvas 1</title>
+    <rect fill="white" x="-794" y="-208" width="1985" height="1242"/>
+    <g id="Canvas_1: Layer 1">
+      <title>Layer 1</title>
+      <g id="Graphic_210">
+        <rect x="-793" y="-207" width="1483" height="955" fill="white"/>
+        <path d="M -793 -207 L 690 -207 L 690 748 L -793 748 Z" stroke="#8d0309" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="8.0,4.0,1.0,4.0" stroke-width="1"/>
+        <text transform="translate(-788 724.552)" fill="#8d0309">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="#8d0309" x="0" y="15">Main Thread</tspan>
+        </text>
+      </g>
+      <g id="Graphic_209">
+        <rect x="-723" y="-144.94229" width="1338" height="855.3" fill="white"/>
+        <rect x="-723" y="-144.94229" width="1338" height="855.3" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_208">
+        <rect x="-655" y="30.505712" width="238" height="360.5577" fill="white"/>
+        <path d="M -655 30.505712 L -417 30.505712 L -417 391.06343 L -655 391.06343 Z" stroke="#8d0309" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="8.0,4.0,1.0,4.0" stroke-width="1"/>
+        <text transform="translate(-650 367.61543)" fill="#8d0309">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="#8d0309" x="0" y="15">Admin Service</tspan>
+        </text>
+      </g>
+      <g id="Graphic_207">
+        <rect x="-177.479" y="28.057714" width="218" height="339" fill="white"/>
+        <path d="M -177.479 28.057714 L 40.521 28.057714 L 40.521 367.0577 L -177.479 367.0577 Z" stroke="#8d0309" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="8.0,4.0,1.0,4.0" stroke-width="1"/>
+        <text transform="translate(-172.479 343.6097)" fill="#8d0309">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="#8d0309" x="0" y="15">Peer Manager</tspan>
+        </text>
+      </g>
+      <g id="Graphic_206">
+        <title>Connection Manager</title>
+        <rect x="-629.5" y="40.557714" width="187" height="304.5" fill="white"/>
+        <rect x="-629.5" y="40.557714" width="187" height="304.5" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_205">
+        <title>Connection Manager</title>
+        <rect x="-168.5" y="34.557714" width="187" height="304.5" fill="white"/>
+        <rect x="-168.5" y="34.557714" width="187" height="304.5" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_204">
+        <title>Connection Manager</title>
+        <rect x="-539" y="146.16971" width="92.5" height="54" fill="white"/>
+        <rect x="-539" y="146.16971" width="92.5" height="54" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(-534 154.72172)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="24.81" y="15">Peer </tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="3.618" y="33.448">Connector</tspan>
+        </text>
+      </g>
+      <g id="Line_203">
+        <line x1="-655.5" y1="944.2297" x2="-480.99505" y2="944.9418" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="6"/>
+      </g>
+      <g id="Graphic_202">
+        <text transform="translate(-437 935.5057)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="0" y="15">Channel</tspan>
+        </text>
+      </g>
+      <g id="Line_201">
+        <line x1="-660" y1="916.0232" x2="-466.8952" y2="916.3217" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_200">
+        <rect x="-550" y="28.919714" width="231.75" height="117.25" fill="white"/>
+        <path d="M -550 28.919714 L -318.25 28.919714 L -318.25 146.16971 L -550 146.16971 Z" stroke="#8d0309" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="8.0,4.0,1.0,4.0" stroke-width="1"/>
+        <text transform="translate(-545 104.27372)" fill="#8d0309">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="#8d0309" x="0" y="15">PeerManagerNotification </tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="#8d0309" x="0" y="33.448">Receiver</tspan>
+        </text>
+      </g>
+      <g id="Graphic_199">
+        <text transform="translate(-437 907.0577)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="0" y="15"> </tspan>
+        </text>
+      </g>
+      <g id="Line_198">
+        <line x1="-434" y1="164.33067" x2="-181.59972" y2="165.72772" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="6"/>
+      </g>
+      <g id="Graphic_197">
+        <title>Connection Manager</title>
+        <rect x="-535" y="40.557714" width="92.5" height="54" fill="white"/>
+        <rect x="-535" y="40.557714" width="92.5" height="54" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(-530 39.885717)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="24.81" y="15">Peer</tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="9.69" y="33.448">Manager </tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="2.434" y="51.895996">Subscriber</tspan>
+        </text>
+      </g>
+      <g id="Line_196">
+        <line x1="-415.40054" y1="190.75317" x2="-170.5" y2="192.612" marker-start="url(#FilledArrow_Marker_2)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="6"/>
+      </g>
+      <g id="Graphic_195">
+        <rect x="269" y="21.057714" width="263.5" height="347" fill="white"/>
+        <path d="M 269 21.057714 L 532.5 21.057714 L 532.5 368.0577 L 269 368.0577 Z" stroke="#8d0309" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="8.0,4.0,1.0,4.0" stroke-width="1"/>
+        <text transform="translate(274 344.6097)" fill="#8d0309">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="#8d0309" x="0" y="15">Connection Manager</tspan>
+        </text>
+      </g>
+      <g id="Line_194">
+        <path d="M -424.65187 72.32143 L -297.4271 74.12542 L -172.25 75.39105" marker-start="url(#FilledArrow_Marker_2)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="6"/>
+      </g>
+      <g id="Graphic_193">
+        <title>Connection Manager</title>
+        <rect x="291" y="34.557714" width="218" height="304.5" fill="white"/>
+        <rect x="291" y="34.557714" width="218" height="304.5" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_192">
+        <title>Connection Manager</title>
+        <rect x="-75.5" y="285.0577" width="92.5" height="54" fill="white"/>
+        <rect x="-75.5" y="285.0577" width="92.5" height="54" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(-70.5 293.6097)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="24.81" y="15">Peer </tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="3.618" y="33.448">Connector</tspan>
+        </text>
+      </g>
+      <g id="Line_191">
+        <line x1="20" y1="290.0577" x2="272.4003" y2="291.45476" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="6"/>
+      </g>
+      <g id="Line_190">
+        <line x1="38.599464" y1="325.6989" x2="283.5" y2="327.5577" marker-start="url(#FilledArrow_Marker_2)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="6"/>
+      </g>
+      <g id="Graphic_189">
+        <title>Connection Manager</title>
+        <rect x="-75.5" y="34.557714" width="92.5" height="54" fill="white"/>
+        <rect x="-75.5" y="34.557714" width="92.5" height="54" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(-70.5 33.885717)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x=".058" y="15">Connection </tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="9.69" y="33.448">Manager </tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="2.434" y="51.895996">Subscriber</tspan>
+        </text>
+      </g>
+      <g id="Line_188">
+        <line x1="43.098767" y1="66.60524" x2="285" y2="69.39105" marker-start="url(#FilledArrow_Marker_2)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="6"/>
+      </g>
+      <g id="Graphic_187">
+        <text transform="translate(-599.1596 12.057714)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="0" y="15">Admin Service</tspan>
+        </text>
+      </g>
+      <g id="Graphic_186">
+        <text transform="translate(-125.224 .057714286)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="1563194e-19" y="15">Peer Manager</tspan>
+        </text>
+      </g>
+      <g id="Graphic_185">
+        <text transform="translate(309.524 -7.942286)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="5684342e-19" y="15">Connection Manager</tspan>
+        </text>
+      </g>
+      <g id="Graphic_184">
+        <rect x="291" y="450.0577" width="238" height="184.25" fill="white"/>
+        <path d="M 291 450.0577 L 529 450.0577 L 529 634.3077 L 291 634.3077 Z" stroke="#8d0309" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="8.0,4.0,1.0,4.0" stroke-width="1"/>
+        <text transform="translate(296 610.8597)" fill="#8d0309">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="#8d0309" x="0" y="15">mesh::Reactor</tspan>
+        </text>
+      </g>
+      <g id="Graphic_183">
+        <title>Connection Manager</title>
+        <rect x="322" y="474.6827" width="187" height="112.5" fill="white"/>
+        <rect x="322" y="474.6827" width="187" height="112.5" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_182">
+        <text transform="translate(340.178 524.2087)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="0" y="15">ConnectionMatrix</tspan>
+        </text>
+      </g>
+      <g id="Graphic_181">
+        <path d="M -75.5 135.12868 L -75.5 103.55627 C -75.5 101.37777 -56.908 99.60972 -34 99.60972 C -11.092 99.60972 7.5 101.37777 7.5 103.55627 L 7.5 135.12868 C 7.5 137.30718 -11.092 139.07523 -34 139.07523 C -56.908 139.07523 -75.5 137.30718 -75.5 135.12868" fill="#c0ffff"/>
+        <path d="M -75.5 135.12868 L -75.5 103.55627 C -75.5 101.37777 -56.908 99.60972 -34 99.60972 C -11.092 99.60972 7.5 101.37777 7.5 103.55627 L 7.5 135.12868 C 7.5 137.30718 -11.092 139.07523 -34 139.07523 C -56.908 139.07523 -75.5 137.30718 -75.5 135.12868 M -75.5 103.55627 C -75.5 105.73476 -56.908 107.50282 -34 107.50282 C -11.092 107.50282 7.5 105.73476 7.5 103.55627" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(-70.5 112.50282)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="4.052" y="15">PeerMap</tspan>
+        </text>
+      </g>
+      <g id="Line_180">
+        <line x1="-655.5" y1="977.5577" x2="-462.3952" y2="978.3457" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="8.0,5.0" stroke-width="1"/>
+      </g>
+      <g id="Graphic_179">
+        <text transform="translate(-437 963.9537)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="0" y="15">Connection</tspan>
+        </text>
+      </g>
+      <g id="Graphic_178">
+        <path d="M -534.25 252.1317 L -534.25 222.93171 C -534.25 220.91691 -515.658 219.28171 -492.75 219.28171 C -469.842 219.28171 -451.25 220.91691 -451.25 222.93171 L -451.25 252.1317 C -451.25 254.1465 -469.842 255.7817 -492.75 255.7817 C -515.658 255.7817 -534.25 254.1465 -534.25 252.1317" fill="#c0ffff"/>
+        <path d="M -534.25 252.1317 L -534.25 222.93171 C -534.25 220.91691 -515.658 219.28171 -492.75 219.28171 C -469.842 219.28171 -451.25 220.91691 -451.25 222.93171 L -451.25 252.1317 C -451.25 254.1465 -469.842 255.7817 -492.75 255.7817 C -515.658 255.7817 -534.25 254.1465 -534.25 252.1317 M -534.25 222.93171 C -534.25 224.9465 -515.658 226.5817 -492.75 226.5817 C -469.842 226.5817 -451.25 224.9465 -451.25 222.93171" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(-529.25 231.5817)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="3.916" y="15">PeerRefs</tspan>
+        </text>
+      </g>
+      <g id="Graphic_177">
+        <path d="M 343 119.05771 L 343 55.057714 C 343 50.641714 370.21062 47.057714 403.738 47.057714 C 437.2654 47.057714 464.476 50.641714 464.476 55.057714 L 464.476 119.05771 C 464.476 123.47371 437.2654 127.05771 403.738 127.05771 C 370.21062 127.05771 343 123.47371 343 119.05771" fill="#c0ffff"/>
+        <path d="M 343 119.05771 L 343 55.057714 C 343 50.641714 370.21062 47.057714 403.738 47.057714 C 437.2654 47.057714 464.476 50.641714 464.476 55.057714 L 464.476 119.05771 C 464.476 123.47371 437.2654 127.05771 403.738 127.05771 C 370.21062 127.05771 343 123.47371 343 119.05771 M 343 55.057714 C 343 59.473714 370.21062 63.057714 403.738 63.057714 C 437.2654 63.057714 464.476 59.473714 464.476 55.057714" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(348 68.057714)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="14.545999" y="15">Connection </tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="24.178" y="33.448">Manager</tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="36.922" y="51.895996">State</tspan>
+        </text>
+      </g>
+      <g id="Graphic_176">
+        <title>Connection Manager</title>
+        <rect x="366" y="173.05771" width="143" height="71.896" fill="white"/>
+        <rect x="366" y="173.05771" width="143" height="71.896" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_175">
+        <text transform="translate(397.568 199.78171)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="6963319e-19" y="15">Authorizers</tspan>
+        </text>
+      </g>
+      <g id="Line_174">
+        <line x1="535.8496" y1="208.5918" x2="860.8171" y2="211.75296" marker-end="url(#FilledArrow_Marker_3)" marker-start="url(#FilledArrow_Marker_4)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="8.0,5.0" stroke-width="1"/>
+      </g>
+      <g id="Graphic_173">
+        <ellipse cx="1035" cy="201.55771" rx="155.000247674794" ry="162.500259659058" fill="white"/>
+        <ellipse cx="1035" cy="201.55771" rx="155.000247674794" ry="162.500259659058" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(916 192.33372)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="102.56" y="15">Peer</tspan>
+        </text>
+      </g>
+      <g id="Graphic_172">
+        <text transform="translate(-128.125 -179.94229)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="25" font-weight="400" fill="black" x="6.95" y="24">Splinter daemon  </tspan>
+        </text>
+      </g>
+      <g id="Graphic_171">
+        <title>Connection Manager</title>
+        <rect x="-756" y="194.78171" width="193.85" height="61" fill="white"/>
+        <rect x="-756" y="194.78171" width="193.85" height="61" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(-751 216.05771)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="57.117" y="15">REST API</tspan>
+        </text>
+      </g>
+      <g id="Graphic_170">
+        <rect x="-52" y="438.8077" width="143" height="184.25" fill="white"/>
+        <path d="M -52 438.8077 L 91 438.8077 L 91 623.0577 L -52 623.0577 Z" stroke="#8d0309" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="8.0,4.0,1.0,4.0" stroke-width="1"/>
+        <text transform="translate(-47 581.1617)" fill="#8d0309">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="#8d0309" x="0" y="15">PeerInterconnect </tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="#8d0309" x="0" y="33.448">Receiver</tspan>
+        </text>
+      </g>
+      <g id="Graphic_169">
+        <rect x="-195" y="438.8077" width="143" height="189.25" fill="white"/>
+        <path d="M -195 438.8077 L -52 438.8077 L -52 628.0577 L -195 628.0577 Z" stroke="#8d0309" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="8.0,4.0,1.0,4.0" stroke-width="1"/>
+        <text transform="translate(-190 586.1617)" fill="#8d0309">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="#8d0309" x="0" y="15">PeerInterconnects</tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="#8d0309" x="0" y="33.448">Sender</tspan>
+        </text>
+      </g>
+      <g id="Graphic_167">
+        <ellipse cx="-476.2912" cy="359.61543" rx="13.8960222044454" ry="14.5577375475142" fill="#ffff40"/>
+        <ellipse cx="-476.2912" cy="359.61543" rx="13.8960222044454" ry="14.5577375475142" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(-482.408 353.46143)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="11" font-weight="400" fill="black" x="7998314e-10" y="10">14</tspan>
+        </text>
+      </g>
+      <g id="Graphic_166">
+        <title>Connection Manager</title>
+        <rect x="-539" y="285.0577" width="92.5" height="54" fill="white"/>
+        <rect x="-539" y="285.0577" width="92.5" height="54" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(-534 293.6097)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="11.186" y="15">Network </tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="15.618" y="33.448">Sender</tspan>
+        </text>
+      </g>
+      <g id="Graphic_165">
+        <title>Connection Manager</title>
+        <rect x="-155" y="466.0577" width="187" height="112.5" fill="white"/>
+        <rect x="-155" y="466.0577" width="187" height="112.5" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_164">
+        <text transform="translate(-125.224 511.1097)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="0" y="15">Peer Interconnect</tspan>
+        </text>
+      </g>
+      <g id="Line_163">
+        <path d="M -492.0012 339.0577 L -487 519.39105 L -173.59956 521.5393" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="6"/>
+      </g>
+      <g id="Line_162">
+        <line x1="508.7518" y1="484.7498" x2="908.6649" y2="342.0323" marker-end="url(#FilledArrow_Marker_3)" marker-start="url(#FilledArrow_Marker_4)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="8.0,5.0" stroke-width="1"/>
+      </g>
+      <g id="Line_161">
+        <line x1="35.5" y1="518.8337" x2="296.6006" y2="521.7241" marker-end="url(#FilledArrow_Marker_3)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_160">
+        <text transform="translate(80.058 471.0577)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="9094947e-19" y="15">ConnectionMatrixSender</tspan>
+        </text>
+      </g>
+      <g id="Line_159">
+        <line x1="451.36" y1="344.6097" x2="428.197" y2="464.96113" marker-end="url(#FilledArrow_Marker_3)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_158">
+        <text transform="translate(468.688 380.1617)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="0" y="15">Connection Matrix</tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="40.152" y="33.448">Sender</tspan>
+        </text>
+      </g>
+      <g id="Line_157">
+        <line x1="-660" y1="1019.0577" x2="-466.8952" y2="1019.8457" stroke="#760000" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="16.0,9.0,16.0,9.0,1.0,9.0" stroke-width="1"/>
+      </g>
+      <g id="Graphic_156">
+        <text transform="translate(-437 1010.3337)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="0" y="15">Thread Boundary</tspan>
+        </text>
+      </g>
+      <g id="Graphic_155">
+        <ellipse cx="429.896" cy="367.61543" rx="13.8960222044454" ry="14.5577375475142" fill="#ffff40"/>
+        <ellipse cx="429.896" cy="367.61543" rx="13.8960222044454" ry="14.5577375475142" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(423.7792 361.46143)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="11" font-weight="400" fill="black" x="3.0588" y="10">1</tspan>
+        </text>
+      </g>
+      <g id="Graphic_154">
+        <ellipse cx="460.896" cy="119.34247" rx="13.8960222044454" ry="14.5577375475142" fill="#ffff40"/>
+        <ellipse cx="460.896" cy="119.34247" rx="13.8960222044454" ry="14.5577375475142" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(454.7792 113.18848)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="11" font-weight="400" fill="black" x="3.0588" y="10">2</tspan>
+        </text>
+      </g>
+      <g id="Graphic_153">
+        <ellipse cx="259.104" cy="42.61543" rx="13.8960222044454" ry="14.5577375475142" fill="#ffff40"/>
+        <ellipse cx="259.104" cy="42.61543" rx="13.8960222044454" ry="14.5577375475142" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(252.9872 36.46143)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="11" font-weight="400" fill="black" x="3.0588" y="10">3</tspan>
+        </text>
+      </g>
+      <g id="Graphic_152">
+        <ellipse cx="-70.104" cy="143.5" rx="13.8960222044454" ry="14.5577375475142" fill="#ffff40"/>
+        <ellipse cx="-70.104" cy="143.5" rx="13.8960222044454" ry="14.5577375475142" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(-76.2208 137.346)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="11" font-weight="400" fill="black" x="3.0588" y="10">4</tspan>
+        </text>
+      </g>
+      <g id="Graphic_151">
+        <ellipse cx="-359.104" cy="49.11543" rx="13.8960222044454" ry="14.5577375475142" fill="#ffff40"/>
+        <ellipse cx="-359.104" cy="49.11543" rx="13.8960222044454" ry="14.5577375475142" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(-365.2208 42.96143)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="11" font-weight="400" fill="black" x="3.0588" y="10">5</tspan>
+        </text>
+      </g>
+      <g id="Graphic_150">
+        <ellipse cx="-580.104" cy="128" rx="13.8960222044454" ry="14.5577375475142" fill="#ffff40"/>
+        <ellipse cx="-580.104" cy="128" rx="13.8960222044454" ry="14.5577375475142" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(-586.2208 121.846)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="11" font-weight="400" fill="black" x="3.0588" y="10">6</tspan>
+        </text>
+      </g>
+      <g id="Graphic_149">
+        <ellipse cx="703.896" cy="187.61543" rx="13.8960222044454" ry="14.5577375475142" fill="#ffff40"/>
+        <ellipse cx="703.896" cy="187.61543" rx="13.8960222044454" ry="14.5577375475142" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(697.7792 181.46143)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="11" font-weight="400" fill="black" x="3.0588" y="10">7</tspan>
+        </text>
+      </g>
+      <g id="Graphic_148">
+        <ellipse cx="232.75" cy="93.16667" rx="13.8960222044454" ry="14.5577375475142" fill="#ffff40"/>
+        <ellipse cx="232.75" cy="93.16667" rx="13.8960222044454" ry="14.5577375475142" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(226.6332 87.01267)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="11" font-weight="400" fill="black" x="3.0588" y="10">8</tspan>
+        </text>
+      </g>
+      <g id="Line_147">
+        <line x1="366.8" y1="344.6097" x2="398.2942" y2="465.1045" marker-end="url(#FilledArrow_Marker_3)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_146">
+        <text transform="translate(214 380.1617)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="0" y="15">Connection Matrix</tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="34.232" y="33.448">Lifecycle</tspan>
+        </text>
+      </g>
+      <g id="Graphic_145">
+        <ellipse cx="505.216" cy="212.5" rx="13.8960222044454" ry="14.5577375475142" fill="#ffff40"/>
+        <ellipse cx="505.216" cy="212.5" rx="13.8960222044454" ry="14.5577375475142" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(499.0992 206.346)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="11" font-weight="400" fill="black" x="3.0588" y="10">9</tspan>
+        </text>
+      </g>
+      <g id="Graphic_144">
+        <ellipse cx="389.40733" cy="376.5057" rx="13.8960222044454" ry="14.5577375475142" fill="#ffff40"/>
+        <ellipse cx="389.40733" cy="376.5057" rx="13.8960222044454" ry="14.5577375475142" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(383.29053 370.3517)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="11" font-weight="400" fill="black" x="7998314e-10" y="10">10</tspan>
+        </text>
+      </g>
+      <g id="Graphic_143">
+        <ellipse cx="119.896" cy="49.11543" rx="13.8960222044454" ry="14.5577375475142" fill="#ffff40"/>
+        <ellipse cx="119.896" cy="49.11543" rx="13.8960222044454" ry="14.5577375475142" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(113.7792 42.96143)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="11" font-weight="400" fill="black" x="7998314e-10" y="10">11</tspan>
+        </text>
+      </g>
+      <g id="Graphic_142">
+        <ellipse cx="-7.288" cy="143.5" rx="13.8960222044454" ry="14.5577375475142" fill="#ffff40"/>
+        <ellipse cx="-7.288" cy="143.5" rx="13.8960222044454" ry="14.5577375475142" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(-13.4048 137.346)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="11" font-weight="400" fill="black" x="7998314e-10" y="10">12</tspan>
+        </text>
+      </g>
+      <g id="Graphic_141">
+        <ellipse cx="-256.854" cy="54.833333" rx="13.8960222044454" ry="14.5577375475142" fill="#ffff40"/>
+        <ellipse cx="-256.854" cy="54.833333" rx="13.8960222044454" ry="14.5577375475142" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(-262.9708 48.679334)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="11" font-weight="400" fill="black" x="7998314e-10" y="10">13</tspan>
+        </text>
+      </g>
+      <g id="Line_140">
+        <line x1="-52" y1="606.9327" x2="-52" y2="459.9327" stroke="#760000" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="16.0,9.0,16.0,9.0,1.0,9.0" stroke-width="1"/>
+      </g>
+    </g>
+  </g>
+</svg>
