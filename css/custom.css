@@ -461,3 +461,12 @@ h3 {
     padding: 10px;
     margin-left: 50px;
 }
+
+/* Community Planning */
+
+#planning-disclaimer {
+    background-color: var(--light-gray);
+    border-radius: 5px;
+    margin-bottom: 30px;
+    padding: 20px;
+}
