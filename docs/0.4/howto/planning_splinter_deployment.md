@@ -93,7 +93,7 @@ Communication over this connection is encrypted with TLS.
 > that have disconnected cannot reestablish their connections to your node.
 > If running behind a firewall without an open port is absolutely necessary,
 > see the [Splinter
-> FAQ](https://github.com/Cargill/splinter-docs/blob/master/docs/faq/faq.md#can-i-run-the-splinter-daemon-behind-a-firewall-without-opening-up-a-port).
+> FAQ](https://github.com/Cargill/splinter-docs/blob/master/docs/faq/index.md#can-i-run-the-splinter-daemon-behind-a-firewall-without-opening-up-a-port).
 
 We recommend redirecting web server traffic from port 80 to port 443, which
 sends all HTTP requests to the TLS port.
