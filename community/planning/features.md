@@ -17,10 +17,14 @@ forum.
 
 * [Canopy 0.2]({% link community/planning/canopy_0.2.md %})
 
-  A new design of the Canopy system that enables dynamic loading of saplings and
+  New design of the Canopy system that enables dynamic loading of saplings and
   improved inter-sapling communication.
 
 * [PeerManager]({% link community/planning/peer_manager.md %})
 
   The `PeerManager` is in charge of keeping track of peers and their reference
   counts, as well as requesting connections from the `ConnectionManager`.
+
+* [Admin application]({% link community/planning/admin_application.md %})
+
+  Splinter administration utility.
