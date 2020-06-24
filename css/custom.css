@@ -467,6 +467,26 @@ h4 {
     margin-left: 50px;
 }
 
+.gameroom_db_table {
+    table-layout: auto;
+    border: 1px solid black;
+    margin: 15px;
+}
+
+.gameroom_db_headers {
+    border: 1px solid black;
+}
+
+.gameroom_db_data {
+    border: 1px solid black;
+    width: 100%;
+    height: 20px;
+}
+
+.gameroom_placeholder {
+    font-style: italic;
+}
+
 .glossary-header {
     line-height: 0px;
     font-size: 20px;
