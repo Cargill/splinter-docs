@@ -13,22 +13,6 @@ Splinter works with a wide variety of deployment patterns. This guide summarizes
 how to use Docker containers, a basic Kubernetes pod, and Amazon Elastic
 Kubernetes Services (Amazon EKS).
 
-**Contents**
-<br>
-[Overview](#overview)
-<br>
-[Splinter Architecture](#splinter-architecture)
-<br>
-[Network Configuration](#network-configuration)
-<br>
-[Application Pattern](#application-pattern)
-<br>
-[Docker Deployment](#docker-deployment)
-<br>
-[Basic Kubernetes Deployment](#basic-kubernetes-deployment)
-<br>
-[Amazon EKS Deployment](#amazon-eks-deployment)
-
 ## Overview
 
 A Splinter deployment usually has the following items:

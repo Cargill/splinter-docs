@@ -16,20 +16,6 @@ about Splinter concepts and features.
 
 ## New and Noteworthy
 
-Quick links: <br>
-[API stability](#api-stability) <br>
-[Robust circuit support](#robust-circuit-support) <br>
-[Registry for local and remote node
-information](#registry-for-local-and-remote-node-information) <br>
-[Biome for user management](#biome-for-user-management) <br>
-[Scabbard service for smart contract
-execution](#scabbard-service-for-smart-contract-execution) <br>
-[Configuration tools for the Splinter
-daemon](#configuration-tools-for-the-splinter-daemon) <br>
-[Peer management improvements](#peer-management-improvements) <br>
-[Gameroom example application](#gameroom-example-application) <br>
-[... and more](#and-more) <br>
-
 ### API Stability
 
 The Splinter v0.4 release commits to API stability. Changes in future v0.4.x
