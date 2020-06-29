@@ -15,7 +15,22 @@
 */
 
 function generateRightSidebar() {
+  var current_file = window.location.pathname.substring(
+    window.location.pathname.lastIndexOf("/") + 1
+  );
+
   $("#main-content").children().each(function (idx, element) {
+      if (current_file.includes(".1.")) {
+        // skip the first h1 header in a man page, it is the title
+        if ($(element).is("h1") && idx !=0) {
+          // Treat H1 headers in man pages as H2 headers for right sidebars
+          $("#right-sidebar").append(
+              "<a href=#" + element.id + " class=\"right-sidebar-h2\">" +
+              element.innerText + "</a>"
+          );
+        }
+      }
+
       if ($(element).is("h2")) {
           $("#right-sidebar").append(
               "<a href=#" + element.id + " class=\"right-sidebar-h2\">" +

@@ -249,6 +249,15 @@ img {
 h1 {
     font-size: 2.2rem;
     margin-bottom: 30px;
+
+    /*
+        Snap h1 links below the header. Without this, clicking a link on the
+        right sidebar would cause the contents to start at the top of the
+        window, behind the header. 62px is the navbar height. Adds 10px (in
+        addition to the 10px top padding) to have the same space at the top as
+        content.
+    */
+    scroll-margin-top: 72px;
 }
 
 h2 {
