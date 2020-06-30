@@ -6,7 +6,7 @@
   https://creativecommons.org/licenses/by/4.0/
 -->
 
-<!-- (like "Enabling Optional Features" or "Creating the Node Registry) -->
+<!-- (like "Enabling Optional Features" or "Creating the Registry") -->
 
 <!--
 Note: The file name should match the title, with underscores instead of spaces
