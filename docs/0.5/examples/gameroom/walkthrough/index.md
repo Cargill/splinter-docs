@@ -158,7 +158,22 @@ has been sent to Bubba Bakery.
 Live performances should include an intermission at this point,
 because there is a lot that just happened (see
 <a href="#gameroom_behind">"Behind the
-Scenes: A Look at Act 1").
+Scenes: A Look at Act 1"</a>).
+
+### Scene 3: Bob logs into Bubba Bakery's Gameroom application
+
+BOB, muttering to himself, opens a BROWSER and searches for "tic tac toe". Gets
+distracted by Wikipedia's list of games. Plays Quantum Tic Tac Toe Online for
+20 minutes. Eventually hunts through his email for the right link and starts
+the BUBBA BAKERY GAMEROOM APP.
+
+![](./images/scene3_1.png "Bubba Bakery login screen")
+
+Bob logs in with his EMAIL and PASSWORD.
+
+Success. The browser now displays the BUBBA BAKERY GAMEROOM HOME SCREEN.
+
+![](./images/scene3_2.png "Bubba Bakery home screen")
 
 <h2 class="gameroom_behind">
 Behind the Scenes: A Look at Act I, Alice and Bob Create a Gameroom
@@ -1567,3 +1582,240 @@ At the end of the operation, the `gameroom_notification` table looks like this:
       logs in. For example, when Bob logs in, the Bubba Bakery UI will request
       the list so it can display the notification icon and the number on the
       home screen.
+
+### I-3. Behind scene 3: Bob logs into Bubba Bakery's Gameroom application
+
+When Bob logs in, the Bubba Bakery UI works with `gameroomd` and Gameroom REST
+API to check his user credentials and build the Bubba Bakery Gameroom home
+page. This process is almost identical to Alice's login process. The only
+difference is that the Bubba Bakery Gameroom home page will display a
+notification about his invitation from Alice.
+
+#### I-3.1. Bubba Bakery UI sends authorization request to Gameroom REST API
+
+This process is the same as the Acme process in [section
+Ⅰ-1.1](#i-11-acme-ui-sends-authorization-request-to-gameroom-rest-api).
+For Bob, the general process looks like this:
+
+![](./images/auth_login_bubba1.svg "Gameroom daemon receives auth request")
+
+When Bob clicks `Log in`, the Bubba Bakery Gameroom UI hashes the password,
+then sends an authorization request to the Bubba Bakery Gameroom daemon,
+`gameroomd`. The request is handled by the Gameroom REST API, which is a part
+of `gameroomd`.
+
+```
+    POST /users/authenticate
+    {
+        email: "bob@bubbabakery.com",
+        hashedPassword: "2b944c69...c11fcf9c"
+    }
+```
+
+As mentioned earlier, the UI does not reveal the user's password to the REST
+API because the password is used to encrypt signing keys.
+
+#### I-3.2. Bubba Bakery Gameroom REST API authorizes the login
+
+This process is the same as the Acme process in [section
+Ⅰ-1.2](#i-12-gameroom-daemon-uses-biome-rest-api-to-verify-password).
+For Bob, the general process looks like this:
+
+![](./images/auth_login_bubba2.svg "Gameroom daemon receives auth request")
+
+When the Gameroom REST API receives the authorization request for Bob, it
+re-hashes the password sent from the browser and compares the email and hashed
+password to Bob's entry in the Bubba Bakery Gameroom database. If they match,
+authentication was successful.
+
+The `gameroom_user` table in the Gameroom database has the following schema:
+
+``` sql
+    CREATE TABLE IF NOT EXISTS gameroom_user (
+      email                  TEXT    PRIMARY KEY,
+      public_key             TEXT    NOT NULL,
+      encrypted_private_key  TEXT    NOT NULL,
+      hashed_password        TEXT    NOT NULL
+    );
+```
+
+Bob's public and private key pair was created before registration and was added
+to the Bubba Bakery Gameroom database when Bob registered (see The Prequel,
+section P.2). The database has the following entry:
+
+<table class ="gameroom_db_table" border="1">
+  <tr class="gameroom_db_headers">
+    <th><code>email</code></th>
+    <th><code>hashed_password</code></th>
+    <th><code>public_key</code></th>
+    <th><code>encrypted_private_key</code></th>
+  </tr>
+  <tr class="gameroom_db_data">
+    <td><code>bob@bubbabakery.com</code></td>
+    <td><code>4c825b14...534bfc25</code></td>
+    <td><code>b1834871...2914a7f4</code></td>
+    <td><code>du+XOOyVy...nkO/NiHcn</code></td>
+  </tr>
+</table>
+
+#### I-3.3. Bubba Bakery Gameroom REST API returns login success response
+
+This process is the same as the Acme process in [section
+Ⅰ-1.3](#i-13-gameroom-daemon-uses-biome-rest-api-to-request-alices-key-pairs).
+For Bob at Bubba Bakery, the general process looks like this:
+
+![](./images/auth_login_bubba3.svg "Gameroom daemon receives auth request")
+
+If the user authentication was successful, the Gameroom REST API sends a
+response to the Bubba Bakery UI that contains Bob's public key and encrypted
+private key.
+
+```
+    {
+        email: "bob@bubbabakery.com",
+        publicKey: "b1834871...2914a7f4",
+        encryptedPrivateKey: "\"{\\\"iv\\\":...ZCyV\\\"}\"",
+    }
+```
+
+Next, the UI must gather information for the list of gamerooms, invitations,
+and notifications that Bob will see on the Bubba Bakery home page.
+
+#### I-3.4. Bubba Bakery UI requests list of existing gamerooms
+
+As part of building the Bubba Bakery home screen for Bob, the UI requests the
+list of Bob's gamerooms. This process is the same as the Acme process in
+[section Ⅰ-1.4](#i-14-gameroom-rest-api-returns-login-success-response).
+
+1. The Bubba Bakery UI makes a call to the Gameroom REST API for the list of
+   existing gamerooms.
+
+    ```
+    GET /gamerooms
+    ```
+
+2. The Bubba Bakery Gameroom REST API returns an empty list, because there are
+   no existing gamerooms in the Bubba Bakery Gameroom's PostgreSQL database.
+
+    ```
+    {
+        "data": [],
+        "paging": {
+               "current": "/gamerooms?limit=100&offset=0",
+               "offset": 0,
+               "limit": 100,
+               "total": 0,
+               "first": "/gamerooms?limit=100&offset=0",
+               "prev": "/gamerooms?limit=100&offset=0",
+               "next": "/gamerooms?limit=100&offset=0",
+               "last": "/gamerooms?limit=100&offset=0"
+        }
+    }
+    ```
+
+#### I-3.5. Bubba Bakery UI requests list of gameroom invitations
+
+As part of building the Bubba Bakery home screen for Bob, the UI requests the
+list of Bob's invitations. This process is different from the Acme process in
+[section Ⅰ-1.5](#i-15-acme-ui-requests-a-list-of-gamerooms),
+because Bob has a new invitation from Alice.
+
+1. The Bubba Bakery UI makes a call to the Gameroom REST API for Bob's list of
+   invitations (also called _circuit proposals_).
+
+    ```
+    GET /proposals
+    ```
+
+2. The Bubba Bakery Gameroom REST API returns a list that includes Alice's
+   invitation.
+
+    ```
+    {
+        "data": [
+            {
+               "proposal_id": <auto-generated id>,
+               "circuit_id": "gameroom::acme-node-000::bubba-node-000::<UUIDv4>",
+               "circuit_hash": <hash of circuit definition>,
+               "members": [
+                   {
+                       "node_id": "acme-node-000",
+                       "endpoint": "tls://splinterd-node-acme:8044"
+                   },
+                   {
+                       "node_id": "bubba-node-000",
+                       "endpoint": "tls://splinterd-node-bubba:8044"
+                   }
+               ],
+               "requester": <Alice's public key>,
+               "requester_node_id": acme-node-000,
+               "created_time": <time entry was created>,
+               "updated_time": <time entry was updated>
+            }
+        ],
+               "paging": {
+                      "current": "/proposals?limit=100&offset=0",
+                      "offset": 0,
+                      "limit": 100,
+                      "total": 1,
+                      "first": "/proposals?limit=100&offset=0",
+                      "prev": "/proposals?limit=100&offset=0",
+                      "next": "/proposals?limit=100&offset=0",
+                      "last": "/proposals?limit=100&offset=0"
+               }
+        }
+    ```
+
+#### I-3.6. Bubba Bakery UI queries for unread notifications
+
+While building the Bubba Bakery home screen, the UI also requests the list of
+Bob's unread notifications.
+
+When the circuit proposal (Alice's invitation) was created, the Bubba Bakery
+admin service stored Bob's notification information in the Gameroom database,
+with the `read` field set to "false". For the details of how the Gameroom
+tables were updated during circuit creation, see [section
+Ⅰ-2.8](#i-28-gameroom-daemons-write-notification-to-gameroom-database)
+and [section
+Ⅰ-2.9](#i-29-alice-sees-notification-that-gameroom-invitation-was-sent).
+
+1. The Bubba Bakery UI makes a call to the Bubba Bakery Gameroom REST API for
+   the list of Bob's unread notifications.
+
+    ```
+    GET /notification
+    ```
+
+2. The Gameroom REST API queries the `gameroom_notification` table and sends
+   Bob's notifications to the Bubba Bakery UI. The notification for Alice's
+   invitation looks like this:
+
+    ```
+    {
+        "data": [
+               {
+                   "id": <auto-generated id>,
+                   "notification_type": "gameroom_proposal",
+                   "org": "",
+                   "requester": <Alice's public key>,
+                   "node_id": "acme-node-000",
+                   "target": "gameroom::acme-node-000::bubba-node-000::<UUIDv4>",
+                   "timestamp": <time entry was created>,
+                   "read": <boolean; false means not read>,
+               }
+        ],
+        "paging": {
+                   "current": "/notifications?limit=100&offset=0",
+                   "offset": 0,
+                   "limit": 100,
+                   "total": 1,
+                   "first": "/notifications?limit=100&offset=0",
+                   "prev": "/notifications?limit=100&offset=0",
+                   "next": "/notifications?limit=100&offset=0",
+                   "last": "/notifications?limit=100&offset=0"
+        },
+    }
+    ```
+
+At this point, the Bubba Bakery Gameroom UI has the information it needs to
+display Bob's home screen.
