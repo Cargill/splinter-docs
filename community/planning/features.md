@@ -25,6 +25,6 @@ forum.
   The `PeerManager` is in charge of keeping track of peers and their reference
   counts, as well as requesting connections from the `ConnectionManager`.
 
-* [Admin application]({% link community/planning/admin_application.md %})
+* [Admin UI]({% link community/planning/admin_ui.md %})
 
   Splinter administration utility.

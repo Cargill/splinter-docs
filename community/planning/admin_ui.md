@@ -1,4 +1,4 @@
-# Admin Application
+# Splinter Admin UI
 <!--
   Copyright 2018-2020 Cargill Incorporated
   Licensed under Creative Commons Attribution 4.0 International License
@@ -6,9 +6,16 @@
 -->
 
 The [splinter-ui repository](https://github.com/Cargill/splinter-ui) includes
-an example application for Splinter administration. This document shows the
-planned screens and popups for this application.
+the Admin UI for Splinter administration. This document shows the planned
+screens and popups for this application.
 
+<em>
+**NOTE:**
+</em>
+This planning document shows preliminary images for the Admin UI. The actual
+interface will change as the UI is developed. For current information, see the
+Splinter v0.4 tutorial [Using the Admin
+UI](/docs/0.4/tutorials/using_the_admin_ui.html).
 
 ## View Circuits and Proposals
 
@@ -70,7 +77,7 @@ submit circuit proposal")
 
 ### Confirmation
 
-Next, the admin application displays the circuit detail screen. A notification
+Next, the Admin UI displays the circuit detail screen. A notification
 appears when the proposal submission has succeeded.
 
 ![]({% link images/adminapp_circuit_submitted_successfully.png %} "Circuit
