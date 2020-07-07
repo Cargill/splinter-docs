@@ -11,9 +11,10 @@ user profiles, circuit proposals, and circuits on a Splinter network.
 
 This tutorial shows how to use the Splinter Admin UI with an example scenario
 that creates a circuit between Alice at Acme Corporation and Bob at Bubba's
-Bakery. (See the [Gameroom Walkthrough](../examples/gameroom/walkthrough/) for
-more information about Alice and Bob.) This example uses Docker containers that
-configure and start a node for each organization, `acme-node-000` and
+Bakery. (See the
+[Gameroom Walkthrough]({% link docs/0.5/examples/gameroom/walkthrough/index.md %})
+for more information about Alice and Bob.) This example uses Docker containers
+that configure and start a node for each organization, `acme-node-000` and
 `bubba-node-000`, as well as an external database for each node and a single
 external registry for node and key information.
 
@@ -62,17 +63,19 @@ alpha (`alpha-node-000`) is at `localhost:3030`. The UI for beta
 1. For Alice, open a browser and go to `localhost:3030`. The Log In dialog
    displays.
 
-    <img src="../images/adminui_log_in.png" height="258"
+    <img src="{% link docs/0.5/images/adminui_log_in.png %}" height="258"
     alt="Admin UI login dialog">
 
 2. To register Alice as a new user, click **Register**, then enter a new
    username (such as `alice` or `alice@acme.com`) and password.
 
-    ![](../images/adminui_register_alice.png "Admin UI register dialog")
+    ![]({% link docs/0.5/images/adminui_register_alice.png %}
+    "Admin UI register dialog")
 
 3. Next, the main Admin UI page displays.
 
-    ![](../images/adminui_blank_landing_page.png "Admin UI: Main page")
+    ![]({% link docs/0.5/images/adminui_blank_landing_page.png %}
+    "Admin UI: Main page")
 
 > NOTE: To repeat this procedure for Bob, open a new browser window and go to
 > `localhost:3031`. Then use the same steps to register Bob as a new user.
@@ -106,7 +109,7 @@ After registering a new user, add the user's public and private keys.
 2. On the main page, click the profile icon in the left menu. The Profile page
    appears.
 
-    ![](../images/adminui_profile_alice_no_keys.png
+    ![]({% link docs/0.5/images/adminui_profile_alice_no_keys.png %}
     "Profile page (no keys yet)")
 
 1. On the Profile page, click the orange **+** icon to display the **Add key**
@@ -117,11 +120,11 @@ After registering a new user, add the user's public and private keys.
 
    Tip: Do **not** press Enter or Return after pasting a key value.
 
-    ![](../images/adminui_add_key_alice.png "Admin UI: Add key values")
+    ![]({% link docs/0.5/images/adminui_add_key_alice.png %} "Admin UI: Add key values")
 
 1. Click the **Next** button, then enter Alice's password and click **Submit**.
 
-    ![](../images/adminui_add_key_password.png
+    ![]({% link docs/0.5/images/adminui_add_key_password.png %}
     "Admin UI: Enter password to add a key")
 
    If the operation was successful, the Profile page displays Alice's public
@@ -132,14 +135,14 @@ After registering a new user, add the user's public and private keys.
 
    a. Hover over the key, then click **Set active**.
 
-   ![](../images/adminui_profile_alice_set_active_key.png
+   ![]({% link docs/0.5/images/adminui_profile_alice_set_active_key.png %}
    "Admin UI: Set active key")
 
    b. Enter Alice's password when prompted.
 
    c. If the operation was successful, the key is now marked as **Active**.
 
-   ![](../images/adminui_profile_alice_active_key.png
+   ![]({% link docs/0.5/images/adminui_profile_alice_active_key.png %}
    "Admin UI: Profile page with active key")
 
 > NOTE: To repeat this procedure for Bob, use a separate browser window that
@@ -154,7 +157,7 @@ After registering a new user, add the user's public and private keys.
    displays a summary of existing circuits and proposals. In this example,
    nothing exists yet.
 
-    ![](../images/adminui_circuits_page_blank.png
+    ![]({% link docs/0.5/images/adminui_circuits_page_blank.png %}
     "Admin UI: Circuits summary page")
 
 1. Click **Propose New Circuit**. The **Add nodes** form shows the nodes that
@@ -162,7 +165,7 @@ After registering a new user, add the user's public and private keys.
   preselected. Select the checkbox for **Node beta-node-000**, then click
   **Next**.
 
-    ![](../images/adminui_propose_2_add_beta.png
+    ![]({% link docs/0.5/images/adminui_propose_2_add_beta.png %}
     "Propose Circuit: Add beta node")
 
 1. On the **Add services** form, enter the following service information for
@@ -183,13 +186,13 @@ After registering a new user, add the user's public and private keys.
    Tip: To add a second service argument, click the small **+** icon on the
    right.
 
-   ![](../images/adminui_propose_3_add_services_alpha.png
+   ![]({% link docs/0.5/images/adminui_propose_3_add_services_alpha.png %}
    "Propose Circuit: Add alpha service")
 
 4. Click the green check to submit alpha's service information. If the operation
    was successful, the green check changes to a pencil (edit) icon.
 
-   ![](../images/adminui_propose_4_submit_service_alpha.png
+   ![]({% link docs/0.5/images/adminui_propose_4_submit_service_alpha.png %}
    "Propose Circuit: Alpha service confirmed")
 
    Otherwise, an error displays so you can correct the information and
@@ -213,12 +216,12 @@ After registering a new user, add the user's public and private keys.
    Note: You must use the same key (or the same set of multiple keys) for all
    services on a circuit.
 
-   ![](../images/adminui_propose_5_add_services_beta.png
+   ![]({% link docs/0.5/images/adminui_propose_5_add_services_beta.png %}
    "Propose Circuit: Add beta service")
 
 1. Click the green check to submit beta's service information.
 
-    ![](../images/adminui_propose_6_submit_service_beta.png
+    ![]({% link docs/0.5/images/adminui_propose_6_submit_service_beta.png %}
     "Propose Circuit: Beta service confirmed")
 
 1. Review the service information for both nodes, then click **Next**.
@@ -227,7 +230,7 @@ After registering a new user, add the user's public and private keys.
    management type, and enter an optional comment if you would like. Then
    click **Next**.
 
-    ![](../images/adminui_propose_7_circuit_details.png
+    ![]({% link docs/0.5/images/adminui_propose_7_circuit_details.png %}
     "Propose Circuit: Add circuit details")
 
 1. On the **Add application metadata** form, you can specify
@@ -235,14 +238,14 @@ After registering a new user, add the user's public and private keys.
 
    This example specifies a JSON-format alias for the circuit.
 
-    ![](../images/adminui_propose_8_metadata.png
+    ![]({% link docs/0.5/images/adminui_propose_8_metadata.png %}
     "Propose Circuit: Example metadata")
 
 1. On the **Review and submit** form, carefully check the circuit proposal. If
    necessary, use the **Previous** button to go back and fix incorrect
    information.
 
-    ![](../images/adminui_propose_9_review.png
+    ![]({% link docs/0.5/images/adminui_propose_9_review.png %}
     "Propose Circuit: Review proposal")
 
 1. When you're sure the circuit proposal is correct, click **Submit**.
@@ -250,14 +253,14 @@ After registering a new user, add the user's public and private keys.
    displays a notification and a summary of the proposed circuit (after a few
    seconds).
 
-    ![](../images/adminui_propose_10_submitted_successfully.png
+    ![]({% link docs/0.5/images/adminui_propose_10_submitted_successfully.png %}
     "Circuit proposal submitted successfully")
 
    Otherwise, the notification displays an error with information about the
    problem. The error is also displayed as a log message in the terminal window
    running `docker-compose`.
 
-    ![](../images/adminui_proposal_error.png
+    ![]({% link docs/0.5/images/adminui_proposal_error.png %}
     "Circuit proposal submission error")
 
 ## Viewing a Circuit Proposal
@@ -268,19 +271,20 @@ After registering a new user, add the user's public and private keys.
 1. The Circuits page shows all circuits and proposals. In this example, Alice
    sees one proposed circuit that is awaiting approval from Bob.
 
-    ![](../images/adminui_circuits_proposal_awaiting_approval.png
+    ![]({% link docs/0.5/images/adminui_circuits_proposal_awaiting_approval.png %}
     "Circuits page: Proposal awaiting approval")
 
 1. To view the proposal details, click on the proposal summary. The circuit
    detail page shows information about each node in the circuit.
 
-    ![](../images/adminui_circuits_proposal_details.png
+    ![]({% link docs/0.5/images/adminui_circuits_proposal_details.png %}
     "Circuit proposal details")
 
 1. To see even more information, click on a node. The page expands to show
    service details for the node.
 
-    ![](../images/adminui_circuits_proposal_details_service_info.png
+    ![]({% link
+    docs/0.5/images/adminui_circuits_proposal_details_service_info.png %}
     "Circuit proposal details with service information")
 
 ## Voting on a Circuit Proposal
@@ -298,13 +302,13 @@ As a user on the other node, Bob must vote to accept or reject the proposal.
    view includes "Action required" and "Awaiting approval" notifications because
    his vote is needed.
 
-    ![](../images/adminui_proposal_awaiting_approval_bob.png
+    ![]({% link docs/0.5/images/adminui_proposal_awaiting_approval_bob.png %}
     "Circuit proposal: Action required")
 
 1. Click on the proposal summary to see details of the proposed circuit.
    For Bob, this page displays a **Vote on proposal** button.
 
-    ![](../images/adminui_proposal_circuit_details_bob.png
+    ![]({% link docs/0.5/images/adminui_proposal_circuit_details_bob.png %}
     "Circuit Proposal: Details with Vote button")
 
 1. Click **Vote on proposal** to display the **Vote on circuit proposal**
@@ -313,7 +317,7 @@ As a user on the other node, Bob must vote to accept or reject the proposal.
 
    In this example, Bob eagerly accepts the proposal.
 
-    ![](../images/adminui_vote_on_circuit_proposal.png
+    ![]({% link docs/0.5/images/adminui_vote_on_circuit_proposal.png %}
     "Vote on circuit proposal")
 
 1. After Bob's approval, the circuit detail page displays a notification that
@@ -321,43 +325,44 @@ As a user on the other node, Bob must vote to accept or reject the proposal.
    main Circuits page would display an empty list with no proposals or
    circuits.)
 
-    ![](../images/adminui_circuit_detail_vote_submitted.png
+    ![]({% link docs/0.5/images/adminui_circuit_detail_vote_submitted.png %}
     "Circuit detail: Vote submitted successfully")
 
 1. After a short delay, the circuit is created. The circuit detail page no
    longer shows "action required" notifications at the top or in the Status
    column.
 
-    ![](../images/adminui_circuit_detail_new_circuit_bob.png
+    ![]({% link docs/0.5/images/adminui_circuit_detail_new_circuit_bob.png %}
     "Circuit detail: Circuit created")
 
 1. Likewise, the main Circuits page shows the new circuit in place of the
    proposal.
 
-    ![](../images/adminui_circuits_new_circuit_bob.png
+    ![]({% link docs/0.5/images/adminui_circuits_new_circuit_bob.png %}
     "Circuits page: Circuit created (Bob's view)")
 
 1. From Alice's browser window (at `localhost:3030`), the main Circuits page
    also displays the new circuit.
 
-    ![](../images/adminui_circuits_new_circuit_alice.png
+    ![]({% link docs/0.5/images/adminui_circuits_new_circuit_alice.png %}
     "Circuits page: Circuit created (Alice's view)")
 
 ## Logging Out
 
 1. Click the profile icon to display the Profile page.
 
-   ![](../images/adminui_profile_alice_active_key.png
+   ![]({% link docs/0.5/images/adminui_profile_alice_active_key.png %}
    "Admin UI: Profile page")
 
 1. Click **Actions** (in the upper right).
 
-    ![](../images/adminui_profile_actions_menu.png
+    ![]({% link docs/0.5/images/adminui_profile_actions_menu.png %}
     "Actions menu on Profile page")
 
 2. In the drop-down menu, click **Logout**.
 
-    ![](../images/adminui_actions_logout_alice.png "Actions menu: Logout")
+    ![]({% link docs/0.5/images/adminui_actions_logout_alice.png %}
+    "Actions menu: Logout")
 
 ## Stopping the Demo
 

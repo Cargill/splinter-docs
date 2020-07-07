@@ -29,7 +29,8 @@ and `--help`).
 * Avoid starting a sentence with a word that is normally lowercase. For example,
   change "splinterd" to "Splinter daemon".
 
-* Follow the [Splinter capitalization guidelines](capitalization.md).
+* Follow the [Splinter capitalization
+  guidelines]({% link community/doc_guidelines/capitalization.md %}).
 
 ## Description Section
 

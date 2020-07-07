@@ -212,7 +212,7 @@ store the user's keys in the Biome database.
 
 This example assumes that the user's public and private key files already exist.
 For information on generating these keys, see the [splinter-keygen(1) man
-page](../references/cli/splinter-keygen.1.html).
+page]({% link docs/0.4/references/cli/splinter-keygen.1.md %}).
 
 **Important**: For security reasons, it is highly recommended to encrypt the
 private key.  The encryption method is left to the calling application; Biome

@@ -93,7 +93,8 @@ location by setting the `SPLINTER_CERT_DIR` environment variable or using the
       necessary, you can specify each file separately with the command-line option
       or in the config file.
 
-For more information see [Generating Insecure Certificates for Development](https://github.com/Cargill/splinter-docs/blob/master/docs/howto/generating_insecure_certificates_for_development.md)
+For more information see [Generating Insecure Certificates for Development]({%
+link docs/0.4/howto/generating_insecure_certificates_for_development.md %})
 
 For an example of how this could be handled in a docker-compose.yaml file look
 at the [Gameroom](https://github.com/Cargill/splinter/blob/v0.3.12/examples/gameroom/docker-compose-dockerhub.yaml)
@@ -169,7 +170,8 @@ $ splinter circuit create --help
 
 Examples can be found at:
 
-  - [Uploading Smart Contract](https://github.com/Cargill/splinter-docs/blob/master/docs/howto/uploading_smart_contract.md)
+  - [Uploading Smart
+    Contract]({% link docs/0.4/howto/uploading_smart_contract.md %})
   - [Grid on Splinter](https://github.com/hyperledger/grid/tree/master/examples/splinter)
 
 ## The scabbard CLI's upload command has been changed

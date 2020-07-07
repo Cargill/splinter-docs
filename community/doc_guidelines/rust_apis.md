@@ -6,8 +6,10 @@
   https://creativecommons.org/licenses/by/4.0/
 -->
 
-* Follow Splinter's [general documentation guidelines](general.md) and
-  [capitalization guidelines](capitalization.md).
+* Follow Splinter's [general documentation
+  guidelines]({% link community/doc_guidelines/general.md %}) and
+  [capitalization
+  guidelines]({% link community/doc_guidelines/capitalization.md %}).
 
 * Provide a crate-level overview (with `//!` comments) that summarizes the
   purpose of the crate.

@@ -16,7 +16,8 @@ Many thanks to the Google writers who provide this clear, comprehensive guide.
 
 * Be consistent.
 
-* Follow the [Splinter capitalization guidelines](capitalization.md).
+* Follow the [Splinter capitalization
+  guidelines]({% link community/doc_guidelines/capitalization.md %}).
 
 * Note these conventions and best practices. (Follow the links for more
   information in the Google developer documentation style guide.)
