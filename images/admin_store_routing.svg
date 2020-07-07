@@ -1,0 +1,102 @@
+<!--
+  Copyright 2018-2020 Cargill Incorporated
+  Licensed under Creative Commons Attribution 4.0 International License
+  https://creativecommons.org/licenses/by/4.0/
+-->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:dc="http://purl.org/dc/elements/1.1/" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xl="http://www.w3.org/1999/xlink" viewBox="93 401 833 331" width="833" height="331">
+  <defs>
+    <font-face font-family="Helvetica Neue" font-size="16" panose-1="2 0 5 3 0 0 0 2 0 4" units-per-em="1000" underline-position="-100" underline-thickness="50" slope="0" x-height="517" cap-height="714" ascent="951.9958" descent="-212.99744" font-weight="400">
+      <font-face-src>
+        <font-face-name name="HelveticaNeue"/>
+      </font-face-src>
+    </font-face>
+    <marker orient="auto" overflow="visible" markerUnits="strokeWidth" id="FilledArrow_Marker" stroke-linejoin="miter" stroke-miterlimit="10" viewBox="-1 -4 10 8" markerWidth="10" markerHeight="8" color="black">
+      <g>
+        <path d="M 8 0 L 0 -3 L 0 3 Z" fill="currentColor" stroke="currentColor" stroke-width="1"/>
+      </g>
+    </marker>
+    <marker orient="auto" overflow="visible" markerUnits="strokeWidth" id="FilledArrow_Marker_2" stroke-linejoin="miter" stroke-miterlimit="10" viewBox="-9 -4 10 8" markerWidth="10" markerHeight="8" color="black">
+      <g>
+        <path d="M -8 0 L 0 3 L 0 -3 Z" fill="currentColor" stroke="currentColor" stroke-width="1"/>
+      </g>
+    </marker>
+    <linearGradient x1="0" x2="1" id="Gradient" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ffacb5"/>
+      <stop offset="1" stop-color="white"/>
+    </linearGradient>
+    <linearGradient id="Obj_Gradient" xl:href="#Gradient" gradientTransform="translate(529.69634 545.7866) rotate(37) scale(166.04235)"/>
+  </defs>
+  <metadata> Produced by OmniGraffle 7.16
+    <dc:date>2020-07-06 15:30:43 +0000</dc:date>
+  </metadata>
+  <g id="Canvas_1" stroke-opacity="1" stroke-dasharray="none" stroke="none" fill="none" fill-opacity="1">
+    <title>Canvas 1</title>
+    <g id="Canvas_1: Layer 1">
+      <title>Layer 1</title>
+      <g id="Graphic_2">
+        <rect x="159" y="467.25" width="185" height="118" fill="#ffc8c9"/>
+        <rect x="159" y="467.25" width="185" height="118" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(164 472.25)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="35.788" y="15">Admin Service</tspan>
+        </text>
+      </g>
+      <g id="Graphic_3">
+        <rect x="505" y="401.5" width="420" height="249.5" fill="#c0ffc0"/>
+        <rect x="505" y="401.5" width="420" height="249.5" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(510 406.5)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="145.28" y="15">Splinter Daemon</tspan>
+        </text>
+      </g>
+      <g id="Graphic_4">
+        <rect x="191.25" y="526.25" width="120.5" height="46.5" fill="#ffacb5"/>
+        <rect x="191.25" y="526.25" width="120.5" height="46.5" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(196.25 540.276)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="36.138" y="15">Store</tspan>
+        </text>
+      </g>
+      <g id="Graphic_5">
+        <path d="M 94 721.1 L 94 641.9 C 94 636.4352 116.512 632 144.25 632 C 171.988 632 194.5 636.4352 194.5 641.9 L 194.5 721.1 C 194.5 726.5648 171.988 731 144.25 731 C 116.512 731 94 726.5648 94 721.1" fill="#ffacb5"/>
+        <path d="M 94 721.1 L 94 641.9 C 94 636.4352 116.512 632 144.25 632 C 171.988 632 194.5 636.4352 194.5 641.9 L 194.5 721.1 C 194.5 726.5648 171.988 731 144.25 731 C 116.512 731 94 726.5648 94 721.1 M 94 641.9 C 94 647.3648 116.512 651.8 144.25 651.8 C 171.988 651.8 194.5 647.3648 194.5 641.9" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Line_7">
+        <line x1="232.60938" y1="572.75" x2="188.01627" y2="627.6338" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Line_8">
+        <line x1="353.9" y1="526.25" x2="495.1" y2="526.25" marker-end="url(#FilledArrow_Marker)" marker-start="url(#FilledArrow_Marker_2)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_9">
+        <rect x="522" y="556" width="148" height="79.5" fill="url(#Obj_Gradient)"/>
+        <path d="M 522 556 L 670 556 L 670 635.5 L 522 635.5 Z" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4.0,4.0" stroke-width="1"/>
+        <text transform="translate(527 586.526)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="20.104" y="15">Routing Table</tspan>
+        </text>
+      </g>
+      <g id="Line_10">
+        <line x1="311.75" y1="557.5887" x2="512.188" y2="584.498" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_11">
+        <rect x="662" y="462.5" width="177" height="54" fill="#80ff80"/>
+        <rect x="662" y="462.5" width="177" height="54" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_15">
+        <rect x="673" y="476" width="177" height="54" fill="#80ff80"/>
+        <rect x="673" y="476" width="177" height="54" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_16">
+        <rect x="690.5" y="491" width="177" height="54" fill="#80ff80"/>
+        <rect x="690.5" y="491" width="177" height="54" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_17">
+        <rect x="705.5" y="507.5" width="177" height="54" fill="#80ff80"/>
+        <rect x="705.5" y="507.5" width="177" height="54" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(710.5 525.276)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="17.564" y="15">Dispatch Handlers</tspan>
+        </text>
+      </g>
+      <g id="Line_18">
+        <line x1="706.7184" y1="561.5" x2="679.4578" y2="569.9329" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+    </g>
+  </g>
+</svg>
