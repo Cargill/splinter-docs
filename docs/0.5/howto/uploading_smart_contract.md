@@ -169,7 +169,7 @@ for details on how to create and compile a smart contract
         --service-id $CIRCUIT_ID::scabbard-service-beta
 
     NAME        VERSIONS OWNERS
-    sawtooth_xo  1.0     <owner_public_key> 
+    sawtooth_xo  1.0     <owner_public_key>
     ```
 
 8. Display uploaded smart contract.

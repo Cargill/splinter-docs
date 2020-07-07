@@ -100,7 +100,7 @@ After registering a new user, add the user's public and private keys.
     root@9739a96d4f2a:/# cat /registry/alice.pub
     03ae67a60aacd6db99c851119204c81914c97bc231c79af9a22a2cb78f25218383
     root@9739a96d4f2a:/#
-    
+
     root@9739a96d4f2a:/# cat /registry/alice.priv
     12f5463fcf7525363cacaad7b7aba4e8f182ec38942f7a74678bdf6fdfab050a
     root@9739a96d4f2a:/#
