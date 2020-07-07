@@ -31,8 +31,7 @@ All instances of these endpoints must be updated. Requests to the previous
 endpoints will result in a `404 NOT FOUND` error.
 
 The functionality for these endpoints has remained the same. For more
-information, see the [splinterd OpenAPI
-documentation](https://github.com/Cargill/splinter/blob/v0.3.15/splinterd/api/static/openapi.yml).
+information, see the [Splinter REST API documentation](/docs/0.4/api/).
 
 ## The splinter circuit create subcommand has been renamed to propose
 

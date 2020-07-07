@@ -234,7 +234,8 @@ endpoints and the server will return a `404 NOT FOUND` HTTP error as the
 v0.3.11 endpoints no longer exist.
 
 The functionality for these endpoints has remained the same, and more
-information on the functionality may be found in the [openapi documentation](https://github.com/Cargill/splinter/blob/v0.3.12/splinterd/api/static/openapi.yml)
+information on the functionality may be found in the
+[Splinter REST API documentation](/docs/0.4/api/)
 
 ## The Sabre version used by scabbard has been updated
 In v0.3.12, the scabbard service has been updated to use v0.5 of the Sawtooth
