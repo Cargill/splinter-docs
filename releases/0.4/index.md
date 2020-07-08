@@ -11,8 +11,9 @@ features in this release. For detailed changes related to the v0.4 release,
 see the [Splinter release
 notes](https://github.com/Cargill/splinter/blob/master/RELEASE_NOTES.md).
 
-If you're new to Splinter, see the [Splinter documentation](/docs/0.4/) to learn
-about Splinter concepts and features.
+If you're new to Splinter, see the
+[Splinter documentation]({% link docs/0.4/index.md %}) to learn about Splinter
+concepts and features.
 
 ## New and Noteworthy
 
@@ -85,7 +86,8 @@ from local and remote files. The Splinter daemon constructs the local registry
 from a local registry file and multiple (zero or more) remote registry URLs.
 For more information, see the [v0.3.17 upgrade
 document](/releases/upgrading/splinter-v0.3.17-from-v0.3.16.html#the-key-registry-and-node-registry-have-been-combined)
-and the [splinterd(1) man page](/docs/0.4/references/cli/splinterd.1.html).
+and the
+[splinterd(1) man page]({% link docs/0.4/references/cli/splinterd.1.md %}).
 
 ### Biome for User Management
 
@@ -97,7 +99,8 @@ information and provides the user keys that the rest of Splinter relies on.
 
 Splinter exposes several `/biome` REST API endpoints for registering users,
 accessing user information, updating passwords (or other access credentials) and
-more. See [Biome User Management](/docs/0.4/concepts/biome_user_management.html)
+more. See
+[Biome User Management]({% link docs/0.4/concepts/biome_user_management.md %})
 and the `/biome` endpoints in the [splinterd REST API
 Reference](/docs/0.4/api/#tag/Biome).
 
@@ -148,8 +151,8 @@ information, see the [splinterd REST API Reference](/docs/0.4/api/).
 The Splinter daemon, `splinterd`, provides Splinter functionality for a node.
 The daemon can be configured with environment variables, configuration files,
 and options with `splinterd` command. For more information, run `man splinterd`
-at a command-line prompt or see the [Splinter CLI Command
-Reference](/docs/0.4/references/cli/splinterd.1.html).
+at a command-line prompt or see the
+[Splinter CLI Command Reference]({% link docs/0.4/references/cli/splinterd.1.md %}).
 
 ### Peer Management Improvements
 
@@ -170,8 +173,8 @@ other nodes on a circuit.
 This release includes an example application, Gameroom, that demonstrates how to
 use Splinter features such as Biome, scabbard, and others.
 
-For more information, see the [Gameroom
-Walkthrough](/docs/0.4/examples/gameroom/) and
+For more information, see the
+[Gameroom Walkthrough]({% link docs/0.4/examples/gameroom/index.md %}) and
 [examples/gameroom](https://github.com/Cargill/splinter/tree/master/examples/gameroom)
 in the Splinter repository.
 
@@ -191,7 +194,7 @@ This release includes the following command-line tools:
   runs smart contracts.
 
 For more information, see the [Splinter CLI Command
-Reference](/docs/0.4/references/cli/cli_command_reference.html).
+Reference]({% link docs/0.4/references/cli/cli_command_reference.md %}).
 Splinter also provides man pages for these CLI tools; view them by running
 `man {command-subcommand}` at a command-line prompt (for example,
 `man splinter-circuit-vote`).
@@ -202,7 +205,7 @@ This release includes documentation for Splinter concepts, features, and tasks
 (under development), API reference guides, CLI man pages, and a comprehensive
 walkthrough for the Gameroom example application.
 
-* [Splinter documentation](/docs/0.4/)
+* [Splinter documentation]({% link docs/0.4/index.md %})
 
 * [splinterd REST API Reference](/docs/0.4/api/)
 
@@ -212,9 +215,10 @@ walkthrough for the Gameroom example application.
 * [Rust crate:scabbard API
   documentation](https://docs.rs.splinter/latest/scabbard)
 
-* [Splinter CLI Command Reference](/docs/0.4/references/cli/cli_command_reference.html)
+* [Splinter CLI Command
+  Reference]({% link docs/0.4/references/cli/cli_command_reference.md %})
 
-* [Gameroom Walkthrough](/docs/0.4/examples/gameroom/):
+* [Gameroom Walkthrough]({% link docs/0.4/examples/gameroom/index.md %}):
   Example Splinter application
 
 ## Splinter Software

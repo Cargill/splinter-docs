@@ -27,7 +27,8 @@ A Splinter deployment usually has the following items:
 
 *   A web UI (brower-based user interface) for interacting with the application.
 
-![](../images/splinter-deployment-overview.png "Splinter deployment overview")
+![]({% link docs/0.4/images/splinter-deployment-overview.png %}
+"Splinter deployment overview")
 
 ## Splinter Architecture
 
@@ -52,8 +53,8 @@ nodes, by using **circuits** and **services**.
 * **Shared state** (a database updated by smart contracts) is visible only to
   the services within a circuit.
 
-For more information about Splinter, see the [Splinter
-documentation](https://github.com/Cargill/splinter-docs/blob/master/docs/index.md).
+For more information about Splinter, see the
+[Splinter documentation]({% link docs/0.4/index.md %}).
 
 ## Network Configuration
 
@@ -76,13 +77,14 @@ Communication over this connection is encrypted with TLS.
 > it will not receive circuit management requests from new peers; existing peers
 > that have disconnected cannot reestablish their connections to your node.
 > If running behind a firewall without an open port is absolutely necessary,
-> see the [Splinter
-> FAQ](https://github.com/Cargill/splinter-docs/blob/master/docs/faq/index.md#can-i-run-the-splinter-daemon-behind-a-firewall-without-opening-up-a-port).
+> see the
+> [Splinter FAQ](/docs/faq/index.md#can-i-run-the-splinter-daemon-behind-a-firewall-without-opening-up-a-port).
 
 We recommend redirecting web server traffic from port 80 to port 443, which
 sends all HTTP requests to the TLS port.
 
-![](../images/splinter-deployment-network-config.png "Splinter network configuration")
+![]({% link docs/0.4/images/splinter-deployment-network-config.png %}
+"Splinter network configuration")
 
 ## Application Pattern
 
@@ -90,8 +92,8 @@ Users generally access the application with web-based apps that interact with
 Splinter through a web server and server-side application. Splinter includes
 **Canopy**, a distributed-application UI framework that dynamically loads
 distributed UI components called _Saplings_. See [Canopy Application
-Framework](../concepts/canopy_application_framework.md)
-for more information.
+Framework]({% link docs/0.4/concepts/canopy_application_framework.md %}) for
+more information.
 
 The server-side application (application server) is commonly a single
 application with a REST API, as shown here, but more complex designs are
@@ -105,7 +107,8 @@ must be persisted across restarts.
 > Kubernetes persistent volume) for `/var/lib/splinter`, which contains circuit
 > definitions and shared state.
 
-![](../images/splinter-deployment-application-pattern.png 'Splinter application pattern')
+![]({% link docs/0.4/images/splinter-deployment-application-pattern.png %}
+'Splinter application pattern')
 
 ## Docker Deployment
 
@@ -118,7 +121,8 @@ can use the Splinter command-line interface (CLI) to interact with splinterd.
 * If your application requires persistent data across restarts, configure a
   Docker data volume for the database container.
 
-![](../images/splinter-deployment-docker.png "Splinter Docker deployment")
+![]({% link docs/0.4/images/splinter-deployment-docker.png %}
+"Splinter Docker deployment")
 
 ## Basic Kubernetes Deployment
 
@@ -131,7 +135,8 @@ this pattern has been tested with the Splinter examples.
 * If your application requires persistent data across restarts, configure a
   persistent volume  for the database container.
 
-![](../images/splinter-deployment-kubernetes.png "Splinter Kubernetes deployment")
+![]({% link docs/0.4/images/splinter-deployment-kubernetes.png %}
+"Splinter Kubernetes deployment")
 
 ## Amazon EKS Deployment
 
@@ -145,7 +150,8 @@ has been tested with the Splinter examples.
 * If your application requires persistent data across restarts, configure an EBS
   persistent volume  for the database container.
 
-![](../images/splinter-deployment-amazonEKS.png "Splinter Amazon EKS deployment")
+![]({% link docs/0.4/images/splinter-deployment-amazonEKS.png %}
+"Splinter Amazon EKS deployment")
 
 ## Summary
 

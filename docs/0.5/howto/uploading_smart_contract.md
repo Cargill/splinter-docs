@@ -6,17 +6,19 @@
   https://creativecommons.org/licenses/by/4.0/
 -->
 
-This tutorial covers how to create a circuit on a splinter network between 
+This tutorial covers how to create a circuit on a splinter network between
 two nodes and upload a smart contract via the circuit.
 
 ## Prerequisites
 
 * A splinter network with at least two nodes running. The tutorial will refer
   to the two nodes as "alpha" and "beta" respectively
-* The scabbard command line tool installed with [experimental features](https://github.com/Cargill/splinter/blob/master/README.md#building-splinter)
-enabled
-* The splinter command line tool installed with [experimental features](https://github.com/Cargill/splinter/blob/master/README.md#building-splinter)
-enabled
+* The scabbard command line tool installed with
+  [experimental features]({% link docs/0.5/howto/building_splinter.md %})
+  enabled
+* The splinter command line tool installed with
+  [experimental features]({% link docs/0.5/howto/building_splinter.md %})
+  enabled
 * A compiled smart contract. Check [here](https://sawtooth.hyperledger.org/docs/sabre/nightly/master/application_developer_guide.html#)
 for details on how to create and compile a smart contract
 
@@ -167,7 +169,7 @@ for details on how to create and compile a smart contract
         --service-id $CIRCUIT_ID::scabbard-service-beta
 
     NAME        VERSIONS OWNERS
-    sawtooth_xo  1.0     <owner_public_key> 
+    sawtooth_xo  1.0     <owner_public_key>
     ```
 
 8. Display uploaded smart contract.

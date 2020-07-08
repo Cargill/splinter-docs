@@ -6,12 +6,12 @@
   https://creativecommons.org/licenses/by/4.0/
 -->
 
-## <img src="/assets/xo.png" width="32" height="32" alt="Gameroom logo">&nbsp;Gameroom
+## <img src="{% link assets/xo.png %}" width="32" height="32" alt="Gameroom logo">&nbsp;Gameroom
 
 Gameroom is a full-stack web application that sets up private circuits for two
 or three participants to play tic tac toe with shared state.
 
-<img src="images/gameroom_example.png" alt="Tic tac toe in Gameroom">
+<img src="{% link examples/images/gameroom_example.png %}" alt="Tic tac toe in Gameroom">
 
 Although playing distributed games is an unusual use case, Gameroom shows how to
 write a Splinter application that integrates the Splinter framework, UI
@@ -31,7 +31,7 @@ demonstrates the following items:
 <a href ="/docs/{{ site.data.general.latest_version }}/examples/gameroom/"
 type="button" class="btn btn-primary">Try Gameroom ➜</a><br>&nbsp;<br>
 
-## <img src="/assets/grid_logo.svg" width="32" height="32" alt="Grid logo">&nbsp;Hyperledger&nbsp;Grid
+## <img src="{% link assets/grid_logo.svg %}" width="32" height="32" alt="Grid logo">&nbsp;Hyperledger&nbsp;Grid
 
 [Hyperledger Grid](https://grid.hyperledger.org/) includes a real-world example
 of using Grid as a backend for Splinter. Grid's mission is to provide reference
@@ -39,7 +39,7 @@ implementations of supply-chain-centric items – data types, data models,
 smart-contract-based business logic, and more – that are anchored on existing
 open standards and industry best practices.
 
-<img src="images/grid_stack.png" alt="Grid in the solution stack">
+<img src="{% link examples/images/grid_stack.png %}" alt="Grid in the solution stack">
 
 This example demonstrates how to combine the Splinter framework with Hyperledger
 components into a single, effective business solution. It includes Hyperledger's

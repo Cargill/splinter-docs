@@ -117,33 +117,41 @@ bookmark. The app starts to load.
 
 Alice looks at the GAMEROOM APP LOGIN SCREEN in her browser.
 
-![](./images/acme_gameroom_login_screen.svg "Gameroom app Acme login screen")
+![]({% link
+docs/0.5/examples/gameroom/walkthrough/images/acme_gameroom_login_screen.svg %}
+"Gameroom app Acme login screen")
 
 Alice enters her EMAIL and PASSWORD. Clicks LOG IN.
 
 Success. The browser now displays the ACME GAMEROOM HOME SCREEN.
 
-![](./images/acme_gameroom_home_screen.svg "Gameroom app Acme home screen")
+![]({% link
+docs/0.5/examples/gameroom/walkthrough/images/acme_gameroom_home_screen.svg %}
+"Gameroom app Acme home screen")
 
 ### Scene 2: Alice creates a new gameroom
 
 Alice sees an empty MY GAMEROOMS sidebar (no gamerooms exist yet). Alice creates
 a new gameroom by clicking on the **+** button next to My Gamerooms.
 
-![](./images/scene2_1.svg "Gamerooms sidebar")
+![]({% link docs/0.5/examples/gameroom/walkthrough/images/scene2_1.svg %}
+"Gamerooms sidebar")
 
 Alice sees the NEW GAMEROOM DIALOG.
 
-![](./images/scene2_2.svg "New Gameroom dialog")
+![]({% link docs/0.5/examples/gameroom/walkthrough/images/scene2_2.svg %}
+"New Gameroom dialog")
 
 Alice looks at the OTHER ORGANIZATION pulldown list. She
 selects BUBBA BAKERY.
 
-![](./images/scene2_3.svg "New Gameroom dialog organization pulldown list")
+![]({% link docs/0.5/examples/gameroom/walkthrough/images/scene2_3.svg %}
+"New Gameroom dialog organization pulldown list")
 
 Next, she enters a NAME for the new gameroom: Acme + Bubba.
 
-![](./images/scene2_4.svg "New Gameroom dialog completed")
+![]({% link docs/0.5/examples/gameroom/walkthrough/images/scene2_4.svg %}
+"New Gameroom dialog completed")
 
 Alice clicks SEND.
 
@@ -151,7 +159,8 @@ The New Gameroom dialog is replaced with the Acme Gameroom home
 screen. A TOAST NOTIFICATION tells Alice that her invitation
 has been sent to Bubba Bakery.
 
-![](./images/scene2_5.svg "Invitation successfully sent notification")
+![]({% link docs/0.5/examples/gameroom/walkthrough/images/scene2_5.svg %}
+"Invitation successfully sent notification")
 
 ### INTERMISSION
 
@@ -167,8 +176,8 @@ Behind the Scenes: A Look at Act I, Alice and Bob Create a Gameroom
 ### I-1. Behind scene 1: Alice logs into Acme's Gameroom UI
 
 Gameroom uses Biome for user management, including authentication. For more
-information, check out the [Biome
-overview](../../../concepts/biome_user_management.md).
+information, check out the
+[Biome overview]({% link docs/0.5/concepts/biome_user_management.md %}).
 
 When a user logs in, the user interface (UI) component of the Gameroom client
 application works with the Gameroom REST API to check the user's email address
@@ -182,7 +191,8 @@ passwords are hashed by the Gameroom client so that they remain secret.
 
 #### I-1.1. Acme UI sends authorization request to Gameroom REST API
 
-![](./images/auth_login_acme1.svg "Gameroom daemon receives auth request")
+![]({% link docs/0.5/examples/gameroom/walkthrough/images/auth_login_acme1.svg %}
+"Gameroom daemon receives auth request")
 
 When Alice clicks Log in, the Acme Gameroom UI hashes the password, then sends
 an authorization request to the Acme Gameroom daemon, gameroomd. The Gameroom
@@ -203,7 +213,8 @@ is used to encrypt signing keys (as described in section I-2.3, step 5).
 
 #### I-1.2. Gameroom daemon uses Biome REST API to verify password
 
-![](./images/auth_login_acme2.svg "Gameroom daemon forwards auth request")
+![]({% link docs/0.5/examples/gameroom/walkthrough/images/auth_login_acme2.svg %}
+"Gameroom daemon forwards auth request")
 
 Once the Gameroom daemon receives the authentication request, the actual
 authentication is handled by the Biome REST API. This authentication request
@@ -222,7 +233,8 @@ the entry from the Acme Splinter daemon's local database associated with the
 username and verifies the hashed password sent in the request.
 
 
-![](./images/auth_login_acme3.svg "Splinter daemon verifies Alice's credentials")
+![]({% link docs/0.5/examples/gameroom/walkthrough/images/auth_login_acme3.svg %}
+"Splinter daemon verifies Alice's credentials")
 
 
 The `user_credentials` table in the Splinter database has the following schema:
@@ -282,7 +294,8 @@ following success response:
 
 #### I-1.3. Gameroom daemon uses Biome REST API to request Alice's key pairs
 
-![](./images/auth_login_acme4.svg "Gameroom daemon requests Alice's keys")
+![]({% link docs/0.5/examples/gameroom/walkthrough/images/auth_login_acme4.svg %}
+"Gameroom daemon requests Alice's keys")
 
 Once the Gameroom daemon has verified Alice's password, it must then verify that
 Alice has a public and private key pair. Alice's public and private key pair was
@@ -301,7 +314,8 @@ daemon to authorize access to the user's key information, as well as extract the
 user ID from the token to fetch the keys from the Splinter daemon's database.
 
 
-![](./images/auth_login_acme5.svg "Splinter daemon retrieves Alice's keys")
+![]({% link docs/0.5/examples/gameroom/walkthrough/images/auth_login_acme5.svg %}
+"Splinter daemon retrieves Alice's keys")
 
 
 The `keys` table in the Splinter database has the following schema:
@@ -459,7 +473,8 @@ circuit.
 First, the Acme Gameroom UI must load the list of members for the "New Gameroom"
 dialog. The general process looks like this:
 
-![](./images/get_nodes_diagram.svg "Splinter daemon loads member list")
+![]({% link docs/0.5/examples/gameroom/walkthrough/images/get_nodes_diagram.svg %}
+"Splinter daemon loads member list")
 
 1. The UI makes this REST API call to the Gameroom REST API.
 
@@ -527,7 +542,9 @@ dialog. The general process looks like this:
      When Alice clicks on the **Send** button, the general process looks like
      this:
 
-    ![](./images/create_gameroom_diagram.svg "Create Gameroom proposal sent")
+    ![]({% link
+    docs/0.5/examples/gameroom/walkthrough/images/create_gameroom_diagram.svg %}
+    "Create Gameroom proposal sent")
 
     The UI sends a "create new gameroom" request to the Gameroom REST API that
     includes the gameroom name (also called an _alias_) and list of other

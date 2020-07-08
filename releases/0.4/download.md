@@ -11,11 +11,11 @@
 Clone the core [GitHub repository](https://github.com/Cargill/splinter/tree/0-4)
 to view the Splinter source code, demo applications, and example Docker compose
 files for starting up a Splinter network. Learn
-[how to build Splinter](/docs/0.4/howto/building_splinter.html) and more by
-browsing the [Splinter documentation](/docs/0.4/).
+[how to build Splinter]({% link docs/0.4/howto/building_splinter.md %}) and more
+by browsing the [Splinter documentation]({% link docs/0.4/index.md %}).
 
-See [Repositories](/community/repositories.md) for the other
-Splinter repositories in this project.
+See [Repositories]({% link community/repositories.md %}) for the other Splinter
+repositories in this project.
 
 ## Rust crates
 

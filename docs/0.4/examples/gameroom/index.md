@@ -14,7 +14,7 @@ organizations: Acme Corporation and Bubba Bakery.
 
 To learn about the Splinter functionality that powers this deceptively simple
 application, see the [Gameroom Technical
-Walkthrough](walkthrough/).
+Walkthrough]({% link docs/0.4/examples/gameroom/walkthrough/index.md %}).
 
 ## Running the Gameroom Demo with Docker
 
