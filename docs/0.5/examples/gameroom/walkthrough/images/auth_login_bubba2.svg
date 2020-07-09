@@ -1,0 +1,123 @@
+<!--
+  Copyright 2018-2020 Cargill Incorporated
+  Licensed under Creative Commons Attribution 4.0 International License
+  https://creativecommons.org/licenses/by/4.0/
+-->
+<svg xmlns:xl="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:dc="http://purl.org/dc/elements/1.1/" viewBox="-239 -102 737 311" width="737" height="311">
+  <defs>
+    <font-face font-family="Helvetica Neue" font-size="16" panose-1="2 0 5 3 0 0 0 2 0 4" units-per-em="1000" underline-position="-100" underline-thickness="50" slope="0" x-height="517" cap-height="714" ascent="951.9958" descent="-212.99744" font-weight="400">
+      <font-face-src>
+        <font-face-name name="HelveticaNeue"/>
+      </font-face-src>
+    </font-face>
+    <marker orient="auto" overflow="visible" markerUnits="strokeWidth" id="FilledArrow_Marker" stroke-linejoin="miter" stroke-miterlimit="10" viewBox="-1 -3 7 6" markerWidth="7" markerHeight="6" color="#666">
+      <g>
+        <path d="M 4.8 0 L 0 -1.8 L 0 1.8 Z" fill="currentColor" stroke="currentColor" stroke-width="1"/>
+      </g>
+    </marker>
+  </defs>
+  <metadata> Produced by OmniGraffle 7.16 
+    <dc:date>2020-06-30 21:15:23 +0000</dc:date>
+  </metadata>
+  <g id="Gameroom_doc_-_login_auth_-_Bubba_2" stroke-dasharray="none" fill-opacity="1" stroke="none" fill="none" stroke-opacity="1">
+    <title>Gameroom doc - login auth - Bubba 2</title>
+    <rect fill="white" x="-239" y="-102" width="737" height="311"/>
+    <g id="Gameroom_doc_-_login_auth_-_Bubba_2: Layer 1">
+      <title>Layer 1</title>
+      <g id="Group_19">
+        <g id="Graphic_24">
+          <ellipse cx="-215" cy="-62.5" rx="20.0000319580379" ry="20.5000327569889" fill="#ebebeb"/>
+          <ellipse cx="-215" cy="-62.5" rx="20.0000319580379" ry="20.5000327569889" stroke="black" stroke-linecap="round" stroke-linejoin="miter" stroke-width="2"/>
+        </g>
+        <g id="Group_21">
+          <g id="Graphic_23">
+            <ellipse cx="-207.5" cy="-68.5" rx="3.00000479370569" ry="3.50000559265663" fill="black"/>
+            <ellipse cx="-207.5" cy="-68.5" rx="3.00000479370569" ry="3.50000559265663" stroke="black" stroke-linecap="round" stroke-linejoin="miter" stroke-width="1"/>
+          </g>
+          <g id="Graphic_22">
+            <ellipse cx="-222.5" cy="-68.5" rx="3.00000479370568" ry="3.50000559265663" fill="black"/>
+            <ellipse cx="-222.5" cy="-68.5" rx="3.00000479370568" ry="3.50000559265663" stroke="black" stroke-linecap="round" stroke-linejoin="miter" stroke-width="1"/>
+          </g>
+        </g>
+        <g id="Line_20">
+          <path d="M -223.375 -55.6 C -223.375 -55.6 -220.12036 -52.65 -215.375 -52.65 C -210.62964 -52.65 -206.625 -55.6 -206.625 -55.6" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+        </g>
+      </g>
+      <g id="Graphic_18">
+        <rect x="-111.6" y="-72.16667" width="148" height="91.16667" fill="white"/>
+        <rect x="-111.6" y="-72.16667" width="148" height="91.16667" stroke="#666" stroke-linecap="round" stroke-linejoin="miter" stroke-width="1"/>
+        <text transform="translate(-106.6 -54.25533)" fill="#666">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="#666" x="18.176" y="15">Bubba Bakery</tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="#666" x="28.984" y="33.448">Gameroom</tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="#666" x="61.152" y="51.895996">UI</tspan>
+        </text>
+      </g>
+      <g id="Graphic_17">
+        <path d="M -189.3 -57.75 L -189.3 -63.25 L -126.3 -63.25 L -126.3 -66 L -115.3 -60.5 L -126.3 -55 L -126.3 -57.75 Z" fill="lime"/>
+        <path d="M -189.3 -57.75 L -189.3 -63.25 L -126.3 -63.25 L -126.3 -66 L -115.3 -60.5 L -126.3 -55 L -126.3 -57.75 Z" stroke="black" stroke-linecap="round" stroke-linejoin="miter" stroke-width="1"/>
+      </g>
+      <g id="Graphic_16">
+        <path d="M 42.100007 -57.75 L 42.100007 -63.25 L 169.9 -63.25 L 169.9 -66 L 180.9 -60.5 L 169.9 -55 L 169.9 -57.75 Z" fill="lime"/>
+        <path d="M 42.100007 -57.75 L 42.100007 -63.25 L 169.9 -63.25 L 169.9 -66 L 180.9 -60.5 L 169.9 -55 L 169.9 -57.75 Z" stroke="black" stroke-linecap="round" stroke-linejoin="miter" stroke-width="1"/>
+      </g>
+      <g id="Group_13">
+        <g id="Graphic_15">
+          <rect x="237.0847" y="-72.16667" width="150.56733" height="116.16667" fill="white"/>
+          <rect x="237.0847" y="-72.16667" width="150.56733" height="116.16667" stroke="#666" stroke-linecap="round" stroke-linejoin="miter" stroke-width="1"/>
+          <text transform="translate(242.0847 -41.75533)" fill="#666">
+            <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="#666" x="19.45966" y="15">Bubba Bakery</tspan>
+            <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="#666" x="30.26766" y="33.448">Gameroom</tspan>
+            <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="#666" x="40.19566" y="51.895996">Daemon</tspan>
+          </text>
+        </g>
+        <g id="Graphic_14">
+          <rect x="185.2" y="-72.16667" width="65.7969" height="116.16667" fill="white"/>
+          <rect x="185.2" y="-72.16667" width="65.7969" height="116.16667" stroke="#666" stroke-linecap="round" stroke-linejoin="miter" stroke-width="1"/>
+          <text transform="translate(190.2 -32.53133)" fill="#666">
+            <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="#666" x="7.754449" y="15">REST </tspan>
+            <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="#666" x="15.458449" y="33.448">API</tspan>
+          </text>
+        </g>
+      </g>
+      <g id="Line_12">
+        <line x1="36.400005" y1="-30.383328" x2="184.4" y2="-30.383328" stroke="#666" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Group_9">
+        <g id="Graphic_11">
+          <path d="M 83.19897 -26.920667 C 77.2698 -29.841745 81.81759 -39.393954 89.6346 -39.133844 C 88.58994 -43.161884 98.22579 -49.333333 106.07592 -43.3568 C 107.05296 -47.8392 122.21364 -48.81378 124.33677 -41.537363 C 126.62757 -46.7349 144.01212 -43.94155 139.80105 -34.651444 C 146.60652 -35.95066 149.77362 -20.228999 138.4866 -19.773973 C 141.48534 -14.122078 130.4343 -8.989736 126.02106 -12.433028 C 126.59376 -7.62599 110.38842 -3.4030344 107.25513 -11.133811 C 106.0083 -6.326773 89.83677 -9.509955 92.29593 -16.006043 C 87.51147 -13.53733 77.5389 -21.398494 83.19897 -26.920667 Z M 94.62054 1.599585 C 93.50895 3.158247 94.31763 5.951598 97.88838 3.678466 C 98.15817 5.951598 103.04337 6.211707 103.95279 3.678466 C 106.581 5.237128 108.80487 3.3531627 107.35587 .8199214 C 110.18625 .62500554 109.14159 -4.702252 105.26724 -2.6233708 C 106.24428 -4.702252 100.44897 -6.651411 99.74172 -3.2733122 C 98.42796 -5.0920837 94.92414 -5.1572774 94.99107 -2.0386232 C 92.83482 -2.8182867 91.08291 1.5343913 94.62054 1.599585 Z M 84.58035 11.019411 C 84.00765 12.318628 87.68052 13.228014 88.01724 11.214327 C 90.07206 11.799074 90.94836 9.979638 89.6346 8.68042 C 90.91455 6.731261 87.78126 5.6269597 86.80422 7.316009 C 85.52427 5.432044 82.82844 7.510925 83.83929 8.810142 C 81.71685 9.589806 83.26659 11.604158 84.58035 11.019411 Z" fill="white"/>
+          <path d="M 83.19897 -26.920667 C 77.2698 -29.841745 81.81759 -39.393954 89.6346 -39.133844 C 88.58994 -43.161884 98.22579 -49.333333 106.07592 -43.3568 C 107.05296 -47.8392 122.21364 -48.81378 124.33677 -41.537363 C 126.62757 -46.7349 144.01212 -43.94155 139.80105 -34.651444 C 146.60652 -35.95066 149.77362 -20.228999 138.4866 -19.773973 C 141.48534 -14.122078 130.4343 -8.989736 126.02106 -12.433028 C 126.59376 -7.62599 110.38842 -3.4030344 107.25513 -11.133811 C 106.0083 -6.326773 89.83677 -9.509955 92.29593 -16.006043 C 87.51147 -13.53733 77.5389 -21.398494 83.19897 -26.920667 Z M 94.62054 1.599585 C 93.50895 3.158247 94.31763 5.951598 97.88838 3.678466 C 98.15817 5.951598 103.04337 6.211707 103.95279 3.678466 C 106.581 5.237128 108.80487 3.3531627 107.35587 .8199214 C 110.18625 .62500554 109.14159 -4.702252 105.26724 -2.6233708 C 106.24428 -4.702252 100.44897 -6.651411 99.74172 -3.2733122 C 98.42796 -5.0920837 94.92414 -5.1572774 94.99107 -2.0386232 C 92.83482 -2.8182867 91.08291 1.5343913 94.62054 1.599585 Z M 84.58035 11.019411 C 84.00765 12.318628 87.68052 13.228014 88.01724 11.214327 C 90.07206 11.799074 90.94836 9.979638 89.6346 8.68042 C 90.91455 6.731261 87.78126 5.6269597 86.80422 7.316009 C 85.52427 5.432044 82.82844 7.510925 83.83929 8.810142 C 81.71685 9.589806 83.26659 11.604158 84.58035 11.019411 Z" stroke="#666" stroke-linecap="round" stroke-linejoin="miter" stroke-width="1"/>
+        </g>
+        <g id="Graphic_10">
+          <rect x="79.00001" y="-5.768817" width="31.5" height="29.435484" fill="white"/>
+        </g>
+      </g>
+      <g id="Graphic_8">
+        <text transform="translate(-181.5 -97)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="40500936e-20" y="15">1. Login</tspan>
+        </text>
+      </g>
+      <g id="Graphic_7">
+        <text transform="translate(56.508 -97)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="0" y="15">2. Auth request</tspan>
+        </text>
+      </g>
+      <g id="Graphic_6">
+        <text transform="translate(352.5 61.276)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="0" y="15">3. Auth comparison</tspan>
+        </text>
+      </g>
+      <g id="Graphic_5">
+        <path d="M 248.85202 197.3 L 248.85202 111.7 C 248.85202 105.7936 279.94322 101 318.25202 101 C 356.5608 101 387.652 105.7936 387.652 111.7 L 387.652 197.3 C 387.652 203.2064 356.5608 208 318.25202 208 C 279.94322 208 248.85202 203.2064 248.85202 197.3" fill="white"/>
+        <path d="M 248.85202 197.3 L 248.85202 111.7 C 248.85202 105.7936 279.94322 101 318.25202 101 C 356.5608 101 387.652 105.7936 387.652 111.7 L 387.652 197.3 C 387.652 203.2064 356.5608 208 318.25202 208 C 279.94322 208 248.85202 203.2064 248.85202 197.3 M 248.85202 111.7 C 248.85202 117.6064 279.94322 122.4 318.25202 122.4 C 356.5608 122.4 387.652 117.6064 387.652 111.7" stroke="#666" stroke-linecap="round" stroke-linejoin="miter" stroke-width="1"/>
+        <text transform="translate(253.85202 132.178)" fill="#666">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="#666" x="13.576002" y="15">Bubba Bakery</tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="#666" x="20.984002" y="33.448">PostgreSQL</tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="#666" x="31.208" y="51.895996">database</tspan>
+        </text>
+      </g>
+      <g id="Line_4">
+        <line x1="317.94297" y1="45.10803" x2="318.06443" y2="88.10008" marker-end="url(#FilledArrow_Marker)" stroke="#666" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+      </g>
+    </g>
+  </g>
+</svg>
