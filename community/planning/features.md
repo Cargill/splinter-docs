@@ -28,3 +28,7 @@ forum.
 * [Admin UI]({% link community/planning/admin_ui.md %})
 
   Splinter administration utility.
+
+* [Admin Service Store]({% link community/planning/admin_service_store.md %})
+
+  New design for storing circuit and circuit proposal state.
