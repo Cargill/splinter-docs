@@ -185,7 +185,7 @@ service.
       ///
       /// The proposals returned can be filtered by provided CircuitPredicate. This enables   
       /// filtering by management type and members.
-      fn list_circuits(&self,  predicates: &[CircuitPredicate]) -> Result<Box<dyn ExactSizeIterator<Item =Circuit>, AdminServiceStoreError>;
+      fn list_circuits(&self,  predicates: &[CircuitPredicate]) -> Result<Box<dyn ExactSizeIterator<Item =Circuit>>, AdminServiceStoreError>;
 
       /// Adds a circuit to the underlying storage based on the proposal that is already in state..
       /// Also includes the associated Services and Nodes. The associated circuit proposal for
@@ -207,7 +207,7 @@ service.
       fn fetch_node(&self, node_id: &str) -> Result<Option<CircuitNode>, AdminServiceStoreError>;
 
       /// List all nodes from the underlying storage
-      fn list_nodes(&self) -> Result<Box<dyn ExactSizeIterator<Item =CircuitNode>, AdminServiceStoreError>;
+      fn list_nodes(&self) -> Result<Box<dyn ExactSizeIterator<Item =CircuitNode>>, AdminServiceStoreError>;
 
       /// Fetches a service from the underlying storage
       ///
@@ -227,7 +227,7 @@ service.
       fn list_services(
           &self,
           circuit_id: String,
-      ) -> Result<Box<dyn ExactSizeIterator<Item = Service>, AdminServiceStoreError>;
+      ) -> Result<Box<dyn ExactSizeIterator<Item = Service>>, AdminServiceStoreError>;
   }
   ```
 
@@ -260,7 +260,7 @@ The methods for reading the `RoutingTable` are defined in the trait
 services, and nodes.
 
 ```
-  pub impl RoutingTableReader {
+  pub trait RoutingTableReader {
       // ---------- methods to access service directory ----------
       fn fetch_service(&self, id: &ServiceId) -> Result<Option<Service>, RoutingTableReadError>;
 
@@ -271,7 +271,7 @@ services, and nodes.
 
       fn list_nodes(&self) ->  Result<Box<dyn ExactSizeIterator<Item = Node>,  RoutingTableReadError>;
 
-      fn fetch_node(&self, node_id: &str) -> Result<Option<CircuitNode> ,  RoutingTableReadError>;
+      fn fetch_node(&self, node_id: &str) -> Result<Option<CircuitNode>,  RoutingTableReadError>;
 
       fn list_circuits(&self) -> Result<Box<dyn ExactSizeIterator<Item = Circuit>, RoutingTableReadError>;
 
@@ -302,7 +302,7 @@ circuits, as well as adding and removing nodes and services.
 
       fn add_node(&mut self, id: String, node: CircuitNode -> Result<(), RoutingTableWriterError>;
 
-      fn remove_node(&mut self, id: &str) -> Result<(), , RoutingTableWriterError>;
+      fn remove_node(&mut self, id: &str) -> Result<(), RoutingTableWriterError>;
   }
 ```
 
