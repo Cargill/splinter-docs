@@ -405,7 +405,7 @@ happens when there are gamerooms for the UI to display.
 list of gamerooms.
 
 ```
-GET /api/gamerooms
+GET /gamerooms
 ```
 
 2. This call returns an empty list, since there are no gamerooms in the Acme
@@ -436,7 +436,7 @@ will show what happens when a user has unaccepted invitations.
 of invitations (also called _circuit proposals_).
 
 ```
-GET /api/proposals
+GET /proposals
 ```
 
 2. Because Alice has no invitations, the Gameroom REST API returns an empty list.
