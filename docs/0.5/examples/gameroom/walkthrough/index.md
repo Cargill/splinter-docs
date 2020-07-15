@@ -176,13 +176,17 @@ distracted by Wikipedia's list of games. Plays Quantum Tic Tac Toe Online for
 20 minutes. Eventually hunts through his email for the right link and starts
 the BUBBA BAKERY GAMEROOM APP.
 
-![](./images/scene3_1.png "Bubba Bakery login screen")
+![]({% link
+docs/0.5/examples/gameroom/walkthrough/images/scene3_1.png %}
+"Bubba Bakery login screen")
 
 Bob logs in with his EMAIL and PASSWORD.
 
 Success. The browser now displays the BUBBA BAKERY GAMEROOM HOME SCREEN.
 
-![](./images/scene3_2.png "Bubba Bakery home screen")
+![]({% link
+docs/0.5/examples/gameroom/walkthrough/images/scene3_2.png %}
+"Bubba Bakery home screen")
 
 <h2 class="gameroom_behind">
 Behind the Scenes: A Look at Act I, Alice and Bob Create a Gameroom
@@ -401,7 +405,7 @@ happens when there are gamerooms for the UI to display.
 list of gamerooms.
 
 ```
-GET /api/gamerooms
+GET /gamerooms
 ```
 
 2. This call returns an empty list, since there are no gamerooms in the Acme
@@ -432,7 +436,7 @@ will show what happens when a user has unaccepted invitations.
 of invitations (also called _circuit proposals_).
 
 ```
-GET /api/proposals
+GET /proposals
 ```
 
 2. Because Alice has no invitations, the Gameroom REST API returns an empty list.
@@ -1602,11 +1606,11 @@ At the end of the operation, the `gameroom_notification` table looks like this:
 
 ### I-3. Behind scene 3: Bob logs into Bubba Bakery's Gameroom application
 
-When Bob logs in, the Bubba Bakery UI works with `gameroomd` and Gameroom REST
-API to check his user credentials and build the Bubba Bakery Gameroom home
-page. This process is almost identical to Alice's login process. The only
-difference is that the Bubba Bakery Gameroom home page will display a
-notification about his invitation from Alice.
+When Bob logs in, the Bubba Bakery UI works with `gameroomd`, `splinterd`, and
+both the Splinter and Gameroom REST API to check his user credentials and build
+the Bubba Bakery Gameroom home page. This process is almost identical to Alice's
+login process. The only difference is that the Bubba Bakery Gameroom home page
+will display a notification about his invitation from Alice.
 
 #### I-3.1. Bubba Bakery UI sends authorization request to Gameroom REST API
 
@@ -1614,91 +1618,196 @@ This process is the same as the Acme process in [section
 Ⅰ-1.1](#i-11-acme-ui-sends-authorization-request-to-gameroom-rest-api).
 For Bob, the general process looks like this:
 
-![](./images/auth_login_bubba1.svg "Gameroom daemon receives auth request")
+![]({% link
+docs/0.5/examples/gameroom/walkthrough/images/auth_login_bubba_1.svg %}
+"Gameroom daemon receives auth request")
 
 When Bob clicks `Log in`, the Bubba Bakery Gameroom UI hashes the password,
 then sends an authorization request to the Bubba Bakery Gameroom daemon,
-`gameroomd`. The request is handled by the Gameroom REST API, which is a part
-of `gameroomd`.
+`gameroomd`. Then, the Gameroom daemon makes some requests to the Biome REST
+API to verify the user.
 
 ```
-    POST /users/authenticate
-    {
-        email: "bob@bubbabakery.com",
-        hashedPassword: "2b944c69...c11fcf9c"
-    }
+POST /users/authenticate
+{
+  "email": "bob@bubbabakery.com",
+  "hashedPassword": "2b944c69...c11fcf9c"
+}
 ```
 
 As mentioned earlier, the UI does not reveal the user's password to the REST
 API because the password is used to encrypt signing keys.
 
-#### I-3.2. Bubba Bakery Gameroom REST API authorizes the login
+#### I-3.2. Gameroom daemon uses Biome REST API to verify password
 
-This process is the same as the Acme process in [section
-Ⅰ-1.2](#i-12-gameroom-daemon-uses-biome-rest-api-to-verify-password).
-For Bob, the general process looks like this:
+![]({% link
+docs/0.5/examples/gameroom/walkthrough/images/auth_login_bubba_2.svg %}
+"Gameroom daemon retrieves user credentials")
 
-![](./images/auth_login_bubba2.svg "Gameroom daemon receives auth request")
+After the Gameroom daemon has received the authentication request, the
+authentication is handled by the Biome REST API. The authentication request
+is sent from the Bubba Bakery Gameroom daemon to the Biome REST API.
 
-When the Gameroom REST API receives the authorization request for Bob, it
-re-hashes the password sent from the browser and compares the email and hashed
-password to Bob's entry in the Bubba Bakery Gameroom database. If they match,
-authentication was successful.
-
-The `gameroom_user` table in the Gameroom database has the following schema:
-
-``` sql
-    CREATE TABLE IF NOT EXISTS gameroom_user (
-      email                  TEXT    PRIMARY KEY,
-      public_key             TEXT    NOT NULL,
-      encrypted_private_key  TEXT    NOT NULL,
-      hashed_password        TEXT    NOT NULL
-    );
+```
+POST /biome/login
+{
+  "username": "bob@bubbabakery.com",
+  "hashed_password": "2b944c69...c11fcf9c",
+}
 ```
 
-Bob's public and private key pair was created before registration and was added
-to the Bubba Bakery Gameroom database when Bob registered (see The Prequel,
-section P.2). The database has the following entry:
+When the Biome REST API receives the authorization request for Bob, it fetches
+the entry from the Bubba Bakery Splinter daemon's local database associated with
+the username and verifies the hashed password sent in the request.
+
+![]({% link
+docs/0.5/examples/gameroom/walkthrough/images/auth_login_bubba_3.svg %}
+"Splinter daemon verifies Bob's credentials")
+
+The `user_credentials` table in the Splinter database has the same schema as
+described earlier in
+[section I-1.2](#i-12-gameroom-daemon-uses-biome-rest-api-to-verify-password).
+For Bob, the Splinter database has the following entry in the `user_credentials`
+table:
 
 <table class ="gameroom_db_table" border="1">
   <tr class="gameroom_db_headers">
-    <th><code>email</code></th>
-    <th><code>hashed_password</code></th>
+    <th><code>user_id</code></th>
+    <th><code>username</code></th>
+    <th><code>password</code></th>
+  </tr>
+  <tr class="gameroom_db_data">
+    <td><code>9g3rmce0...9823citbg5</code></td>
+    <td><code>bob@bubbabakery.com</code></td>
+    <td><code>2b944c69...c11fcf9c</code></td>
+  </tr>
+</table>
+
+If the hashed password from the authentication request passes verification,
+the Biome REST API will respond with a success response. This response includes
+JSON Web Tokens, which enable the Gameroom REST API to make authorized requests
+to the Biome REST API, without requiring the user to enter their password.
+The refresh token included in the success response allows a new access token to
+be issued, if the refresh token has not expired, when the original token issued
+has expired. Each refresh token issued is saved to the `refresh_tokens` table in
+the Splinter daemon database, with an associated user ID.
+
+The `refresh_tokens` table in the Splinter database has the same schema as
+described in section
+[section I-1.2](#i-12-gameroom-daemon-uses-biome-rest-api-to-verify-password).
+Once Bob has logged in, the Splinter database has the following entry in the
+`refresh_tokens` table:
+
+<table class ="gameroom_db_table" border="1">
+  <tr class="gameroom_db_headers">
+    <th><code>id</code></th>
+    <th><code>user_id</code></th>
+    <th><code>token</code></th>
+  </tr>
+  <tr class="gameroom_db_data">
+    <td><code>1</code></td>
+    <td><code>9g3rmce0...9823citbg5</code></td>
+    <td><code>gy9ubMNu...tyV87rco</code></td>
+  </tr>
+</table>
+
+If Bob's credentials are verified, the Biome REST API will respond with the
+following success response:
+
+```
+{
+  "message": "Successful login",
+  "user_id": "9g3rmce0...9823citbg5",
+  "token": "ihGhBIxc...923bby17",
+  "refresh_token": "gy9ubMNu...tyV87rco",
+}
+```
+
+#### I-3.3. Gameroom daemon uses Biome REST API to request Bob's key pairs
+
+![]({% link
+docs/0.5/examples/gameroom/walkthrough/images/auth_login_bubba_4.svg %}
+"Gameroom daemon requests Bob's keys")
+
+Once the Gameroom daemon has verified Bob's password, it must then verify that
+Bob has an associated public and private key pair. Bob's public and private key
+pair was added to the Bubba Bakery Splinter database during registration (see The
+Prequel, section P.2).
+
+The request to list Bob's associated keys is made to the Biome REST API.
+
+```
+GET /biome/keys
+```
+
+The request made to the Biome REST API holds Bob's JSON Web Token in an
+`Authorization` header, which enables the Splinter daemon to authorize access to
+the user's key information, as well as extract the user ID from the token to
+fetch the keys from the Splinter daemon's database.
+
+![]({% link
+docs/0.5/examples/gameroom/walkthrough/images/auth_login_bubba_5.svg %}
+"Splinter daemon retrieves Bob's keys")
+
+The `keys` table schema in the Splinter database has the schema as described in
+section
+[section I-1.3](#i-13-gameroom-daemon-uses-biome-rest-api-to-request-alice's-key-pairs).
+Using the unique `user_id` extracted from the access token, the public/private
+key pair associated with Bob is fetched from the Splinter daemon's database.
+
+The Splinter database has the following entry in the `keys` table:
+
+<table class ="gameroom_db_table" border="1">
+  <tr class="gameroom_db_headers">
+    <th><code>display_name</code></th>
+    <th><code>user_id</code></th>
     <th><code>public_key</code></th>
     <th><code>encrypted_private_key</code></th>
   </tr>
   <tr class="gameroom_db_data">
     <td><code>bob@bubbabakery.com</code></td>
-    <td><code>4c825b14...534bfc25</code></td>
+    <td><code>9g3rmce0...9823citbg5</code></td>
     <td><code>b1834871...2914a7f4</code></td>
-    <td><code>du+XOOyVy...nkO/NiHcn</code></td>
+    <td><code>{\"iv\":...goPek\"}</code></td>
   </tr>
 </table>
 
-#### I-3.3. Bubba Bakery Gameroom REST API returns login success response
-
-This process is the same as the Acme process in [section
-Ⅰ-1.3](#i-13-gameroom-daemon-uses-biome-rest-api-to-request-alices-key-pairs).
-For Bob at Bubba Bakery, the general process looks like this:
-
-![](./images/auth_login_bubba3.svg "Gameroom daemon receives auth request")
-
-If the user authentication was successful, the Gameroom REST API sends a
-response to the Bubba Bakery UI that contains Bob's public key and encrypted
-private key.
+If Bob's public/private key pair is found in the Splinter database `keys` table,
+a success response with the list of key information is sent back to Bubba Bakery's
+Gameroom daemon with Bob's associated keys.
 
 ```
+{
+  "data": [
     {
-        email: "bob@bubbabakery.com",
-        publicKey: "b1834871...2914a7f4",
-        encryptedPrivateKey: "\"{\\\"iv\\\":...ZCyV\\\"}\"",
+      "public_key": "b1834871...2914a7f4",
+      "user_id": "9g3rmce0...9823citbg5",
+      "display_name": "bob@bubbabakery.com",
+      "encrypted_private_key": "{\"iv\":\"...goPek\"}"
     }
+  ]
+}
 ```
 
-Next, the UI must gather information for the list of gamerooms, invitations,
-and notifications that Bob will see on the Bubba Bakery home page.
+#### I-3.4. Gameroom REST API returns login success response
 
-#### I-3.4. Bubba Bakery UI requests list of existing gamerooms
+If Bubba Bakery's Gameroom REST API receives a successful response from the
+requests made to verify Bob's credentials and keys, then the entire authentication
+process was successful. Therefore, the Gameroom REST API is then able to send
+a response to the Bubba Bakery UI that contains Bob's public/private key pair.
+
+```
+{
+  "email": "bob@bubbabakery.com",
+  "public_key": "b1834871...2914a7f4",
+  "encrypted_private_key": "{\"iv\":\"...goPek\"}",
+}
+```
+
+Next, the UI must gather the information for the Bubba Bakery Gameroom home
+screen that Bob will see after logging in.
+
+#### I-3.5. Bubba Bakery UI requests list of existing gamerooms
 
 As part of building the Bubba Bakery home screen for Bob, the UI requests the
 list of Bob's gamerooms. This process is the same as the Acme process in
@@ -1730,7 +1839,7 @@ list of Bob's gamerooms. This process is the same as the Acme process in
     }
     ```
 
-#### I-3.5. Bubba Bakery UI requests list of gameroom invitations
+#### I-3.6. Bubba Bakery UI requests list of gameroom invitations
 
 As part of building the Bubba Bakery home screen for Bob, the UI requests the
 list of Bob's invitations. This process is different from the Acme process in
@@ -1752,16 +1861,20 @@ because Bob has a new invitation from Alice.
         "data": [
             {
                "proposal_id": <auto-generated id>,
-               "circuit_id": "gameroom::acme-node-000::bubba-node-000::<UUIDv4>",
+               "circuit_id": "01234-ABCDE",
                "circuit_hash": <hash of circuit definition>,
                "members": [
                    {
                        "node_id": "acme-node-000",
-                       "endpoint": "tls://splinterd-node-acme:8044"
+                       "endpoints": [
+                        "tcps://splinterd-node-acme:8044",
+                       ],
                    },
                    {
                        "node_id": "bubba-node-000",
-                       "endpoint": "tls://splinterd-node-bubba:8044"
+                       "endpoints": [
+                        "tcps://splinterd-node-bubba:8044"
+                       ]
                    }
                ],
                "requester": <Alice's public key>,
@@ -1783,7 +1896,7 @@ because Bob has a new invitation from Alice.
         }
     ```
 
-#### I-3.6. Bubba Bakery UI queries for unread notifications
+#### I-3.7. Bubba Bakery UI queries for unread notifications
 
 While building the Bubba Bakery home screen, the UI also requests the list of
 Bob's unread notifications.
@@ -1800,7 +1913,7 @@ and [section
    the list of Bob's unread notifications.
 
     ```
-    GET /notification
+    GET /notifications
     ```
 
 2. The Gameroom REST API queries the `gameroom_notification` table and sends
@@ -1816,20 +1929,20 @@ and [section
                    "org": "",
                    "requester": <Alice's public key>,
                    "node_id": "acme-node-000",
-                   "target": "gameroom::acme-node-000::bubba-node-000::<UUIDv4>",
+                   "target": "01234-ABCDE",
                    "timestamp": <time entry was created>,
                    "read": <boolean; false means not read>,
                }
         ],
         "paging": {
-                   "current": "/notifications?limit=100&offset=0",
+                   "current": "api/notifications?limit=100&offset=0",
                    "offset": 0,
                    "limit": 100,
                    "total": 1,
-                   "first": "/notifications?limit=100&offset=0",
-                   "prev": "/notifications?limit=100&offset=0",
-                   "next": "/notifications?limit=100&offset=0",
-                   "last": "/notifications?limit=100&offset=0"
+                   "first": "api/notifications?limit=100&offset=0",
+                   "prev": "api/notifications?limit=100&offset=0",
+                   "next": "api/notifications?limit=100&offset=0",
+                   "last": "api/notifications?limit=100&offset=0"
         },
     }
     ```
