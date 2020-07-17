@@ -188,6 +188,15 @@ Success. The browser now displays the BUBBA BAKERY GAMEROOM HOME SCREEN.
 docs/0.4/examples/gameroom/walkthrough/images/scene3_2.png %}
 "Bubba Bakery home screen")
 
+### Scene 4: Bob checks his notifications
+
+Bob sees that he has a notification and clicks on the NOTIFICATION ICON. The
+NOTIFICATION PANE shows an INVITATION from Alice.
+
+![]({% link
+docs/0.4/examples/gameroom/walkthrough/images/scene4_1.png %}
+"Bubba Bakery home screen with notification from Alice")
+
 <h2 class="gameroom_behind">
 Behind the Scenes: A Look at Act I, Alice and Bob Create a Gameroom
 </h2>
@@ -1949,3 +1958,54 @@ and [section
 
 At this point, the Bubba Bakery Gameroom UI has the information it needs to
 display Bob's home screen.
+
+### I-4. Behind scene 4: Bob checks his notification
+
+On Bob's Bubba Bakery home screen, the UI displays Bob's existing gamerooms on
+the left (none, at this point) and notifications in the upper right (as a bell
+icon). Bob's public key is not listed as the requester on the gameroom_proposal
+notification, so the Bubba Bakery UI displays the notification icon with a red
+badge that indicates an unread notification.
+
+![]({% link
+docs/0.4/examples/gameroom/walkthrough/images/scene4_2.png %}
+"Bubba Bakery home screen with notification")
+
+1. When Bob clicks the bell icon, the UI shows his unread notifications.
+
+  ![]({% link
+  docs/0.4/examples/gameroom/walkthrough/images/scene4_1.png %}
+  "Bob's notification details")
+
+
+2. When Bob clicks on his notification, the Bubba Bakery UI calls the Bubba
+   Bakery Gameroom REST API to update the selected notification (to show that Bob
+   has read it). After the update, this notification will no longer show up as a
+   new notification in the UI.
+
+  ```
+  PATCH /notifications/{notification_id}/read
+  ```
+
+  This call updates the notification’s entry read field in the Bubba Bakery
+  database’s gameroom_notification table from false to true. For more information
+  on this table, see [section I-2.8.5](#i-285-new-gameroom_notification-table-entry).
+
+3. After successfully updating the notification, the Bubba Bakery Gameroom REST
+   API responds with the entire notification object.
+
+  ```
+  {
+    "data": [
+      {
+        "id": <auto generated id>,
+        "notification_type": "gameroom_proposal",
+        "requester": <Alice’s public key>,
+        “requester_node_id”: “acme-node-000”,
+        "target": "01234-ABCDE",
+        "timestamp": <time entry was created>,
+        "read": true
+      }
+    ]
+  }
+  ```
