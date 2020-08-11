@@ -678,7 +678,7 @@ REST API asks the Gameroom UI to sign it with Alice's information.
     requester_node_id: acme-node-000
     ```
 
-    CircuitManagmentPayload​:
+    **CircuitManagementPayload​**:
     ``` yaml
     header: <bytes of header described above>
     circuit_create_request: <circuit definition described above>
@@ -730,7 +730,7 @@ REST API asks the Gameroom UI to sign it with Alice's information.
 
     The protobuf is represented in YAML format:
     ``` yaml
-    CircuitManagmentPayload:
+    CircuitManagementPayload:
       header: <bytes of header described above>
       circuit_create_request:
         circuit:
@@ -774,7 +774,7 @@ REST API asks the Gameroom UI to sign it with Alice's information.
    key stored in the header.
 
 8. Because the Acme and Bubba Bakery nodes are not yet peered (do not have an
-   authorized connection on the Splinter network), the ​`CircuitManagmentPayload​`
+   authorized connection on the Splinter network), the ​`CircuitManagementPayload​`
    is placed in the "unpeered payloads" queue for unpeered nodes.
 
 #### I-2.4. Acme node peers with Bubba Bakery node
@@ -812,7 +812,7 @@ long as they are needed.
    subscribers.
 
 6. Once the admin service has received the `Connected` message, the
-   `​CircuitManagmentPayload​` is removed from the `unpeered_payloads` queue
+   `​CircuitManagementPayload​` is removed from the `unpeered_payloads` queue
    and moved to `pending_protocol_payloads` queue. Peers' admin services with
    payloads in this list have yet to agree on a protocol version. Protocol
    versions are required to ensure the peers are running compatible versions of
@@ -841,7 +841,7 @@ and `admin::bubba-node-000​`) must agree that the `​CircuitManagementPayload
 which includes `CircuitCreateRequest​`, is a valid request. Consensus manages
 each node's approval of the proposal.
 
-##### I-2.5.1. Acme node validates the CircuitManagmentPayload
+##### I-2.5.1. Acme node validates the CircuitManagementPayload
 
 1. The Acme admin service verifies that the `​CircuitManagementPayload​` and the
    included `CircuitCreateRequest​` are valid.
@@ -980,7 +980,7 @@ each node's approval of the proposal.
 
 ##### I-2.5.2. Acme node sends Circuit Create request to Bubba Bakery node
 
-After the Acme node creates the `​CircuitProposal​`, the `​CircuitManagmentPayload​`
+After the Acme node creates the `​CircuitProposal​`, the `​CircuitManagementPayload​`
 is sent to the other members defined in the circuit. In this case, the only
 member is the admin service on the Bubba Bakery node.
 
@@ -1066,7 +1066,7 @@ and starts the process of "unwrapping" the message with a series of dispatchers.
    `​AdminDirectMessage` and inspects the `​AdminMessage​` to see if it contains
    `​AdminMessage::ProposedCircuit​`.
 
-    If so, the admin service takes the `​CircuitManagmentPayload​` out of the
+    If so, the admin service takes the `​CircuitManagementPayload​` out of the
     `​ProposedCircuit` message and passes it to
     `​AdminServiceShared.pending_circuit_payloads`.
 
