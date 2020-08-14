@@ -105,6 +105,8 @@ Implementations of this trait will replace `libsplinter::storage` and
 service.
 
 ```
+  /// Defines methods for CRUD operations and fetching and listing circuits, proposals, nodes and
+  /// services without defining a storage strategy
   pub trait AdminServiceStore: Send + Sync {
       /// Adds a circuit proposal to the underlying storage
       ///
@@ -138,23 +140,34 @@ service.
       /// # Arguments
       ///
       ///  * `proposal_id` - The unique ID of the circuit proposal to be returned
-      fn fetch_proposal(&self, proposal_id: &str) -> Result<Option<CircuitProposal>, AdminServiceStoreError>;
+      fn fetch_proposal(
+          &self,
+          proposal_id: &str,
+      ) -> Result<Option<CircuitProposal>, AdminServiceStoreError>;
 
       /// List circuit proposals from the underlying storage
       ///
-      /// The proposals returned can be filtered by provided CircuitPredicate. This enables   
+      /// The proposals returned can be filtered by provided `CircuitPredicate`. This enables
       /// filtering by management type and members.
-      fn list_proposal(&self, predicates: &[CircuitPredicate],) -> Result<Box<dyn ExactSizeIterator<Item =CircuitProposal>>, AdminServiceStoreError>;
+      fn list_proposals(
+          &self,
+          predicates: &[CircuitPredicate],
+      ) -> Result<Box<dyn ExactSizeIterator<Item = CircuitProposal>>, AdminServiceStoreError>;
 
       /// Adds a circuit to the underlying storage. Also includes the associated Services and
       /// Nodes
       ///
       /// # Arguments
       ///
-      ///  * `circuit` - The user to be added
+      ///  * `circuit` - The circuit to be added to state
+      ///  * `nodes` - A list of nodes that represent the circuit's members
       ///
       ///  Returns an error if a `Circuit` with the same ID already exists
-      fn add_circuit(&self, circuit: Circuit) -> Result<(), AdminServiceStoreError>;
+      fn add_circuit(
+          &self,
+          circuit: Circuit,
+          nodes: Vec<CircuitNode>,
+      ) -> Result<(), AdminServiceStoreError>;
 
       /// Updates a circuit in the underlying storage
       ///
@@ -183,21 +196,21 @@ service.
 
       /// List all circuits from the underlying storage
       ///
-      /// The proposals returned can be filtered by provided CircuitPredicate. This enables   
+      /// The proposals returned can be filtered by provided `CircuitPredicate`. This enables
       /// filtering by management type and members.
-      fn list_circuits(&self,  predicates: &[CircuitPredicate]) -> Result<Box<dyn ExactSizeIterator<Item =Circuit>>, AdminServiceStoreError>;
+      fn list_circuits(
+          &self,
+          predicates: &[CircuitPredicate],
+      ) -> Result<Box<dyn ExactSizeIterator<Item = Circuit>>, AdminServiceStoreError>;
 
-      /// Adds a circuit to the underlying storage based on the proposal that is already in state..
+      /// Adds a circuit to the underlying storage based on the proposal that is already in state.
       /// Also includes the associated Services and Nodes. The associated circuit proposal for
       /// the circuit ID is also removed
       ///
       /// # Arguments
       ///
-      ///  * `circuit` - The circuit to be added
-      fn upgrade_proposal_to_circuit(
-          &self,
-          circuit_id: String,
-      ) -> Result<(), AdminServiceStoreError>;
+      ///  * `circuit_id` - The ID of the circuit proposal that should be converted to a circuit
+      fn upgrade_proposal_to_circuit(&self, circuit_id: &str) -> Result<(), AdminServiceStoreError>;
 
       /// Fetches a node from the underlying storage
       ///
@@ -207,7 +220,9 @@ service.
       fn fetch_node(&self, node_id: &str) -> Result<Option<CircuitNode>, AdminServiceStoreError>;
 
       /// List all nodes from the underlying storage
-      fn list_nodes(&self) -> Result<Box<dyn ExactSizeIterator<Item =CircuitNode>>, AdminServiceStoreError>;
+      fn list_nodes(
+          &self,
+      ) -> Result<Box<dyn ExactSizeIterator<Item = CircuitNode>>, AdminServiceStoreError>;
 
       /// Fetches a service from the underlying storage
       ///
@@ -226,10 +241,10 @@ service.
       ///  * `circuit_id` - The unique ID of the circuit the services belong to
       fn list_services(
           &self,
-          circuit_id: String,
+          circuit_id: &str,
       ) -> Result<Box<dyn ExactSizeIterator<Item = Service>>, AdminServiceStoreError>;
   }
-  ```
+```
 
 The splinter library will provide several implemented backends. The planned
 implementations are `DieselAdminServiceStore` (PostgreSQL and SQLite) and
@@ -248,7 +263,7 @@ For example:
   // Implements a handler that handles `CircuitDirectMessage`
   pub struct CircuitDirectMessageHandler {
       node_id: String,
-      routing_table: Box<dyn RoutingTableWriter>,
+      routing_table: Box<dyn RoutingTableReader>,
   }
   ```
 
@@ -260,27 +275,45 @@ The methods for reading the `RoutingTable` are defined in the trait
 services, and nodes.
 
 ```
-  pub trait RoutingTableReader {
-      // ---------- methods to access service directory ----------
-      fn fetch_service(&self, id: &ServiceId) -> Result<Option<Service>, RoutingTableReadError>;
+  /// The trait that defines a reader for reading the in-memory routing table
+  pub trait RoutingTableReader: Send {
+    // ---------- methods to access service directory ----------
 
-      fn has_service(&self, id: &ServiceId) -> Result<bool, RoutingTableReadError>;
+    /// Returns the service with the provided ID
+    ///
+    /// # Arguments
+    ///
+    /// * `service_id` -  The unique ID for the service to be fetched
+    fn fetch_service(&self, service_id: &ServiceId) -> Result<Option<Service>, FetchServiceError>;
 
+    /// Returns all the services for the provided circuit
+    ///
+    /// # Arguments
+    ///
+    /// * `circuit_id` -  The unique ID the circuit whose services should be returned
+    fn list_service(&self, circuit_id: &str) -> Result<Vec<Service>, ListServiceError>;
 
-      // ---------- methods to access circuit directory ----------
+    // ---------- methods to access circuit directory ----------
 
-      fn list_nodes(&self) ->  Result<Box<dyn ExactSizeIterator<Item = Node>,  RoutingTableReadError>;
+    /// Returns the nodes in the routing table
+    fn list_nodes(&self) -> Result<CircuitNodeIter, ListNodesError>;
 
-      fn fetch_node(&self, node_id: &str) -> Result<Option<CircuitNode>,  RoutingTableReadError>;
+    /// Returns the node with the provided ID
+    ///
+    /// # Arguments
+    ///
+    /// * `node_id` -  The unique ID for the node to be fetched
+    fn fetch_node(&self, node_id: &str) -> Result<Option<CircuitNode>, FetchNodeError>;
 
-      fn list_circuits(&self) -> Result<Box<dyn ExactSizeIterator<Item = Circuit>, RoutingTableReadError>;
+    /// Returns the circuits in the routing table
+    fn list_circuits(&self) -> Result<CircuitIter, ListCircuitsError>;
 
-
-      fn fetch_circuit(&self, circuit_id: &str) -> Result<Option<&Circuit>, RoutingTableReadError>;
-
-
-      fn has_circuit(&self, circuit_id: &str) ->Result<bool, RoutingTableReadError>;
-
+    /// Returns the circuit with the provided ID
+    ///
+    /// # Arguments
+    ///
+    /// * `circuit_id` -  The unique ID for the circuit to be fetched
+    fn fetch_circuit(&self, circuit_id: &str) -> Result<Option<Circuit>, FetchCircuitError>;
   }
 ```
 
@@ -289,20 +322,77 @@ The methods for updating the `RoutingTable` are defined in the trait
 circuits, as well as adding and removing nodes and services.
 
 ```
-  pub trait RoutingTableWriter {
-      fn add_service(&mut self, service_id: ServiceId, service: Service) -> Result<(), RoutingTableWriterError>;
+  /// The trait that defines a writer for updating the in-memory routing table
+  pub trait RoutingTableWriter: Send {
+      /// Adds a new service to the routing table
+      ///
+      /// # Arguments
+      ///
+      /// * `service_id` -  The unique ServiceId for the service
+      /// * `service` -  The service to be added to the routing table
+      fn add_service(
+          &mut self,
+          service_id: ServiceId,
+          service: Service,
+      ) -> Result<(), AddServiceError>;
 
-      fn remove_service(&mut self, service_id: &ServiceId) -> Result<(), RoutingTableWriterError>;
+      /// Removes a service from the routing table if it exists
+      ///
+      /// # Arguments
+      ///
+      /// * `service_id` -  The unique ServiceId for the service
+      fn remove_service(&mut self, service_id: &ServiceId) -> Result<(), RemoveServiceError>;
 
-      fn add_circuit(&mut self, name: String, circuit: Circuit) -> Result<(), RoutingTableWriterError>;
+      /// Adds a new circuit to the routing table.  Also adds the associated services and nodes.
+      ///
+      /// # Arguments
+      ///
+      /// * `circuit_id` -  The unique ID for the circuit
+      /// * `circuit` -  The circuit to be added to the routing table
+      /// * `nodes` - The list of circuit nodes that should be added along with the circuit
+      fn add_circuit(
+          &mut self,
+          circuit_id: String,
+          circuit: Circuit,
+          nodes: Vec<CircuitNode>,
+      ) -> Result<(), AddCircuitError>;
 
-      fn add_circuits(&mut self, circuits: Vec<Circuit>) -> Result<(), RoutingTableWriterError>;
+      /// Adds a list of circuits to the routing table. Also adds the associated services.
+      ///
+      /// # Arguments
+      ///
+      /// * `circuits` - The list of circuits to be added to the routing table
+      fn add_circuits(&mut self, circuits: Vec<Circuit>) -> Result<(), AddCircuitsError>;
 
-      fn remove_circuit(&mut self, name: &str) -> Result<(), RoutingTableWriterError>;
+      /// Removes a circuit from the routing table if it exists.  Also removes the associated
+      /// services.
+      ///
+      /// # Arguments
+      ///
+      /// * `circuit_id` -  The unique ID for the circuit
+      fn remove_circuit(&mut self, circuit_id: &str) -> Result<(), RemoveCircuitError>;
 
-      fn add_node(&mut self, id: String, node: CircuitNode -> Result<(), RoutingTableWriterError>;
+      /// Adds a new node to the routing table
+      ///
+      /// # Arguments
+      ///
+      /// * `node_id` -  The unique ID for the node
+      /// * `node`- The node to add to the routing table
+      fn add_node(&mut self, node_id: String, node: CircuitNode) -> Result<(), AddNodeError>;
 
-      fn remove_node(&mut self, id: &str) -> Result<(), RoutingTableWriterError>;
+      /// Adds a list of node to the routing table
+      ///
+      /// # Arguments
+      ///
+      /// * `nodes`- The list of nodes to add to the routing table
+      fn add_nodes(&mut self, nodes: Vec<CircuitNode>) -> Result<(), AddNodesError>;
+
+      /// Removes a node from the routing table if it exists
+      ///
+      /// # Arguments
+      ///
+      /// * `node_id` -  The unique ID for the node that should be removed
+      fn remove_node(&mut self, node_id: &str) -> Result<(), RemoveNodeError>;
   }
 ```
 
