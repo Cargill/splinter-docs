@@ -197,6 +197,17 @@ NOTIFICATION PANE shows an INVITATION from Alice.
 docs/0.5/examples/gameroom/walkthrough/images/scene4_1.png %}
 "Bubba Bakery home screen with notification from Alice")
 
+### Scene 5: Bob accepts Alice's gameroom invitation
+
+Time passes.
+Eventually, Bob clicks the notification. The notifications pane
+disappears and the INVITATIONS TAB is shown. Bob clicks the
+`ACCEPT` button on Alice's invitation.
+
+![]({% link
+docs/0.5/examples/gameroom/walkthrough/images/scene5_1.png %}
+"Bubba Bakery invitations")
+
 <h2 class="gameroom_behind">
 Behind the Scenes: A Look at Act I, Alice and Bob Create a Gameroom
 </h2>
@@ -667,7 +678,7 @@ REST API asks the Gameroom UI to sign it with Alice's information.
     requester_node_id: acme-node-000
     ```
 
-    CircuitManagmentPayload​:
+    **CircuitManagementPayload​**:
     ``` yaml
     header: <bytes of header described above>
     circuit_create_request: <circuit definition described above>
@@ -719,7 +730,7 @@ REST API asks the Gameroom UI to sign it with Alice's information.
 
     The protobuf is represented in YAML format:
     ``` yaml
-    CircuitManagmentPayload:
+    CircuitManagementPayload:
       header: <bytes of header described above>
       circuit_create_request:
         circuit:
@@ -763,7 +774,7 @@ REST API asks the Gameroom UI to sign it with Alice's information.
    key stored in the header.
 
 8. Because the Acme and Bubba Bakery nodes are not yet peered (do not have an
-   authorized connection on the Splinter network), the ​`CircuitManagmentPayload​`
+   authorized connection on the Splinter network), the ​`CircuitManagementPayload​`
    is placed in the "unpeered payloads" queue for unpeered nodes.
 
 #### I-2.4. Acme node peers with Bubba Bakery node
@@ -801,7 +812,7 @@ long as they are needed.
    subscribers.
 
 6. Once the admin service has received the `Connected` message, the
-   `​CircuitManagmentPayload​` is removed from the `unpeered_payloads` queue
+   `​CircuitManagementPayload​` is removed from the `unpeered_payloads` queue
    and moved to `pending_protocol_payloads` queue. Peers' admin services with
    payloads in this list have yet to agree on a protocol version. Protocol
    versions are required to ensure the peers are running compatible versions of
@@ -830,7 +841,7 @@ and `admin::bubba-node-000​`) must agree that the `​CircuitManagementPayload
 which includes `CircuitCreateRequest​`, is a valid request. Consensus manages
 each node's approval of the proposal.
 
-##### I-2.5.1. Acme node validates the CircuitManagmentPayload
+##### I-2.5.1. Acme node validates the CircuitManagementPayload
 
 1. The Acme admin service verifies that the `​CircuitManagementPayload​` and the
    included `CircuitCreateRequest​` are valid.
@@ -969,7 +980,7 @@ each node's approval of the proposal.
 
 ##### I-2.5.2. Acme node sends Circuit Create request to Bubba Bakery node
 
-After the Acme node creates the `​CircuitProposal​`, the `​CircuitManagmentPayload​`
+After the Acme node creates the `​CircuitProposal​`, the `​CircuitManagementPayload​`
 is sent to the other members defined in the circuit. In this case, the only
 member is the admin service on the Bubba Bakery node.
 
@@ -1055,7 +1066,7 @@ and starts the process of "unwrapping" the message with a series of dispatchers.
    `​AdminDirectMessage` and inspects the `​AdminMessage​` to see if it contains
    `​AdminMessage::ProposedCircuit​`.
 
-    If so, the admin service takes the `​CircuitManagmentPayload​` out of the
+    If so, the admin service takes the `​CircuitManagementPayload​` out of the
     `​ProposedCircuit` message and passes it to
     `​AdminServiceShared.pending_circuit_payloads`.
 
@@ -2009,3 +2020,668 @@ docs/0.5/examples/gameroom/walkthrough/images/scene4_2.png %}
     ]
   }
   ```
+
+### I-5. Behind scene 5: Bob accepts Alice's invitation
+
+When Bob accepts Alice's invitation, the Bubba Bakery UI sends his "yes" vote to
+the Gameroom REST API, which forwards it to Splinter REST API. After the vote is
+validated, the admin service creates the circuit in Splinter state and tells the
+Gameroom daemon that the circuit is available.
+
+Next, the Bubba Bakery admin service notifies the Acme node that it's ready to
+create services. After the Acme node responds (described in "Behind Scene 6"),
+the Bubba Bakery admin service initializes its scabbard service for the new
+gameroom. Scabbard is the Splinter service for Gameroom that includes the
+[Sawtooth Sabre](https://sawtooth.hyperledger.org/docs/sabre/nightly/master/sabre_transaction_family.html)
+transaction handler and [Hyperledger Transact](https://crates.io/crates/transact),
+using two-phase commit consensus to agree on state. Gameroom uses this service
+to store the XO smart contract and manage XO state. Finally, the Gameroom daemon
+updates the gameroom status in its local database from "Accepted" to "Ready".
+
+#### I-5.1. Bubba Bakery UI submits Accept Invitation request to Gameroom REST API
+
+When Bob clicks on the Accept button, the Bubba Bakery Gameroom UI sends a vote
+(also called a "circuit vote request") to the Gameroom REST API.
+
+```
+POST /proposals/vote
+  {
+    "circuit_id": "gameroom::acme-node-000::bubba-node-000::<UUIDv4>",
+    "circuit_hash": "8cd2bfcf3f4259b9785a723e19b4bb4d5cc0206e",
+    "vote": "Accept"
+  }
+```
+
+#### I-5.2. Gameroom REST API submits Proposal Accept request to Splinter REST API
+
+1. When the Bubba Bakery Gameroom REST API receives the vote request, it uses
+   that information to create a `CircuitManagementPayload`, which will eventually
+   be sent to the Bubba Bakery Splinter daemon.
+
+2. Before the payload can be sent, the Bubba Bakery UI must sign the bytes of
+   the `CircuitManagementPayload` header.
+
+    The following example shows a YAML representation of the
+    `CircuitManagementPayload` that the Gameroom REST API creates.
+
+    **Circuit proposal vote**:
+    ```
+    circuit_id: gameroom::acme-node-000::bubba-node-000::<UUIDv4>
+    circuit_hash: <sha256 hash of the circuit definition of the proposed circuit>
+    vote: Accept
+    ```
+
+    **Header**:
+    ```
+    Action: CIRCUIT_PROPOSAL_VOTE
+    requester: <public key of requester> // left empty by the REST API
+    payload_sha512: <sha512 hash of the circuit proposal vote described above>
+    requester_id: <ID of the Splinter node that the requester is registered to>
+    ```
+
+    **`CircuitManagementPayload`**:
+    ```
+    header: <bytes of header described above>
+    circuit_proposal_vote: <circuit proposal vote described above>
+    signature: <signature of bytes of the header> // left empty by the REST API
+    ```
+
+    Note that the Gameroom REST API does not fill in the requester field in the
+    header or the signature field in the `CircuitManagementPayload`.
+
+3. The Bubba Bakery Gameroom REST API serializes the payload and sends the bytes
+   as a response to the UI.
+
+    ```
+    {
+      "data": { “payload_bytes”: <bytes of the CircuitManagementPayload> }
+    }
+    ```
+
+4. After receiving the response from the Gameroom REST API, the Bubba Bakery UI
+   deserializes the `CircuitManagementPayload`. It adds the requester's public
+   key to the header (in this case, Alice is the requester), serializes the
+   header, signs the header bytes, and adds the signature to the payload.
+   Finally, the UI serializes the complete payload.
+
+5. The Bubba Bakery UI submits the bytes of the signed payload to the Gameroom
+   REST API.
+
+    ```
+    POST /submit
+    Content-Type: application/octet-stream
+    <bytes of the signed CircuitManagementPayload>
+    ```
+
+6. The Bubba Bakery Gameroom REST API forwards the payload to the Bubba Bakery
+   Splinter daemon.
+
+    ```
+    POST /submit
+    Content-Type: application/octet-stream
+    <bytes of the signed CircuitManagementPayload>
+    ```
+
+7. The Splinter REST API responds with the status "202 Accepted" and the Bubba
+   Bakery admin service processes the vote.
+
+8. The Bubba Bakery REST API forwards the "202 Accepted" response to the Bubba
+   Bakery UI.
+
+#### I-5.3. Bubba Bakery node votes "yes" (validates the vote)
+
+1. The Bubba Bakery admin service (`admin::bubba-node-000`) receives the
+   `CircuitManagementPayload` containing a `CircuitProposalVote` from the Splinter
+   REST API, and adds it to its pending circuit payloads queue.
+
+    ```
+    CircuitProposalVote:
+    circuit_id: gameroom::acme-node-000::bubba-node-000::<UUIDv4>
+    circuit_hash: <hash of circuit>
+    vote: ACCEPT
+    ```
+
+2. The Bubba Bakery admin service validates `CircuitManagementPayload` using the
+   same validation process described earlier (see
+   [section I-2.5.1](#i-251-acme-node-validates-the-circuitmanagementpayload),
+   step 1). It also validates the provided payload (a `CircuitProposalVote`)
+   using vote-specific validation rules. `CircuitProposalVote` is valid if the
+   following things are true:
+
+    * There is a pending `CircuitProposal` in admin state with the same circuit
+      ID as in the `CircuitProposalVote`
+
+    * The hash of the stored pending `CircuitProposal` is the same as the
+      `circuit_hash` in `CircuitProposalVote`
+
+    * `CircuitProposalVote` vote field is set to either the Vote enum `ACCEPT` or
+      `REJECT`
+
+    * The public key belongs to a node in the circuit, and that node is allowed
+      to submit the vote (see below).
+
+    * `CircuitProposal` does not already contain a vote from that node.
+      To verify the node's public key and voting permission, the admin service
+      checks the key registry and key permissions manager.
+
+    * The key registry provides a way to look up details about a public key used
+      to sign a circuit proposal: the requester node ID (the "home node" of the
+      requester and location of that user's public key) and arbitrary metadata
+      (represented as key/value string pairs).
+
+    * The key permissions manager checks that a public key is authorized in a
+      specific role. In the case of circuit proposal votes, the signing public
+      key must be authorized for the role "voter".
+
+3. If the request is valid, the admin service makes a copy of the existing
+   `CircuitProposal`, adds a vote record to it, and stores it in
+   `AdminServiceShared.pending_changes`. The protobuf is represented in YAML
+   format.
+
+    ```
+    CircuitProposal:
+      proposal_type: CREATE
+      circuit_id: gameroom::acme-node-000::bubba-node-000::<UUIDv4>:
+      circuit_hash: <hash of circuit>
+      circuit_proposal:
+        circuit:
+          gameroom::acme-node-000::bubba-node-000::<UUIDv4>:
+            auth: trust
+            members:
+              acme-node-000:
+                endpoints:
+                  - tls://splinterd-node-acme:8044
+              bubba-node-000:
+                endpoints:
+                  - tls://splinterd-node-bubba:8044
+            roster:
+              gameroom_acme-node-000:
+                service_type: scabbard
+                allowed_nodes:
+                  - acme-node-000
+                arguments:
+                  - peer_services:
+                      - gameroom_bubba-node-000
+                    admin_keys:
+                      - <acme gameroomd public key>
+
+              gameroom_bubba-node-000:
+                service_type: scabbard
+                allowed_nodes:
+                  - acme-node-000
+                arguments:
+                  - peer_services:
+                      - gameroom_acme-node-000
+                    admin_keys:
+                      - <acme gameroomd public key>
+
+            persistence: any
+            durability: none
+            routes: require_direct
+            circuit_management_type: gameroom
+      votes:
+        - public_key: <voter’s public key>
+          vote: ACCEPT
+          voter_node_id: bubba-node-000
+      requester: <public key of requester>
+      requester_node_id: acme-node-000
+    ```
+
+4. The admin service creates a new consensus `Proposal` for the updated
+   `CircuitProposal`. (See
+    [section I-2.5.1](#i-251-acme-node-validates-the-circuitmanagmentpayload),
+    step 3, for the `Proposal` description.)
+
+#### I-5.4. Bubba Bakery node sends proposal accept vote to Acme node
+
+1. After the Bubba node creates the updated `CircuitProposal`, the
+   `CircuitManagementPayload` is sent to the other members defined in the circuit
+   -- specifically, the admin service on the Acme node (`admin::acme-node-000`).
+
+2. The Acme admin service receives the `CircuitMangementPayload` containing the
+   `CircuitProposalVote` (as described in
+   [section I-5.3](#i-53-bubba-bakery-node-receives-circuit-create-request-from-acme-node),
+   step 1), validates the payload (see
+   [section I-5.3](#i-53-bubba-bakery-node-receives-circuit-create-request-from-acme-node),
+   step 2), and creates an updated `CircuitProposal` (see
+   [section I-5.3](#i-53-bubba-bakery-node-receives-circuit-create-request-from-acme-node),
+   step 3).
+
+3. The nodes use consensus to agree to accept or reject the circuit proposal.
+   See Appendix B for more information on consensus agreement.
+
+4. After consensus has completed its agreement on the proposal, it notifies the
+   Bubba Bakery admin service that both nodes have accepted the proposal. The
+   Bubba Bakery admin service then commits the updated `CircuitProposal`.
+
+#### I-5.5. Bubba Bakery admin service checks for approval and creates a circuit
+
+1. When the `CircuitProposal` is committed, the Bubba Bakery admin service checks
+   to see if it contains the required number of `ACCEPT` votes to be added to
+   Splinter state (the `SplinterState` struct), where active circuits are stored.
+
+   The `CircuitProposal` must have a `VoteRecord` with a vote of `ACCEPT` from
+   every member of the proposed circuit definition, except for the requester
+   (because submitting a circuit proposal counts as an accept vote).
+
+2. If a vote exists for every member, the Bubba Bakery admin service adds the
+   circuit defined in the CircuitProposal to Splinter state. Once in Splinter
+   state, the circuit is ready to accept service connections and be used for
+   communication.
+
+3. After the circuit has been created, the Bubba Bakery admin service creates
+   the scabbard service using the service orchestrator (described in
+   [section I-5.8](#i-58-bubba-bakery-admin-service-initializes-scabbard-service)).
+
+#### I-5.6. Bubba Bakery admin service notifies Gameroom daemon of new circuit
+
+1. The Bubba Bakery admin service notifies the Bubba Bakery application
+   authorization handler that the circuit has been accepted.
+    ```
+    {
+      “eventType”: “ProposalAccepted”,
+      “message”: {
+        “proposal_type”: “Create”,
+        “circuit_id”: “gameroom::acme-node-000::bubba-node-000::<UUIDv4>”,
+        “circuit_hash”: “...”,
+        “circuit”: {
+          "circuit_id": "gameroom::acme-node-000::bubba-node-000::<UUIDv4>",
+          "authorization_type": "Trust",
+          "members": [{
+            "node_id": "acme-node-000",
+            "endpoint": "tls://splinterd-node-acme:8044"
+            },
+            {
+            "node_id": "bubba-node-000",
+            "endpoint": "tls://splinterd-node-bubba:8044"
+            }
+          ],
+          "roster": [{
+            "service_id": "gameroom_acme-node-000",
+            "service_type": "scabbard",
+            "allowed_nodes": [ "acme-node-000"]
+            "arguments": {
+                "peer_services": [ "gameroom_bubba-node-000" ]
+                "admin_keys": [ "<acme gameroomd public key>" ]
+              }
+            },
+            {
+            "service_id": "gameroom_bubba-node-000",
+            "service_type": "scabbard",
+            "allowed_nodes": [ "bubba-node-000"]
+            "arguments": {
+                "peer_services": [ "gameroom_acme-node-000" ]
+                "admin_keys": [ "<acme gameroomd public key>" ]
+              }
+            }
+          ],
+          "circuit_management_type": "gameroom",
+          "application_metadata": [...],
+          "persistence": "Any",
+          "durability": "None",
+          "routes": "Any"
+        },
+        “vote_record”: [{
+          “public_key”: “<public key of voter>”,
+          “vote”: “Accepted”
+          "voter_node_id": “bubba-node-000”
+        }],
+        “requester”: “<public key of requester>”
+        “requester_node_id”: “acme-node-000”
+      }
+    }
+    ```
+
+2. When the application authorization handler receives this message, it updates
+   the database to change the status of the proposal, gameroom, members and
+   services from “Pending” to “Accepted”.
+
+   At the end of the database transaction, the gameroom database has the
+   following updates:
+
+   * `gameroom` table:
+
+   <table class ="gameroom_db_table" border="1">
+
+     <tr class="gameroom_db_headers">
+       <th><code>circuit_id</code></th>
+       <th><code>authorization_type</code></th>
+       <th><code>persistence</code></th>
+       <th><code>routes</code></th>
+       <th><code>durability</code></th>
+     </tr>
+     <tr class="gameroom_db_data">
+       <td><code> gameroom::acme-node-000::bubba-node-000::&lt;UUIDv4&gt;</code></td>
+       <td><code>Trust</code></td>
+       <td><code>Any</code></td>
+       <td><code>Any</code></td>
+       <td><code>None</code></td>
+     </tr>
+     <tr class="gameroom_db_headers">
+       <th><code>circuit_management_type</code></th>
+       <th><code>alias</code></th>
+       <th><code>status</code></th>
+       <th><code>created_time</code></th>
+       <th><code>updated_time</code></th>
+     </tr>
+     <tr class="gameroom_db_data">
+       <td><code>gameroom</code></td>
+       <td><code>Acme + Bubba</code></td>
+       <td><code>accepted</code></td>
+       <td><code>&lt;time status was updated&gt;</code></td>
+       <td><code>&lt;time entry was created&gt;</code></td>
+     </tr>
+
+   </table>
+
+   * `gameroom_member` table
+
+   <table class ="gameroom_db_table" border="1">
+     <tr class="gameroom_db_headers">
+       <th><code>id</code></th>
+       <th><code>circuit_id</code></th>
+       <th><code>node_id</code></th>
+       <th><code>endpoint</code></th>
+     </tr>
+     <tr class="gameroom_db_data">
+       <td><code>&lt;auto generated id&gt;</code></td>
+       <td><code>gameroom::acme-node-000::bubba-node-000::&lt;UUIDv4&gt;</code></td>
+       <td><code>acme-node-000</code></td>
+       <td><code>tls://splinterd-node-acme:8044</code></td>
+     </tr>
+     <tr class="gameroom_db_data">
+       <td><code>&lt;auto generated id&gt;</code></td>
+       <td><code>gameroom::acme-node-000::bubba-node-000::&lt;UUIDv4&gt;</code></td>
+       <td><code>bubba-node-000</code></td>
+       <td><code>tls://splinterd-node-bubba:8044</code></td>
+     </tr>
+     <tr class="gameroom_db_headers">
+       <th><code>status</code></th>
+       <th><code>created_time</code></th>
+       <th><code>updated_time</code></th>
+     </tr>
+     <tr class="gameroom_db_data">
+       <td><code>accepted</code></td>
+       <td><code>&lt;time status was updated&gt;</code></td>
+       <td><code>&lt;time entry was created&gt;</code></td>
+     </tr>
+     <tr class="gameroom_db_data">
+       <td><code>accepted</code></td>
+       <td><code>&lt;time status was updated&gt;</code></td>
+       <td><code>&lt;time entry was created&gt;</code></td>
+     </tr>
+   </table>
+
+   * `gameroom_service` table:
+
+   <table class ="gameroom_db_table" border="1">
+     <tr class="gameroom_db_headers">
+       <th><code>id</code></th>
+       <th><code>circuit_id</code></th>
+       <th><code>service_id</code></th>
+       <th><code>service_type</code></th>
+     </tr>
+     <tr class="gameroom_db_data">
+       <td><code>&lt;auto generated id&gt;</code></td>
+       <td><code>gameroom::acme-node-000::bubba-node-000::&lt;UUIDv4&gt;</code></td>
+       <td><code>gameroom_acme-node-000</code></td>
+       <td><code>scabbard</code></td>
+     </tr>
+     <tr class="gameroom_db_data">
+       <td><code>&lt;auto generated id&gt;</code></td>
+       <td><code>gameroom::acme-node-000::bubba-node-000::&lt;UUIDv4&gt;</code></td>
+       <td><code>gameroom_bubba-node-000</code></td>
+       <td><code>scabbard</code></td>
+     </tr>
+     <tr class="gameroom_db_headers">
+       <th><code>allowed_nodes</code></th>
+       <th><code>arguments</code></th>
+       <th><code>status</code></th>
+     </tr>
+     <tr class="gameroom_db_data">
+       <td><code>{"acme-node-000"}</code></td>
+       <td><code>"peer_services": ["gameroom_bubba-node-000"], "admin_keys": ...</code></td>
+       <td><code>accepted</code></td>
+     </tr>
+     <tr class="gameroom_db_data">
+       <td><code>{"bubba-node-000"}</code></td>
+       <td><code>"peer_services": ["gameroom_acme-node-000"], "admin_keys": ...</code></td>
+       <td><code>accepted</code></td>
+     </tr>
+     <tr class="gameroom_db_headers">
+       <th><code>created_time</code></th>
+       <th><code>updated_time</code></th>
+     </tr>
+     <tr class="gameroom_db_data">
+       <td><code>&lt;time entry was created&gt;</code></td>
+       <td><code>&lt;time status was updated&gt;</code></td>
+     </tr>
+     <tr class="gameroom_db_data">
+       <td><code>&lt;time entry was created&gt;</code></td>
+       <td><code>&lt;time status was updated&gt;</code></td>
+     </tr>
+   </table>
+
+   * `gameroom_proposal` table:
+
+   <table class ="gameroom_db_table" border="1">
+     <tr class="gameroom_db_headers">
+       <th><code>id</code></th>
+       <th><code>circuit_id</code></th>
+       <th><code>proposal_type</code></th>
+       <th><code>circuit_hash</code></th>
+     </tr>
+     <tr class="gameroom_db_data">
+       <td><code>&lt;auto generated id&gt;</code></td>
+       <td><code>gameroom::acme-node-000::bubba-node-000::&lt;UUIDv4&gt;</code></td>
+       <td><code>Create</code></td>
+       <td><code>&lt;hash of circuit definition&gt;</code></td>
+     </tr>
+   </table>
+
+3. Finally, the application authorization handler updates the
+  `gameroom_notification` table to tell the UI that the gameroom proposal has
+  been accepted.
+
+  <table class ="gameroom_db_table" border="1">
+    <tr class="gameroom_db_headers">
+      <th><code>id</code></th>
+      <th><code>notification_type</code></th>
+      <th><code>requester</code></th>
+      <th><code>requester_node_id</code></th>
+    </tr>
+    <tr class="gameroom_db_data">
+      <td><code>&lt;auto generated id&gt;</code></td>
+      <td><code>proposal_accepted</code></td>
+      <td><code>&lt;Bob's public key&gt;</code></td>
+      <td><code>bubba-node-000</code></td>
+    </tr>
+    <tr class="gameroom_db_headers">
+      <th><code>target</code></th>
+      <th><code>created_time</code></th>
+      <th><code>read</code></th>
+    </tr>
+    <tr class="gameroom_db_data">
+      <td><code>gameroom::acme-node-000::bubba-node-000::&lt;UUIDv4&gt;</code></td>
+      <td><code>&lt;time entry was created&gt;</code></td>
+      <td><code>false</code></td>
+    </tr>
+  </table>
+
+#### I-5.7. Bubba Bakery admin service sends "ready to create services" to Acme
+
+Before the Bubba Bakery admin service can initialize its scabbard service on the
+new circuit, it needs to know that the Acme Splinter node has also created the
+circuit on the Acme side (added the circuit that is defined in the
+`CircuitProposal` to Splinter state). The Acme process will be described in the
+next chapter (section I-6).
+
+This information is required because when a Splinter service connects to its own
+Splinter node (the node that it is allowed to connect to), that Splinter node
+sends a message to the other connected Splinter nodes on the new circuit that
+the service is available. This message cannot be sent until the Splinter node
+(in this case, the Acme node) has created the circuit.
+
+If the circuit was not yet created on the other Splinter node (or nodes), the
+message would be dropped. This node would not be able to communicate with the
+other node's service after the circuit is created, because it wouldn't know
+where that service exists.
+
+1. To notify the Acme admin service that the Bubba Bakery node is ready to
+   initialize its service, the Bubba Bakery admin service sends an `AdminMessage`
+   with the message type `MEMBER_READY` and a "member ready" message that
+   contains the circuit ID and Bubba Bakery's node ID.
+
+    ```
+    admin_message:
+    message_type: MEMBER_READY,
+    member_ready:
+      circuit_id: gameroom::acme-node-000::bubba-node-000::<UUIDv4>
+      member_node_id: bubba-node-000
+    ```
+
+2. The Bubba Bakery admin service waits for Acme to respond with a "member
+   ready" message. (The next section describes how the Bubba Bakery node
+   initializes its services.)
+
+#### I-5.8. Bubba Bakery admin service initializes scabbard service
+
+After the circuit is created (described in
+[section I-5.5](#i-55-acme-and-bubba-bakery-reach-consensus)) and all members are
+ready to create services (covered in
+[section I-5.7](#i-57-bubba-bakery-admin-service-sends-ready-to-create-services-to-acme)),
+the Bubba Bakery admin service makes a call to the service orchestrator to
+initialize the scabbard service for the new gameroom. As described above,
+scabbard is the Splinter service for Gameroom that includes the
+[Sawtooth Sabre](https://sawtooth.hyperledger.org/docs/sabre/nightly/master/sabre_transaction_family.html)
+transaction handler and [Hyperledger Transact](https://crates.io/crates/transact),
+using two-phase commit consensus to agree on state. Gameroom uses this service
+to store the XO smart contract and manage XO state.
+
+1. The Bubba Bakery admin service checks which services are allowed to run on
+   its node. In this case, the Bubba Bakery node (`bubba-node-000`) is allowed to
+   run the scabbard service with service ID `gameroom_bubba-node-000`.
+
+2. The admin service creates a ServiceDefinition for `gameroom_bubba-node-000`,
+   which is the scabbard service on the Bubba Bakery Splinter node.
+
+    ```
+    ServiceDefinition {
+      circuit: "gameroom::acme-node-000::bubba-node-000::<UUIDv4>",
+      service_id: "gameroom_bubba-node-000",
+      service_type: "scabbard",
+    }
+    ```
+
+3. The admin service passes the service definition, along with the arguments
+   defined in the `CircuitProposal` for that service, to the service
+   orchestrator’s `initialize_service` method to initialize the scabbard service.
+
+4. `ServiceOrchestrator` uses structs that implement the `ServiceFactory` trait
+   to create new services. An orchestrator can have multiple factories. First,
+   the orchestrator must determine which factory can create a scabbard service
+   (in this case, the `ScabbardFactory`). Then the orchestrator creates a new
+   instance of the scabbard service using that factory, the service definition,
+   and the service arguments.
+
+5. After the scabbard service has been created, the orchestrator starts the
+   service and adds it to its internally managed list of services. When starting
+   the service, the orchestrator creates a `StandardServiceNetworkRegistry`
+   (used to register the service with the node) and passes it to the service;
+   the scabbard service then registers, which provides it with a
+   `StandardServiceNetworkSender` that it will use to send direct messages to
+   other services.
+
+#### I-5.9. Bubba Bakery Gameroom daemon updates gameroom status in database
+
+At this point, the new service is running and ready to receive smart contracts.
+
+1. The Bubba Bakery admin service sends a `CircuitReady` notification to the
+   Gameroom daemon's application authorization handler to let it know that the
+   circuit is created and its services are ready.
+
+    ```
+    {
+      “eventType”: CircuitReady,
+      “message”: {
+        “proposal_type”: “Create”,
+        “circuit_id”: “gameroom::acme-node-000::bubba-node-000::<UUIDv4>”,
+        “circuit_hash”: “...”,
+        “circuit”: {
+          "circuit_id": "gameroom::acme-node-000::bubba-node-000::<UUIDv4>",
+          "authorization_type": "Trust",
+          "members": [{
+            "node_id": "acme-node-000",
+            "endpoint": "tls://splinterd-node-acme:8044"
+            },
+            {
+            "node_id": "bubba-node-000",
+            "endpoint": "tls://splinterd-node-bubba:8044"
+            }
+          ],
+          "roster": [{
+            "service_id": "gameroom_acme-node-000",
+            "service_type": "scabbard",
+            "allowed_nodes": [ "acme-node-000"]
+            "arguments": {
+                "peer_services": [ "gameroom_bubba-node-000" ]
+                "admin_keys": [ "<acme gameroomd public key>" ]
+              }
+            },
+            {
+            "service_id": "gameroom_bubba-node-000",
+            "service_type": "scabbard",
+            "allowed_nodes": [ "bubba-node-000"]
+            "arguments": {
+                "peer_services": [ "gameroom_acme-node-000" ]
+                "admin_keys": [ "<acme gameroomd public key>" ]
+              }
+            }
+          ],
+          "circuit_management_type": "gameroom",
+          "application_metadata": [...],
+          "persistence": "Any",
+          "durability": "None",
+          "routes": "Any"
+        },
+        “vote_record”: [{
+          “public_key”: “<public key of voter>”,
+          “vote”: “Accepted”
+          "voter_node_id": “bubba-node-000”
+        }],
+        “requester”: “<public key of requester>”
+        “requester_node_id”: “acme-node-000”
+      }
+    }
+    ```
+
+2. When the authorization handler receives the `CircuitReady` message, it
+   changes the status of the gameroom in the database from “Accepted” to “Ready”.
+
+3. The authorization handler creates a new `WebSocket` to listen for events from
+   the scabbard service. These events are then captured, parsed, and uploaded
+   into the gameroom database. The process of reading state-change updates from
+   Splinter and uploading them to a local database is called "state delta export"
+   and is done by the `XoStateDeltaProcessor`. The `XoStateDeltaProcessor`
+   consumes `StateChangeEvent` payloads, such as this example:
+    ```
+    {
+      “type”: “Set”,
+      “message”: {
+        “key”: “<xo_address>”
+        “value” [<bytes>]
+      }
+    }
+    ```
+
+    The bytes in value field are deserialized into the following CSV-format
+    representation of the XO game state:
+
+    `“<game-name>,<game-board>,<game-state>,<player1-key>,<player2-key>”`
+
+    For more information on the XO game state, see Appendix D.
+
+At this point, the circuit (Alice and Bob's gameroom) is ready. Next, the Acme
+Gameroom daemon must submit the XO smart contract, which is the last step before
+the gameroom is ready for Alice and Bob to play games. See section I-6.6 for an
+explanation of this process.
