@@ -13,6 +13,10 @@ Splinter works with a wide variety of deployment patterns. This guide summarizes
 how to use Docker containers, a basic Kubernetes pod, and Amazon Elastic
 Kubernetes Services (Amazon EKS).
 
+See [Security Considerations]({% link
+docs/0.4/concepts/security_considerations.md %})
+for information about admin roles and permissions.
+
 ## Overview
 
 A Splinter deployment usually has the following items:
@@ -53,8 +57,8 @@ nodes, by using **circuits** and **services**.
 * **Shared state** (a database updated by smart contracts) is visible only to
   the services within a circuit.
 
-For more information about Splinter, see the
-[Splinter documentation]({% link docs/0.4/index.md %}).
+For more information, see [Features and
+Concepts]({% link docs/0.4/concepts/features_and_concepts.md %}).
 
 ## Network Configuration
 
