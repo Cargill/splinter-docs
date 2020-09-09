@@ -10,4 +10,7 @@
 <link rel="stylesheet" href="{% link css/custom.css %}">
 <link rel="stylesheet" href="{% link css/code.css %}">
 <link rel="shortcut icon" type="image/svg" href="{% link logos/svg/splinter_logos_logomark_square_gradient.svg %}">
+{% if jekyll.environment == 'production' %}
+    {% include analytics.html %}
+{% endif %}
 {% seo %}
