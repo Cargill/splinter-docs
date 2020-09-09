@@ -15,5 +15,9 @@
 
 set -e
 
-docker build -t splintercommunity/splinter-docs -f ci/website.dockerfile .
+docker build \
+    --build-arg jekyll_env=production \
+    -t splintercommunity/splinter-docs \
+    -f ci/website.dockerfile \
+    .
 docker push splintercommunity/splinter-docs
