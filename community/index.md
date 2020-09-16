@@ -22,11 +22,11 @@ new features.
 Version 2.0 software license](licensing.html). This project accepts GitHub pull
 requests. For more information, see "Contributing Code", below.
 
-**Join the bi-weekly engineering forum**: We host an [open Zoom
-meeting](https://us02web.zoom.us/j/89560362141) to present brief updates on
-Splinter development and to provide a way for the Splinter developer community
-to connect with each other and with us. Join us every other Thursday from
-8:00 AM - 9:00 AM, US Central Time.
+**Join the monthly engineering forum**: We host an open Zoom
+meeting to present brief updates on Splinter development and to provide a way
+for the Splinter developer community to connect with each other and with us.
+Please see [splinterworld.slack.com](http://splinterworld.slack.com) for next
+meeting link and time.
 
 Splinter operates under the [Cargill Code of
 Conduct](https://github.com/Cargill/code-of-conduct/blob/master/code-of-conduct.md).
