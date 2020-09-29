@@ -36,7 +36,7 @@ Finally, you'll log out for both Alice and Bob.
 1. Start the Docker containers with the following command.
 
     ```
-    docker-compose -f docker/docker-compose.yaml up --build
+    docker-compose up --build
     ```
 
 2. Wait until the build completes and the containers have started. The output
@@ -91,7 +91,7 @@ After registering a new user, add the user's public and private keys.
        `splinter-ui`, then open a bash shell in the container:
 
     ```
-    docker-compose -f docker/docker-compose.yaml run generate-registry bash
+    docker-compose run generate-registry bash
     ```
 
     b. Display Alice's public and private keys:
@@ -367,7 +367,7 @@ As a user on the other node, Bob must vote to accept or reject the proposal.
 ## Stopping the Demo
 
 1. To stop the demo, enter CTRL-C in the terminal window where you ran
-   `docker-compose ... up`, and wait for a graceful shutdown.
+   `docker-compose up`, and wait for a graceful shutdown.
 
     ```
     registry-server             | 172.24.0.7 - - [29/Jun/2020:22:59:02 +0000] "GET /registry.yaml HTTP/1.1" 200 458
@@ -389,5 +389,5 @@ As a user on the other node, Bob must vote to accept or reject the proposal.
    run the following command:
 
     ```
-    docker-compose -f docker/docker-compose.yaml down --volumes
+    docker-compose down --volumes
     ```
