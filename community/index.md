@@ -13,7 +13,8 @@ Splinter community and contribute to this project in the following ways:
 
 **Chat** at [splinterworld.slack.com](http://splinterworld.slack.com).
 Join us on Slack to ask questions, tell us about a bug, or propose changes and
-new features.
+new features. Get an invite by visiting
+[join.splinter.dev](https://join.splinter.dev).
 
 **Report bugs**: We track bugs as GitHub issues at
 [Cargill/splinter/issues](https://github.com/Cargill/splinter/issues).
