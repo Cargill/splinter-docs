@@ -293,6 +293,30 @@ h4 {
     margin-bottom: 20px;
 }
 
+/* Table Styles */
+
+table {
+    table-layout: auto;
+    margin: 5px;
+    margin-bottom: 20px;
+}
+
+th {
+    padding: 5px;
+    border-bottom: 2px solid var(--light-splinter-fuchsia);
+}
+
+td {
+    padding: 5px 37px 5px 5px;
+}
+
+/* Roadmap tables */
+
+#splinter-06 + table, #splinter-08 + p + table {
+    width: 100%;
+    table-layout: fixed;
+}
+
 /* Landing Page Styles */
 
 #release-banner {
