@@ -14,7 +14,7 @@
 
 # -------------=== redoc build ===-------------
 
-FROM node as redoc
+FROM node:lts-stretch as redoc
 
 RUN npm install -g redoc
 RUN npm install -g redoc-cli
