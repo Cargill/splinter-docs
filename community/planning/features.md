@@ -20,6 +20,10 @@ forum.
   New design of the Canopy system that enables dynamic loading of saplings and
   improved inter-sapling communication.
 
+* [Cylinder JWT]({% link community/planning/cylinder_jwt.md %})
+
+  A JSON Web Token module for the Cylinder Signing library.
+
 * [PeerManager]({% link community/planning/peer_manager.md %})
 
   The `PeerManager` is in charge of keeping track of peers and their reference
