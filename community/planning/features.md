@@ -15,6 +15,14 @@ forum.
 
 ## Features
 
+* [Admin Service Store]({% link community/planning/admin_service_store.md %})
+
+  New design for storing circuit and circuit proposal state.
+
+* [Admin UI]({% link community/planning/admin_ui.md %})
+
+  Splinter administration utility.
+
 * [Canopy 0.2]({% link community/planning/canopy_0.2.md %})
 
   New design of the Canopy system that enables dynamic loading of saplings and
@@ -28,11 +36,3 @@ forum.
 
   The `PeerManager` is in charge of keeping track of peers and their reference
   counts, as well as requesting connections from the `ConnectionManager`.
-
-* [Admin UI]({% link community/planning/admin_ui.md %})
-
-  Splinter administration utility.
-
-* [Admin Service Store]({% link community/planning/admin_service_store.md %})
-
-  New design for storing circuit and circuit proposal state.
