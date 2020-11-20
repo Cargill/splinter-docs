@@ -32,6 +32,11 @@ forum.
 
   A JSON Web Token module for the Cylinder Signing library.
 
+* [OAuth 2 REST API Authentication]({% link
+  community/planning/oauth2_rest_api_authentication.md %})
+
+  Support of OAuth 2 authentication for the Splinter REST API.
+
 * [PeerManager]({% link community/planning/peer_manager.md %})
 
   The `PeerManager` is in charge of keeping track of peers and their reference
