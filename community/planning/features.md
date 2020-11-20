@@ -15,6 +15,14 @@ forum.
 
 ## Features
 
+* [Admin Service Store]({% link community/planning/admin_service_store.md %})
+
+  New design for storing circuit and circuit proposal state.
+
+* [Admin UI]({% link community/planning/admin_ui.md %})
+
+  Splinter administration utility.
+
 * [Canopy 0.2]({% link community/planning/canopy_0.2.md %})
 
   New design of the Canopy system that enables dynamic loading of saplings and
@@ -24,15 +32,12 @@ forum.
 
   A JSON Web Token module for the Cylinder Signing library.
 
+* [OAuth 2 REST API Authentication]({% link
+  community/planning/oauth2_rest_api_authentication.md %})
+
+  Support of OAuth 2 authentication for the Splinter REST API.
+
 * [PeerManager]({% link community/planning/peer_manager.md %})
 
   The `PeerManager` is in charge of keeping track of peers and their reference
   counts, as well as requesting connections from the `ConnectionManager`.
-
-* [Admin UI]({% link community/planning/admin_ui.md %})
-
-  Splinter administration utility.
-
-* [Admin Service Store]({% link community/planning/admin_service_store.md %})
-
-  New design for storing circuit and circuit proposal state.
