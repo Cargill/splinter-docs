@@ -60,6 +60,7 @@ first node, alpha.
                 --advertised-endpoints tcps://splinterd-alpha:8044 \
                 --rest-api-endpoint 0.0.0.0:8085 \
                 --registries file:///config/alpha-registry.yaml \
+                --storage yaml \
                 --tls-insecure
           "
 
@@ -98,6 +99,9 @@ first node, alpha.
     `--registries file:///config/alpha-registry.yaml`:  Defines one or more
     read-only Splinter registry files. This will be covered in more detail
     later. Notice that this is using a Docker bind mount.
+
+    `--storage`:  When set to `yaml`, the splinterd will store the Splinter
+    state files in YAML files stored in the Splinter state directory.
 
     `--tls-insecure`:  Turns off certificate authority validation for TLS
     connections; all peer certificates are accepted. This flag is intended for
@@ -235,6 +239,7 @@ Congratulations! You've got a Splinter node up and running.
                 --advertised-endpoints tcps://splinterd-beta:8044 \
                 --rest-api-endpoint 0.0.0.0:8085 \
                 --registries file:///config/beta-registry.yaml \
+                --storage yaml \
                 --tls-insecure
           "
 
