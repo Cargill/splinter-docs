@@ -71,7 +71,7 @@ Default location for splinterd keys generated with `splinter keygen --system`.
 
 `/var/lib/splinter/`:
 Default location for the Splinter state directory, which stores the circuit
-state YAML file (unless `--storage`  is  set  to  memory). Note: If
+state SQLITE database (unless `--database` is set). Note: If
 `$SPLINTER_HOME` is set, the default location is `$SPLINTER_HOME/data/`.
 
 ### Logging
