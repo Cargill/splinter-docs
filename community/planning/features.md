@@ -23,6 +23,11 @@ forum.
 
   Splinter administration utility.
 
+* [Biome OAuth Integration]({% link community/planning/biome_oauth_user_store.md
+  %})
+
+  New design for a linkage between an OAuth user id and a biome userid.
+
 * [Canopy 0.2]({% link community/planning/canopy_0.2.md %})
 
   New design of the Canopy system that enables dynamic loading of saplings and
