@@ -107,10 +107,10 @@ page.
 
 **REST API**
 
-Splinterd’s REST API does not have built-in authorization or access control.
-Anyone with access to your Splinter nodes on port 8080 will have unrestricted
-access to the REST API. Production Splinter deployments should implement a
-reverse proxy to protect the REST API.
+See the
+[Ports and REST API Connections](/docs/0.5/concepts/security_considerations.html#ports-and-rest-api-connections)
+section of the "Security Considerations" document for details about REST API
+security.
 
 **Certificates**
 
