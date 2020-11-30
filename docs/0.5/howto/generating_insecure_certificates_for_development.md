@@ -77,7 +77,8 @@ This procedure requires a local development environment that includes the
    connect to another Splinter node.
 
    ``` console
-   $ splinterd --node-id node-000 --tls-insecure --network-endpoints tcps://127.0.0.1:8044
+   $ splinterd --node-id node-000 --tls-insecure --network-endpoints tcps://127.0.0.1:8044 \
+   --storage yaml
    [2020-02-04 15:40:29.763] T["main"] WARN [splinterd] Starting TlsTransport in insecure mode
    ```
 
@@ -92,11 +93,12 @@ This procedure requires a local development environment that includes the
      keys were used, add `-vv` to increase the logging level.
 
    ``` console
-   $ splinterd --node-id node-000 --tls-insecure -vv --network-endpoints tcps://127.0.0.1:8044
+   $ splinterd --node-id node-000 --tls-insecure -vv --network-endpoints tcps://127.0.0.1:8044 \
+    --storage yaml
    .
    .
    [2020-02-13 08:50:30.574] T["main"] DEBUG [splinterd] Loading configuration file
-   [2020-02-13 08:50:30.592] T["main"] DEBUG [splinterd::config] Config: storage: yaml (source: Default)
+   [2020-02-13 08:50:30.592] T["main"] DEBUG [splinterd::config] Config: storage: yaml (source: CommandLine)
    [2020-02-13 08:50:30.592] T["main"] DEBUG [splinterd::config] Config: transport: tls (source: CommandLine)
    [2020-02-13 08:50:30.592] T["main"] WARN [splinterd::config] Starting TlsTransport in insecure mode
    [2020-02-13 08:50:30.592] T["main"] DEBUG [splinterd::config] Config: tls_cert_dir: /etc/splinter/certs/ (source: Default)
