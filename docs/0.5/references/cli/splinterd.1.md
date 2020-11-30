@@ -57,7 +57,7 @@ the certificate-related options and CERTIFICATE FILES, below.
 This command includes several options that change default Splinter directory
 locations. These directory locations can also be changed with environment
 variables or settings in the `splinterd` TOML configuration file. For more
-information, see `--config-dir`, `--storage` `--tls-cert-dir`, and
+information, see `--config-dir`, `--tls-cert-dir`, and
 "SPLINTER DIRECTORY PATHS", below.
 
 FLAGS
@@ -128,8 +128,14 @@ OPTIONS
 : Specifies a human-readable name for the node (Default: "Node NODE-ID")
 
 `--database DB-URL`
-: Specifies the URL for the PostgreSQL database used for Biome. (Default:
-  127.0.0.1:5432.) This option is required when `--enable-biome` is used.
+: Specifies the URL or connection string for the PostgreSQL or SQLite database
+  used for Splinter state, including circuits, proposals and Biome. (Default:
+  SQLite database splinter_state.db) This option is required. The default SQLite
+  database will go in the directory, `/var/lib/splinter`, unless
+  `SPLINTER_STATE_DIR` or `SPLINTER_HOME` is set.
+
+  Using `memory` or `:memory:` as the DB-URL means that state will not
+  persist when `splinterd` restarts.
 
 `--heartbeat SECONDS`
 : Specifies how often, in seconds, to send a heartbeat. (Default: 30 seconds.)
@@ -156,8 +162,13 @@ OPTIONS
 `--oauth-client-secret OAUTH-CLIENT-SECRET`
 : Specifies the client secret for the OAuth provider used by the REST API.
 
+`--oauth-openid-url OAUTH-OPENID-URL`
+: OpenID discovery document URL for the OAuth provider used by the REST API.
+  This option is required when `--oauth-provider openid` is used.
+
 `--oauth-provider OAUTH-PROVIDER`
-: Specifies the OAuth provider used by the REST API. Accepted values: `github`.
+: Specifies the OAuth provider used by the REST API. Accepted values: `github`,
+  `openid`.
 
 `--oauth-redirect-url OAUTH-REDIRECT-URL`
 : Redirect URL for the OAuth provider used by the REST API.
@@ -190,15 +201,6 @@ OPTIONS
   (Default: `/var/lib/splinter`.)
 
   This option overrides the `SPLINTER_STATE_DIR` environment variable, if set.
-
-`--storage STORAGE-TYPE`
-: Specifies whether to store circuit state in memory or in a local YAML file.
-  *STORAGE-TYPE* can be `memory` or `yaml` (the default). For `yaml`, the file
-  is stored in the default state directory, `/var/lib/splinter`, unless
-  `SPLINTER_STATE_DIR` or `SPLINTER_HOME` is set.
-
-  Using `memory` for storage means that circuits will not persist when
-  `splinterd` restarts.
 
 `--tls-ca-file CERT-FILE`
 : Specifies the path and file name for the trusted CA certificate.
@@ -283,10 +285,8 @@ Several Splinter directories have the following default locations:
 
 For the configuration and certificate directories, the directory paths can be
 changed individually with a `splinterd` option, a setting in a TOML config file,
-or an environment variable. (The state directory location is controlled only by
-an environment variable when the default YAML storage type is used; no config
-setting or command option is available.) For more information, see
-`--config-dir`, `--storage` and `--tls-cert-dir`.
+or an environment variable. For more information, see `--config-dir`,
+`--database` and `--tls-cert-dir`.
 
 In addition, the `SPLINTER_HOME` environment variable provides a simple way to
 change the base path for all of these directories. This variable is intended for
@@ -310,17 +310,18 @@ is set to `/tmp/testing` and `SPLINTER_STATE_DIR` is set to
 AUTHORIZATION CONFIGURATION
 ===========================
 
-Currently, splinterd supports two authorization types: Biome credentials and
-OAuth. The REST API requires that one of these authorization providers is
-configured.
+Currently, splinterd supports three authorization types: Biome credentials,
+Cylinder JWT, and OAuth.
+
+Cylinder JWT authorization is enabled by default.
 
 Biome credentials for the splinter REST API can be enabled using the
 `--enable-biome` flag.
 
-The Splinter daemon provides 4 options for configuring OAuth for the REST API:
+The Splinter daemon provides 5 options for configuring OAuth for the REST API:
 
 * `oauth-provider` for specifying the OAuth provider that splinterd will use to
-  get the client's identity. Currently, only `github` is supported.
+  get the client's identity. Currently, `github` and `openid` are supported.
 
 * `oauth-client-id` for specifying the client ID, which is a public identifier
   for an app that's registered with the chosen OAuth provider.
@@ -331,8 +332,14 @@ The Splinter daemon provides 4 options for configuring OAuth for the REST API:
 * `oauth-redirect-url` for specifying the endpoint that the OAuth provider will
   redirect to when completing authentication.
 
-All 4 of the above arguments must be provided when using OAuth authorization. If
-some but not all of these arguments are provided, splinterd will fail to start.
+* `oauth-openid-url` for specifying the OpenID discovery document URL that will
+  be used to find the OAuth and OpenID endpoints for authentication. This option
+  is required if the `oauth-provider` option is set to `openid`; if a different
+  provider is configured, this option will have no effect.
+
+The first 4 of the above arguments (provider, client ID, client secret, and
+redirect URL) must be provided when using OAuth authorization. If some but not
+all of these 4 arguments are provided, splinterd will fail to start.
 
 The client ID, client secret, and redirect URL must all be registered for an app
 with the chosen provider. The client ID and secret are generated by the provider.
@@ -362,9 +369,9 @@ ENVIRONMENT VARIABLES
   is set (`SPLINTER_CERT_DIR`, `SPLINTER_CONFIG_DIR`, or `SPLINTER_STATE_DIR`).
 
 **SPLINTER_STATE_DIR**
-: Specifies where to store the circuit state YAML file, if `--storage` is
-  set to `yaml`. (See `--storage`.) By default, this file is stored in
-  `/var/lib/splinter`.
+: Specifies where to store the circuit state SQLite database file, if
+  `--database` is not set. (See `--database`.) By default, this file is stored
+  in `/var/lib/splinter`.
 
 **SPLINTER_STRICT_REF_COUNT**
 : Turns on strict peer reference counting. If `SPLINTER_STRICT_REF_COUNT`is set
@@ -380,6 +387,10 @@ ENVIRONMENT VARIABLES
 **OAUTH_CLIENT_SECRET**
 : Specifies the client secret for the OAuth provider used by the REST API. See
   `--oauth-client-secret`.
+
+**OAUTH_OPENID_URL**
+: URL for the OpenID provider's discovery document used by the REST API. See
+  `--oauth-openid-url`.
 
 **OAUTH_PROVIDER**
 : Specifies the OAuth provider used by the REST API. See `--oauth-provider`.
@@ -402,7 +413,7 @@ FILES
 
 `/var/lib/splinter/`
 : Default location for the Splinter state directory, which stores the circuit
-  state YAML file (unless `--storage` is set to `memory`). Note: If
+  state SQLite database file (unless `--database` is set). Note: If
   `$SPLINTER_HOME` is set, the default location is `$SPLINTER_HOME/data/`.
 
 EXAMPLES
@@ -433,6 +444,42 @@ node_id = "mynode"
 # Setting heartbeat to 0 disables this feature.
 heartbeat = 60
 ```
+
+The next example demonstrates how to configure GitHub as an OAuth provider for
+REST API authentication, where the placeholder values for the client ID and
+secret would be replaced with actual values for a registered GitHub OAuth app:
+
+```
+$ splinterd --node-id mynode \
+  --oauth-provider github \
+  --oauth-client-id <my-client-id> \
+  --oauth-client-secret <my-client-secret> \
+  --oauth-redirect http://localhost:8080/oauth/callback
+```
+
+The above example assumes that the splinterd REST API is accessible to the web
+browser at the address `http://localhost:8080/`; if the REST API has a different
+address, this argument would be changed accordingly. For example, if the REST
+API is proxied to the address `http://localhost:8080/splinterd`, the redirect
+URL would be `http://localhost:8080/splinterd/oauth/callback`. If the REST API
+is hosted at `https://www.example.com/`, the redirect would be
+`https://www.example.com/oauth/callback`.
+
+Similar to the GitHub example, here is how you would configure a Google OAuth
+provider for REST API authentication:
+
+```
+$ splinterd --node-id mynode \
+  --oauth-provider openid \
+  --oauth-client-id <my-client-id> \
+  --oauth-client-secret <my-client-secret> \
+  --oauth-redirect http://localhost:8080/oauth/callback \
+  --oauth-openid-url https://accounts.google.com/.well-known/openid-configuration
+```
+
+To configure a different OAuth provider that conforms to the OpenID
+specification, you would start splinterd just like the Google example, but with
+the appropriate OpenID discovery document URL for the desired OAuth provider.
 
 SEE ALSO
 ========
