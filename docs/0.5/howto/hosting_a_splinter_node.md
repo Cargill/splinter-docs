@@ -29,7 +29,7 @@ how-to document. This section summarizes some especially important information.
 
 Other nodes must be able to connect to your node on port **8044**.
 Applications and CLIs used to manage Splinter will connect to the Splinter REST
-API on port **8085**.
+API on port **8080**.
 
 While it is technically possible to run the Splinter daemon without port
 **8044** open, it is not recommended. If the daemon cannot accept incoming
@@ -108,7 +108,7 @@ page.
 **REST API**
 
 Splinterd’s REST API does not have built-in authorization or access control.
-Anyone with access to your Splinter nodes on port 8085 will have unrestricted
+Anyone with access to your Splinter nodes on port 8080 will have unrestricted
 access to the REST API. Production Splinter deployments should implement a
 reverse proxy to protect the REST API.
 
@@ -177,8 +177,3 @@ This error message suggests that the key provided as the circuit admin key in th
 circuit proposal isn’t the key listed for this node in the node registry.
 Look at your Splinter registry file and make sure that the correct key is
 being used.
-
-
-
-
-
