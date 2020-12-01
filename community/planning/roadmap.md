@@ -8,12 +8,16 @@
 
 The following is a tentative roadmap to future releases.
 
-Splinter uses an odd/even release numbering. Even minor numbers (0.4, 0.6) are
-stable releases, while odd minor numbers (0.3, 0.5) are developer releases.
-Only stable releases are covered on the roadmap.
+Splinter uses an odd/even release numbering. Even minor numbers (v0.4, v0.6)
+are stable releases, while odd minor numbers (v0.3, v0.5) are developer
+releases.  Only stable releases are covered on the roadmap.
 
+## Splinter v0.6
 
-## Splinter 0.6
+Splinter v0.6 addresses critical areas required for running Splinter in
+production, which brings Splinter to a huge milestone: v0.6 is expected to be
+suitable for low-volume production environments which can withstand some amount
+of downtime for upgrades or single-point-of-failure issues.
 
 | Feature | Status | Documentation |
 | ------- | ------ | ------------- |
@@ -31,14 +35,31 @@ Only stable releases are covered on the roadmap.
 | Transact SQL Support | Under Development | [Code](https://github.com/hyperledger/transact/tree/master/libtransact/src/database) |
 | WebSocket Transport | Experimental | [Code](https://github.com/Cargill/splinter/tree/master/libsplinter/src/transport/ws) |
 
-## Splinter 0.8
+## Splinter v0.8
 
-This release is still in early planning, but some features are already under
-development.
+This release is still in early planning.
+
+This release will likely contain high availability and failover support for
+transaction processing. The high availability journey begins here because
+transaction processing involves technically complex parts of the system:
+a merkle tree with provable state agreement and consensus algorithms.  High
+availability of other Splinter components will continue in subsequent releases.
+
+The release will likely also contain performance metrics collection and
+performance tuning of transaction processing.
+
+Thus, Splinter v0.8 is expected to be suitable for low-to-medium-volume
+production environments which can withstand some amount of downtime for
+upgrades or single-point-of-failure issues (due to remaining non-HA
+components).
 
 | Feature | Status | Documentation |
 | ------- | ------ | ------------- |
 | Advanced Blockchain (Sawtooth) Support | Under Development | - |
+| External Services Support | Not Started | - |
+| Performance Metrics | Not Started | - |
+| Scabbard Clusters | Not Started | - |
+| ... | - | - |
 
 ## Additional Information
 
