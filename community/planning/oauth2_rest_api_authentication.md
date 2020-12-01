@@ -175,6 +175,10 @@ authorization server provides them, the Splinter REST API will also provide the
 refresh token using the `refresh_token` query parameter, and the lifetime of the
 access token (in seconds) using the `expires_in` query parameter.
 
+When biome features are enabled, the user's token and other details will be
+added to the biome `OAuthUserStore`; see [Biome OAuth Integration]({% link
+community/planning/biome_oauth_user_store.md %}) for more details.
+
 ### Configuration
 
 The Splinter REST API will provide out-of-the-box support for configuring Active
@@ -211,4 +215,3 @@ TBD
   to verify a user's identity?
 * How can the REST API provide more detailed information about users, such as
   profile pictures, display names, etc.?
-* How does OAuth support integrate with Biome for storing tokens?
