@@ -68,7 +68,7 @@ The Splinter daemon uses the following ports:
 
 * **8044**: Network endpoint for node-to-node communication
 
-* **8085**: Application communication via the splinterd
+* **8080**: Application communication via the splinterd
   REST API
 
 If your Splinter node is behind a firewall, the node must be accessible from the
@@ -163,4 +163,4 @@ This topic summarizes three basic approaches for deploying Splinter, but
 many other patterns are possible. You can customize a Splinter deployment for
 your organization, as long as you meet the networking requirements: Your node
 is accessible from the internet on a well-known URL using **port 8044** and
-server-side application communication is allowed on **port 8085**.
+server-side application communication is allowed on **port 8080**.

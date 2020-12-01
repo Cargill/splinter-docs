@@ -153,9 +153,9 @@ Guide](https://sawtooth.hyperledger.org/docs/sabre/nightly/master/application_de
 
 ## Ports and REST API Connections
 
-By default, Splinter uses ports **8084** and **8085** for communication.
-Other nodes must be able to connect on port 8084.  Applications and CLIs used
-to manage Splinter will connect to the Splinter REST API on port 8085.
+By default, Splinter uses ports **8044** and **8080** for communication. Other
+nodes must be able to connect on port 8044.  Applications and CLIs used to
+manage Splinter will connect to the Splinter REST API on port 8080.
 
 Splinter supports several connection protocols for node-to-node communication:
 
@@ -166,13 +166,13 @@ Splinter supports several connection protocols for node-to-node communication:
 
 * Raw TCP (intended for development and testing only)
 
-Currently, the `splinterd` REST API does not have built-in authentication or
-authorization (except for the Biome endpoints). Anyone with access to a
-Splinter node on port 8085 will have unrestricted access to the REST API.
-Endpoint authentication/authorization is planned for the future. In the
-meantime, protecting port 8085 is recommended, either by blocking external
-access or allowing selective access with a mechanism such as a reverse proxy
-server or webserver.
+Currently, the `splinterd` REST API supports authentication with Biome or OAuth,
+but does not yet provide authorization (except for the Biome endpoints). Anyone
+with access to a Splinter node on port 8080 that can authenticate will have
+unrestricted access to the REST API. Endpoint authorization is planned for the
+future. In the meantime, protecting port 8080 is recommended, either by blocking
+external access or allowing selective access with a mechanism such as a reverse
+proxy server or webserver.
 
 For more information, see [Planning a Splinter
 Deployment]({% link docs/0.5/howto/planning_splinter_deployment.md %}).

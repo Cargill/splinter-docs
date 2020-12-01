@@ -58,7 +58,7 @@ first node, alpha.
                 --node-id alpha \
                 --network-endpoints tcps://0.0.0.0:8044 \
                 --advertised-endpoints tcps://splinterd-alpha:8044 \
-                --rest-api-endpoint 0.0.0.0:8085 \
+                --rest-api-endpoint 0.0.0.0:8080 \
                 --registries file:///config/alpha-registry.yaml \
                 --storage yaml \
                 --tls-insecure
@@ -93,7 +93,7 @@ first node, alpha.
     network endpoint for daemon-to-daemon communication between Splinter nodes,
     if the `network-endpoint` is not public.
 
-    `--rest-api-endpoint 0.0.0.0:8085`:  Specifies the address and the port that
+    `--rest-api-endpoint 0.0.0.0:8080`:  Specifies the address and the port that
     the `splinterd` REST API will listen on.
 
     `--registries file:///config/alpha-registry.yaml`:  Defines one or more
@@ -201,7 +201,7 @@ to use the actual key value you copied instead of the example value shown below.
     splinterd-alpha    | [2020-05-25 18:35:36.233] T["Peer Manager"] INFO [splinter::peer] Received peer connection from admin::alpha (remote endpoint: inproc://admin-service)
     splinterd-alpha    | [2020-05-25 18:35:36.233] T["Peer Manager"] INFO [splinter::peer] Received peer connection from orchestator::alpha (remote endpoint: inproc://orchestator)
     splinterd-alpha    | [2020-05-25 18:35:36.276] T["SplinterDRestApi"] INFO [actix_server::builder] Starting 2 workers
-    splinterd-alpha    | [2020-05-25 18:35:36.276] T["SplinterDRestApi"] INFO [actix_server::builder] Starting server on 0.0.0.0:8085
+    splinterd-alpha    | [2020-05-25 18:35:36.276] T["SplinterDRestApi"] INFO [actix_server::builder] Starting server on 0.0.0.0:8080
     splinterd-alpha    | [2020-05-25 18:35:36.284] T["Service admin::alpha"] INFO [splinter::service::processor] Starting Service: admin::alpha
     ```
 
@@ -237,7 +237,7 @@ Congratulations! You've got a Splinter node up and running.
                 --node-id beta \
                 --network-endpoints tcps://0.0.0.0:8044 \
                 --advertised-endpoints tcps://splinterd-beta:8044 \
-                --rest-api-endpoint 0.0.0.0:8085 \
+                --rest-api-endpoint 0.0.0.0:8080 \
                 --registries file:///config/beta-registry.yaml \
                 --storage yaml \
                 --tls-insecure
@@ -361,7 +361,7 @@ beta nodes.
     ```bash
     root@beta:/# splinter circuit propose \
       --key /config/keys/beta.priv \
-      --url http://0.0.0.0:8085  \
+      --url http://0.0.0.0:8080  \
       --node beta::tcps://splinterd-beta:8044 \
       --node alpha::tcps://splinterd-alpha:8044 \
       --service gsBB::beta \
@@ -379,7 +379,7 @@ beta nodes.
     name of a .`priv` file in the `$HOME/.splinter/keys` directory. The target
     file must contain a valid secp256k1 private key. This option is required.
 
-    `--url http://splinterd-beta:8085`: URL of the Splinter REST API
+    `--url http://splinterd-beta:8080`: URL of the Splinter REST API
 
     `--node beta::tcps://splinterd-beta:8044`: Node that should be part of the
     circuit, using the format NODE-ID::ENDPOINT1,ENDPOINT2. All endpoints must
@@ -485,7 +485,7 @@ beta nodes.
     ```bash
     root@alpha:/# splinter circuit vote \
     --key /config/keys/alpha.priv \
-    --url http://0.0.0.0:8085 \
+    --url http://0.0.0.0:8080 \
     El9jM-6bXjg \
     --accept
     ```
@@ -583,7 +583,7 @@ as the contract’s owners.
       sawtooth_xo \
       --owners $(cat /config/keys/beta.pub) \
       --key /config/keys/beta.priv \
-      --url 'http://splinterd-beta:8085' \
+      --url 'http://splinterd-beta:8080' \
       --service-id $CIRCUIT_ID::gsBB
     ```
 
@@ -599,7 +599,7 @@ as the contract’s owners.
     You can run `splinter circuit show $CIRCUIT_ID` to view the admin keys of
     the services on the circuit._
 
-    `--url 'http://splinterd-beta:8085'`: URL to the scabbard REST API. (This is
+    `--url 'http://splinterd-beta:8080'`: URL to the scabbard REST API. (This is
     built in to Splinter)
 
     `--service-id $CIRCUIT_ID::gsBB`: Fully-qualified service ID of the scabbard
@@ -641,7 +641,7 @@ contract to the circuit.
     root@scabbard-cli-beta:/# scabbard contract upload xo:0.4.2 \
       --path . \
       --key /config/keys/beta.priv \
-      --url 'http://splinterd-beta:8085' \
+      --url 'http://splinterd-beta:8080' \
       --service-id $CIRCUIT_ID::gsBB
     ```
 
@@ -682,17 +682,14 @@ the smart contract was successfully uploaded and transmitted across the circuit.
 
     ```bash
     root@scabbard-cli-beta:/# scabbard contract list \
-      --url 'http://splinterd-alpha:8085' \
+      --url 'http://splinterd-alpha:8080' \
       --service-id $CIRCUIT_ID::gsAA
     NAME        VERSIONS OWNERS
     sawtooth_xo 1.0      02edb9b9e3d652f0df43408f7e99be1172b665ac34320229f7624b7c292e8cf4b0
 
     root@scabbard-cli-beta:/# scabbard contract list \
-      --url 'http://splinterd-beta:8085' \
+      --url 'http://splinterd-beta:8080' \
       --service-id $CIRCUIT_ID::gsBB
     NAME        VERSIONS OWNERS
     sawtooth_xo 1.0      02edb9b9e3d652f0df43408f7e99be1172b665ac34320229f7624b7c292e8cf4b0
     ```
-
-
-

@@ -6,7 +6,7 @@
   https://creativecommons.org/licenses/by/4.0/
 -->
 
-This tutorial covers how to create a circuit on a splinter network between 
+This tutorial covers how to create a circuit on a splinter network between
 two nodes and upload a smart contract via the circuit.
 
 ## Prerequisites
@@ -30,7 +30,7 @@ for details on how to create and compile a smart contract
 
     ``` console
     $ splinter circuit propose \
-        --url http://splinterd-alpha:8085 \
+        --url http://splinterd-alpha:8080 \
         --key <path_to_alpha_private_key> \
         --node alpha-node-000::tcps://splinterd-alpha:8044 \
         --node beta-node-000::tcps://splinterd-beta:8044 \
@@ -59,7 +59,7 @@ for details on how to create and compile a smart contract
     example:
 
     ``` console
-    $ splinter circuit proposals --url http://splinterd-beta:8085
+    $ splinter circuit proposals --url http://splinterd-beta:8080
 
     ID                                   MANAGEMENT MEMBERS
     01234567-0123-0123-0123-012345678901 tutorial   alpha-node-000;beta-node-000
@@ -74,7 +74,7 @@ for details on how to create and compile a smart contract
     ``` console
     $ splinter circuit vote \
         --key <path_to_beta_private_key> \
-        --url http://splinterd-beta:8085 $CIRCUIT_ID --accept
+        --url http://splinterd-beta:8080 $CIRCUIT_ID --accept
     ```
 
     You have now established a circuit between node alpha and node beta based
@@ -83,7 +83,7 @@ for details on how to create and compile a smart contract
     d. Verify the circuit has been established.
 
     ``` console
-    $ splinter circuit list --url http://splinterd-alpha:8085
+    $ splinter circuit list --url http://splinterd-alpha:8080
 
     ID                                   MANAGEMENT MEMBERS
     01234567-0123-0123-0123-012345678901 tutorial   alpha-node-000;beta-node-000
@@ -121,7 +121,7 @@ for details on how to create and compile a smart contract
     $ scabbard cr create my_contract \
         --owner <alpha_node_public_key> \
         --key <path_to_alpha_node_private_key> \
-        --url http://splinterd-alpha:8085 \
+        --url http://splinterd-alpha:8080 \
         --service-id $CIRCUIT_ID::scabbard-service-alpha
     ```
 
@@ -130,7 +130,7 @@ for details on how to create and compile a smart contract
    ``` console
    $ scabbard contract upload ./my_contract.scar \
        --key <path_to_alpha_node_private_key> \
-       --url http://splinterd-alpha:8085 \
+       --url http://splinterd-alpha:8080 \
        --service-id $CIRCUIT_ID::scabbard-service-alpha
    ```
 
@@ -145,7 +145,7 @@ for details on how to create and compile a smart contract
     $ scabbard ns create 5b7349 \
        --owner <alpha_node_public_key> \
        --key <path_to_alpha_node_private_key> \
-       --url http://splinterd-alpha:8085 \
+       --url http://splinterd-alpha:8080 \
        --service-id $CIRCUIT_ID::scabbard-service-alpha
     ```
 
@@ -158,14 +158,14 @@ for details on how to create and compile a smart contract
    ``` console
    $ scabbard perm 5b7349 my_contract --read --write \
        --key <path_to_alpha_node_private_key> \
-       --url http://splinterd-alpha:8085 \
+       --url http://splinterd-alpha:8080 \
        --service-id $CIRCUIT_ID::scabbard-service-alpha
    ```
 
 7. List uploaded smart contracts.
 
     ``` console
-    $ scabbard contract list -U 'http://splinterd-beta:8085' \
+    $ scabbard contract list -U 'http://splinterd-beta:8080' \
         --service-id $CIRCUIT_ID::scabbard-service-beta
 
     NAME        VERSIONS OWNERS
@@ -176,7 +176,7 @@ for details on how to create and compile a smart contract
 
     ``` console
     $ scabbard contract show my_contract:1.0 \
-        -U 'http://splinterd-beta:8085' \
+        -U 'http://splinterd-beta:8080' \
         --service-id $CIRCUIT_ID::scabbard-service-beta
 
     name: my_contract
