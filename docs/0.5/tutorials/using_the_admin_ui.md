@@ -23,21 +23,91 @@ then propose a circuit and view the proposal summary. As Bob, you'll register
 and add keys, vote on the circuit proposal, then view the new circuit's summary.
 Finally, you'll log out for both Alice and Bob.
 
+There are two paths in this tutorial: the first uses Biome for user
+authentication, and the second uses OAuth. Biome authentication will require
+users to register and login with a username and password that is verified by
+splinterd, while OAuth authentication uses a configured OAuth provider for
+logging users in. Both of these options will be covered. The choice here only
+affects the initial configuration and user registration/login; the other steps
+of this tutorial are the same for both paths.
+
 ## Prerequisites
 
 * A clone of the [splinter-ui repository](https://github.com/Cargill/splinter-ui)
+
 * [Docker Engine](https://docs.docker.com/engine/)
+
 * [Docker Compose](https://docs.docker.com/compose/)
+
+* If using OAuth authentication, you will need to register an OAuth app with a
+  supported OAuth provider. Splinter supports GitHub and any OAuth provider that
+  conforms to the OpenID standard, including Google and Azure AD. Here are
+  instructions for registering an app with some of the supported providers:
+
+  * [Registering a GitHub OAuth app](https://docs.github.com/en/free-pro-team@latest/developers/apps/creating-an-oauth-app)
+
+  * [Registering a Google OAuth app](https://support.google.com/cloud/answer/6158849)
+
+  * [Registering an Azure AD OAuth app](https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app)
+
+  Some providers will require a homepage URL and a redirect URL; if these are
+  required, use the values `http://localhost` and
+  `http://localhost/splinterd/oauth/callback`, respectively.
+
+  Your chosen OAuth provider will give you a client ID and client secret for
+  your registered OAuth app. These values will be used to configure splinterd in
+  this tutorial. Additionally, if you are using an OpenID-compliant provider,
+  you will need the URL for the provider's OpenID discovery document. Here are
+  details about the discovery documents for some of the supported providers:
+
+  * [OpenID discovery document for Google](https://developers.google.com/identity/protocols/oauth2/openid-connect#discovery)
+
+  * [OpenID discovery document for Azure AD](https://docs.microsoft.com/en-us/azure/active-directory/develop/v2-protocols-oidc#fetch-the-openid-connect-metadata-document)
 
 ## Starting the Admin UI with Docker
 
 1. In a terminal window, navigate to the root of the `splinter-ui` repository.
 
-1. Start the Docker containers with the following command.
+1. Start the Docker containers.
 
-    ```
-    docker-compose up --build
-    ```
+   **Option 1: Biome**
+
+   If you wish to use Biome authorization, simply run the following command:
+
+   ```bash
+   docker-compose -f docker-compose-biome.yaml up --build
+   ```
+
+   **Option 2: OAuth**
+
+   If you are using OAuth, you will need to set the following environment
+   variables before running the Docker compose file: `OAUTH_PROVIDER`,
+   `OAUTH_CLIENT_ID`, `OAUTH_CLIENT_SECRET`, and `OAUTH_OPENID_URL` (if
+   applicable). For full details on these configuration values, see the
+   <a href="/docs/0.5/references/cli/splinterd.1.html#authorization-configuration">
+   Authorization configuration section</a> of the splinterd man page.
+
+   To run the Admin UI with a GitHub OAuth provider, you would run the
+   following commands with the client ID and secret of your GitHub OAuth app:
+
+   ```bash
+   $ export OAUTH_PROVIDER=github
+   $ export OAUTH_CLIENT_ID=<your-client-id>
+   $ export OAUTH_CLIENT_SECRET=<your-client-secret>
+   $ docker-compose -f docker-compose-oauth.yaml up --build
+   ```
+
+   To run the Admin UI with an OAuth provider that supports OpenID (such as
+   Google or Azure AD), you would run the following commands with your client
+   ID, client secret, and the URL of the OpenID discovery document:
+
+   ```bash
+   $ export OAUTH_PROVIDER=openid
+   $ export OAUTH_CLIENT_ID=<your-client-id>
+   $ export OAUTH_CLIENT_SECRET=<your-client-secret>
+   $ export OAUTH_OPENID_URL=<openid-discovery-document>
+   $ docker-compose -f docker-compose-oauth.yaml up --build
+   ```
 
 2. Wait until the build completes and the containers have started. The output
    will end with messages that resemble this example:
@@ -60,17 +130,31 @@ alpha (`alpha-node-000`) is at `localhost:3030`. The UI for beta
 
 ## Logging In or Registering
 
-1. For Alice, open a browser and go to `localhost:3030`. The Log In dialog
-   displays.
+1. For Alice, open a browser and go to `localhost:3030`.
 
-    <img src="{% link docs/0.5/images/adminui_log_in.png %}" height="258"
-    alt="Admin UI login dialog">
+   **Option 1: Biome**
 
-2. To register Alice as a new user, click **Register**, then enter a new
+   The Biome Log In dialog displays.
+
+    <img src="{% link docs/0.5/images/adminui_log_in_biome.png %}" height="258"
+    alt="Admin UI Biome login dialog">
+
+   To register Alice as a new user, click **Register**, then enter a new
    username (such as `alice` or `alice@acme.com`) and password.
 
     ![]({% link docs/0.5/images/adminui_register_alice.png %}
     "Admin UI register dialog")
+
+   **Option 2: OAuth**
+
+   The OAuth Log In dialog displays.
+
+    <img src="{% link docs/0.5/images/adminui_log_in_oauth.png %}" height="258"
+    alt="Admin UI OAuth login dialog">
+
+   To login Alice, click the login button and follow the login process of the
+   configured OAuth provider. Once completed, the browser will be redirected
+   back to the Admin UI.
 
 3. Next, the main Admin UI page displays.
 
@@ -78,7 +162,7 @@ alpha (`alpha-node-000`) is at `localhost:3030`. The UI for beta
     "Admin UI: Main page")
 
 > NOTE: To repeat this procedure for Bob, open a new browser window and go to
-> `localhost:3031`. Then use the same steps to register Bob as a new user.
+> `localhost:3031`. Then use the same steps to register/login Bob as a new user.
 
 ## Adding User Keys
 
