@@ -129,12 +129,16 @@ Each OAuth provider will have its own `IdentityProvider` implementation that
 queries the appropriate provider's servers using an access token to get the
 client's identity. These will be configured for the REST API and passed to the
 middleware, which will call them for each request to get the client's identity.
+This identity is added to the authorized request using the HTTP request
+extensions. This allows the Splinter REST API endpoints that are validated
+through this middleware component to access the user's verified identity.
 
 ### REST API Endpoints
 
 The Splinter REST API will provide two new endpoints to enable authorization:
-the `GET /oauth/login` route and the `GET /oauth/callback` route. This section
-outlines the external behavior of these routes.
+the `GET /oauth/login` route, the `GET /oauth/callback` route, and the
+`GET /oauth/logout` route. This section outlines the external behavior of these
+routes.
 
 #### Login Route
 
@@ -169,6 +173,10 @@ to the login route. The access token will be passed by appending the
 will have the format `OAuth2:<token>`, where `<token>` is the access token that
 the authorization server provided.
 
+The user's identity, retrieved by the `IdentityProvider` described above, will
+also be appended to the client redirect URL using the `display_name` query
+parameter.
+
 Some authorization servers expire access tokens after a period of time and
 provide a refresh token to get a new access token. If the configured
 authorization server provides them, the Splinter REST API will also provide the
@@ -177,6 +185,21 @@ access token (in seconds) using the `expires_in` query parameter.
 
 When biome features are enabled, the user's token and other details will be
 added to the biome `OAuthUserStore`; see [Biome OAuth Integration]({% link
+community/planning/biome_oauth_user_store.md %}) for more details.
+
+#### Logout Route
+
+The logout route is used by the browser application to remove the user's stored
+tokens from underlying storage. After the request has been authenticated by the
+middleware component, the Splinter REST API attempts to perform the configured
+operation to remove the user's access and refresh tokens. If this operation is
+successful, the Splinter REST API will respond with `200 Ok`.
+
+OAuth user storage is represented by the `OAuthUserInfoStore` trait, which
+defines methods to save and remove user information. If underlying storage has
+not been configured, no-op versions of these methods are used instead. When
+biome features are enabled, the `OAuthUserInfoStore` is backed by the biome
+`OAuthUserStore`; see [Biome OAuth Integration]({% link
 community/planning/biome_oauth_user_store.md %}) for more details.
 
 ### Configuration
