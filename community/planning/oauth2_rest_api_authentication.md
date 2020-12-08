@@ -10,7 +10,7 @@
 
 OAuth 2 support for Splinter's REST APIs provides standard and secure
 authentication with the REST APIs from end-user browser applications. The
-primary OAuth 2 providers targeted are Active Directory, Github, and Google.
+primary OAuth 2 providers targeted are Azure Active Directory, Github, and Google.
 
 ## Motivation
 [motivation]: #motivation
@@ -31,8 +31,8 @@ further here.)
 
 Splinter applications will commonly be integrated with an organization's SSO
 implementation. Since most large organizations use Active Directory for managing
-users, it is desirable to support Active Directory as an OAuth authentication
-server.
+users, it is desirable to support Azure Active Directory as an OAuth
+authentication server.
 
 In public environments, it is common to use authentication servers provided by
 organizations which have a large number of users. GitHub and Google both provide
@@ -43,8 +43,9 @@ because Google Apps is commonly used by smaller businesses, but also because of
 the robust OAuth implementation provided by Google.
 
 By supporting multiple OAuth providers, we ensure we are not implementing a
-solution that only works with a single provider. Additionally, three (Active
-Directory, GitHub, and Google) is a reasonable number to initially support.
+solution that only works with a single provider. Additionally, three (Azure
+Active Directory, GitHub, and Google) is a reasonable number to initially
+support.
 
 ## Guide-level explanation
 [guide-level-explanation]: #guide-level-explanation
@@ -92,7 +93,7 @@ Here is the flow in more detail:
 
 The implementation of this feature is based on the
 [OAuth 2 protocol](https://oauth.net/2/) in combination with provider-specific
-details ([Active Directory](https://docs.microsoft.com/en-us/azure/active-directory/develop/v2-oauth2-auth-code-flow),
+details ([Azure Active Directory](https://docs.microsoft.com/en-us/azure/active-directory/develop/v2-oauth2-auth-code-flow),
 [Github](https://docs.github.com/en/free-pro-team@latest/developers/apps/building-oauth-apps),
 and [Google](https://developers.google.com/identity/protocols/oauth2)).
 
@@ -204,10 +205,10 @@ community/planning/biome_oauth_user_store.md %}) for more details.
 
 ### Configuration
 
-The Splinter REST API will provide out-of-the-box support for configuring Active
-Directory, GitHub, and Google providers.
+The Splinter REST API will provide out-of-the-box support for configuring Azure
+Active Directory, GitHub, and Google providers.
 
-#### Active Directory
+#### Azure Active Directory
 
 TBD
 
