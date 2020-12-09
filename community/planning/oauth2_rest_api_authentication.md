@@ -286,10 +286,6 @@ REST API will respond with `200 Ok`.
 The Splinter REST API will provide out-of-the-box support for configuring Azure
 Active Directory, GitHub, and Google providers.
 
-#### Azure Active Directory
-
-TBD
-
 #### GitHub
 
 To configure GitHub as an OAuth provider for the Splinter REST API, the library
@@ -299,9 +295,17 @@ GitHub when setting up an OAuth app. The redirect URL, which will need to be
 registered with the GitHub OAuth app, will be the URL of the `/oauth/callback`
 endpoint of the Splinter REST API.
 
-#### Google
+#### OpenID (Azure Active Directory and Google)
 
-TBD
+To configure an OpenID-compliant OAuth provider such as Azure Active Directory
+or Google, the library user will need to provide four configuration values: a
+client ID, a client secret, a redirect URL, and an OpenID discovery document
+URL. The Client ID and client secret are determined by the provider when setting
+up an OAuth app. The redirect URL, which will need to be registered with the
+OAuth app, will be the URL of the `/oauth/callback` endpoint of the Splinter
+REST API. The OpenID discovery document URL will be defined by the OAuth
+provider; usually this is the `/.well-known/openid-configuration` endpoint of
+the provider's server.
 
 ## Unresolved questions
 [unresolved]: #unresolved
