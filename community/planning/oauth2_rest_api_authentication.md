@@ -136,7 +136,7 @@ through this middleware component to access the user's verified identity.
 
 ### REST API Endpoints
 
-The Splinter REST API will provide two new endpoints to enable authorization:
+The Splinter REST API will provide three new endpoints to enable authorization:
 the `GET /oauth/login` route, the `GET /oauth/callback` route, and the
 `GET /oauth/logout` route. This section outlines the external behavior of these
 routes.
