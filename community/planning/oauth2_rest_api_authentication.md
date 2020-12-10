@@ -10,7 +10,7 @@
 
 OAuth 2 support for Splinter's REST APIs provides standard and secure
 authentication with the REST APIs from end-user browser applications. The
-primary OAuth 2 providers targeted are Active Directory, Github, and Google.
+primary OAuth 2 providers targeted are Azure Active Directory, Github, and Google.
 
 ## Motivation
 [motivation]: #motivation
@@ -31,8 +31,8 @@ further here.)
 
 Splinter applications will commonly be integrated with an organization's SSO
 implementation. Since most large organizations use Active Directory for managing
-users, it is desirable to support Active Directory as an OAuth authentication
-server.
+users, it is desirable to support Azure Active Directory as an OAuth
+authentication server.
 
 In public environments, it is common to use authentication servers provided by
 organizations which have a large number of users. GitHub and Google both provide
@@ -43,8 +43,9 @@ because Google Apps is commonly used by smaller businesses, but also because of
 the robust OAuth implementation provided by Google.
 
 By supporting multiple OAuth providers, we ensure we are not implementing a
-solution that only works with a single provider. Additionally, three (Active
-Directory, GitHub, and Google) is a reasonable number to initially support.
+solution that only works with a single provider. Additionally, three (Azure
+Active Directory, GitHub, and Google) is a reasonable number to initially
+support.
 
 ## Guide-level explanation
 [guide-level-explanation]: #guide-level-explanation
@@ -77,11 +78,18 @@ Here is the flow in more detail:
   authorization code</li>
   <li>Splinter REST API submits the authorization code to the Authorization
   Server</li>
-  <li>Authorization Server responds to Splinter REST API with access token</li>
-  <li>Splinter REST API responds to Application with access token</li>
-  <li>Application accesses Splinter REST API with access token</li>
-  <li>Splinter REST API gets the user's identity from the Authorization Server
-  using the access token</li>
+  <li>Authorization Server responds to Splinter REST API with OAuth access
+  token</li>
+  <li>Splinter REST API requests the user’s identity from the Authorization
+  Server using the OAuth access token</li>
+  <li>Authorization Server responds to the Splinter REST API with the user's
+  identity</li>
+  <li>Splinter REST API stores the OAuth access token and responds to
+  Application with a new Splinter access token</li>
+  <li>Application accesses Splinter REST API with the Splinter access token</li>
+  <li>Splinter REST API checks if user authentication has expired. If not
+  expired, skips to (S); if expired, gets the user's identity from the
+  Authorization Server using the OAuth access token.</li>
   <li>Authorization Server responds to the Splinter REST API with the user's
   identity</li>
   <li>Application REST API satisfies the call</li>
@@ -92,9 +100,63 @@ Here is the flow in more detail:
 
 The implementation of this feature is based on the
 [OAuth 2 protocol](https://oauth.net/2/) in combination with provider-specific
-details ([Active Directory](https://docs.microsoft.com/en-us/azure/active-directory/develop/v2-oauth2-auth-code-flow),
+details ([Azure Active Directory](https://docs.microsoft.com/en-us/azure/active-directory/develop/v2-oauth2-auth-code-flow),
 [Github](https://docs.github.com/en/free-pro-team@latest/developers/apps/building-oauth-apps),
 and [Google](https://developers.google.com/identity/protocols/oauth2)).
+
+### User Storage
+
+The Splinter REST API will use a new database store, the `OAuthUserStore`, to
+track user tokens and sessions. The store will contain an entry for each active
+OAuth session, where each entry is represented by the following structs:
+
+```rust
+struct OAuthUserAccess {
+    id: String,
+    oauth_identity: String,
+    oauth_access_token: String,
+    oauth_refresh_token: Option<String>,
+    oauth_provider: OAuthProvider,
+    splinter_access_token: String,
+}
+
+pub enum OAuthProvider {
+    Github,
+    OpenId,
+}
+```
+
+The `id` field will be provided using an auto-incremented primary key in the
+database implementation of this store. This will allow the REST API to track
+individual sessions when a user has more than one active session at a time.
+
+New entries will be added by the `GET /oauth/callback` endpoint, and entries
+will be removed by the `GET /oauth/logout` endpoint as well as the authorization
+guard. The contents of the store will be used by the authorization guard to
+cache user identities and exchange refresh tokens for new OAuth access tokens.
+These points will be discussed in the following sections of this document.
+
+#### Biome Integration
+
+When the `biome` feature is enabled for Splinter, a new store called the
+`BiomeOAuthUserStore` will be used to correlate OAuth users with Biome users to
+leverage Biome's key management functionality. When a new user authenticates and
+their tokens get added to the `OAuthUserStore`, a new entry will be added to the
+`BiomeOAuthUserStore`. Entries in the Biome OAuth store will be represented by
+the following struct:
+
+```rust
+struct BiomeOAuthUser {
+    /// A Biome user ID
+    user_id: String,
+    /// The identity provided by the OAuth authorization server
+    oauth_identity: String,
+}
+```
+
+This store allows Biome to manage keys for a user that authenticates with OAuth
+in the same way that it does with users that authenticate using Biome
+credentials.
 
 ### Authorization Guard
 
@@ -105,10 +167,10 @@ REST API routes that provide authorization (such as the OAuth routes).
 
 For the Actix REST API, Splinter will use a middleware component to check
 authorization using the `Authorization` HTTP header. For OAuth, it is expected
-that this header has the value `Bearer: OAuth2:<token>`, where `<token>` is the
-access token that the authorization server gives to the REST API. If this token
-type (`OAuth2`) is not provided, or if this header is malformed, the Splinter
-REST API will respond with `401 Unauthorized`.
+that this header has the value `Bearer: OAuth2:<token>`, where `<token>` is an
+access token provided by the Splinter REST API. If this token type (`OAuth2`) is
+not provided, or if this header is malformed, the Splinter REST API will respond
+with `401 Unauthorized`.
 
 The middleware will resolve tokens to client identities using a set of
 configured identity providers, which are defined by the following trait:
@@ -125,20 +187,46 @@ pub trait IdentityProvider: Send + Sync {
 }
 ```
 
-Each OAuth provider will have its own `IdentityProvider` implementation that
-queries the appropriate provider's servers using an access token to get the
-client's identity. These will be configured for the REST API and passed to the
+Each of the OAuth provider types will have its own `IdentityProvider`
+implementation that queries the appropriate provider's servers using an OAuth
+access token to get the client's identity. When the client's identity is
+retrieved initially in the `GET /oauth/callback` endpoint, the configured OAuth
+identity provider will create an entry in the `OAuthUserStore` to save the OAuth
+tokens and the user's identity.
+
+For up to one hour after authentication, the OAuth identity provider will use
+the `OAuthUserStore` to lookup a user's identity based on a request's provided
+Splinter access token. After an hour, the identity provider will attempt to use
+the corresponding OAuth access token to re-check the user's identity; this
+ensures that the user is still authenticated for the Splinter REST API according
+to the OAuth provider. If this check fails but an OAuth refresh token exists for
+the session, the identity provider will attempt to get a new OAuth access token
+using the refresh token; if this succeeds, Splinter will attempt to use the new
+access token to fetch the user's identity. If the refresh token exchange fails
+or no refresh token exists, the server will logout the user by removing the
+store entry before returning a `401 Unauthorized` response to the client.
+
+Identity providers will be configured for the REST API and passed to the
 middleware, which will call them for each request to get the client's identity.
 This identity is added to the authorized request using the HTTP request
 extensions. This allows the Splinter REST API endpoints that are validated
 through this middleware component to access the user's verified identity.
 
+The following `IdentityProvider` implementations will be included with the
+Splinter REST API:
+
+* `GithubUserIdentityProvider` - Gets a user's GitHub username using a GitHub
+  OAuth access token
+
+* `OpenIdUserIdentityProvider` - Gets a user's subject identifier from an
+  OpenID-compliant OAuth provider (this covers the Azure Active Directory and
+  Google providers)
+
 ### REST API Endpoints
 
-The Splinter REST API will provide two new endpoints to enable authorization:
+The Splinter REST API will provide three new endpoints to enable authorization:
 the `GET /oauth/login` route, the `GET /oauth/callback` route, and the
-`GET /oauth/logout` route. This section outlines the external behavior of these
-routes.
+`GET /oauth/logout` route. This section outlines the behavior of these routes.
 
 #### Login Route
 
@@ -163,53 +251,40 @@ The callback route is used by the authorization server to send a temporary
 authorization code to the Splinter REST API. After the user has granted
 permission to the application, the authorization server will redirect the
 browser to the callback route with the authorization code. The Splinter REST API
-will then exchange this code for the user's access token, and return the access
-token to the browser application.
+will then exchange this code for the user's OAuth access token and a refresh
+token if the authorization server provides one.
 
-The Splinter REST API sends the access token to the application by redirecting
+Once it has the OAuth token(s), the REST API will fetch the user's identity
+using the configured OAuth `IdentityProvider`. Splinter will also generate a new
+Splinter access token for the user, which is a random 32-character alphanumeric
+string. These tokens, along with the user's identity, will then be entered into
+the `OAuthUserStore` before the REST API returns the Splinter access token to
+the browser application.
+
+The Splinter REST API sends its access token to the application by redirecting
 the browser to the client redirect URL that was provided in the initial request
 to the login route. The access token will be passed by appending the
 `access_token` query parameter to the client redirect URL. This access token
-will have the format `OAuth2:<token>`, where `<token>` is the access token that
-the authorization server provided.
+will have the format `OAuth2:<token>`, where `<token>` is the token generated by
+the Splinter REST API (this is different than the OAuth access token provided by
+the authorization server).
 
 The user's identity, retrieved by the `IdentityProvider` described above, will
 also be appended to the client redirect URL using the `display_name` query
 parameter.
 
-Some authorization servers expire access tokens after a period of time and
-provide a refresh token to get a new access token. If the configured
-authorization server provides them, the Splinter REST API will also provide the
-refresh token using the `refresh_token` query parameter, and the lifetime of the
-access token (in seconds) using the `expires_in` query parameter.
-
-When biome features are enabled, the user's token and other details will be
-added to the biome `OAuthUserStore`; see [Biome OAuth Integration]({% link
-community/planning/biome_oauth_user_store.md %}) for more details.
-
 #### Logout Route
 
 The logout route is used by the browser application to remove the user's stored
-tokens from underlying storage. After the request has been authenticated by the
-middleware component, the Splinter REST API attempts to perform the configured
-operation to remove the user's access and refresh tokens. If this operation is
-successful, the Splinter REST API will respond with `200 Ok`.
-
-OAuth user storage is represented by the `OAuthUserInfoStore` trait, which
-defines methods to save and remove user information. If underlying storage has
-not been configured, no-op versions of these methods are used instead. When
-biome features are enabled, the `OAuthUserInfoStore` is backed by the biome
-`OAuthUserStore`; see [Biome OAuth Integration]({% link
-community/planning/biome_oauth_user_store.md %}) for more details.
+tokens from the `OAuthUserStore`. After the request has been authenticated by
+the middleware component, the Splinter REST API will remove the user's access
+and refresh tokens from the store. If this operation is successful, the Splinter
+REST API will respond with `200 Ok`.
 
 ### Configuration
 
-The Splinter REST API will provide out-of-the-box support for configuring Active
-Directory, GitHub, and Google providers.
-
-#### Active Directory
-
-TBD
+The Splinter REST API will provide out-of-the-box support for configuring Azure
+Active Directory, GitHub, and Google providers.
 
 #### GitHub
 
@@ -220,9 +295,17 @@ GitHub when setting up an OAuth app. The redirect URL, which will need to be
 registered with the GitHub OAuth app, will be the URL of the `/oauth/callback`
 endpoint of the Splinter REST API.
 
-#### Google
+#### OpenID (Azure Active Directory and Google)
 
-TBD
+To configure an OpenID-compliant OAuth provider such as Azure Active Directory
+or Google, the library user will need to provide four configuration values: a
+client ID, a client secret, a redirect URL, and an OpenID discovery document
+URL. The Client ID and client secret are determined by the provider when setting
+up an OAuth app. The redirect URL, which will need to be registered with the
+OAuth app, will be the URL of the `/oauth/callback` endpoint of the Splinter
+REST API. The OpenID discovery document URL will be defined by the OAuth
+provider; usually this is the `/.well-known/openid-configuration` endpoint of
+the provider's server.
 
 ## Unresolved questions
 [unresolved]: #unresolved
@@ -232,9 +315,5 @@ TBD
   API. These patterns likely require more design.
 * It is unclear how CLIs or non-user-based applications such as integration
   daemons could leverage OAuth for authenticating with the Splinter REST API.
-* How should refresh tokens handled for authorization servers that expire access
-  tokens?
-* How can the REST API avoid calling the identity provider every time it needs
-  to verify a user's identity?
 * How can the REST API provide more detailed information about users, such as
   profile pictures, display names, etc.?
