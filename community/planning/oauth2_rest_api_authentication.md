@@ -104,59 +104,11 @@ details ([Azure Active Directory](https://docs.microsoft.com/en-us/azure/active-
 [Github](https://docs.github.com/en/free-pro-team@latest/developers/apps/building-oauth-apps),
 and [Google](https://developers.google.com/identity/protocols/oauth2)).
 
-### User Storage
+### Biome OAuth User Session Store
 
-The Splinter REST API will use a new database store, the `OAuthUserStore`, to
-track user tokens and sessions. The store will contain an entry for each active
-OAuth session, where each entry is represented by the following structs:
-
-```rust
-struct OAuthUserAccess {
-    id: String,
-    oauth_identity: String,
-    oauth_access_token: String,
-    oauth_refresh_token: Option<String>,
-    oauth_provider: OAuthProvider,
-    splinter_access_token: String,
-}
-
-pub enum OAuthProvider {
-    Github,
-    OpenId,
-}
-```
-
-The `id` field will be provided using an auto-incremented primary key in the
-database implementation of this store. This will allow the REST API to track
-individual sessions when a user has more than one active session at a time.
-
-New entries will be added by the `GET /oauth/callback` endpoint, and entries
-will be removed by the `GET /oauth/logout` endpoint as well as the authorization
-guard. The contents of the store will be used by the authorization guard to
-cache user identities and exchange refresh tokens for new OAuth access tokens.
-These points will be discussed in the following sections of this document.
-
-#### Biome Integration
-
-When the `biome` feature is enabled for Splinter, a new store called the
-`BiomeOAuthUserStore` will be used to correlate OAuth users with Biome users to
-leverage Biome's key management functionality. When a new user authenticates and
-their tokens get added to the `OAuthUserStore`, a new entry will be added to the
-`BiomeOAuthUserStore`. Entries in the Biome OAuth store will be represented by
-the following struct:
-
-```rust
-struct BiomeOAuthUser {
-    /// A Biome user ID
-    user_id: String,
-    /// The identity provided by the OAuth authorization server
-    oauth_identity: String,
-}
-```
-
-This store allows Biome to manage keys for a user that authenticates with OAuth
-in the same way that it does with users that authenticate using Biome
-credentials.
+The [Biome OAuth user session store]({% link
+community/planning/biome_oauth_user_session_store.md %}) will be used by the
+Splinter REST API for tracking and re-authenticating active user sessions.
 
 ### Authorization Guard
 
@@ -191,20 +143,21 @@ Each of the OAuth provider types will have its own `IdentityProvider`
 implementation that queries the appropriate provider's servers using an OAuth
 access token to get the client's identity. When the client's identity is
 retrieved initially in the `GET /oauth/callback` endpoint, the configured OAuth
-identity provider will create an entry in the `OAuthUserStore` to save the OAuth
-tokens and the user's identity.
+identity provider will create an entry in the `OAuthUserSessionStore` to save
+the OAuth tokens and the user's identity.
 
 For up to one hour after authentication, the OAuth identity provider will use
-the `OAuthUserStore` to lookup a user's identity based on a request's provided
-Splinter access token. After an hour, the identity provider will attempt to use
-the corresponding OAuth access token to re-check the user's identity; this
-ensures that the user is still authenticated for the Splinter REST API according
-to the OAuth provider. If this check fails but an OAuth refresh token exists for
-the session, the identity provider will attempt to get a new OAuth access token
-using the refresh token; if this succeeds, Splinter will attempt to use the new
-access token to fetch the user's identity. If the refresh token exchange fails
-or no refresh token exists, the server will logout the user by removing the
-store entry before returning a `401 Unauthorized` response to the client.
+the `OAuthUserSessionStore` to lookup a user's identity based on a request's
+provided Splinter access token. After an hour, the identity provider will
+attempt to use the corresponding OAuth access token to re-check the user's
+identity; this ensures that the user is still authenticated for the Splinter
+REST API according to the OAuth provider. If this check fails but an OAuth
+refresh token exists for the session, the identity provider will attempt to get
+a new OAuth access token using the refresh token; if this succeeds, Splinter
+will update the store entry for the session and attempt to use the new access
+token to fetch the user's identity. If the refresh token exchange fails or no
+refresh token exists, the server will logout the user by removing the store
+entry before returning a `401 Unauthorized` response to the client.
 
 Identity providers will be configured for the REST API and passed to the
 middleware, which will call them for each request to get the client's identity.
@@ -258,8 +211,8 @@ Once it has the OAuth token(s), the REST API will fetch the user's identity
 using the configured OAuth `IdentityProvider`. Splinter will also generate a new
 Splinter access token for the user, which is a random 32-character alphanumeric
 string. These tokens, along with the user's identity, will then be entered into
-the `OAuthUserStore` before the REST API returns the Splinter access token to
-the browser application.
+the `OAuthUserSessionStore` before the REST API returns the Splinter access
+token to the browser application.
 
 The Splinter REST API sends its access token to the application by redirecting
 the browser to the client redirect URL that was provided in the initial request
@@ -276,9 +229,9 @@ parameter.
 #### Logout Route
 
 The logout route is used by the browser application to remove the user's stored
-tokens from the `OAuthUserStore`. After the request has been authenticated by
-the middleware component, the Splinter REST API will remove the user's access
-and refresh tokens from the store. If this operation is successful, the Splinter
+tokens from the `OAuthUserSessionStore`. After the request has been
+authenticated by the middleware component, the Splinter REST API will remove the
+user's session from the store. If this operation is successful, the Splinter
 REST API will respond with `200 Ok`.
 
 ### Configuration
