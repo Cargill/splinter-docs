@@ -23,8 +23,8 @@ forum.
 
   Splinter administration utility.
 
-* [Biome OAuth Integration]({% link community/planning/biome_oauth_user_store.md
-  %})
+* [Biome OAuth Integration]({% link
+  community/planning/biome_oauth_user_session_store.md %})
 
   New design for a linkage between an OAuth user id and a biome userid.
 
