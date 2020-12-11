@@ -8,9 +8,11 @@
 ## Summary
 [summary]: #summary
 
-This RFC proposes adding a linkage between an OAuth user id and a biome userid.
-This change enables support of signing key management on behalf of a user that
-has authenticated via an OAuth provider.
+This RFC proposes adding a new Biome store for tracking OAuth sessions and
+an OAuth user identity with a Biome user ID. This change enables support of user
+notifications and signing key management on behalf of a user that has
+authenticated via an OAuth provider instead of Biome's own credentials
+authentication.
 
 ## Motivation
 [motivation]: #motivation
@@ -20,174 +22,284 @@ management systems. These systems can include public providers, such as Github
 or Google, or internal single-sign-on installations that provide OAuth2
 capabilities.
 
-When using Canopy applications, signing key management is provided by the Biome
-REST API endpoints that may be exposed by a splinter daemon. These keys are tied
-to a user ID that is currently only linked to Biome user credentials. In order
-to connect an OAuth user to keys, we need a link between a user ID and the OAuth
-user ID.
+This new store will serve four purposes:
+
+* This store will provide a link between a Biome user ID and an OAuth user ID to
+  connect an OAuth user to notification and keys. This is required by Canopy
+  applications, where signing key management is provided by the Biome REST API
+  endpoints that may be exposed by a Splinter daemon.
+
+* This store will enable the Splinter REST API to cache a user's authorization
+  so that it doesn't need to check the authorization for each request. The store
+  will track the last time the user was authenticated and, after some period of
+  time, the REST API will re-authenticate the user.
+
+* This store will keep track of the refresh token associated with an OAuth
+  session, which may be needed in the future to keep a user's session going.
+
+* This store will allow the Splinter REST API to provide a custom access token
+  that is associated with the OAuth access token. This is important because the
+  Splinter REST API should not directly expose the OAuth access token for
+  security reasons.
 
 ## Guide-level explanation
 [guide-level-explanation]: #guide-level-explanation
 
-To support this change, we will introduce a new store for saving the OAuth user
-information.  This OAuthUserStore will manage the linkage between a user ID and
-the information required about an OAuth user.
+This change will introduce a new store for saving the OAuth user session info.
+This `OAuthUserSessionStore` will manage the linkage between a user ID and the
+information about an OAuth user and their active sessions.
 
 The information required for the OAuth user is:
 
-* provider user identifier: this is the identifier for the user within the
-  OAuth2 provider's system.  For example, email address in Google or Github
-  account name.
-* access token: the currently valid OAuth2 access token
-* refresh token: a refresh token, if one is provided
-* provider id: this is an id of the provider used.
+* Subject identifier: the unique identifier for the user within the OAuth2
+  provider's system.
+* OAuth access token: an OAuth2 access token for validating the user's
+  authentication with the OAuth provider.
+* OAuth refresh token: an refresh token for getting a new access token from the
+  OAuth provider (this is optional as not all OAuth providers have expiring
+  access tokens).
+* Splinter access token: the access token created and issued by the Splinter
+  REST API for the authenticated user's session.
 
-This information will be associated with a user ID, which is required to exist
-in the UserStore.  Implementations backed by databases, such as PostgreSQL, may
-optimize how this requirement is checked.
+This information will be associated with a Biome user ID, which is a generated
+UUID.
 
-This store will be used when the authorization process is completed to provide a
-biome user ID back to the client.  Before the callback returns the information
-to the client, it should check for the existence of the OAuth user.  If one does
-not exist, a user ID and an OAuth user should be created in tandem.
+Two initial implementations will be provided: one with in-memory storage, and
+another backed by a database via the Diesel crate.
 
 ## Reference-level explanation
 [reference-level-explanation]: #reference-level-explanation
 
-The OAuthUserStore will be defined by the following trait, in the module
-`splinter::biome::oauth`:
+The `OAuthUserSessionStore` will be defined by the following trait, in the
+module `splinter::biome::oauth`:
 
 ```rust
-use crate::error::{InternalError, ConstraintViolation};
+use std::time::SystemTime;
 
+use crate::error::{ConstraintViolation, InternalError, InvalidStateError};
+
+/// Errors that may be returned by the `OAuthUserSessionStore`
 #[derive(Debug)]
-pub enum OAuthUserStoreError {
+pub enum OAuthUserSessionStore {
     InternalError(InternalError),
     ConstraintViolation(ConstraintViolation),
 }
 
-impl std::error::Error for OAuthUserStoreError {
+impl std::error::Error for OAuthUserSessionStoreError {
     // contents omitted for brevity
 }
 
-impl std::fmt::Display for OAuthUserStoreError {
+impl std::fmt::Display for OAuthUserSessionStoreError {
     // contents omitted for brevity
 }
 
-pub enum OAuthProvider {
-    Github,
-}
-
-/// The OAuthUser links the user information from an OAuth user with a Biome
-/// user ID.
+/// Correlates an OAuth user (subject) with a Biome user ID
 pub struct OAuthUser {
-    user_id: String,
-    provider_user_identifier: String,
-
-    access_token: String,
-    refresh_token: Option<String>,
-    provider: Provider,
+    id: String,
+    subject: String,
 }
 
 impl OAuthUser {
-    pub fn user_id(&self) -> &str {
-        &self.user_id
+    fn new(id: String, subject: String) -> Self {
+        Self { id, subject }
     }
 
-    pub fn provider_user_identifier(&self) -> &str {
-        &self.provider_user_identifier
+    pub fn id(&self) -> &str {
+        &self.id
     }
 
-    pub fn access_token(&self) -> &str {
-        &self.access_token
+    pub fn subject(&self) -> &str {
+        &self.subject
+    }
+}
+
+/// Contains data associated with an OAuth user's session
+pub struct OAuthUserSession {
+    splinter_access_token: String,
+    subject: String,
+    oauth_access_token: String,
+    oauth_refresh_token: Option<String>,
+    last_authenticated: SystemTime,
+}
+
+impl OAuthUserSession {
+    pub fn splinter_access_token(&self) -> &str {
+        &self.splinter_access_token
     }
 
-    pub fn refresh_token(&self) -> Option<&str> {
-        self.refresh_token.as_deref()
+    pub fn subject(&self) -> &str {
+        &self.subject
     }
 
-    pub fn provider(&self) -> &OAuthProvider {
-        &self.provider
+    pub fn oauth_access_token(&self) -> &str {
+        &self.oauth_access_token
     }
 
-    /// Convert this OAuthUser into an update builder.
-    pub fn into_update_builder(self) -> OAuthUserUpdateBuilder {
+    pub fn oauth_refresh_token(&self) -> Option<&str> {
+        self.oauth_refresh_token.as_deref()
+    }
+
+    pub fn last_authenticated(&self) -> SystemTime {
+        self.last_authenticated
+    }
+
+    pub fn into_update_builder(self) -> OAuthUserSessionUpdateBuilder {
         // contents omitted for brevity
     }
 }
 
-/// Builds new `OAuthUser` structs.
-pub struct OAuthUserBuilder {
-    // contents omitted for brevity
-}
-
-/// Builds an updated `OAuthUser` struct.
+/// Builds an updated [OAuthUserSession]
 ///
-/// This builder only allows changes to the fields on an OAuthUser that may be
+/// This builder only allows changes to the fields of a session that may be
 /// updated.
-pub struct OAuthUserUpdateBuilder {
+pub struct OAuthUserSessionUpdateBuilder {
     // contents omitted for brevity
 }
 
-impl OAuthUserUpdateBuilder {
-    pub fn with_access_token(mut self, access_token: String) -> Self {
+impl OAuthUserSessionUpdateBuilder {
+    pub fn with_oauth_access_token(
+        mut self,
+        oauth_access_token: String,
+    ) -> Self {
         // contents omitted for brevity
     }
 
-    pub fn with_refresh_token(mut self, access_token: String) -> Self {
+    pub fn with_oauth_refresh_token(
+        mut self,
+        oauth_refresh_token: String,
+    ) -> Self {
         // contents omitted for brevity
     }
 
-    pub fn build(self) -> Result<OAuthUser, InvalidStateError> {
+    pub fn build(self) -> Result<OAuthUserSession, InvalidStateError> {
         // contents omitted for brevity
     }
 }
 
-/// Defines methods for CRUD operations and fetching OAuth user information.
-pub trait OAuthUserStore {
-    /// Add an OAuthUser to the store.
+/// A new OAuth user session to be stored
+///
+/// Unlike [OAuthUserSession], this struct does not contain a
+/// `last_authenticated` timestamp, since this value will be set internally by
+/// the store.
+pub struct NewOAuthUserSession {
+    // contents omitted for brevity
+}
+
+impl NewOAuthUserSession {
+    // contents omitted for brevity
+}
+
+/// Builds [NewOAuthUserSession]s
+pub struct NewOAuthUserSessionBuilder {
+    // contents omitted for brevity
+}
+
+impl NewOAuthUserSessionBuilder {
+    // contents omitted for brevity
+}
+
+/// Defines methods for CRUD operations and fetching OAuth session information.
+pub trait OAuthUserSessionStore {
+    /// Adds an OAuth session. This will generate a new OAuth user entry if one
+    /// does not already exist for the session's subject.
     ///
     /// # Errors
     ///
-    /// Returns a ConstraintViolation if either there already is a user ID
-    /// associated with another provider identity, or the provider identity has
-    /// already been associated with a user ID.
-    fn add_oauth_user(&self, oauth_user: OAuthUser)
-        -> Result<(), OAuthUserStoreError>;
-
-    /// Update the the access token an/or refre
-    fn update_oauth_user(
+    /// Returns a `ConstraintViolation` error if a session with the given
+    /// `splinter_access_token` already exists.
+    fn add_session(
         &self,
-        oauth_user: OAuthUser
+        session: OAuthUserSession,
     ) -> Result<(), OAuthUserStoreError>;
 
-    /// Returns the stored OAuth user based on the identifier specified by an
-    /// OAuth provider.
-    fn get_by_provider_user_identity(
+    /// Updates the the OAuth access and/or refresh token for a session. This
+    /// will set the "last authenticated" value of the session to the current
+    /// time.
+    ///
+    /// # Errors
+    ///
+    /// Returns a `ConstraintViolation` error if there is no session with the
+    /// given `splinter_access_token` or if any field other than
+    /// `oauth_access_token` or `oauth_refresh_token` have been changed
+    fn update_session(
         &self,
-        provider_user_identifier: &str,
-    ) -> Result<Option<OAuthUser>, OAuthUserStoreError>;
+        session: OAuthUserSession
+    ) -> Result<(), OAuthUserStoreError>;
 
-    /// Returns the stored OAuth user based on the biome user ID.
-    fn get_by_user_id(&self, user_id: &str)
-        -> Result<Option<OAuthUser>, OAuthUserStoreError>;
+    /// Returns an OAuth session based on the provided Splinter access token.
+    fn get_session(
+        &self,
+        splinter_access_token: &str
+    ) -> Result<Option<OAuthUserSession>, OAuthUserStoreError>;
+
+    /// Returns the [OAuthUser] struct for the given subject.
+    fn get_user(
+        &self,
+        subject: &str
+    ) -> Result<Option<OAuthUser>, OAuthUserStoreError>;
 }
 ```
 
-These traits would be used in tandem with the existing `UserStore` to create a
-new `OAuthUser`, if necessary.
+The database-backed implementation of this store will be comprised of two
+tables: the `oauth_users` table and the `oauth_user_sessions` table.
 
-Once an `OAuthUser` has been created and stored, subsequent authorization checks
-can use this information to provide the user id for calls to the key store and
-the like.
+The `oauth_users` table will associate the user's OAuth identity (the identity
+of the user according to the configured OAuth provider, such as a username or a
+subject identifier) with a unique Biome user ID. The table will be defined as:
+
+```sql
+CREATE TABLE IF NOT EXISTS oauth_users (
+  user_id                   TEXT        PRIMARY KEY,
+  subject                   TEXT        NOT NULL
+);
+```
+
+The `user_id` value will be a UUID generated by the store. To ensure uniqueness
+of these user IDs with respect to user IDs generated by the Biome credentials
+store, these user IDs will be namespaced to this table.
+
+The `oauth_user_sessions` table will track each active session that has been
+initiated by a user. The table will be defined as:
+
+```sql
+CREATE TABLE IF NOT EXISTS oauth_user_sessions (
+  splinter_access_token     TEXT        PRIMARY KEY,
+  subject                   TEXT        NOT NULL,
+  oauth_access_token        TEXT        NOT NULL,
+  oauth_refresh_token       TEXT,
+  last_authenticated        TEXT        NOT NULL,
+  FOREIGN KEY (subject) REFERENCES oauth_users(subject) ON DELETE CASCADE
+);
+```
+
+The `splinter_access_token` will be a value that is randomly generated by the
+Splinter REST API. The `oauth_access_token` and `oauth_refresh_token` will be
+used to periodically re-authenticate with the OAuth provider. The
+`last_authenticated` timestamp will be used to determine when the user should be
+re-authenticated with the OAuth provider (the Splinter REST API will determine
+when this needs to be done). This timestamp will be generated internally by the
+database, not by the Rust implementation.
+
+By separating the user definitions and sessions into separate tables, we are
+able to provide a stable user ID that can be correlated with other Biome tables
+(such as `keys` and `user_notifications`) while also allowing 0 or more active
+user sessions.
+
+The storage of OAuth tokens in this Biome-specific store was intentionally
+designed. While the development team acknowledges that the contents of the
+`oauth_user_sessions` table are not user-specific (the same values would be used
+to represent a non-user OAuth session, such as one using the client credentials
+grant type), the table is contained within this store to keep the store
+self-contained. The team has deemed it undesirable for the Splinter stores to
+interact with external database tables. As such, the table has been explicitly
+named to indicate that it will only contain user sessions. If non-user OAuth
+authentication is implemented for Splinter, the tokens and other relevant data
+will be stored in a separate store and database table.
 
 ## Drawbacks
 [drawbacks]: #drawbacks
 
-The drawbacks of this method are similar to those that exist in other biome
-stores: namely the limitations of the current architecture to provide
-transactional capabilities across stores.  This is considered a very hard
-problem, and has no immediate solution.
+None
 
 ## Rationale and alternatives
 [rationale-and-alternatives]: #rationale-and-alternatives
