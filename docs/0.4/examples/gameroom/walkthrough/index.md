@@ -208,6 +208,25 @@ disappears and the INVITATIONS TAB is shown. Bob clicks the
 docs/0.4/examples/gameroom/walkthrough/images/scene5_1.png %}
 "Bubba Bakery invitations")
 
+### Scene 6: Alice sees that Bob accepted her invitation
+
+Alice notices that she has a notification and clicks on the notification icon.
+The NOTIFICATIONS PANE appears, with the happy news that Bob has accepted her
+invitation and that the new Acme + Bubba gameroom has been created.
+
+![]({% link
+docs/0.4/examples/gameroom/walkthrough/images/scene6_1.png %}
+"Acme notifications")
+
+Alice clicks on the notification. The Notifications pane closes and Alice is
+redirected to the ACME + BUBBA GAMEROOM SCREEN.
+
+![]({% link
+docs/0.4/examples/gameroom/walkthrough/images/scene6_2.png %}
+"ACME + BUBBA GAMEROOM SCREEN")
+
+Alice and Bob’s gameroom is ready. They can now play games.
+
 <h2 class="gameroom_behind">
 Behind the Scenes: A Look at Act I, Alice and Bob Create a Gameroom
 </h2>
@@ -2240,11 +2259,11 @@ POST /proposals/vote
 
 2. The Acme admin service receives the `CircuitMangementPayload` containing the
    `CircuitProposalVote` (as described in
-   [section I-5.3](#i-53-bubba-bakery-node-receives-circuit-create-request-from-acme-node),
+   [section I-5.3](#i-53-bubba-bakery-node-votes-yes-validates-the-vote),
    step 1), validates the payload (see
-   [section I-5.3](#i-53-bubba-bakery-node-receives-circuit-create-request-from-acme-node),
+   [section I-5.3](#i-53-bubba-bakery-node-votes-yes-validates-the-vote),
    step 2), and creates an updated `CircuitProposal` (see
-   [section I-5.3](#i-53-bubba-bakery-node-receives-circuit-create-request-from-acme-node),
+   [section I-5.3](#i-53-bubba-bakery-node-votes-yes-validates-the-vote),
    step 3).
 
 3. The nodes use consensus to agree to accept or reject the circuit proposal.
@@ -2685,3 +2704,200 @@ At this point, the circuit (Alice and Bob's gameroom) is ready. Next, the Acme
 Gameroom daemon must submit the XO smart contract, which is the last step before
 the gameroom is ready for Alice and Bob to play games. See section I-6.6 for an
 explanation of this process.
+
+### I-6. Behind scene 6: Bob accepts Alice's invitation
+
+Most of the steps in this scene are similar to the Bubba Bakery steps described
+earlier. However, one activity is unique — because the Acme node (Alice's node)
+requested the new circuit, it is responsible for submitting the XO smart
+contract that will allow Alice and Bob to play tic tac toe in the new gameroom.
+
+#### Ⅰ-6.1. Acme admin service receives `CircuitProposalVote` from Bubba Bakery
+
+When the Acme Splinter node receives the `CircuitManagementPayload` network
+message containing the Bubba Bakery `CircuitProposalVote` (sent in
+[section 5.4](#i-54-bubba-bakery-node-sends-proposal-accept-vote-to-acme-node)),
+it "unwraps" the message with a series of dispatchers. See section 2.7 for the
+details of this process.
+
+As described in [section 5.4](#i-54-bubba-bakery-node-sends-proposal-accept-vote-to-acme-node),
+step 3, both nodes use consensus to agree on the circuit proposal, After they
+agree, the Acme node commits the CircuitProposal.
+
+#### Ⅰ-6.2 Acme admin service checks for approval and creates circuit
+
+When the CircuitProposal is committed, the Acme admin service checks that the
+Bubba Bakery node has voted "yes" (see
+[section 5.3](#i-53-bubba-bakery-node-votes-yes-validates-the-vote),
+then creates the circuit (adds the new circuit to Splinter state). For the
+details of this process, see
+[section I-5.5](#i-55-bubba-bakery-admin-service-checks-for-approval-and-creates-a-circuit).
+
+#### Ⅰ-6.3. Acme admin service notifies Acme Gameroom daemon of new circuit
+
+Once the circuit has been created, the Acme admin service tells the Acme
+application authorization handler that the circuit has been accepted. When the
+application authorization handler receives this message, it updates the
+database to change the status of the proposal, gameroom, members and services
+from “Pending” to “Accepted”. See [section I-5.6](#i-56-bubba-bakery-admin-service-notifies-gameroom-daemon-of-new-circuit)
+for the details of this process.
+
+#### Ⅰ-6.4. Acme admin service tells Bubba Bakery that it is ready to create services
+
+The Acme node notifies the Bubba Bakery node that it is ready to initialize the
+Acme scabbard service by sending an an `AdminMessage` with the message type
+`MEMBER_READY` and a "member ready" message that contains the circuit ID and
+Acme's Splinter node ID.
+
+The Acme node waits for all members to report a "member ready" message before
+proceeding. For the details, see [section I-5.7](#i-57-bubba-bakery-admin-service-sends-ready-to-create-services-to-acme).
+
+#### Ⅰ-6.5. Acme admin service creates scabbard service via service orchestration
+
+After the Acme node learns that all members are ready to create services, the
+Acme admin service makes a call to the service orchestrator to initialize the
+scabbard service for the new gameroom. See [section I-5.8](#i-58-bubba-bakery-admin-service-initializes-scabbard-service)
+for the details of this process.
+
+#### Ⅰ-6.6. Acme Gameroom daemon submits Sabre transactions to add XO smart contract
+
+The Acme Gameroom daemon submits the XO smart contract by using the scabbard
+REST API that is exposed by the Splinter daemon, `splinterd`.
+
+When the Acme Gameroom daemon’s application authorization handler receives the
+`CircuitReady` notification from the admin service, it subscribes to scabbard
+and starts listening for scabbard events. See Appendix C for the registration
+(event subscription) process.
+
+```
+GET <circuit_id>/<service_id>/ws/subscribe
+```
+
+After a connection has been established, the application authorization handler
+prepares the XO (tic tac toe) business logic by submitting the XO smart
+contract to the Acme scabbard service.
+
+The Acme gameroom daemon gets the following information from the
+`CircuitProposal` that was just accepted (as described in
+[section I-5.9](#i-59-bubba-bakery-gameroom-daemon-updates-gameroom-status-in-database)):
+
+`circuit_id`: unique ID of the new circuit that includes a version 4 UUID, such
+as `gameroom::acme-node-000::bubba-node-000::<UUIDv4>`
+
+`service_id`: ID of the scabbard service that is running on the local Splinter
+node; for example: `gameroom_acme-node-000`
+
+`scabbard_admin_keys`: scabbard admin keys that are stored in the circuit
+proposal’s application metadata
+
+The scabbard admin keys in Gameroom’s application metadata specify who is
+allowed to add or modify smart contracts. When the circuit is initially defined
+(see [section I-2.3](#i-23-gameroom-rest-api-sends-a-circuitmanagementpayload)),
+the Gameroom daemon that creates the circuit definition (in this case, Acme's
+`gameroomd`) specifies its own public key as the scabbard admin. Since the Acme
+Gameroom daemon has the only key that’s authorized to add smart contracts, it
+is responsible for adding the XO smart contract.
+
+To add the XO smart contract, the Acme Gameroom daemon creates a series of
+transactions to set the permissions surrounding the smart contract and to
+submit the smart contract itself. For more information, see the
+[Sawtooth Sabre](https://sawtooth.hyperledger.org/docs/sabre/nightly/master/sabre_transaction_family.html)
+documentation.
+
+The Acme Gameroom daemon bundles these transactions into a batch, serializes
+the batch, and submits the serialized batch to the scabbard service on its
+local Splinter node:
+
+```
+	POST /scabbard/<circuit_id>/<service_id>/batches
+  <serialized batch>
+```
+
+For more information about batches, see "Transactions and Batches" in the
+[Sawtooth Architecture](https://sawtooth.hyperledger.org/docs/core/releases/latest/architecture/transactions_and_batches.html)
+documentation.
+
+When the Acme scabbard service receives this batch, it must agree with the
+Bubba Bakery scabbard service to submit the smart contract. The Acme scabbard
+service performs the following steps:
+
+a. Deserializes the batch: Shares the batch with the other scabbard services in
+   the circuit (in this case, the Bubba Bakery scabbard service)
+
+b. Creates a consensus proposal to send to the admin services of the other
+   nodes (in this case, Bubba Bakery's scabbard service) to agree on the batch
+
+c. Waits for consensus to agree on the batch, then commits it to scabbard
+   state. For information on consensus, see Appendix B: Consensus.
+
+d. After the scabbard services on both nodes have committed the smart contract,
+   the Acme Splinter node is done setting up the gameroom.
+
+#### Ⅰ-6.7. Both Gameroom daemons update gameroom status in database
+
+The application authorization handler listens for scabbard events using its
+state delta processor, `XoStateDeltaProcessor`. When the state delta processor
+receives an event with the address of the uploaded XO contract it then sets the
+status of the gameroom to “circuit_active”
+
+```
+StateChangeEvent containing contact address
+{
+  “type”: “Set”,
+  “message”: {
+    “key”: “<xo_contract_address>”
+    “value” [..]
+  }
+}
+```
+
+At this point, the state delta processor will begin listening for
+XO game state changes (defined in Appendix D).
+
+#### Ⅰ-6.8. Acme Gameroom daemon notifies Acme UI
+
+After the state delta processor sets the status of the gameroom to
+“circuit_active”, the Acme Gameroom application authorization handler adds a
+new entry to the `gameroom_notification` table:
+
+
+<table class ="gameroom_db_table" border="1">
+  <tr class="gameroom_db_headers">
+    <th><code>id</code></th>
+    <th><code>notification_type</code></th>
+    <th><code>requester</code></th>
+    <th><code>requester_node_id</code></th>
+  </tr>
+  <tr class="gameroom_db_data">
+    <td class="gameroom_placeholder"><code>auto generated id</code></td>
+    <td><code>gameroom_proposal</code></td>
+    <td class="gameroom_placeholder"><code>Alice's public key</code></td>
+    <td><code>acme-node-000</code></td>
+  </tr>
+  <tr class="gameroom_db_headers">
+    <th><code>target</code></th>
+    <th><code>created_time</code></th>
+    <th><code>read</code></th>
+  </tr>
+  <tr>
+    <td><code>01234-ABCDE</code></td>
+    <td class="gameroom_placeholder"><code>time entry was created</code></td>
+    <td><code>f</code></td>
+  </tr>
+</table>
+
+
+This notification is pushed to the Acme UI in the same way as the
+“gameroom_proposal” notification. (See [section I-2.8.4](#i-284-new-gameroom-proposal-table-entry))
+
+#### Ⅰ-6.9. Alice sees notification that new gameroom is ready
+
+After the notification is pushed to the Acme UI, Alice sees a new notification.
+The new gameroom also appears on the dashboard menu.
+
+![]({% link
+docs/0.4/examples/gameroom/walkthrough/images/scene6_3.png %}
+"Acme gameroom homescreen")
+
+When Alice clicks on the notification, she sees the details page for the new
+gameroom. (See [Behind Scene 4, Bob Checks his Notifications](#i-4-behind-scene-4-bob-checks-his-notification))
