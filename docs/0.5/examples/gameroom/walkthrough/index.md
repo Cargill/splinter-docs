@@ -3997,3 +3997,1125 @@ Likewise, participant actions are private to the circuit. The transactions to
 create a gameroom, start a new game, or make an XO move are private to the
 participants in a gameroom. Shared state (a database updated by smart
 contracts) is visible only to the services within a circuit.
+
+## The Prequel: Setting Up the Gameroom Application
+
+Before Act I starts, sysadmins installed the Gameroom application on Alice and
+Bob's corporate networks, and both people are registered as Gameroom users.
+
+This section describes the installation and user-registration process. It also
+describes how the Gameroom application registers the Gameroom daemon for admin
+service events.
+
+### P.1: Running the Gameroom Demo with Docker
+
+Gameroom is a demo Splinter application that allows you to set up dynamic two-
+party circuits (called "gamerooms") and play tic tac toe with shared state, as
+managed by two-phase commit consensus between the parties.
+
+
+**Note**: This demo uses the Sabre smart contract engine provided in
+[Sawtooth Sabre](https://sawtooth.hyperledger.org/docs/sabre/nightly/master/sabre_transaction_family.html)
+and the XO smart contract provided in the [Hyperledger Sawtooth Rust SDK](https://github.com/hyperledger/sawtooth-sdk-rust/tree/master/examples/xo_rust).
+
+
+This example application includes a docker-compose file that sets up Splinter
+nodes for two imaginary organizations: Acme Corporation and Bubba Bakery. Both
+nodes are created on the same system so that this example is easy to run. For a
+proof-of-concept or production network, however, each node should be on a
+separate system.
+
+
+Prerequisites: This demo requires [Docker Engine](https://docs.docker.com/engine)
+and [Docker Compose](https://docs.docker.com/compose).
+
+1. Clone the [splinter repository](https://github.com/Cargill/splinter).
+
+2. To start Gameroom, run the following command from the Splinter root
+   directory:
+
+   ```
+   $ docker-compose -f examples/gameroom/docker-compose.yaml up
+   ```
+
+3. Get Alice's and Bob's private keys to use in the web application. To display
+   these keys, run bash using the `generate-key-registry` image, then read the
+   private key.
+
+   For example, to get Alice's private key, use these commands:
+
+   ```
+   $ docker-compose -f examples/gameroom/docker-compose.yaml \
+   run generate-key-registry bash
+
+   root@<container-id>:/# cat /key_registry/alice.priv; echo ""
+   Alice's-private-key-value
+   root@<container-id>:/#
+   ```
+
+4. In a browser, navigate to the Gameroom web application UI for each
+   organization:
+
+   - Acme UI: http://localhost:8080
+
+   - Bubba Bakery UI: http://localhost:8081
+
+5. When you are finished, shut down the demo.
+
+    a. Enter CONTROL-C in the terminal window where you ran
+       `docker-compose.yaml up`.
+
+       ```
+       ^C Gracefully stopping... (press Ctrl+C again to force)
+       Stopping gameroomd-acme                   ... done
+       Stopping gameroomd-bubba                  ... done
+       Stopping gameroom-app-acme                ... done
+       Stopping splinterd-node-acme              ... done
+       Stopping splinterd-node-bubba             ... done
+       Stopping db-acme                          ... done
+       Stopping db-bubba                         ... done
+       Stopping gameroom-app-bubba               ... done
+       $
+       ```
+
+    b. Then shut down the docker containers with the following command:
+
+       ```
+       $ docker-compose -f examples/gameroom/docker-compose.yaml down
+       ```
+
+### P.2: Registering a User in the Gameroom UI
+
+Each new user must register with the Gameroom application by specifying an
+email address, providing their private key, and setting a password to use when
+logging in.
+
+When Alice navigates to the Gameroom application in her browser, the UI welcome
+page includes an option to register.
+
+![]({% link
+docs/0.5/examples/gameroom/walkthrough/images/p2_1.png %}
+"Register for Gameroom")
+
+The Register page lets Alice enter her email address, private key, and
+password. The Gameroom demo docker-compose file generates private keys for
+Alice and Bob. See [section P.1](#p1-running-the-gameroom-demo-with-docker),
+step 3 to learn how to display these private keys.
+
+![]({% link
+docs/0.5/examples/gameroom/walkthrough/images/p2_2.png %}
+"Signup form")
+
+After Alice registers, she is automatically logged in. The Acme Gameroom UI
+displays the home page.
+
+![]({% link
+docs/0.5/examples/gameroom/walkthrough/images/p2_3.png %}
+"Gameroom home page"){:height="100%" width="100%"}
+
+When a new user registers, the Gameroom daemon adds a new entry for that user
+to the `gameroom_user` table in the local Gameroom database. The `gameroom_user`
+table has the following schema:
+
+``` sql
+CREATE TABLE IF NOT EXISTS gameroom_user (
+  email            		TEXT    	PRIMARY KEY,
+  public_key            	TEXT    	NOT NULL,
+  encrypted_private_key 	TEXT    	NOT NULL,
+  hashed_password       	TEXT    	NOT NULL
+);
+```
+
+For example, an entry for a new user looks like this:
+
+<table class ="gameroom_db_table" border="1">
+  <tr class="gameroom_db_headers">
+    <th>email</th>
+    <th>hashed_password</th>
+    <th>public_key</th>
+    <th>encrypted_private_key</th>
+  </tr>
+  <tr class="gameroom_db_data">
+    <td>user@example.com</td>
+    <td>56ec82cb...480cad32</td>
+    <td>0384781f...5a7e4998</td>
+    <td>{\"iv\":...cgXrm\"}</td>
+  </tr>
+</table>
+
+### P.3: Registering the Gameroom daemon for admin service events
+
+The Gameroom application needs to receive notifications for admin service
+events (described in [Appendix C](#appendix-c-circuit-proposal-events)) so that
+it can react appropriately to circuit proposal events and other admin events.
+
+To see these events, the Gameroom daemon (`gameroomd`) must register an
+application authorization handler for circuits with a specific circuit
+management type. This handler manages the voting strategy for the application
+and notifies the application of any events received from the admin service on
+the local Splinter node.
+
+As part of the event registration, the application authorization handler must
+specify the circuit management type. The `circuit_management_type` string in
+the circuit definition briefly describes the purpose of the circuit. For
+example, the Gameroom application uses the type `gameroom` for its circuits (see
+the `CircuitManagementPayload` definition in
+[section I-2.3](#i-23-gameroom-rest-api-sends-a-circuitmanagementpayload)).
+
+When an event occurs (such as a new circuit proposal or vote), each admin
+service uses a WebSocket connection to notify its application authorization
+handler about the event. In order to receive WebSocket notifications, each
+application authorization handler must send a registration request to its
+Splinter node’s REST API.
+
+For example, the Acme and Bubba Bakery Gameroom daemons would send this
+registration request:
+
+```
+GET /ws/admin/register/gameroom
+```
+
+See [Appendix C](#appendix-c-circuit-proposal-events) for more information on
+circuit events.
+
+## Appendix A: Peer Authorization
+
+This appendix describes the peer authorization process that occurs as part of
+creating a circuit.
+
+To be able to communicate on a Splinter network, each node and service involved
+in the proposed circuit must go through authorization. Each node must authorize
+with the other node (or nodes) involved in the circuit; each service must
+authorize with its own node. After the node or service is authorized, its peer
+ID (the node ID or service ID) is used to prove its identity.
+
+Before a node or service is authorized, it can send only authorization messages
+(in a specific order). If it sends any other messages before the connection is
+authorized, those messages will be dropped.
+
+### A.1: The Authorization Process
+
+When the admin service on the first node (the node where the circuit request
+originated) requests connections with the other members' nodes and services (as
+described in [section I-2.4](#i-24-acme-node-peers-with-bubba-bakery-node)),
+it starts the process of authorizing the nodes and services on those nodes.
+
+1. First, the node or service requesting authorization is given a temporary
+   peer ID with the following format:
+
+    ```
+    temp-<UUID>
+    ```
+
+2. Next, the node or service sends a `ConnectRequest` message wrapped in an
+   `AuthorizationMessage`.
+
+    The `ConnectRequest` specifies whether the authorization should be
+    bidirectional (both sides) or unidirectional (one side only).
+
+    - Connecting Splinter nodes should use bidirectional authorization, because
+      each node must be authorized with the other node.
+
+    - A Splinter service can use unidirectional authorization if it does not
+      require the node to authorize itself with the service.
+
+      The following example shows a bidirectional authorization request from a
+      node.
+
+    ```
+    ---
+    ConnectRequest:
+        handshake_mode: BIDIRECTIONAL
+
+    ---
+    AuthorizationMessage:
+      message_type: CONNECT_REQUEST
+        payload: <bytes of connect request>
+    ```
+
+3. When a Splinter node receives a `ConnectRequest`, it responds with a
+   `ConnectResponse` that includes a list of supported authorization types.
+   Currently, the only supported authorization type is `Trust`, which means
+   that the specified node or service (as identified by the peer ID) will be
+   accepted as valid without any proof.
+
+    ```
+    ---
+    ConnectResponse:
+        accepted_authorization_types: [Trust]
+    ```
+
+4. When the node or service requesting authorization receives the
+   `ConnectResponse`, it checks the list of accepted authorization types for a
+   matching, supported authorization type. If both sides support `Trust`
+   authorization, this node or service will send a `TrustRequest` message that
+   includes its peer ID (either a node ID or service ID).
+
+    ```
+    ---
+    TrustRequest:
+        identity: <ID for the node or service>
+    ```
+
+5. When the node that is being connected to receives the `TrustRequest`, it
+   changes the temporary peer ID to the actual peer ID (the node or service ID).
+
+6. Next, this node sends an empty `AuthorizedMessage` to the connecting node or
+   service to signify that it is now authorized to communicate on the Splinter
+   network.
+
+### A.2: Authorization Callbacks
+
+When a new circuit is being created, the admin service may need to create a new
+connection to Splinter nodes that are not currently connected. This is done
+using the `PeerConnector`, as described in
+[section I-2.4](#i-24-acme-node-peers-with-bubba-bakery-node). Before the admin
+service completes authorization, any `AdminDirectMessage` it sends will be
+dropped. This section describes how authorization callbacks are used to notify
+a node or service (such as the admin service) when the authorization process is
+complete.
+
+The `AuthorizationInquisitor` interrogates the authorization status for a given
+peer ID, and includes a callback registration function to notify the caller of
+changes in peer authorization.
+
+The `AuthorizationInquisitor` provides two methods:
+
+- `is_authorized` checks whether a specific peer ID is registered
+
+- `register_callback`, which takes a boxed `AuthorizationCallback`, requests
+   notification when a peer's authorization status changes
+
+```rust
+pub trait AuthorizationInquisitor: Send {
+    /// Register a callback to receive notifications about peer
+    /// authorization statuses.
+    fn register_callback(
+      &self,
+      callback: Box<dyn AuthorizationCallback>,
+    ) -> Result<(), AuthorizationCallbackError>;
+
+    /// Indicates whether or not a peer is authorized.
+    fn is_authorized(&self, peer_id: &str) -> bool;
+}
+```
+
+An `AuthorizationCallback` is a trait that must implement an
+`on_authorization_change` function that is called by the
+`AuthorizationInquisitor` when a peer's authorization status change. It takes
+the peer ID of the node or service whose authorization status has changed and
+the new `PeerAuthorizationState` (either `Authorized` or `Unauthorized`).
+
+```rust
+pub enum PeerAuthorizationState {
+  Authorized,
+  Unauthorized,
+}
+
+/// A callback for changes in a peer's authorization state.
+pub trait AuthorizationCallback: Send {
+    /// This function is called when a peer's state changes to Authorized
+    /// or Unauthorized.
+    fn on_authorization_change(
+      &self,
+      peer_id: &str,
+      state: PeerAuthorizationState,
+    ) -> Result<(), AuthorizationCallbackError>;
+}
+```
+
+The admin service is passed an `AuthorizationInquisitor` on startup. Then the
+admin service registers an `AuthorizationCallback` that will remove pending
+payloads from the `unpeered_payload` queue and move them the pending circuit
+payload queue once all required members have successfully peered and authorized.
+
+## Appendix B: Consensus
+
+Consensus is used to reach agreement between multiple parties.
+
+Within Splinter, consensus refers to a library that contains consensus
+algorithm implementations (called "consensus engines") and a single interface
+for using those algorithms. Splinter services are typically the consumers of
+this interface.
+
+In the Gameroom application, both the admin service and the scabbard service
+use a consensus algorithm called *two-phase commit*, which is a basic consensus
+algorithm that requires all participating parties to agree. If any party
+disagrees, the consensus proposal (the item being considered) is rejected. The
+Gameroom example uses two-phase commit for items such as circuit proposals,
+proposal validation, and transactions to add a smart contract.
+
+### B.1: Consensus Interface
+
+The consensus interface defines the relationship between a service and a
+consensus engine.
+
+A `Proposal` is the entity that consensus agrees on; it contains a summary of
+the underlying data that a service would like to commit, as well as information
+that may be useful to consensus. The Proposal is defined as a protobuf:
+
+```
+message Proposal {
+  // The proposal’s identifier, which is a hash of `previous_id`,
+  // `proposal_height`, and `summary`
+  bytes id = 1;
+  // The identifier of the proposal’s immediate predecessor
+  bytes previous_id = 2;
+  // The number of proposals preceding this one (used for ordering
+  // purposes)
+  uint64 proposal_height = 3;
+  // A summary of the data this proposal represents
+  bytes summary = 4;
+  // Opaque data that is provided by the consensus algorithm
+  bytes consensus_data = 5;
+}
+```
+
+A message sent between consensus engines is called a `ConsensusMessage`, and is
+defined by the following protobuf:
+
+```
+message ConsensusMessage {
+  // An opaque message that is interpreted by the consensus algorithm
+  bytes message = 1;
+  // ID of the service that created this message
+  bytes origin_id = 2;
+}
+```
+
+A service that uses consensus must implement two Rust traits for the consensus
+engine to interact with: the `ProposalManager` trait, which manages the
+`Proposals` that consensus decides on, and the `ConsensusNetwork` trait, which
+an engine uses to send messages to other nodes’ consensus engines.
+
+The consensus algorithm itself is implemented using the `ConsensusEngine` trait.
+
+### B.2: Two-Phase Commit
+
+Two-phase commit (2PC) is a basic consensus algorithm that requires agreement
+from all parties in order to accept a proposal.
+
+The following diagram summarizes the operation of this algorithm. It shows the
+activities on two nodes for the consensus engines (2PC-1 and 2PC-2), the
+proposal managers (PM-1 and PM-2), and the consensus network senders (NS-1 and
+NS-2).
+
+![]({% link
+docs/0.5/examples/gameroom/walkthrough/images/two_phase_commit_diagram.svg %}
+"Two-Phase Commit")
+
+#### B.2.1: `TwoPhaseMessage` Types
+
+Two-phase commit has three message types that are sent between its consensus
+engines: `PROPOSAL_VERIFICATION_REQUEST`, `PROPOSAL_VERIFICATION_RESPONSE`, and
+`PROPOSAL_RESULT`. The following `TwoPhaseMessage` protobuf defines these
+message types.
+
+```
+message TwoPhaseMessage {
+  enum Type {
+      UNSET_TYPE = 0;
+      PROPOSAL_VERIFICATION_REQUEST = 1;
+      PROPOSAL_VERIFICATION_RESPONSE = 2;
+      PROPOSAL_RESULT = 3;
+  }
+
+  enum ProposalVerificationResponse {
+      UNSET_VERIFICATION_RESPONSE = 0;
+      VERIFIED = 1;
+      FAILED = 2;
+  }
+
+  enum ProposalResult {
+      UNSET_RESULT = 0;
+      APPLY = 1;
+      REJECT = 2;
+  }
+
+  Type message_type = 1;
+
+  bytes proposal_id = 2;
+
+  ProposalVerificationResponse proposal_verification_response = 3;
+  ProposalResult proposal_result = 4;
+}
+```
+
+To send a message to one of its peers, the two-phase commit engine constructs
+the `TwoPhaseMessage` protobuf, serializes it into bytes, and passes it to the
+`ConsensusNetworkSender`, which will then wrap it in a `ConsensusMessage` and
+relay it to one or more peers.
+
+When a two-phase engine receives a consensus message, it extracts and
+deserializes the `TwoPhaseMessage` protobuf, then handles the message.
+
+#### B.2.2: Startup
+
+When a service using two-phase commit starts up, it creates the consensus
+engine and runs it in a new thread.
+
+#### B.2.3: Proposal Creation
+
+The two-phase commit consensus engine can create new proposals when it  is not
+already performing consensus on a proposal. To create a new proposal, the
+consensus engine requests a new proposal from the Splinter service using the
+`ProposalManager.create_proposal()` method.
+
+- If the service has data for consensus to agree on, it will create a proposal
+  for that data and send it to consensus as a `ProposalCreated(Some(Proposal))`
+  update.
+
+- If the service does *not* have data for consensus, it will send a
+  `ProposalCreated(None)` update to consensus, and consensus will ask again
+  after a brief timeout.
+
+After sending the new proposal to the consensus engine, the service sends the
+data (the item to be decided on) to the other services in the circuit. The
+other services send the new proposal to their respective consensus engines as
+a `ProposalReceived(Proposal, PeerId)` update, where the `PeerId` is the ID of
+the consensus engine that created the proposal.
+
+#### B.2.4: Coordinator and Initial Verification
+
+A `ProposalManager` is a Rust trait that must be implemented for a Splinter
+service and is used by the consensus engine to create, check, accept, and
+reject proposals
+
+When a two-phase commit engine determines that it is the coordinator for a new
+proposal, it first asks its service to verify the proposal using the
+`ProposalManager.check_proposal()` method.
+
+If the proposal is valid, the proposal manager replies with a
+`ProposalValid(ProposalId)` update; if it is invalid, it will reply with a
+`ProposalInvalid(ProposalId)` update.
+
+- In the case of an invalid proposal, the coordinator will simply reject the
+  proposal by calling `ProposalManager.reject_proposal()` and instruct its
+  peers to do the same by broadcasting a `ProposalResult::REJECT` message.
+
+- In the case of a valid proposal, the coordinator will request verification
+  from the other verifying peers.
+
+#### B.2.5: Verification
+
+To request verification from the verifying peers, the coordinator broadcasts a
+`PROPOSAL_VERIFICATION_REQUEST` for the proposal using the service’s
+`ConsensusNetworkSender.broadcast()` method.
+
+When each verifying consensus engine receives the
+`PROPOSAL_VERIFICATION_REQUEST` from the coordinator, it verifies the proposal
+itself by calling its service's `ProposalManager.check_proposal()` method and
+waiting for a response.
+
+- If the verifier receives a `ProposalValid` update from its proposal manager,
+  it will send a `ProposalVerificationResponse::VERIFIED` message to the
+  coordinator using its service’s `ConsensusNetworkSender.send_to()` method.
+
+- If the verifier receives a `ProposalInvalid` update, it will send a
+  `ProposalVerificationResponse::FAILED` message to the coordinator.
+
+#### B.2.6: Proposal Result and Commit/Reject
+
+If the coordinator receives a `ProposalVerificationResponse::FAILED` response,
+the consensus engine tells the `ProposalsManager.reject_proposal`, which will
+roll back any changes being stored in the service.
+
+If the coordinator receives a `ProposalVerificationResponse::VERIFIED`, the
+consensus engine checks whether it has received a verification response from
+every peer. If the engine has received all verification requests, it accepts
+the proposal and calls `ProposalsManager.accept_proposal`, which will commit
+the pending changes in the Splinter service.
+
+The coordinator then sends a message about the `ProposalResult` to its peers,
+with either an `APPLY` or `REJECT` result. This notifies the other peers they
+should also accept or reject the proposals.
+
+## Appendix C: Circuit Proposal Events
+
+During Gameroom setup (see
+[The Prequel](#the-prequel-setting-up-the-gameroom-application)),
+each node's Gameroom application authorization handler is registered as an
+authorization handler for the Gameroom application. This handler receives
+messages (via a WebSocket connection) about circuit proposal events.
+
+1. The application authorization handler, which is part of the Gameroom daemon,
+   sends a request to the Splinter REST API to register as an authorization
+   handler for the Gameroom application. The request is a WebSocket handshake
+   request that looks like this:
+
+    ```
+    GET /ws/admin/register/gameroom
+    Upgrade: websocket
+    Connection: Upgrade
+    Sec-Websocket-Version: 13
+    Sec-Websocket-key:  13
+    ```
+
+2. If the request is successful, the server sends a response indicating that
+   the protocol will change from HTTP to WebSocket. The response looks like
+   this:
+
+    ```
+    HTTP/1.1 101 Switching Protocols
+    Upgrade: websocket
+    Connection: Upgrade
+    Sec-WebSocket-Accept: s3pPLMBiTxaQ9kYGzzhZRbK+xOo=
+    ```
+
+3. After the protocol has been upgraded, the Gameroom Application Authorization
+   Handler receives messages (via the WebSocket connection) about circuit
+   proposal events related to the Gameroom application. The event types include:
+
+    - `ProposalSubmitted`
+    - `ProposalRejected`
+    - `ProposalAccepted`
+    - `ProposalVote`
+    - `CircuitReady`
+
+These event messages are serialized JSON.
+
+### C.1: `ProposalSubmitted` event
+
+The serialized JSON message for a `ProposalSubmitted` event looks like this:
+
+```
+{
+  "eventType": "ProposalSubmitted",
+  "message": {
+    "proposal_type": "Create",
+    "circuit_id": "my_circuit",
+    "Circuit_hash":  "8e066d41911817a42ab098eda35a2a2b11e93c753bc5ecc3ffb3e99ed99ada0d",
+    "circuit": {
+    "circuit_id": "my_circuit",
+    "roster": [
+      {
+        "service_id": "scabbard_123",
+        "service_type": "scabbard",
+        "allowed_nodes": [
+          "acme_corp"
+         ]
+       }
+    ],
+    "members": [
+      {
+        "node_id": "Node-123",
+        "endpoint": "127.0.0.1:8282”
+      }
+    ],
+    "authorization_type": "Trust",
+    "persistence": "Any",
+    "routes": "Any",
+    "circuit_management_type": "gameroom",
+    "application_metadata": []
+  },
+  "votes": [],
+  "requester": "<requester public key>"
+  "requester_node_id": <node id of the node the requester is registered"
+  }
+}
+```
+
+### C.2: `ProposalRejected` event
+
+The serialized JSON message for a `ProposalRejected` event looks like this:
+
+```
+{
+  "eventType": "ProposalRejected",
+  "message": {
+    "proposal_type": "Create",
+    "circuit_id": "my_circuit",
+    "circuit_hash":  "8e066d41911817a42ab098eda35a2a2b11e93c753bc5ecc3ffb3e99ed99ada0d",
+    "circuit": {
+    "circuit_id": "my_circuit",
+    "roster": [
+      {
+        "service_id": "scabbard_123",
+        "service_type": "scabbard",
+        "allowed_nodes": [
+          "acme_corp"
+         ]
+       }
+    ],
+    "members": [
+      {
+        "node_id": "Node-123",
+        "endpoint": "127.0.0.1:8282”
+      }
+    ],
+    "authorization_type": "Trust",
+    "persistence": "Any",
+    "routes": "Any",
+    "circuit_management_type": "gameroom",
+    "application_metadata": []
+  },
+  "votes": [{
+      “public_key”: “<publickeyofvoter>”,
+      “vote”: “Rejected”
+      "voter_node_id": “ <node id of the node the requester is registered>”
+    }],
+  "requester": "<requester public key>"
+  "requester_node_id": <node id of the node the requester is registered>"
+
+  }
+}
+```
+
+### C.3: `ProposalAccepted` event
+
+The serialized JSON message for a `ProposalAccepted` event looks like this:
+
+```
+{
+  "eventType": "ProposalAccepted",
+  "message": {
+    "proposal_type": "Create",
+    "circuit_id": "my_circuit",
+    "circuit_hash":  "8e066d41911817a42ab098eda35a2a2b11e93c753bc5ecc3ffb3e99ed99ada0d",
+    "circuit": {
+    "circuit_id": "my_circuit",
+    "roster": [
+      {
+        "service_id": "scabbard_123",
+        "service_type": "scabbard",
+        "allowed_nodes": [
+          "acme_corp"
+         ]
+       }
+    ],
+    "members": [
+      {
+        "node_id": "Node-123",
+        "endpoint": "127.0.0.1:8282”
+      }
+    ],
+    "authorization_type": "Trust",
+    "persistence": "Any",
+    "routes": "Any",
+    "circuit_management_type": "gameroom",
+    "application_metadata": []
+  },
+  "votes": [{
+      “public_key”: “<publickeyofvoter>”,
+      “vote”: “Accepted”
+      "voter_node_id": “ <node id of the node the requester is registered>”
+    }],
+  "requester": "<requester public key>"
+  "requester_node_id": <node id of the node the requester is registered>"
+  }
+}
+```
+
+### C.4: `ProposalVote` event
+
+The serialized JSON message for a `ProposalVote` event looks like this:
+
+```
+{
+  "eventType": "ProposalVote",
+  "message": {
+    "proposal_type": "Create",
+    "circuit_id": "my_circuit",
+    "circuit_hash":  "8e066d41911817a42ab098eda35a2a2b11e93c753bc5ecc3ffb3e99ed99ada0d",
+    "circuit": {
+    "circuit_id": "my_circuit",
+    "roster": [
+      {
+        "service_id": "scabbard_123",
+        "service_type": "scabbard",
+        "allowed_nodes": [
+          "acme_corp"
+         ]
+       }
+    ],
+    "members": [
+      {
+        "node_id": "Node-123",
+        "endpoint": "127.0.0.1:8282”
+      }
+    ],
+    "authorization_type": "Trust",
+    "persistence": "Any",
+    "routes": "Any",
+    "circuit_management_type": "gameroom",
+    "application_metadata": []
+  },
+  "votes": [{
+      “public_key”: “<publickeyofvoter>”,
+      “vote”: “Accepted”
+      "voter_node_id": “ <node id of the node the requester is registered>”
+    }],
+  "requester": "<requester public key>"
+  "requester_node_id": <node id of the node the requester is registered>"
+  },
+}
+```
+
+## Appendix D: XO Smart Contract Specification
+
+The XO smart contract allows users to play the simple board game tic tac toe
+(also known as "Noughts and Crosses" or "X’s and O’s").
+
+### D.1: XO State Entries
+
+An XO state entry consists of the UTF-8 encoding of a string with exactly four
+commas, which has the following format:
+
+```
+<game-name>,<game-board>,<game-state>,<player1-key>,<player2-key>
+```
+
+- `<game-name>` is the name of the game, as a non-empty string that does not
+   contain the character `|`.
+
+- `<game-board>` represents the game board as a 9-character string (called "the
+   board string") that contains only `O`, `X`, or `-`.
+
+- `<game-state>` is one of the following: `P1-NEXT`, `P2-NEXT`, `P1-WIN`,
+   `P2-WIN`, or `TIE`. (`P1` and `P2` stand for "player 1" and "player 2".)
+
+- `<player1-key>` and `<player2-key>` are the (possibly empty) public keys
+   associated with the game’s players.
+
+In the event of a hash collision (two or more state entries sharing the same
+address), the colliding state entries are stored as the UTF-8 encoding of the
+following string, with entries sorted alphabetically:
+
+```
+<a-entry>|<b-entry>|...
+```
+
+#### D.1.1: State Adressing
+
+XO data is stored in state using addresses generated from the XO "family name"
+(explained below) and the name of the game being stored.
+
+In particular, an XO address consists of the first 6 characters of the SHA-512
+hash of the UTF-8 encoding of the string `“xo”` (which is `“5b7349”`), plus the
+first 64 characters of the SHA-512 hash of the UTF-8 encoding of the game name.
+
+For example, the XO address for a game called “mygame” could be generated as
+follows:
+
+```
+>>> hashlib.sha512('xo'.encode('utf-8')).hexdigest()[:6] +
+    hashlib.sha512('mygame'.encode('utf-8')).hexdigest()[:64]
+'5b7349700e158b598043efd6d7610345a75a00b22ac14c9278db53f586179a92b72fbd'
+```
+
+### D.2: XO Transaction Payload
+
+An XO transaction request payload consists of the UTF-8 encoding of a string
+with exactly two commas, which is formatted as follows:
+
+```
+<name>,<action>,<space>
+```
+
+- `<name>` is the game name, as a non-empty string not containing the character
+  `|`. If `<action>` is create, the new name must be unique.
+
+- `<action>` is the game action: `create`, `take`, or `delete`.
+
+- `<space>` is the location on the board, as an integer between 1-9
+  (inclusive), if `<action>` is `take`.
+
+### D.3: XO Transaction Header
+
+Each XO transaction must include a header with the required inputs and outputs,
+plus the XO "family name" and version.
+
+#### D.3.1: Inputs and Outputs
+
+The inputs and outputs for an XO transaction are just the state address
+generated from the transaction game name.
+
+#### D.3.2: Dependencies
+
+XO transactions have no explicit dependencies.
+
+#### D.3.3: Family Name and Version
+
+Each smart contract has a "family name", which identifies the smart contract
+type, and a version number. The term "family" comes from the XO transaction
+family (and transaction processor) in Hyperledger Sawtooth, which is an off-
+chain version of the XO business logic.
+
+- `family_name: "xo"`
+
+- `family_version: "1.0"`
+
+### D.4: XO Execution
+
+When a running XO smart contract receives a transaction request and a state
+dictionary, it checks the validity of the request. A valid transaction request
+payload has a game name, an action, and (if the action is `take`) a space.
+
+Next, the XO smart contract checks whether the transaction (the requested
+action) is valid, then updates the state entry according to the specified
+action.
+
+- If the action is `create`, the transaction is invalid if the game name is
+  already in state dictionary. Otherwise, the smart contract will store a new
+  state entry with board `---------` (a blank board), game state `P1-NEXT`, and
+  empty strings for both player keys.
+
+- If the action is `delete`, the transaction is invalid if the game name is not
+  in the state dictionary. Otherwise, the smart contract will delete the state
+  entry for the game.
+
+- If the action is `take`, the transaction is invalid if the game name is not
+  in the state dictionary. Otherwise, there is a state entry under the game
+  name with a board, game state, player-1 key, and player-2 key.
+
+When the action is `take`, the smart contract updates the game's state entry
+as follows:
+
+1. If the game name is in the state dictionary, the transaction is invalid
+   if one of the following is true:
+
+    - The game state is `P1-WIN`, `P2-WIN`, or `TIE`
+
+    - The game state is `P1-NEXT`, the player-1 key is not null, and the
+      player-1 key is different from the transaction signing key
+
+    - The game state is `P2-NEXT`, the player-2 key is not null, and the
+      player-2 key is different from the transaction signing key
+
+    - The specified ("space-th") character in the board string has already
+      been claimed (is not `-`).
+
+
+2. Otherwise, the smart contract will update the state entry as follows:
+
+    a. **Player keys**: If the player-1 key is null (the empty string), it will
+       be updated to the key with which the transaction was signed. If the
+       player-1 key is not null and the player-2 key is null, the player-2
+       key will be updated to the signing key. Otherwise, the player keys
+       will not be changed.
+
+    b. **Board**: If the game state is `P1-NEXT`, the board will be updated with
+       an `X` (player 1's character) in the specified space. That is, the
+       updated board will be the same as the initial board, except with the
+       "space-th" character replaced by the character X. If the game state is
+       `P2-NEXT`, the same action occurs with an `O` (player 2's character).
+
+    c. **Game state**: The smart contract updates the game state based on the
+       contents of the board string. In this description, the first three
+       characters of the board string represent the first row, the next three
+       characters are the second row, and the last three characters are the
+       third row.
+
+      A character has a win on the board if any of the following is true:
+
+      - If any row consists of the same character.
+
+      - If the same character appears in a column (all the rows have the
+        same first or second or third character).
+
+      - If the same character appears in a diagonal line (the first
+        character/first row, second character/second row, and third
+        character/third row are the same; or the third character /first
+        row, second character/second row, and first character/third row are
+        the same).
+
+
+3. Then the smart contract checks for a tie:
+
+    - If `X` has a win on the board and `O` doesn’t, the updated state will be
+      `P1-WINS`.
+
+    - If `O` has a win on the board and `X` doesn’t, the updated state will be
+      `P2-WINS`.
+
+    - Otherwise, if the updated board has no empty spaces (does not contain
+      `-`), the updated state will be `TIE`.
+
+    - Otherwise, the game continues and the other player takes a turn. If the
+      initial state was `P1-NEXT`, the updated state will be `P2-NEXT`.
+      Conversely, if the initial state was `P2-NEXT`, the updated state will
+      be `P1-NEXT`.
+
+
+## Glossary
+
+#### admin circuit
+<p class="glossary-definition">
+Splinter circuit that automatically includes the admin services of all
+connected nodes. This circuit is used to send administrative messages for
+operations such as circuit creation.
+</p>
+
+#### admin service
+<p class="glossary-definition">
+Splinter service that handles administration tasks. In the Gameroom
+application, the admin service is part of the Splinter daemon
+(<code>splinterd</code>) that runs on each node.
+
+Each admin service has a service ID in the form <code>admin::{nodeID}</code>.
+For example, the service ID for Gameroom's Acme admin service is
+<code>admin::acme-node-000</code>.
+</p>
+
+#### alias
+<p class="glossary-definition">
+User-supplied name for a circuit. The Gameroom UI calls this a "gameroom name".
+</p>
+
+#### application authorization handler
+<p class="glossary-definition">
+Part of an application that handles notifications for pending circuit proposals
+and commit protocol updates. The application authorization handler also
+determines how voting is handled for the application, such as waiting for the
+client to submit a manual vote or accepting all received proposals.
+
+The application authorization handler must register with the admin service
+(using the Splinter REST API) for a specific circuit management type, so that
+the admin service knows which circuit proposals are controlled by this handler.
+</p>
+
+#### circuit
+<p class="glossary-definition">
+Splinter connection between organizations (nodes) that provides private
+communication, as managed by services on each node. A client application might
+use a different term; for example, the Gameroom application calls this a
+"gameroom".
+
+In addition, all nodes can connect to an admin circuit that handles
+administration functions.
+</p>
+
+#### circuit management type
+<p class="glossary-definition">
+String (stored in a circuit definition) that indicates which application
+authorization handler will handle this circuit's change proposals. An
+application authorization handler uses this string when registering as a
+handler with the node's admin service.
+</p>
+
+#### circuit proposal
+<p class="glossary-definition">
+Circuit that has been requested but is not final. A circuit proposal, which is
+stored in the admin service, contains the pending circuit definition and the
+votes for or against the proposal. The pending circuit in the proposal cannot
+be used for communication until the circuit is approved and the accepted
+proposal is committed.
+</p>
+
+#### circuit roster
+<p class="glossary-definition">
+Set of services that are authorized to communicate over the circuit.
+</p>
+
+#### client
+<p class="glossary-definition">
+Short term for a client application for Splinter. A client application usually
+includes a user interface (UI) and a server-side daemon with application-
+specific handlers. For example, the Gameroom client has a web-based browser
+interface and a Gameroom daemon, gameroomd.
+</p>
+
+#### consensus
+<p class="glossary-definition">
+Splinter component that is used by services to agree on shared state.
+</p>
+
+#### consensus proposal
+<p class="glossary-definition">
+Encapsulation of data that services want to agree on (like a transaction), plus
+consensus-specific information such as ID and ordering information.
+</p>
+
+#### Gameroom
+<p class="glossary-definition">
+Example multi-party Splinter application (also called a "distributed
+application") that creates circuits with specific members. Note that the
+capital G marks the application name; an individual circuit is called a
+gameroom (with a lower-case g).
+</p>
+
+#### gameroomd
+<p class="glossary-definition">
+Gameroom daemon; part of the example Gameroom application that provides the
+Gameroom REST API and Gameroom application authorization handler.
+</p>
+
+#### invitation
+<p class="glossary-definition">
+Gameroom application's term for a circuit proposal that contains a pending
+circuit.
+</p>
+
+#### member
+<p class="glossary-definition">
+Splinter node that is a proposed or actual participant in a circuit.
+</p>
+
+#### peer nodes
+<p class="glossary-definition">
+Splinter nodes that have an authorized (authenticated) connection to each
+other. Peering is a trusted connection between nodes.
+</p>
+
+#### peer services
+<p class="glossary-definition">
+Splinter services that share an isolated portion of state on a circuit.
+</p>
+
+#### pending circuit
+<p class="glossary-definition">
+Proposed circuit (defined in a circuit proposal) that is waiting for approval
+and is not yet ready for use. The Gameroom application uses the term
+"invitation" and marks proposed gamerooms with the status "Pending".
+</p>
+
+#### scabbard
+<p class="glossary-definition">
+Splinter service that includes the
+<a href="https://sawtooth.hyperledger.org/docs/sabre/nightly/master/sabre_transaction_family.html">
+Sawtooth Sabre</a> transaction handler and
+<a href="https://crates.io/crates/transact">Hyperledger Transact</a>, using
+two-phase commit consensus to agree on state. This application-specific service
+is specifically configured to work with the example Gameroom application.
+</p>
+
+#### scabbard REST API
+<p class="glossary-definition">
+Endpoints exposed by the Splinter REST API that allow interactions with a
+scabbard service (for operations such as adding batches).
+</p>
+
+#### service
+<p class="glossary-definition">
+Portion of a daemon that handles administration or application-specific
+functions, such as the Splinter daemon's admin service or the Gameroom daemon's
+scabbard service. A service has a service ID that is specified in the circuit
+definition.
+</p>
+
+#### service orchestrator
+<p class="glossary-definition">
+Splinter component that is used by the admin service to initialize new services
+when a circuit is created.
+</p>
+
+#### splinterd
+<p class="glossary-definition">
+Splinter daemon that includes a Splinter REST API and an admin service.
+</p>
+
+#### state delta export
+<p class="glossary-definition">
+Process of reading state-change updates from Splinter and uploading them to a
+local database. An application provides this functionality in a state delta
+processor (or state delta export process). For example, the Gameroom
+application registers for XO smart contract updates and uses the
+<code>XoStateDeltaProcessor</code> to process the information.
+</p>
+
+#### two-phase commit
+<p class="glossary-definition">
+Basic consensus algorithm that requires all participating parties to agree. If
+any party disagrees, the consensus proposal (the item being considered) is
+rejected.
+</p>

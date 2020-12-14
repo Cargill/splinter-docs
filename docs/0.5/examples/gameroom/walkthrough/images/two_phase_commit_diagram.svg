@@ -1,0 +1,287 @@
+<!--
+  Copyright 2018-2020 Cargill Incorporated
+  Licensed under Creative Commons Attribution 4.0 International License
+  https://creativecommons.org/licenses/by/4.0/
+-->
+<svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns="http://www.w3.org/2000/svg" xmlns:xl="http://www.w3.org/1999/xlink" version="1.1" viewBox="-58 -166 1346 1217" width="1346" height="1217">
+  <defs>
+    <font-face font-family="Helvetica Neue" font-size="16" panose-1="2 0 5 3 0 0 0 2 0 4" units-per-em="1000" underline-position="-100" underline-thickness="50" slope="0" x-height="517" cap-height="714" ascent="951.9958" descent="-212.99744" font-weight="400">
+      <font-face-src>
+        <font-face-name name="HelveticaNeue"/>
+      </font-face-src>
+    </font-face>
+    <marker orient="auto" overflow="visible" markerUnits="strokeWidth" id="FilledArrow_Marker" stroke-linejoin="miter" stroke-miterlimit="10" viewBox="-1 -6 14 12" markerWidth="14" markerHeight="12" color="black">
+      <g>
+        <path d="M 11.428568 0 L 0 -4.285713 L 0 4.285713 Z" fill="currentColor" stroke="currentColor" stroke-width="1"/>
+      </g>
+    </marker>
+  </defs>
+  <metadata> Produced by OmniGraffle 7.16
+    <dc:date>2020-12-15 21:27:47 +0000</dc:date>
+  </metadata>
+  <g id="Canvas_1" fill-opacity="1" stroke="none" stroke-opacity="1" stroke-dasharray="none" fill="none">
+    <title>Canvas 1</title>
+    <rect fill="white" x="-58" y="-166" width="1346" height="1217"/>
+    <g id="Canvas_1: Layer 1">
+      <title>Layer 1</title>
+      <g id="Graphic_2">
+        <rect x="-55" y="-163" width="84.5" height="57" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="5"/>
+        <text transform="translate(-50 -143.724)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="14.282" y="15">2PC-1</tspan>
+        </text>
+      </g>
+      <g id="Graphic_3">
+        <rect x="215.88104" y="-163" width="84.5" height="57" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="5"/>
+        <text transform="translate(220.88104 -143.724)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="17.538" y="15">PM-1</tspan>
+        </text>
+      </g>
+      <g id="Graphic_4">
+        <rect x="500" y="-163" width="84.5" height="57" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="5"/>
+        <text transform="translate(505 -143.724)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="18.73" y="15">NS-1</tspan>
+        </text>
+      </g>
+      <g id="Graphic_5">
+        <rect x="659" y="-163" width="84.5" height="57" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="5"/>
+        <text transform="translate(664 -143.724)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="18.73" y="15">NS-2</tspan>
+        </text>
+      </g>
+      <g id="Graphic_6">
+        <rect x="877.994" y="-163" width="84.5" height="52" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="5"/>
+        <text transform="translate(882.994 -146.224)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="17.538" y="15">PM-2</tspan>
+        </text>
+      </g>
+      <g id="Graphic_7">
+        <rect x="1200.994" y="-163" width="84.5" height="57" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="5"/>
+        <text transform="translate(1205.994 -143.724)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="14.282" y="15">2PC-2</tspan>
+        </text>
+      </g>
+      <g id="Line_12">
+        <path d="M -13.25 -101 L -12.877103 284.564 L -13.177584 910.3077" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4.0,4.0" stroke-width="1"/>
+      </g>
+      <g id="Line_13">
+        <path d="M 257.63104 -106 L 258.00394 279.564 L 257.70346 905.3077" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4.0,4.0" stroke-width="1"/>
+      </g>
+      <g id="Line_14">
+        <path d="M 541.75 -101 L 542.1229 284.564 L 541.8224 910.3077" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4.0,4.0" stroke-width="1"/>
+      </g>
+      <g id="Line_15">
+        <path d="M 700.75 -106 L 701.1229 279.564 L 700.8224 905.3077" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4.0,4.0" stroke-width="1"/>
+      </g>
+      <g id="Line_16">
+        <path d="M 919.744 -106 L 920.1169 279.564 L 919.8164 905.3077" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4.0,4.0" stroke-width="1"/>
+      </g>
+      <g id="Line_17">
+        <path d="M 1242.744 -101 L 1243.1169 284.564 L 1242.8164 910.3077" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4.0,4.0" stroke-width="1"/>
+      </g>
+      <g id="Line_31">
+        <line x1="-13.199467" y1="-48.74993" x2="244.3592" y2="-47.563276" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="miter" stroke-width="1"/>
+      </g>
+      <g id="Graphic_32">
+        <text transform="translate(51 -73)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="0" y="15">create_proposal</tspan>
+        </text>
+      </g>
+      <g id="Line_33">
+        <line x1="257.7372" y1="3.749293" x2=".17852866" y2="2.5637906" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="miter" stroke-dasharray="4.0,4.0" stroke-width="1"/>
+      </g>
+      <g id="Graphic_34">
+        <text transform="translate(6.006044 -22)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="881073e-18" y="15">ProposalCreated(Some(Proposal))</tspan>
+        </text>
+      </g>
+      <g id="Graphic_40">
+        <rect x="236" y="24" width="683.74396" height="35" fill="white"/>
+        <rect x="236" y="24" width="683.74396" height="35" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(241 32.276)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="242.03998" y="15">Proposal’s underlying data</tspan>
+        </text>
+      </g>
+      <g id="Graphic_39">
+        <path d="M 920.744 24 L 935.574 41.5 L 920.744 59 Z" fill="white"/>
+        <path d="M 920.744 24 L 935.574 41.5 L 920.744 59 Z" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Line_49">
+        <line x1="919.9426" y1="99.41324" x2="1229.6088" y2="99.0168" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="miter" stroke-width="1"/>
+      </g>
+      <g id="Graphic_50">
+        <text transform="translate(950.266 79)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="7673862e-19" y="15">ProposalReceived(Proposal, 2PC-1Id)</tspan>
+        </text>
+      </g>
+      <g id="Line_51">
+        <line x1="-13.25" y1="144.37657" x2="244.5447" y2="144.43898" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="miter" stroke-width="1"/>
+      </g>
+      <g id="Graphic_53">
+        <text transform="translate(18 120.92858)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="0" y="15">check_proposal(ProposalId)</tspan>
+        </text>
+      </g>
+      <g id="Line_54">
+        <line x1="257.63104" y1="188.69485" x2=".07842669" y2="187.50935" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="miter" stroke-dasharray="4.0,4.0" stroke-width="1"/>
+      </g>
+      <g id="Graphic_55">
+        <text transform="translate(19.006039 164)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="0" y="15">ProposalValid(ProposalId)</tspan>
+        </text>
+      </g>
+      <g id="Line_56">
+        <line x1="-8.394479" y1="235.51942" x2="528.74803" y2="236.6385" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="miter" stroke-width="1"/>
+      </g>
+      <g id="Graphic_57">
+        <rect x="76.52304" y="207" width="363.216" height="28.447998" fill="white"/>
+        <text transform="translate(81.52304 212)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="17089844e-13" y="15">send_to(2PC-2Id, VerificationRequest(ProposalId)</tspan>
+        </text>
+      </g>
+      <g id="Graphic_59">
+        <rect x="526" y="263" width="174.75" height="35" fill="white"/>
+        <rect x="526" y="263" width="174.75" height="35" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(531 271.276)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="17.783" y="15">Network message</tspan>
+        </text>
+      </g>
+      <g id="Graphic_58">
+        <path d="M 700.75 263 L 713.2891 280.5 L 700.75 298 Z" fill="white"/>
+        <path d="M 700.75 263 L 713.2891 280.5 L 700.75 298 Z" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Line_61">
+        <line x1="701.09376" y1="340.2453" x2="1229.7614" y2="340.54886" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="miter" stroke-width="1"/>
+      </g>
+      <g id="Graphic_62">
+        <rect x="729.312" y="309" width="455.072" height="28.447998" fill="white"/>
+        <text transform="translate(734.31195 314)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="5684342e-20" y="15">ConsensusMessage(VerificationRequest(ProposalId), 2PC-1Id)</tspan>
+        </text>
+      </g>
+      <g id="Line_63">
+        <line x1="1243.0646" y1="393.33587" x2="933.3902" y2="394.3977" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="miter" stroke-width="1"/>
+      </g>
+      <g id="Graphic_64">
+        <text transform="translate(982.328 372)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="0" y="15">check_proposal(ProposalId)</tspan>
+        </text>
+      </g>
+      <g id="Line_65">
+        <line x1="920.0355" y1="448.89104" x2="1229.7089" y2="449.9546" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="miter" stroke-dasharray="4.0,4.0" stroke-width="1"/>
+      </g>
+      <g id="Graphic_66">
+        <text transform="translate(990.336 421.5)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="0" y="15">ProposalValid(ProposalId)</tspan>
+        </text>
+      </g>
+      <g id="Line_67">
+        <line x1="1243.0118" y1="503.3329" x2="714.3429" y2="505.4347" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="miter" stroke-width="1"/>
+      </g>
+      <g id="Graphic_68">
+        <rect x="727.994" y="474" width="436.992" height="28.447998" fill="white"/>
+        <text transform="translate(732.994 479)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="0" y="15">send_to(2PC-1Id, VerificationResponse::Verified(ProposalId)</tspan>
+        </text>
+      </g>
+      <g id="Graphic_69">
+        <rect x="541.75" y="525" width="174.75" height="35" fill="white"/>
+        <rect x="541.75" y="525" width="174.75" height="35" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(546.75 533.276)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="17.783" y="15">Network message</tspan>
+        </text>
+      </g>
+      <g id="Graphic_70">
+        <path d="M 541.7092 560 L 529.1905 542.4854 L 541.75 525 Z" fill="white"/>
+        <path d="M 541.7092 560 L 529.1905 542.4854 L 541.75 525 Z" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Line_71">
+        <line x1="541.9719" y1="599.072" x2="2.846807" y2="597.05" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="miter" stroke-width="1"/>
+      </g>
+      <g id="Graphic_72">
+        <rect x="6" y="566" width="528.848" height="28.447998" fill="white"/>
+        <text transform="translate(11.000011 571)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="0" y="15">ConsensusMessage(VerificationResponse::Verified(ProposalId), 2PC-2Id)</tspan>
+        </text>
+      </g>
+      <g id="Line_73">
+        <line x1="-12.492214" y1="649" x2="245.30248" y2="649.0624" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="miter" stroke-width="1"/>
+      </g>
+      <g id="Graphic_74">
+        <text transform="translate(15.04 626.552)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="21316282e-20" y="15">accept_proposal(ProposalId)</tspan>
+        </text>
+      </g>
+      <g id="Line_75">
+        <line x1="259.40325" y1="705.79885" x2="1.8506376" y2="704.61335" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="miter" stroke-dasharray="4.0,4.0" stroke-width="1"/>
+      </g>
+      <g id="Graphic_76">
+        <text transform="translate(8.672003 673)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="61106675e-20" y="15">ProposalAccepted(ProposalId)</tspan>
+        </text>
+      </g>
+      <g id="Line_77">
+        <line x1="-11.477789" y1="760.3509" x2="527.64927" y2="761.7442" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="miter" stroke-width="1"/>
+      </g>
+      <g id="Graphic_78">
+        <rect x="121" y="731.9029" width="343.056" height="28.447998" fill="white"/>
+        <text transform="translate(126 736.9029)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="0" y="15">brooadcast(ProposalResult::Apply(ProposalId))</tspan>
+        </text>
+      </g>
+      <g id="Line_81">
+        <line x1="700.8449" y1="858.5367" x2="1229.3591" y2="857.2537" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="miter" stroke-width="1"/>
+      </g>
+      <g id="Graphic_82">
+        <rect x="729.503" y="823" width="475.232" height="28.447998" fill="white"/>
+        <text transform="translate(734.50295 828)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="0" y="15">ConsensusMessage(ProposalResult::Apply(ProposalId), 2PC-1Id)</tspan>
+        </text>
+      </g>
+      <g id="Line_93">
+        <line x1="1242.8021" y1="900.3359" x2="934.0986" y2="901.3976" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="miter" stroke-width="1"/>
+      </g>
+      <g id="Graphic_92">
+        <text transform="translate(980.0764 879)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="21316282e-20" y="15">accept_proposal(ProposalId)</tspan>
+        </text>
+      </g>
+      <g id="Line_91">
+        <line x1="920.744" y1="955.891" x2="1229.4617" y2="955.9302" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="miter" stroke-dasharray="4.0,4.0" stroke-width="1"/>
+      </g>
+      <g id="Graphic_90">
+        <text transform="translate(973.7084 928.5)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="61106675e-20" y="15">ProposalAccepted(ProposalId)</tspan>
+        </text>
+      </g>
+      <g id="Line_103">
+        <path d="M 1242.8021 900.3359 L 1242.773 1036.8464 L 1243.5322 1036.719" stroke="black" stroke-linecap="square" stroke-linejoin="miter" stroke-dasharray="4.0,4.0" stroke-width="1"/>
+      </g>
+      <g id="Line_104">
+        <path d="M 919.773 907.5 L 919.744 1044.0105 L 920.5031 1043.8831" stroke="black" stroke-linecap="square" stroke-linejoin="miter" stroke-dasharray="4.0,4.0" stroke-width="1"/>
+      </g>
+      <g id="Line_105">
+        <path d="M 700.7791 905.3077 L 700.75 1041.8182 L 701.5091 1041.6908" stroke="black" stroke-linecap="square" stroke-linejoin="miter" stroke-dasharray="4.0,4.0" stroke-width="1"/>
+      </g>
+      <g id="Line_106">
+        <path d="M 541.7791 910.3077 L 541.75 1046.8182 L 542.5091 1046.6908" stroke="black" stroke-linecap="square" stroke-linejoin="miter" stroke-dasharray="4.0,4.0" stroke-width="1"/>
+      </g>
+      <g id="Line_107">
+        <path d="M 257.66012 910.3077 L 257.63104 1046.8182 L 258.39017 1046.6908" stroke="black" stroke-linecap="square" stroke-linejoin="miter" stroke-dasharray="4.0,4.0" stroke-width="1"/>
+      </g>
+      <g id="Line_108">
+        <path d="M -13.220922 910.3077 L -13.25 1046.8182 L -12.490873 1046.6908" stroke="black" stroke-linecap="square" stroke-linejoin="miter" stroke-dasharray="4.0,4.0" stroke-width="1"/>
+      </g>
+      <g id="Graphic_111">
+        <rect x="526" y="787" width="174.75" height="35" fill="white"/>
+        <rect x="526" y="787" width="174.75" height="35" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(531 795.276)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="17.783" y="15">Network message</tspan>
+        </text>
+      </g>
+      <g id="Graphic_110">
+        <path d="M 700.75 787 L 713.2891 804.5 L 700.75 822 Z" fill="white"/>
+        <path d="M 700.75 787 L 713.2891 804.5 L 700.75 822 Z" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+    </g>
+  </g>
+</svg>
