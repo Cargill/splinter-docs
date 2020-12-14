@@ -49,8 +49,9 @@ some details may change (such as the exact format of messages).
 ## The Setting
 Two Splinter nodes are set up, one at Acme Corporation and one at Bubba Bakery.
 Alice and Bob have each registered as a Gameroom user with an email address, a
-private key, and a password. The Prequel explains the details of node setup and
-user registration.
+private key, and a password.
+[The Prequel](#the-prequel-setting-up-the-gameroom-application) explains the
+details of node setup and user registration.
 
 ## Prologue: An Initial Conversation
 <div class="gameroom-script-container">
@@ -119,7 +120,7 @@ Alice looks at the GAMEROOM APP LOGIN SCREEN in her browser.
 
 ![]({% link
 docs/0.4/examples/gameroom/walkthrough/images/acme_gameroom_login_screen.svg %}
-"Gameroom app Acme login screen")
+"Gameroom app Acme login screen"){:height="100%" width="100%"}
 
 Alice enters her EMAIL and PASSWORD. Clicks LOG IN.
 
@@ -127,7 +128,7 @@ Success. The browser now displays the ACME GAMEROOM HOME SCREEN.
 
 ![]({% link
 docs/0.4/examples/gameroom/walkthrough/images/acme_gameroom_home_screen.svg %}
-"Gameroom app Acme home screen")
+"Gameroom app Acme home screen"){:height="100%" width="100%"}
 
 ### Scene 2: Alice creates a new gameroom
 
@@ -140,13 +141,13 @@ a new gameroom by clicking on the **+** button next to My Gamerooms.
 Alice sees the NEW GAMEROOM DIALOG.
 
 ![]({% link docs/0.4/examples/gameroom/walkthrough/images/scene2_2.svg %}
-"New Gameroom dialog")
+"New Gameroom dialog"){:height="100%" width="100%"}
 
 Alice looks at the OTHER ORGANIZATION pulldown list. She
 selects BUBBA BAKERY.
 
 ![]({% link docs/0.4/examples/gameroom/walkthrough/images/scene2_3.svg %}
-"New Gameroom dialog organization pulldown list")
+"Organization pulldown list")
 
 Next, she enters a NAME for the new gameroom: Acme + Bubba.
 
@@ -160,14 +161,13 @@ screen. A TOAST NOTIFICATION tells Alice that her invitation
 has been sent to Bubba Bakery.
 
 ![]({% link docs/0.4/examples/gameroom/walkthrough/images/scene2_5.svg %}
-"Invitation successfully sent notification")
+"Invitation successfully sent notification"){:height="100%" width="100%"}
 
 ### INTERMISSION
 
 Live performances should include an intermission at this point,
 because there is a lot that just happened (see
-<a href="#gameroom_behind">"Behind the
-Scenes: A Look at Act 1"</a>).
+[Behind the Scenes: A Look at Act I](#behind-the-scenes-a-look-at-act-i-alice-and-bob-create-a-gameroom)).
 
 ### Scene 3: Bob logs into Bubba Bakery's Gameroom application
 
@@ -227,9 +227,7 @@ docs/0.4/examples/gameroom/walkthrough/images/scene6_2.png %}
 
 Alice and Bob’s gameroom is ready. They can now play games.
 
-<h2 class="gameroom_behind">
-Behind the Scenes: A Look at Act I, Alice and Bob Create a Gameroom
-</h2>
+## Behind the Scenes: A Look at Act I, Alice and Bob Create a Gameroom
 
 ### I-1. Behind scene 1: Alice logs into Acme's Gameroom UI
 
@@ -374,8 +372,8 @@ following success response:
 
 Once the Gameroom daemon has verified Alice's password, it must then verify that
 Alice has a public and private key pair. Alice's public and private key pair was
-added to the Acme Splinter database during registration (see The Prequel,
-section P.2).
+added to the Acme Splinter database during registration (see
+[The Prequel, section P.2](#p2-registering-a-user-in-the-gameroom-ui)).
 
 The request to list Alice's associated keys is made to the Biome REST API.
 
@@ -470,28 +468,28 @@ happens when there are gamerooms for the UI to display.
 1. When Alice logs in, the Acme UI makes a call to the Gameroom REST API for the
 list of gamerooms.
 
-```
-GET /gamerooms
-```
+    ```
+    GET /gamerooms
+    ```
 
 2. This call returns an empty list, since there are no gamerooms in the Acme
 Gameroom's PostgreSQL database.
 
-```
-{
-  "data": [],
-  "paging": {
-    "current": "/gamerooms?limit=100&offset=0",
-    "offset": 0,
-    "limit": 100,
-    "total": 0,
-    "first": "/gamerooms?limit=100&offset=0",
-    "prev": "/gamerooms?limit=100&offset=0",
-    "next": "/gamerooms?limit=100&offset=0",
-    "last": "/gamerooms?limit=100&offset=0"
-  }
-}
-```
+    ```
+    {
+      "data": [],
+      "paging": {
+        "current": "/gamerooms?limit=100&offset=0",
+        "offset": 0,
+        "limit": 100,
+        "total": 0,
+        "first": "/gamerooms?limit=100&offset=0",
+        "prev": "/gamerooms?limit=100&offset=0",
+        "next": "/gamerooms?limit=100&offset=0",
+        "last": "/gamerooms?limit=100&offset=0"
+        }
+    }
+    ```
 
 #### I-1.6. Acme UI requests a list of invitations
 Next, the Acme Gameroom UI requests the list of gameroom invitations. In this
@@ -499,32 +497,33 @@ scenario, Alice has no invitations, so the list is empty. Later, the walkthrough
 will show what happens when a user has unaccepted invitations.
 
 1. When Alice logs in, the UI makes a call to the Gameroom REST API for the list
-of invitations (also called _circuit proposals_).
+   of invitations (also called _circuit proposals_).
 
-```
-GET /proposals
-```
+    ```
+    GET /proposals
+    ```
 
-2. Because Alice has no invitations, the Gameroom REST API returns an empty list.
+2. Because Alice has no invitations, the Gameroom REST API returns an empty
+   list.
 
-```
-{
-  "data": [],
-  "paging": {
-    "current": "/proposals?limit=100&offset=0",
-    "offset": 0,
-    "limit": 100,
-    "total": 0,
-    "first": "/proposals?limit=100&offset=0",
-    "prev": "/proposals?limit=100&offset=0",
-    "next": "/proposals?limit=100&offset=0",
-    "last": "/proposals?limit=100&offset=0"
-  }
-}
-```
+    ```
+    {
+      "data": [],
+      "paging": {
+        "current": "/proposals?limit=100&offset=0",
+        "offset": 0,
+        "limit": 100,
+        "total": 0,
+        "first": "/proposals?limit=100&offset=0",
+        "prev": "/proposals?limit=100&offset=0",
+        "next": "/proposals?limit=100&offset=0",
+        "last": "/proposals?limit=100&offset=0"
+        }
+    }
+    ```
 
-At this point, Alice sees the Acme Gameroom home screen with no existing
-gamerooms or invitations.
+    At this point, Alice sees the Acme Gameroom home screen with no existing
+    gamerooms or invitations.
 
 ### I-2. Behind scene 2: Alice creates a new gameroom
 
@@ -563,7 +562,9 @@ dialog. The general process looks like this:
 
 1. The UI makes this REST API call to the Gameroom REST API.
 
-    ```GET /nodes```
+    ```
+    GET /nodes
+    ```
 
 2. The Gameroom REST API sends a GET request to the `/registry/nodes` endpoint
    in the Splinter REST API asking for the list of nodes.
@@ -645,7 +646,7 @@ dialog. The general process looks like this:
       "alias": "Acme + Bubba",
       "members": [
         "bubba-node-000",
-      ],
+        ],
     }
     ```
 
@@ -670,14 +671,14 @@ REST API asks the Gameroom UI to sign it with Alice's information.
     The following example shows a YAML representation of the
     `CircuitManagementPayload​`.
 
-    ***Application metadata​***:
+    **Application metadata​**:
     ``` yaml
     alias: Acme + Bubba ​// Gameroom name chosen by Alice
     scabbard_admin_keys:
       - <acme gameroomd public key>
     ```
 
-    ***Circuit definition​***:
+    **Circuit definition​**:
     ``` yaml
     circuit_id: 01234-ABCDE
     authorization_type: Trust
@@ -851,7 +852,7 @@ long as they are needed.
    `PeerManager.add_peer` to create the connection.
 
 4. After the connection has been created, a message exchange starts for peer
-   authorization (described in ​Appendix A​).
+   authorization (described in [Appendix A](#appendix-a-peer-authorization)).
 
 5. If the connection is authorized, the connection is added to the Splinter
    network. The `PeerManager` then sends a `Connected` message to its
@@ -880,7 +881,8 @@ long as they are needed.
 #### I-2.5. Splinter daemons use consensus to process the circuit request
 
 At this point, the circuit proposal is ready to be validated and approved (voted
-on with two-phase commit consensus), as described in ​Appendix B.​
+on with two-phase commit consensus), as described in
+[Appendix B](#appendix-b-consensus).
 
 During this process, the admin services on both nodes (`​admin::acme-node-000​`
 and `admin::bubba-node-000​`) must agree that the `​CircuitManagementPayload​`,
@@ -1118,26 +1120,31 @@ and starts the process of "unwrapping" the message with a series of dispatchers.
 
 ##### I-2.5.4. Bubba Bakery node validates CircuitManagementPayload
 
-The Bubba Bakery admin service validates the `​CircuitManagementPayload​` using the
-same steps as in ​section I-2.5.1​.
+The Bubba Bakery admin service validates the `​CircuitManagementPayload​` using
+the same steps as in
+[section I-2.5.1](#i-251-acme-node-validates-the-circuitmanagementpayload).
 
 1. The admin service verifies that the `​CircuitManagementPayload​` and the
-   included `CircuitCreateRequest​` are valid. (For details, see ​section I-2.5.1,
+   included `CircuitCreateRequest​` are valid. (For details, see
+    [section I-2.5.1](#i-251-acme-node-validates-the-circuitmanagementpayload),
    step 1​.)
 
 2. If the request is valid, the admin service creates a `​CircuitProposal​` and
-   stores it in the `AdminServiceShared.pending_changes​` field (see ​section
-   I-2.5.1, step 2​).
+   stores it in the `AdminServiceShared.pending_changes​` field (see
+   [section I-2.5.1](#i-251-acme-node-validates-the-circuitmanagementpayload),
+   step 2​).
 
 3. The admin service creates a consensus proposal (a `​Proposal​` struct) with the
    proposal ID, summary, and the list of required verifiers. For more
-   information, see ​section I-2.5.1, step 3​.
+   information, see
+   [section I-2.5.1](#i-251-acme-node-validates-the-circuitmanagementpayload),
+   step 3​.
 
 ##### I-2.5.5. Acme and Bubba Bakery reach consensus
 
 When the admin services have validated the proposal and consensus has reached
-agreement, consensus will notify the admin services to commit the proposal. See ​
-Appendix B​ for more information about consensus.
+agreement, consensus will notify the admin services to commit the proposal.
+See ​[Appendix B](#appendix-b-consensus) for more information about consensus.
 
 #### I-2.6. Admin services commit pending circuit proposal
 
@@ -1159,13 +1166,16 @@ we'll use this example circuit ID:
    checks if there are any registered application authorization handlers for the
    circuit management type in the proposed circuit
    (​`01234-ABCDE`​). See The Prequel,
-   section P.3​, for more information on the registration process.
+   [section P.3](#p3-registering-the-gameroom-daemon-for-admin-service-events),
+   for more information on the registration process.
 
    An application authorization handler manages the voting strategy for the
    application and notifies the application of any events received from the
    admin service of the local Splinter node. This handler registers with an
    admin service for a specific circuit management type (also described in
-   ​The Prequel, section P.3​).
+   ​The Prequel,
+   [section P.3](#p3-registering-the-gameroom-daemon-for-admin-service-events).
+
 
 2. If there are any registered application authorization handlers for the
    proposed circuit management type, each admin service forwards the request
@@ -1786,8 +1796,8 @@ docs/0.4/examples/gameroom/walkthrough/images/auth_login_bubba_4.svg %}
 
 Once the Gameroom daemon has verified Bob's password, it must then verify that
 Bob has an associated public and private key pair. Bob's public and private key
-pair was added to the Bubba Bakery Splinter database during registration (see The
-Prequel, section P.2).
+pair was added to the Bubba Bakery Splinter database during registration (see
+[The Prequel, section P.2](#p2-registering-a-user-in-the-gameroom-ui)).
 
 The request to list Bob's associated keys is made to the Biome REST API.
 
@@ -1806,7 +1816,7 @@ docs/0.4/examples/gameroom/walkthrough/images/auth_login_bubba_5.svg %}
 
 The `keys` table schema in the Splinter database has the schema as described in
 section
-[section I-1.3](#i-13-gameroom-daemon-uses-biome-rest-api-to-request-alice's-key-pairs).
+[section I-1.3](#i-13-gameroom-daemon-uses-biome-rest-api-to-request-alices-key-pairs).
 Using the unique `user_id` extracted from the access token, the public/private
 key pair associated with Bob is fetched from the Splinter daemon's database.
 
@@ -2019,9 +2029,9 @@ docs/0.4/examples/gameroom/walkthrough/images/scene4_2.png %}
 
 1. When Bob clicks the bell icon, the UI shows his unread notifications.
 
-  ![]({% link
-  docs/0.4/examples/gameroom/walkthrough/images/scene4_1.png %}
-  "Bob's notification details")
+    ![]({% link
+    docs/0.4/examples/gameroom/walkthrough/images/scene4_1.png %}
+    "Bob's notification details")
 
 
 2. When Bob clicks on his notification, the Bubba Bakery UI calls the Bubba
@@ -2029,32 +2039,33 @@ docs/0.4/examples/gameroom/walkthrough/images/scene4_2.png %}
    has read it). After the update, this notification will no longer show up as a
    new notification in the UI.
 
-  ```
-  PATCH /notifications/{notification_id}/read
-  ```
+    ```
+    PATCH /notifications/{notification_id}/read
+    ```
 
-  This call updates the notification’s entry read field in the Bubba Bakery
-  database’s gameroom_notification table from false to true. For more information
-  on this table, see [section I-2.8.5](#i-285-new-gameroom_notification-table-entry).
+    This call updates the notification’s entry read field in the Bubba Bakery
+    database’s gameroom_notification table from false to true. For more
+    information on this table, see
+    [section I-2.8.5](#i-285-new-gameroom_notification-table-entry).
 
 3. After successfully updating the notification, the Bubba Bakery Gameroom REST
    API responds with the entire notification object.
 
-  ```
-  {
-    "data": [
-      {
-        "id": <auto generated id>,
-        "notification_type": "gameroom_proposal",
-        "requester": <Alice’s public key>,
-        “requester_node_id”: “acme-node-000”,
-        "target": "01234-ABCDE",
-        "timestamp": <time entry was created>,
-        "read": true
-      }
-    ]
-  }
-  ```
+    ```
+    {
+      "data": [
+        {
+          "id": <auto generated id>,
+          "notification_type": "gameroom_proposal",
+          "requester": <Alice’s public key>,
+          “requester_node_id”: “acme-node-000”,
+          "target": "01234-ABCDE",
+          "timestamp": <time entry was created>,
+          "read": true
+        }
+      ]
+    }
+    ```
 
 ### I-5. Behind scene 5: Bob accepts Alice's invitation
 
@@ -2090,8 +2101,8 @@ POST /proposals/vote
 #### I-5.2. Gameroom REST API submits Proposal Accept request to Splinter REST API
 
 1. When the Bubba Bakery Gameroom REST API receives the vote request, it uses
-   that information to create a `CircuitManagementPayload`, which will eventually
-   be sent to the Bubba Bakery Splinter daemon.
+   that information to create a `CircuitManagementPayload`, which will
+   eventually be sent to the Bubba Bakery Splinter daemon.
 
 2. Before the payload can be sent, the Bubba Bakery UI must sign the bytes of
    the `CircuitManagementPayload` header.
@@ -2102,7 +2113,8 @@ POST /proposals/vote
     **Circuit proposal vote**:
     ```
     circuit_id: gameroom::acme-node-000::bubba-node-000::<UUIDv4>
-    circuit_hash: <sha256 hash of the circuit definition of the proposed circuit>
+    circuit_hash:
+      <sha256 hash of the circuit definition of the proposed circuit>
     vote: Accept
     ```
 
@@ -2166,8 +2178,8 @@ POST /proposals/vote
 #### I-5.3. Bubba Bakery node votes "yes" (validates the vote)
 
 1. The Bubba Bakery admin service (`admin::bubba-node-000`) receives the
-   `CircuitManagementPayload` containing a `CircuitProposalVote` from the Splinter
-   REST API, and adds it to its pending circuit payloads queue.
+   `CircuitManagementPayload` containing a `CircuitProposalVote` from the
+   Splinter REST API, and adds it to its pending circuit payloads queue.
 
     ```
     CircuitProposalVote:
@@ -2264,7 +2276,7 @@ POST /proposals/vote
 
 4. The admin service creates a new consensus `Proposal` for the updated
    `CircuitProposal`. (See
-    [section I-2.5.1](#i-251-acme-node-validates-the-circuitmanagmentpayload),
+    [section I-2.5.1](#i-251-acme-node-validates-the-circuitmanagementpayload),
     step 3, for the `Proposal` description.)
 
 #### I-5.4. Bubba Bakery node sends proposal accept vote to Acme node
@@ -2283,7 +2295,8 @@ POST /proposals/vote
    step 3).
 
 3. The nodes use consensus to agree to accept or reject the circuit proposal.
-   See Appendix B for more information on consensus agreement.
+   See [Appendix B](#appendix-b-consensus) for more information on consensus
+   agreement.
 
 4. After consensus has completed its agreement on the proposal, it notifies the
    Bubba Bakery admin service that both nodes have accepted the proposal. The
@@ -2582,8 +2595,8 @@ where that service exists.
 #### I-5.8. Bubba Bakery admin service initializes scabbard service
 
 After the circuit is created (described in
-[section I-5.5](#i-55-acme-and-bubba-bakery-reach-consensus)) and all members are
-ready to create services (covered in
+[section I-5.5](#i-55-bubba-bakery-admin-service-checks-for-approval-and-creates-a-circuit))
+and all members are ready to create services (covered in
 [section I-5.7](#i-57-bubba-bakery-admin-service-sends-ready-to-create-services-to-acme)),
 the Bubba Bakery admin service makes a call to the service orchestrator to
 initialize the scabbard service for the new gameroom. As described above,
@@ -2714,12 +2727,14 @@ At this point, the new service is running and ready to receive smart contracts.
 
     `“<game-name>,<game-board>,<game-state>,<player1-key>,<player2-key>”`
 
-    For more information on the XO game state, see Appendix D.
+    For more information on the XO game state, see
+    [Appendix D](#appendix-d-xo-smart-contract-specification).
 
 At this point, the circuit (Alice and Bob's gameroom) is ready. Next, the Acme
 Gameroom daemon must submit the XO smart contract, which is the last step before
-the gameroom is ready for Alice and Bob to play games. See section I-6.6 for an
-explanation of this process.
+the gameroom is ready for Alice and Bob to play games. See
+[section Ⅰ-6.6](#i-66-acme-gameroom-daemon-submits-sabre-transactions-to-add-xo-smart-contract)
+for an explanation of this process.
 
 ### I-6. Behind scene 6: Bob accepts Alice's invitation
 
@@ -2733,8 +2748,9 @@ contract that will allow Alice and Bob to play tic tac toe in the new gameroom.
 When the Acme Splinter node receives the `CircuitManagementPayload` network
 message containing the Bubba Bakery `CircuitProposalVote` (sent in
 [section 5.4](#i-54-bubba-bakery-node-sends-proposal-accept-vote-to-acme-node)),
-it "unwraps" the message with a series of dispatchers. See section 2.7 for the
-details of this process.
+it "unwraps" the message with a series of dispatchers. See
+[section 2.7](#i-27-admin-services-notify-authorization-handler-of-pending-circuit-proposal)
+for the details of this process.
 
 As described in [section 5.4](#i-54-bubba-bakery-node-sends-proposal-accept-vote-to-acme-node),
 step 3, both nodes use consensus to agree on the circuit proposal, After they
@@ -2782,7 +2798,8 @@ REST API that is exposed by the Splinter daemon, `splinterd`.
 
 When the Acme Gameroom daemon’s application authorization handler receives the
 `CircuitReady` notification from the admin service, it subscribes to scabbard
-and starts listening for scabbard events. See Appendix C for the registration
+and starts listening for scabbard events. See
+[Appendix C](#appendix-c-circuit-proposal-events) for the registration
 (event subscription) process.
 
 ```
@@ -2844,7 +2861,7 @@ b. Creates a consensus proposal to send to the admin services of the other
    nodes (in this case, Bubba Bakery's scabbard service) to agree on the batch
 
 c. Waits for consensus to agree on the batch, then commits it to scabbard
-   state. For information on consensus, see Appendix B: Consensus.
+   state. For information on consensus, see [Appendix B](#appendix-b-consensus).
 
 d. After the scabbard services on both nodes have committed the smart contract,
    the Acme Splinter node is done setting up the gameroom.
@@ -2868,7 +2885,8 @@ StateChangeEvent containing contact address
 ```
 
 At this point, the state delta processor will begin listening for
-XO game state changes (defined in Appendix D).
+XO game state changes (defined in
+[Appendix D](#appendix-d-xo-smart-contract-specification)).
 
 #### Ⅰ-6.8. Acme Gameroom daemon notifies Acme UI
 
@@ -2929,39 +2947,39 @@ displayed.
 
 ![]({% link
 docs/0.4/examples/gameroom/walkthrough/images/act2_scene1_1.png %}
-"Gameroom tab")
+"Gameroom tab"){:height="100%" width="100%"}
 
-Alice wants to play an XO game. She clicks *New Game*. Alice sees the NEW GAME
+Alice wants to play an XO game. She clicks **New Game**. Alice sees the NEW GAME
 DIALOG.
 
 ![]({% link
   docs/0.4/examples/gameroom/walkthrough/images/act2_scene1_2.png %}
 "New game modal")
 
-Alice enters *“alice_vs_bob”* as the game name. She clicks the SEND BUTTON.
+Alice enters **“alice_vs_bob”** as the game name. She clicks the SEND BUTTON.
 
 The Gameroom application starts creating the game. Alice sees a new
-*"alice_vs_bob"* entry with a SPINNER and the message "CREATING GAME".
+`alice_vs_bob` entry with a SPINNER and the message **"CREATING GAME"**.
 
 ![]({% link
 docs/0.4/examples/gameroom/walkthrough/images/act2_scene1_3.png %}
-"Creating Acme + Bubba game")
+"Creating Acme + Bubba game"){:height="100%" width="100%"}
 
 A short period of time passes. When the game has been fully created, Alice sees
-a blank game board and the message *"JOIN GAME"*.
+a blank game board and the message **"JOIN GAME"**.
 
 ![]({% link
   docs/0.4/examples/gameroom/walkthrough/images/act2_scene1_4.png %}
-"Join Acme + Bubba game")
+"Join Acme + Bubba game"){:height="100%" width="100%"}
 
 ### Scene 2: Alice makes the first move
 
-Alice clicks JOIN GAME on the newly created game. The *"alice_vs_bob"* game
-board appears.
+Alice clicks JOIN GAME on the newly created game. The `alice_vs_bob`
+game board appears.
 
 ![]({% link
   docs/0.4/examples/gameroom/walkthrough/images/act2_scene2_1.png %}
-"'alice_vs_bob' game board")
+"'alice_vs_bob' game board"){:height="100%" width="100%"}
 
 Alice stretches her hands and rubs her neck, preparing for her first move.
 
@@ -2972,14 +2990,14 @@ center spot.
 
 ![]({% link
   docs/0.4/examples/gameroom/walkthrough/images/act2_scene2_2.png %}
-"Alice's move processing the game board")
+"Alice's move processing the game board"){:height="100%" width="100%"}
 
-Time passes. The spinner disappears and an X appears in its place. Alice's
+Time passes. The spinner disappears and an `X` appears in its place. Alice's
 first move has been accepted.
 
 ![]({% link
   docs/0.4/examples/gameroom/walkthrough/images/act2_scene2_3.png %}
-"Alice's move on the game board")
+"Alice's move on the game board"){:height="100%" width="100%"}
 
 Now she must wait for Bob’s first move.
 
@@ -2990,22 +3008,22 @@ notification.
 
 ![]({% link
   docs/0.4/examples/gameroom/walkthrough/images/act2_scene3_1.png %}
-"Bob's new game notification")
+"Bob's new game notification"){:height="100%" width="100%"}
 
-Bob clicks on the bell icon. He sees that the game *alice_vs_bob* is available
-in the *Acme + Bubba* gameroom.
+Bob clicks on the bell icon. He sees that the game `alice_vs_bob` is available
+in the `Acme + Bubba` gameroom.
 
 ![]({% link
   docs/0.4/examples/gameroom/walkthrough/images/act2_scene3_2.png %}
-"Bob's notification details")
+"Bob's notification details"){:height="35%" width="35%"}
 
-He clicks on the notification text. The *alice_vs_bob* game board is displayed.
+He clicks on the notification text. The `alice_vs_bob` game board is displayed.
 
 Bob sees that Alice has taken the center space.
 
 ![]({% link
   docs/0.4/examples/gameroom/walkthrough/images/act2_scene3_3.png %}
-"Bob's decision")
+"Bob's decision"){:height="100%" width="100%"}
 
 Muttering to himself, Bob makes his first move: he takes the top right corner.
 
@@ -3014,13 +3032,13 @@ space.
 
 ![]({% link
   docs/0.4/examples/gameroom/walkthrough/images/act2_scene3_4.png %}
-"Bob's move processing on the game board")
+"Bob's move processing on the game board"){:height="100%" width="100%"}
 
 Soon, the spinner disappears. Bob's first move has been accepted.
 
 ![]({% link
   docs/0.4/examples/gameroom/walkthrough/images/act2_scene3_5.png %}
-"Bob's move on the game board")
+"Bob's move on the game board"){:height="100%" width="100%"}
 
 The game continues, slowly, as Alice and Bob carefully analyze each move.
 
@@ -3030,7 +3048,7 @@ It's the last move of the game.
 
 ![]({% link
   docs/0.4/examples/gameroom/walkthrough/images/act2_scene4_1.png %}
-"The final move may be taken")
+"The final move may be taken"){:height="100%" width="100%"}
 
 Alice is biting her nails. Bob wipes his forehead.
 
@@ -3038,19 +3056,19 @@ Alice clicks on the winning spot. Suspense builds while she watches the spinner.
 
 ![]({% link
   docs/0.4/examples/gameroom/walkthrough/images/act2_scene4_2.png %}
-"Alice makes her move")
+"Alice makes her move"){:height="100%" width="100%"}
 
 The spinner disappears. Alice wins the game!
 
 ![]({% link
   docs/0.4/examples/gameroom/walkthrough/images/act2_scene4_3.png %}
-"Alice wins the game")
+"Alice wins the game"){:height="100%" width="100%"}
 
 Bob sees Alice's winning move as a row of red Xs.
 
 ![]({% link
   docs/0.4/examples/gameroom/walkthrough/images/act2_scene4_4.png %}
-"Bob loses the game")
+"Bob loses the game"){:height="100%" width="100%"}
 
 ### Scene 5: The triumph of Alice
 
