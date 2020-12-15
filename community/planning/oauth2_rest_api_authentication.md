@@ -113,38 +113,23 @@ Splinter REST API for tracking and re-authenticating active user sessions.
 ### Authorization Guard
 
 The Splinter REST API will be guarded such that only properly authorized
-requests are accepted. Any request that does not include sufficient
-authorization will receive a `401 Unauthorized` response, with the exception of
-REST API routes that provide authorization (such as the OAuth routes).
+requests are accepted. This functionality is described in the
+[REST API Authorization design]({% link
+community/planning/rest_api_authorization.md %}).
 
-For the Actix REST API, Splinter will use a middleware component to check
-authorization using the `Authorization` HTTP header. For OAuth, it is expected
-that this header has the value `Bearer: OAuth2:<token>`, where `<token>` is an
+For OAuth, it is expected that the `Authorization` header specified with REST
+API requests has the value `Bearer: OAuth2:<token>`, where `<token>` is an
 access token provided by the Splinter REST API. If this token type (`OAuth2`) is
 not provided, or if this header is malformed, the Splinter REST API will respond
 with `401 Unauthorized`.
 
-The middleware will resolve tokens to client identities using a set of
-configured identity providers, which are defined by the following trait:
-
-```rust
-/// A service that fetches identities from a backing provider
-pub trait IdentityProvider: Send + Sync {
-    fn get_identity(
-      &self,
-      authorization: &Authorization
-    ) -> Result<String, IdentityProviderError>;
-
-    fn clone_box(&self) -> Box<dyn IdentityProvider>;
-}
-```
-
 Each of the OAuth provider types will have its own `IdentityProvider`
 implementation that queries the appropriate provider's servers using an OAuth
-access token to get the client's identity. When the client's identity is
-retrieved initially in the `GET /oauth/callback` endpoint, the configured OAuth
-identity provider will create an entry in the `OAuthUserSessionStore` to save
-the OAuth tokens and the user's identity.
+access token to get the client's identity (see the REST API Authorization design
+for more on identity providers). When the client's identity is retrieved
+initially in the `GET /oauth/callback` endpoint, the configured OAuth identity
+provider will create an entry in the `OAuthUserSessionStore` to save the OAuth
+tokens and the user's identity.
 
 For up to one hour after authentication, the OAuth identity provider will use
 the `OAuthUserSessionStore` to lookup a user's identity based on a request's
