@@ -46,3 +46,8 @@ forum.
 
   The `PeerManager` is in charge of keeping track of peers and their reference
   counts, as well as requesting connections from the `ConnectionManager`.
+
+* [REST API Authorization]({% link
+  community/planning/rest_api_authorization.md %})
+
+  Design for securing the Splinter REST API.
