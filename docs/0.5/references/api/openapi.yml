@@ -5,7 +5,7 @@
 openapi: '3.0.0'
 
 info:
-  version: 0.3.18
+  version: 0.5.1
   title: splinterd API
   description: REST API for the Splinter daemon
 
@@ -19,6 +19,7 @@ paths:
         - diagnostics
       description: Used to check if server is successfully running
       parameters:
+        - $ref: "#/components/parameters/auth"
         - $ref: "#/components/parameters/protocol_version"
       responses:
         200:
@@ -27,6 +28,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Status'
+        401:
+          description: The client is unauthorized
         500:
           description: Internal server error
           content:
@@ -48,6 +51,7 @@ paths:
       tags:
         - Proposals
       parameters:
+        - $ref: "#/components/parameters/auth"
         - $ref: "#/components/parameters/protocol_version"
         - name: offset
           in: query
@@ -99,6 +103,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+        401:
+          description: The client is unauthorized
         500:
           description: An internal server error occurrred
           content:
@@ -115,6 +121,7 @@ paths:
       tags:
         - Proposals
       parameters:
+        - $ref: "#/components/parameters/auth"
         - $ref: "#/components/parameters/protocol_version"
         - name: circuit_id
           in: path
@@ -129,6 +136,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Proposal"
+        401:
+          description: The client is unauthorized
         404:
           description: The requested circuit proposal was not found
           content:
@@ -148,6 +157,7 @@ paths:
         - Admin Service
       description: Send circuit management payload in bytes to admin service
       parameters:
+        - $ref: "#/components/parameters/auth"
         - $ref: "#/components/parameters/protocol_version"
       requestBody:
         required: true
@@ -165,6 +175,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+        401:
+          description: The client is unauthorized
         500:
           description: Internal server error
           content:
@@ -179,6 +191,7 @@ paths:
         - Admin Service
       description: Register the handler for a circuit management type
       parameters:
+        - $ref: "#/components/parameters/auth"
         - $ref: "#/components/parameters/protocol_version"
         - name: type
           description: The circuit management type is the type of circuit the handler will manage
@@ -202,12 +215,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/ApplicationRegistration'
         400:
-          description: The circuit management type was invalid
+          description: |
+            The circuit management type was invalid or the request was malformed
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-
+        401:
+          description: The client is unauthorized
         500:
           description: Internal server error
           content:
@@ -227,6 +242,7 @@ paths:
       tags:
         - Circuits
       parameters:
+        - $ref: "#/components/parameters/auth"
         - $ref: "#/components/parameters/protocol_version"
         - name: offset
           in: query
@@ -268,6 +284,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+        401:
+          description: The client is unauthorized
         500:
           description: An internal server error occurrred
           content:
@@ -284,6 +302,7 @@ paths:
       tags:
         - Circuits
       parameters:
+        - $ref: "#/components/parameters/auth"
         - $ref: "#/components/parameters/protocol_version"
         - name: circuit_id
           in: path
@@ -298,6 +317,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Circuit"
+        401:
+          description: The client is unauthorized
         404:
           description: The requested circuit was not found
           content:
@@ -321,6 +342,7 @@ paths:
       tags:
         - Splinter Registry
       parameters:
+        - $ref: "#/components/parameters/auth"
         - $ref: "#/components/parameters/protocol_version"
       requestBody:
         required: true
@@ -337,6 +359,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+        401:
+          description: The client is unauthorized
         500:
           description: An internal server error occurred
           content:
@@ -354,6 +378,7 @@ paths:
       tags:
         - Splinter Registry
       parameters:
+        - $ref: "#/components/parameters/auth"
         - $ref: "#/components/parameters/protocol_version"
         - name: offset
           in: query
@@ -399,6 +424,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+        401:
+          description: The client is unauthorized
         500:
           description: An internal server error occurred
           content:
@@ -414,6 +441,7 @@ paths:
       tags:
         - Splinter Registry
       parameters:
+        - $ref: "#/components/parameters/auth"
         - $ref: "#/components/parameters/protocol_version"
         - name: identity
           in: path
@@ -431,6 +459,8 @@ paths:
                 properties:
                   data:
                     $ref: "#/components/schemas/RegisteredNode"
+        401:
+          description: The client is unauthorized
         404:
           description: The node was not found
           content:
@@ -453,6 +483,7 @@ paths:
       tags:
         - Splinter Registry
       parameters:
+        - $ref: "#/components/parameters/auth"
         - $ref: "#/components/parameters/protocol_version"
         - name: identity
           in: path
@@ -475,6 +506,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+        401:
+          description: The client is unauthorized
         500:
           description: An internal server error occurred
           content:
@@ -488,6 +521,7 @@ paths:
       tags:
         - Splinter Registry
       parameters:
+        - $ref: "#/components/parameters/auth"
         - $ref: "#/components/parameters/protocol_version"
         - name: identity
           in: path
@@ -498,6 +532,8 @@ paths:
       responses:
         200:
           description: The node has been deleted from the registry
+        401:
+          description: The client is unauthorized
         404:
           description: The node was not found
           content:
@@ -522,6 +558,7 @@ paths:
       tags:
         - Scabbard
       parameters:
+        - $ref: "#/components/parameters/auth"
         - $ref: "#/components/parameters/protocol_version"
         - name: circuit
           in: path
@@ -543,11 +580,13 @@ paths:
               schema:
                 $ref: "#/components/schemas/Link"
         400:
-          description: No batches were provided
+          description: Request was malformed
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+        401:
+          description: The client is unauthorized
         404:
           description: |
             The scabbard service with the given circuit and service id was not
@@ -576,6 +615,7 @@ paths:
       tags:
         - Scabbard
       parameters:
+        - $ref: "#/components/parameters/auth"
         - $ref: "#/components/parameters/protocol_version"
         - name: circuit
           in: path
@@ -621,6 +661,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+        401:
+          description: The client is unauthorized
         404:
           description: |
             The scabbard service with the given circuit and service id was not
@@ -653,6 +695,7 @@ paths:
       tags:
         - Scabbard
       parameters:
+        - $ref: "#/components/parameters/auth"
         - $ref: "#/components/parameters/protocol_version"
         - name: circuit
           in: path
@@ -697,6 +740,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+        401:
+          description: The client is unauthorized
         404:
           description: |
             The scabbard service with the given circuit and service id was not
@@ -721,6 +766,7 @@ paths:
       tags:
         - Scabbard
       parameters:
+        - $ref: "#/components/parameters/auth"
         - $ref: "#/components/parameters/protocol_version"
         - name: circuit
           in: path
@@ -750,12 +796,8 @@ paths:
                 type: array
                 items:
                   type: integer
-        400:
-          description: The request was malformed
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+        401:
+          description: The client is unauthorized
         404:
           description: |
             The scabbard service with the given circuit and service id was not
@@ -865,10 +907,10 @@ paths:
                   token:
                     type: string
                     description: "JWT access token used for authorizing access to protected resources"
-                    example: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lk\
-                      IjoiZjM1YWFjYzEtYTljZC00ZWRhLWI2ZDAtMmVmYWRkZjBjOGE0Iiwia\
-                      XNzIjoic2VsZi1pc3N1ZWQiLCJleHAiOjE1ODAyMzkyMjh9.P8hA0ru_x\
-                      riYX7qryl08ZEp86t5HD_AEVPEUXY70Ehc"
+                    example: "Biome:eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2\
+                      VyX2lkIjoiZjM1YWFjYzEtYTljZC00ZWRhLWI2ZDAtMmVmYWRkZjBjOGE\
+                      0IiwiaXNzIjoic2VsZi1pc3N1ZWQiLCJleHAiOjE1ODAyMzkyMjh9.P8h\
+                      A0ru_xriYX7qryl08ZEp86t5HD_AEVPEUXY70Ehc"
                   refresh_token:
                     type: string
                     description: "JWT refresh token used for obtaining a new access to token"
@@ -895,6 +937,7 @@ paths:
         - Biome
       description: Removes access tokens associated with a user
       parameters:
+        - $ref: "#/components/parameters/auth"
         - $ref: "#/components/parameters/protocol_version"
       responses:
         200:
@@ -908,17 +951,13 @@ paths:
                     type: string
                     example: "User successfully logged out"
         400:
-          description: Invalid request
-          content:
-            application/json:
-                schema:
-                  $ref: '#/components/schemas/ErrorBiome'
-        401:
-          description: Access token is invalid
+          description: Request was malformed
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorBiome'
+                $ref: '#/components/schemas/Error'
+        401:
+          description: The client is unauthorized
         500:
           description: Internal server error occurred
           content:
@@ -959,10 +998,10 @@ paths:
                   token:
                     type: string
                     description: "JWT access token used for authorizing access to protected resources"
-                    example: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lk\
-                      IjoiZjM1YWFjYzEtYTljZC00ZWRhLWI2ZDAtMmVmYWRkZjBjOGE0Iiwia\
-                      XNzIjoic2VsZi1pc3N1ZWQiLCJleHAiOjE1ODAyMzkyMjh9.P8hA0ru_x\
-                      riYX7qryl08ZEp86t5HD_AEVPEUXY70Ehc"
+                    example: "Biome:eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2\
+                      VyX2lkIjoiZjM1YWFjYzEtYTljZC00ZWRhLWI2ZDAtMmVmYWRkZjBjOGE\
+                      0IiwiaXNzIjoic2VsZi1pc3N1ZWQiLCJleHAiOjE1ODAyMzkyMjh9.P8h\
+                      A0ru_xriYX7qryl08ZEp86t5HD_AEVPEUXY70Ehc"
         400:
           description: Invalid request
           content:
@@ -994,6 +1033,7 @@ paths:
         - Biome
       description: Verifies a user with username and password credentials
       parameters:
+        - $ref: "#/components/parameters/auth"
         - $ref: "#/components/parameters/protocol_version"
       requestBody:
         content:
@@ -1028,17 +1068,13 @@ paths:
                     description: "Internal unique identifier for the user"
                     example: "f35aacc1-a9cd-4eda-b6d0-2efaddf0c8a4"
         400:
-          description: Invalid request
+          description: Request was malformed
           content:
             application/json:
-                schema:
-                  $ref: '#/components/schemas/ErrorBiome'
+              schema:
+                $ref: '#/components/schemas/Error'
         401:
-          description: Unauthorized request
-          content:
-            application/json:
-                schema:
-                  $ref: '#/components/schemas/ErrorBiome'
+          description: The client is unauthorized
         500:
           description: Internal server error occurred
           content:
@@ -1052,6 +1088,7 @@ paths:
         - Biome
       description: Lists all users
       parameters:
+        - $ref: "#/components/parameters/auth"
         - $ref: "#/components/parameters/protocol_version"
       responses:
         200:
@@ -1071,6 +1108,8 @@ paths:
                       type: string
                       description: "Internal unique identifier for the user"
                       example: "f35aacc1-a9cd-4eda-b6d0-2efaddf0c8a4"
+        401:
+          description: The client is unauthorized
         500:
           description: Internal server error occurred
           content:
@@ -1084,6 +1123,7 @@ paths:
       - Biome
       description: Fetch a user by ID
       parameters:
+        - $ref: "#/components/parameters/auth"
         - $ref: "#/components/parameters/protocol_version"
         - name: user_id
           in: path
@@ -1109,11 +1149,13 @@ paths:
                     description: "Internal unique identifier for the user"
                     example: "f35aacc1-a9cd-4eda-b6d0-2efaddf0c8a4"
         400:
-          description: Invalid request
+          description: Request was malformed
           content:
             application/json:
-                schema:
-                  $ref: '#/components/schemas/ErrorBiome'
+              schema:
+                $ref: '#/components/schemas/Error'
+        401:
+          description: The client is unauthorized
         404:
           description: Resource not found
           content:
@@ -1131,6 +1173,7 @@ paths:
       - Biome
       description: Update a user
       parameters:
+        - $ref: "#/components/parameters/auth"
         - $ref: "#/components/parameters/protocol_version"
         - name: user_id
           in: path
@@ -1182,17 +1225,13 @@ paths:
                     items:
                       $ref: '#/components/schemas/BiomeUserKey'
         400:
-          description: Invalid request
+          description: Request was malformed
           content:
             application/json:
-                schema:
-                  $ref: '#/components/schemas/ErrorBiome'
+              schema:
+                $ref: '#/components/schemas/Error'
         401:
-          description: Unauthorized request
-          content:
-            application/json:
-                schema:
-                  $ref: '#/components/schemas/ErrorBiome'
+          description: The client is unauthorized
         404:
           description: Resource not found
           content:
@@ -1210,6 +1249,7 @@ paths:
         - Biome
       description: Delete a user
       parameters:
+        - $ref: "#/components/parameters/auth"
         - $ref: "#/components/parameters/protocol_version"
         - name: user_id
           in: path
@@ -1229,18 +1269,8 @@ paths:
                   message:
                     type: string
                     example: "User deleted successfully"
-        400:
-          description: Invalid request
-          content:
-            application/json:
-                schema:
-                  $ref: '#/components/schemas/ErrorBiome'
         401:
-          description: Unauthorized request
-          content:
-            application/json:
-                schema:
-                  $ref: '#/components/schemas/ErrorBiome'
+          description: The client is unauthorized
         404:
           description: User with {user_id} not found
           content:
@@ -1260,6 +1290,7 @@ paths:
       - Biome
       description: List keys of a user
       parameters:
+        - $ref: "#/components/parameters/auth"
         - $ref: "#/components/parameters/protocol_version"
       responses:
         200:
@@ -1270,18 +1301,8 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/BiomeUserKey'
-        400:
-          description: Invalid request
-          content:
-            application/json:
-                schema:
-                  $ref: '#/components/schemas/ErrorBiome'
         401:
-          description: User not authorized
-          content:
-            application/json:
-                schema:
-                  $ref: '#/components/schemas/ErrorBiome'
+          description: The client is unauthorized
         500:
           description: Internal server error occurred
           content:
@@ -1293,6 +1314,7 @@ paths:
       - Biome
       description: Update a key's display name
       parameters:
+        - $ref: "#/components/parameters/auth"
         - $ref: "#/components/parameters/protocol_version"
       requestBody:
         content:
@@ -1323,17 +1345,13 @@ paths:
                     type: string
                     example: "Key updated successfully"
         400:
-          description: Invalid request
+          description: Request was malformed
           content:
             application/json:
-                schema:
-                  $ref: '#/components/schemas/ErrorBiome'
+              schema:
+                $ref: '#/components/schemas/Error'
         401:
-          description: User not authorized
-          content:
-            application/json:
-                schema:
-                  $ref: '#/components/schemas/ErrorBiome'
+          description: The client is unauthorized
         404:
           description: Resource not found
           content:
@@ -1351,6 +1369,7 @@ paths:
       - Biome
       description: Add a new key for user
       parameters:
+        - $ref: "#/components/parameters/auth"
         - $ref: "#/components/parameters/protocol_version"
       requestBody:
         content:
@@ -1371,17 +1390,13 @@ paths:
                   data:
                     $ref: '#/components/schemas/BiomeUserKey'
         400:
-          description: Invalid request
+          description: Request was malformed
           content:
             application/json:
-                schema:
-                  $ref: '#/components/schemas/ErrorBiome'
+              schema:
+                $ref: '#/components/schemas/Error'
         401:
-          description: User not authorized
-          content:
-            application/json:
-                schema:
-                  $ref: '#/components/schemas/ErrorBiome'
+          description: The client is unauthorized
         500:
           description: Internal server error occurred
           content:
@@ -1395,6 +1410,7 @@ paths:
       - Biome
       description: Fetch key of a user
       parameters:
+        - $ref: "#/components/parameters/auth"
         - $ref: "#/components/parameters/protocol_version"
         - name: public_key
           in: path
@@ -1414,17 +1430,13 @@ paths:
                   data:
                     $ref: '#/components/schemas/BiomeUserKey'
         400:
-          description: Invalid request
+          description: Request was malformed
           content:
             application/json:
-                schema:
-                  $ref: '#/components/schemas/ErrorBiome'
+              schema:
+                $ref: '#/components/schemas/Error'
         401:
-          description: User not authorized
-          content:
-            application/json:
-                schema:
-                  $ref: '#/components/schemas/ErrorBiome'
+          description: The client is unauthorized
         404:
           description: Resource not found
           content:
@@ -1442,6 +1454,7 @@ paths:
       - Biome
       description: Delete key of a user
       parameters:
+        - $ref: "#/components/parameters/auth"
         - $ref: "#/components/parameters/protocol_version"
         - name: user_id
           in: path
@@ -1471,17 +1484,13 @@ paths:
                   data:
                     $ref: '#/components/schemas/BiomeUserKey'
         400:
-          description: Invalid request
+          description: Request was malformed
           content:
             application/json:
-                schema:
-                  $ref: '#/components/schemas/ErrorBiome'
+              schema:
+                $ref: '#/components/schemas/Error'
         401:
-          description: User not authorized
-          content:
-            application/json:
-                schema:
-                  $ref: '#/components/schemas/ErrorBiome'
+          description: The client is unauthorized
         404:
           description: Resource not found
           content:
@@ -1495,8 +1504,155 @@ paths:
                 schema:
                   $ref: '#/components/schemas/ErrorBiome'
 
+  /oauth/login:
+    get:
+      tags:
+        - OAuth
+      description: |
+        Provides a redirect to the node's configured OAuth provider to
+        authenticate the user.
+      parameters:
+        - $ref: "#/components/parameters/protocol_version"
+        - name: redirect_url
+          in: query
+          description: |
+            The URL the client will be redirected to once the OAuth
+            authentication process has been completed. If this parameter is not
+            provided, Splinter will attempt to retrieve the `referer` header
+            of the request. If this header value is also not available and the
+            `redirect_url` does not have a value, Splinter will respond with
+            400 Bad Request.
+          required: false
+          schema:
+            type: string
+      responses:
+        302:
+          description: Found redirect
+          headers:
+            Location:
+              description: URL of the OAuth provider
+              schema:
+                type: string
+        400:
+          description: |
+            Request was malformed or no `redirect_url` was provided and the server
+            was unable to retrieve the request's `referer` header value.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: Internal server error occurred
+          content:
+            application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+
+  /oauth/callback:
+    get:
+      tags:
+        - OAuth
+      description: |
+        Receives an authorization code from the OAuth provider to create an
+        access token for the user. Redirects to a URL provided by the client
+        when the OAuth authentication process was initiated.
+      parameters:
+        - $ref: "#/components/parameters/protocol_version"
+      responses:
+        302:
+          description: |
+            Splinter has successfully exchanged the authorization code provided
+            by the OAuth provider has been successfully exchanged for an access
+            token. The application may then be redirected to the `redirect_url`
+            provided when the OAuth authentication process was initiated.
+            The `redirect_url` has the access token and other user data required
+            to log in the user to the application appended to it as query
+            parameters.
+          headers:
+            Location:
+              description: |
+                Client URL provided at the beginning of the OAuth authentication
+                process, with the user's information appended as query parameters.
+              schema:
+                type: string
+        400:
+          description: |
+            Request was malformed or no authorization request was found correlating
+            to the authorization code and the server was unable to retrieve the
+            request's `referer` header value.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: Internal server error occurred
+          content:
+            application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+
+  /oauth/logout:
+    get:
+      tags:
+        - OAuth
+      description: Removes a user's access and refresh tokens from storage.
+      parameters:
+        - $ref: "#/components/parameters/auth"
+        - $ref: "#/components/parameters/protocol_version"
+      responses:
+        200:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "User successfully logged out"
+        400:
+          description: Request was malformed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        401:
+          description: The client is unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: Internal server error occurred
+          content:
+            application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+
 components:
   parameters:
+    auth:
+      name: Authorization
+      in: header
+      description: |
+        The client's authorization, which the server resolves to an identity.
+        Currently supports Biome JWT (if Biome credentials is enabled), Cylinder
+        JWT, and OAuth2 bearer tokens.
+      required: true
+      schema:
+        type: string
+        examples:
+          Biome: Bearer Biome:eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lk\
+            IjoiZjM1YWFjYzEtYTljZC00ZWRhLWI2ZDAtMmVmYWRkZjBjOGE0IiwiaXNzIjoic2V\
+            sZi1pc3N1ZWQiLCJleHAiOjE1ODAyMzkyMjh9.P8hA0ru_xriYX7qryl08ZEp86t5HD\
+            _AEVPEUXY70Ehc
+          Cylinder: Bearer Cylinder:eyJhbGciOiJzZWNwMjU2azEiLCJ0eXAiOiJjeWxpbmR\
+            lcitqd3QifQ==.eyJpc3MiOiIwMjc5YmU2NjdlZjlkY2JiYWM1NWEwNjI5NWNlODcwY\
+            jA3MDI5YmZjZGIyZGNlMjhkOTU5ZjI4MTViMTZmODE3OTgifQ==.71Vw3+m9R4b8iZU\
+            zhRHOAtX/hO5WYA9PgMe27/CeZ6NhIXFYkBBzreoIGpHbfJ8UxT+1MLUgjsQB8TISaf\
+            neRA==
+          OAuth2: Bearer OAuth2:55eeea7ce2b472d69d406990939baa698e34e955
+
     protocol_version:
       name: SplinterProtocolVersion
       in: header
@@ -1506,7 +1662,7 @@ components:
       required: false
       schema:
         type: integer
-        example: 1
+        example: 2
 
   schemas:
     Error:
@@ -1539,7 +1695,7 @@ components:
         version:
           description: Rest API version
           type: string
-          example: "0.3.18"
+          example: "0.5.1"
         node_id:
           description: Node id
           type: string
@@ -1674,6 +1830,10 @@ components:
         management_type:
           type: string
           example: gameroom
+        display_name:
+          description: Human readable name for the circuit
+          type: string
+          nullable: true
 
     CircuitService:
       type: object
@@ -1684,11 +1844,10 @@ components:
         service_type:
           type: string
           example: scabbard
-        allowed_nodes:
-          description: IDs of the nodes that are allowed to run this service
-          type: array
-          items:
-            type: string
+        node_id:
+          description: The node ID that is allowed to run this service
+          type: string
+          example: alpha-node-000
 
     Proposal:
       type: object
@@ -1730,6 +1889,10 @@ components:
               comments:
                 description: Arbitrary comments to describe the proposed circuit
                 type: string
+              display_name:
+                description: Human readable name for the circuit
+                type: string
+                nullable: true
         votes:
           type: array
           items:
@@ -1762,12 +1925,10 @@ components:
         service_type:
           type: string
           example: scabbard
-        allowed_nodes:
-          description: List of node IDs that are allowed to run this service
-          type: array
-          items:
-            type: string
-            example: alpha-node-000
+        node_id:
+          description: The node ID that is allowed to run this service
+          type: string
+          example: alpha-node-000
         arguments:
           description: |-
             Arbitrary arguments to be passed to this service on initialization,
