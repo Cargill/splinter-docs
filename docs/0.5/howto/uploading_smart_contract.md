@@ -41,8 +41,7 @@ for details on how to create and compile a smart contract
         --service-arg scabbard-service-beta::peer_services=alpha-node-000 \
         --service-arg scabbard-service-alpha::peer_services=beta-node-000 \
         --service-type *::scabbard \
-        --management tutorial \
-        --auth-type trust
+        --management tutorial
     ```
 
     The `--service-arg`s supplied are specific to the scabbard service and are
