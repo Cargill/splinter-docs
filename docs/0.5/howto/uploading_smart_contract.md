@@ -58,12 +58,12 @@ for details on how to create and compile a smart contract
     ``` console
     $ splinter circuit proposals --url http://splinterd-beta:8080
 
-    ID                                   MANAGEMENT MEMBERS
-    01234567-0123-0123-0123-012345678901 tutorial   alpha-node-000;beta-node-000
+    ID           NAME    MANAGEMENT MEMBERS                       COMMENTS
+    01234-ABCDE  -       tutorial   alpha-node-000;beta-node-000
     ```
 
     ``` console
-    $ export CIRCUIT_ID=01234567-0123-0123-0123-012345678901
+    $ export CIRCUIT_ID=01234-ABCDE
     ```
 
     c. Vote to accept the circuit on node beta.
@@ -82,8 +82,8 @@ for details on how to create and compile a smart contract
     ``` console
     $ splinter circuit list --url http://splinterd-alpha:8080
 
-    ID                                   MANAGEMENT MEMBERS
-    01234567-0123-0123-0123-012345678901 tutorial   alpha-node-000;beta-node-000
+    ID           NAME    MANAGEMENT MEMBERS
+    01234-ABCDE  -       tutorial   alpha-node-000;beta-node-000
     ```
 
 2. Package smart contract.
