@@ -34,9 +34,9 @@ for details on how to create and compile a smart contract
         --key <path_to_alpha_private_key> \
         --node alpha-node-000::tcps://splinterd-alpha:8044 \
         --node beta-node-000::tcps://splinterd-beta:8044 \
-        --service scabbard-service-alpha::alpha-node-000 \
-        --service scabbard-service-beta::beta-node-000 \
-        --service-peer-group beta-node-000,alpha-node-000 \
+        --service a000::alpha-node-000 \
+        --service b000::beta-node-000 \
+        --service-peer-group b000,a000 \
         --service-arg *::admin_keys=<alpha_node_pub_key> \
         --service-type *::scabbard \
         --management tutorial
@@ -119,7 +119,7 @@ for details on how to create and compile a smart contract
         --owner <alpha_node_public_key> \
         --key <path_to_alpha_node_private_key> \
         --url http://splinterd-alpha:8080 \
-        --service-id $CIRCUIT_ID::scabbard-service-alpha
+        --service-id $CIRCUIT_ID::a000
     ```
 
 4. Upload the smart contract.
@@ -128,7 +128,7 @@ for details on how to create and compile a smart contract
    $ scabbard contract upload ./my_contract.scar \
        --key <path_to_alpha_node_private_key> \
        --url http://splinterd-alpha:8080 \
-       --service-id $CIRCUIT_ID::scabbard-service-alpha
+       --service-id $CIRCUIT_ID::a000
    ```
 
 5. Create the namespace registry for the smart contract.
@@ -143,7 +143,7 @@ for details on how to create and compile a smart contract
        --owner <alpha_node_public_key> \
        --key <path_to_alpha_node_private_key> \
        --url http://splinterd-alpha:8080 \
-       --service-id $CIRCUIT_ID::scabbard-service-alpha
+       --service-id $CIRCUIT_ID::a000
     ```
 
 6. Create contract permissions.
@@ -156,14 +156,14 @@ for details on how to create and compile a smart contract
    $ scabbard perm 5b7349 my_contract --read --write \
        --key <path_to_alpha_node_private_key> \
        --url http://splinterd-alpha:8080 \
-       --service-id $CIRCUIT_ID::scabbard-service-alpha
+       --service-id $CIRCUIT_ID::a000
    ```
 
 7. List uploaded smart contracts.
 
     ``` console
     $ scabbard contract list -U 'http://splinterd-beta:8080' \
-        --service-id $CIRCUIT_ID::scabbard-service-beta
+        --service-id $CIRCUIT_ID::b000
 
     NAME        VERSIONS OWNERS
     sawtooth_xo  1.0     <owner_public_key>
@@ -174,7 +174,7 @@ for details on how to create and compile a smart contract
     ``` console
     $ scabbard contract show my_contract:1.0 \
         -U 'http://splinterd-beta:8080' \
-        --service-id $CIRCUIT_ID::scabbard-service-beta
+        --service-id $CIRCUIT_ID::b000
 
     name: my_contract
     version: '1.0'
