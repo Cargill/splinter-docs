@@ -34,15 +34,12 @@ for details on how to create and compile a smart contract
         --key <path_to_alpha_private_key> \
         --node alpha-node-000::tcps://splinterd-alpha:8044 \
         --node beta-node-000::tcps://splinterd-beta:8044 \
-        --service scabbard-service-alpha::alpha-node-000 \
-        --service scabbard-service-beta::beta-node-000 \
-        --service-peer-group beta-node-000,alpha-node-000 \
+        --service a000::alpha-node-000 \
+        --service b000::beta-node-000 \
+        --service-peer-group b000,a000 \
         --service-arg *::admin_keys=<alpha_node_pub_key> \
-        --service-arg scabbard-service-beta::peer_services=alpha-node-000 \
-        --service-arg scabbard-service-alpha::peer_services=beta-node-000 \
         --service-type *::scabbard \
-        --management tutorial \
-        --auth-type trust
+        --management tutorial
     ```
 
     The `--service-arg`s supplied are specific to the scabbard service and are
@@ -61,12 +58,12 @@ for details on how to create and compile a smart contract
     ``` console
     $ splinter circuit proposals --url http://splinterd-beta:8080
 
-    ID                                   MANAGEMENT MEMBERS
-    01234567-0123-0123-0123-012345678901 tutorial   alpha-node-000;beta-node-000
+    ID           NAME    MANAGEMENT MEMBERS                       COMMENTS
+    01234-ABCDE  -       tutorial   alpha-node-000;beta-node-000
     ```
 
     ``` console
-    $ export CIRCUIT_ID=01234567-0123-0123-0123-012345678901
+    $ export CIRCUIT_ID=01234-ABCDE
     ```
 
     c. Vote to accept the circuit on node beta.
@@ -85,8 +82,8 @@ for details on how to create and compile a smart contract
     ``` console
     $ splinter circuit list --url http://splinterd-alpha:8080
 
-    ID                                   MANAGEMENT MEMBERS
-    01234567-0123-0123-0123-012345678901 tutorial   alpha-node-000;beta-node-000
+    ID           NAME    MANAGEMENT MEMBERS
+    01234-ABCDE  -       tutorial   alpha-node-000;beta-node-000
     ```
 
 2. Package smart contract.
@@ -122,7 +119,7 @@ for details on how to create and compile a smart contract
         --owner <alpha_node_public_key> \
         --key <path_to_alpha_node_private_key> \
         --url http://splinterd-alpha:8080 \
-        --service-id $CIRCUIT_ID::scabbard-service-alpha
+        --service-id $CIRCUIT_ID::a000
     ```
 
 4. Upload the smart contract.
@@ -131,7 +128,7 @@ for details on how to create and compile a smart contract
    $ scabbard contract upload ./my_contract.scar \
        --key <path_to_alpha_node_private_key> \
        --url http://splinterd-alpha:8080 \
-       --service-id $CIRCUIT_ID::scabbard-service-alpha
+       --service-id $CIRCUIT_ID::a000
    ```
 
 5. Create the namespace registry for the smart contract.
@@ -146,7 +143,7 @@ for details on how to create and compile a smart contract
        --owner <alpha_node_public_key> \
        --key <path_to_alpha_node_private_key> \
        --url http://splinterd-alpha:8080 \
-       --service-id $CIRCUIT_ID::scabbard-service-alpha
+       --service-id $CIRCUIT_ID::a000
     ```
 
 6. Create contract permissions.
@@ -159,14 +156,14 @@ for details on how to create and compile a smart contract
    $ scabbard perm 5b7349 my_contract --read --write \
        --key <path_to_alpha_node_private_key> \
        --url http://splinterd-alpha:8080 \
-       --service-id $CIRCUIT_ID::scabbard-service-alpha
+       --service-id $CIRCUIT_ID::a000
    ```
 
 7. List uploaded smart contracts.
 
     ``` console
     $ scabbard contract list -U 'http://splinterd-beta:8080' \
-        --service-id $CIRCUIT_ID::scabbard-service-beta
+        --service-id $CIRCUIT_ID::b000
 
     NAME        VERSIONS OWNERS
     sawtooth_xo  1.0     <owner_public_key>
@@ -177,7 +174,7 @@ for details on how to create and compile a smart contract
     ``` console
     $ scabbard contract show my_contract:1.0 \
         -U 'http://splinterd-beta:8080' \
-        --service-id $CIRCUIT_ID::scabbard-service-beta
+        --service-id $CIRCUIT_ID::b000
 
     name: my_contract
     version: '1.0'
