@@ -38,8 +38,6 @@ for details on how to create and compile a smart contract
         --service scabbard-service-beta::beta-node-000 \
         --service-peer-group beta-node-000,alpha-node-000 \
         --service-arg *::admin_keys=<alpha_node_pub_key> \
-        --service-arg scabbard-service-beta::peer_services=alpha-node-000 \
-        --service-arg scabbard-service-alpha::peer_services=beta-node-000 \
         --service-type *::scabbard \
         --management tutorial
     ```
