@@ -45,7 +45,7 @@ users.
 Many errors which occur can be captured by a relatively small set of reusable
 errors. A few examples of reusable errors include:
 
-* `ConstraintVioliationError` - an error which occurs when a database constraint
+* `ConstraintViolationError` - an error which occurs when a database constraint
   prevents an update from occurring
 * `InternalError` - an error returned when a failure occurred within the
   function but the failure is due to an internal implementation detail of the
@@ -59,7 +59,7 @@ When determining whether an error should be included in crate::error, the
 primary concern is reusability -- does it apply across the codebase? The more
 specific an error, the less likely it is to be a good fit for `crate::error`.
 
-Errors in `crate:error` are always structs, and are intended to be used as-is or
+Errors in `crate::error` are always structs, and are intended to be used as-is or
 in the context of a more complex error enum. In the case of the enum, the struct
 should be included as one of the enum's items:
 
@@ -497,7 +497,7 @@ pub enum AdminServiceStoreError {
     ConstraintViolationError(ConstraintViolationError),
     /// Represents when the underlying resource is unavailable
     ResourceTemporarilyUnavailableError(ResourceTemporarilyUnavailableError),
-    /// Represents when cab operation cannot be completed because the state of
+    /// Represents when an operation cannot be completed because the state of
     /// the underlying struct is inconsistent.
     InvalidStateError(InvalidStateError),
 }
