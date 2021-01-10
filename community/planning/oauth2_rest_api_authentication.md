@@ -110,26 +110,177 @@ The [Biome OAuth user session store]({% link
 community/planning/biome_oauth_user_session_store.md %}) will be used by the
 Splinter REST API for tracking and re-authenticating active user sessions.
 
-### Authorization Guard
+### Subject Providers
 
-The Splinter REST API will be guarded such that only properly authorized
+The `SubjectProvider` trait defines the interface for getting a user's subject
+identifier from an OAuth server. This trait will be defined in the
+`splinter::outh::subject` module as follows:
+
+```rust
+use crate::error::InternalError;
+
+/// A service that fetches subject identifiers from a backing OAuth server
+pub trait SubjectProvider: Send + Sync {
+    /// Attempts to get the subject that the given access token is for. This
+    /// method will return `Ok(None)` if the access token could not be resolved
+    /// to a subject.
+    fn get_subject(
+      &self,
+      access_token: &str,
+    ) -> Result<Option<String>, InternalError>;
+
+    fn clone_box(&self) -> Box<dyn SubjectProvider>;
+}
+```
+
+Each of the OAuth provider types will have its own implementation of the
+`SubjectProvider` trait that queries the appropriate provider's servers. The
+following implementations will be included with the Splinter REST API:
+
+* `GithubSubjectProvider` - Gets a user's GitHub username using a GitHub OAuth
+  access token
+
+* `OpenIdSubjectProvider` - Gets a user's subject identifier from an
+  OpenID-compliant OAuth provider (this covers the Azure Active Directory and
+  Google providers)
+
+### OAuth Client
+
+The `OAuthClient` struct will be used for interacting with the OAuth server.
+This struct will be defined in the `splinter::oauth` module with the following
+API:
+
+```rust
+use std::time::Duration;
+
+use crate:error::InternalError;
+
+impl OAuthClient {
+    /// Generates the URL that the end user should be redirected to for
+    /// authorization
+    pub fn get_authorization_url(
+        &self,
+        client_redirect_url: String,
+    ) -> Result<String, InternalError> {
+        // contents omitted for brevity
+    }
+
+    /// Exchanges the given authorization code for an access token and the
+    /// client redirect URL provided in the original auth request, represented
+    /// by a `String`.
+    pub fn exchange_authorization_code(
+        &self,
+        auth_code: String,
+        csrf_token: &str,
+    ) -> Result<Option<(UserInfo, String)>, InternalError> {
+        // contents omitted for brevity
+    }
+
+    /// Exchanges the given refresh token for an access token.
+    pub fn exchange_refresh_token(
+      &self,
+      refresh_token: String
+    ) -> Result<String, InternalError> {
+        // contents omitted for brevity
+    }
+
+    /// Attempts to get the subject that the given access token is for from the
+    /// OAuth server. This method will return `Ok(None)` if the access token
+    /// could not be resolved to a subject.
+    pub fn get_subject(
+      &self,
+      access_token: &str
+    ) -> Result<Option<String>, InternalError> {
+        self.subject_provider.get_subject(access_token)
+    }
+}
+
+/// User information returned by the OAuth2 client
+pub struct UserInfo {
+    access_token: String,
+    expires_in: Option<Duration>,
+    refresh_token: Option<String>,
+    subject: String,
+}
+
+impl UserInfo {
+    // accessor methods omitted for brevity
+}
+```
+
+Internally, the OAuth client will use a new store, the in-flight OAuth request
+store, for correlating authorization requests with callbacks from the
+authorization server. This store will be defined in the `splinter::oauth::store`
+module as follows:
+
+```rust
+use crate::error::{ConstraintViolationError, InternalError};
+
+/// Errors that may occur during InflightOAuthRequestStore operations.
+#[derive(Debug)]
+pub enum InflightOAuthRequestStoreError {
+    InternalError(InternalError),
+    ConstraintViolation(ConstraintViolationError),
+}
+
+/// A Store for the in-flight information pertaining to an OAuth2 request.
+///
+/// An OAuth2 request consists of a request to the provider, and then a callback
+/// request back to the library user's REST API.  There is information created
+/// for the first request that must be verified by the second request. This
+/// store manages that information.
+pub trait InflightOAuthRequestStore: Sync + Send {
+    /// Insert a request into the store.
+    fn insert_request(
+        &self,
+        request_id: String,
+        authorization: PendingAuthorization,
+    ) -> Result<(), InflightOAuthRequestStoreError>;
+
+    /// Remove a request from the store and return it, if it exists.
+    fn remove_request(
+        &self,
+        request_id: &str,
+    ) -> Result<Option<PendingAuthorization>, InflightOAuthRequestStoreError>;
+
+    fn clone_box(&self) -> Box<dyn InflightOAuthRequestStore>;
+}
+
+/// Information pertaining to pending authorization requests, including the
+/// PKCE verifier, and client's redirect URL
+#[derive(Debug, PartialEq)]
+pub struct PendingAuthorization {
+    pkce_verifier: String,
+    client_redirect_url: String,
+}
+```
+
+This store will be implemented according to the
+[Splinter data store guidelines]({% link community/data_store_guidelines.md %}).
+
+### Identity Provider
+
+The Splinter REST API guards itself such that only properly authorized clients'
 requests are accepted. This functionality is described in the
 [REST API Authorization design]({% link
 community/planning/rest_api_authorization.md %}).
 
-For OAuth, it is expected that the `Authorization` header specified with REST
-API requests has the value `Bearer: OAuth2:<token>`, where `<token>` is an
-access token provided by the Splinter REST API. If this token type (`OAuth2`) is
-not provided, or if this header is malformed, the Splinter REST API will respond
-with `401 Unauthorized`.
+An implementation of the `IdentityProvider` trait (defined in the REST API
+authorization design) will be added for authenticating OAuth users. This
+implementation will be defined in the
+`splinter::rest_api::auth::identity::oauth` module as the
+`OAuthUserIdentityProvider`.
 
-Each of the OAuth provider types will have its own `IdentityProvider`
-implementation that queries the appropriate provider's servers using an OAuth
-access token to get the client's identity (see the REST API Authorization design
-for more on identity providers). When the client's identity is retrieved
-initially in the `GET /oauth/callback` endpoint, the configured OAuth identity
-provider will create an entry in the `OAuthUserSessionStore` to save the OAuth
-tokens and the user's identity.
+The `OAuthUserIdentityProvider` will require that the `Authorization` header
+specified with REST API requests has the value `Bearer: OAuth2:<token>`, where
+`<token>` is an access token provided by the Splinter REST API. If this token
+type (`OAuth2`) is not provided, or if this header is malformed, the Splinter
+REST API will respond with `401 Unauthorized`.
+
+This identity provider will use the `OAuthClient` and `OAuthUserSessionStore` to
+authenticate a user. When the client's identity is retrieved initially in the
+`GET /oauth/callback` endpoint, the OAuth tokens and identity will be entered
+into the `OAuthUserSessionStore`.
 
 For up to one hour after authentication, the OAuth identity provider will use
 the `OAuthUserSessionStore` to lookup a user's identity based on a request's
@@ -138,27 +289,15 @@ attempt to use the corresponding OAuth access token to re-check the user's
 identity; this ensures that the user is still authenticated for the Splinter
 REST API according to the OAuth provider. If this check fails but an OAuth
 refresh token exists for the session, the identity provider will attempt to get
-a new OAuth access token using the refresh token; if this succeeds, Splinter
-will update the store entry for the session and attempt to use the new access
-token to fetch the user's identity. If the refresh token exchange fails or no
-refresh token exists, the server will logout the user by removing the store
-entry before returning a `401 Unauthorized` response to the client.
+a new OAuth access token using the refresh token (using the
+`OAuthClient::exchange_refresh_token` method); if this succeeds, Splinter will
+update the store entry for the session and attempt to use the new access token
+to fetch the user's identity. If the refresh token exchange fails or no refresh
+token exists, the server will logout the user by removing the store entry before
+returning a `401 Unauthorized` response to the client.
 
-Identity providers will be configured for the REST API and passed to the
-middleware, which will call them for each request to get the client's identity.
-This identity is added to the authorized request using the HTTP request
-extensions. This allows the Splinter REST API endpoints that are validated
-through this middleware component to access the user's verified identity.
-
-The following `IdentityProvider` implementations will be included with the
-Splinter REST API:
-
-* `GithubUserIdentityProvider` - Gets a user's GitHub username using a GitHub
-  OAuth access token
-
-* `OpenIdUserIdentityProvider` - Gets a user's subject identifier from an
-  OpenID-compliant OAuth provider (this covers the Azure Active Directory and
-  Google providers)
+This identity provider will be configured for the REST API, which will call if
+for each request to get the client's identity.
 
 ### REST API Endpoints
 
@@ -171,7 +310,8 @@ the `GET /oauth/login` route, the `GET /oauth/callback` route, and the
 The login route is used by the browser application to initiate the
 authentication process. The application will request this route from the
 Splinter REST API, which will respond with a `302 Found` response that redirects
-the browser to the Splinter REST API's configured authorization server.
+the browser to the Splinter REST API's configured authorization server. This
+endpoint uses the `OAuthClient::get_authorization_url` method.
 
 In the request to the Splinter REST API, the browser application must provide a
 client redirect URL. This URL will be used by the Splinter REST API to redirect
@@ -190,7 +330,8 @@ authorization code to the Splinter REST API. After the user has granted
 permission to the application, the authorization server will redirect the
 browser to the callback route with the authorization code. The Splinter REST API
 will then exchange this code for the user's OAuth access token and a refresh
-token if the authorization server provides one.
+token if the authorization server provides one. This endpoint uses the
+`OAuthClient::exchange_authorization_code` method.
 
 Once it has the OAuth token(s), the REST API will fetch the user's identity
 using the configured OAuth `IdentityProvider`. Splinter will also generate a new
