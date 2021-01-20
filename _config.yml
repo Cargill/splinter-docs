@@ -81,3 +81,9 @@ defaults:
         type: "pages"
       values:
         layout: "default"
+    - scope:
+        path: "search"
+        type: "pages"
+      values:
+        layout: "sidebars"
+        sidebar: "examples"

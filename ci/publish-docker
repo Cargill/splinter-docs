@@ -18,6 +18,7 @@ set -e
 cp _userconfig.yml.example _userconfig.yml
 
 sed -i "s#%GA_TOKEN%#$GOOGLE_ANALYTICS#g" _userconfig.yml
+sed -i "s#%GPSE_ID%#$GOOGLE_PSE#g" _userconfig.yml
 
 docker build \
     --build-arg jekyll_env=production \

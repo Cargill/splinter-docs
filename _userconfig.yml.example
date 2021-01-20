@@ -13,7 +13,8 @@
 # limitations under the License.
 
 
-# To include Google Analytics, replace the example value below with your token
-# and rename this file to _userconfig.yml
+# To include Google Analytics or enable the search page, replace the example
+# values below with your tokens and rename this file to _userconfig.yml
 
 google_analytics: "%GA_TOKEN%"
+google_search_id: "%GPSE_ID%"
