@@ -51,3 +51,7 @@ forum.
   community/planning/rest_api_authorization.md %})
 
   Design for securing the Splinter REST API.
+
+* [Admin UI Profile Redesign]({% link community/planning/admin_ui_profile.md %})
+
+  New designs for the profile page in the splinter Admin UI.
