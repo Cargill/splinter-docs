@@ -13,7 +13,6 @@
 # limitations under the License.
 
 url: https://www.splinter.dev
-google_analytics: "UA-177547765-1"
 
 plugins:
 - jekyll-default-layout

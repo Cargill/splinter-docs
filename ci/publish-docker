@@ -15,9 +15,14 @@
 
 set -e
 
+cp _userconfig.yml.example _userconfig.yml
+
+sed -i "s#%GA_TOKEN%#$GOOGLE_ANALYTICS#g" _userconfig.yml
+
 docker build \
     --build-arg jekyll_env=production \
     -t splintercommunity/splinter-docs \
     -f ci/website.dockerfile \
     .
+
 docker push splintercommunity/splinter-docs
