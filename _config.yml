@@ -40,8 +40,10 @@ exclude:
   - CODEOWNERS
   - ci
   - docker*
+  - justfile
   - LICENSE
   - MAINTAINERS.md
+  - README.md
   - /docs/README.md
   - /*TEMPLATE_*.md
 
