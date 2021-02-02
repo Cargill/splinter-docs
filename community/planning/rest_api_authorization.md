@@ -26,7 +26,7 @@ behalf of the node, or modifying system state.
 [guide-level-explanation]: #guide-level-explanation
 
 Authorization for the Splinter REST API will be handled by an authorization
-middleware. This component will inspect all REST API requests and attempt to
+guard. This component will inspect all REST API requests and attempt to
 verify if the client is permitted to make the request. This process is as
 follows:
 
@@ -42,32 +42,30 @@ follows:
 
 To determine the identity of a client, the Splinter REST API will be configured
 with a set of identity providers. These identity providers will be called by the
-authorization middleware in the configured order with the parsed contents of the
+authorization guard in the configured order with the parsed contents of the
 request's `Authorization` header in an attempt to find an identity that
-corresponds to the header. If this is successful, the authorization middleware
-will use the returned client identity to perform authorization; if no identity
-could be found, the middleware will respond to the client with
-`401 Unauthorized`.
+corresponds to the header. If this is successful, the authorization guard will
+use the returned client identity to perform authorization; if no identity could
+be found, the guard will respond to the client with `401 Unauthorized`.
 
 ### Authorization Handlers
 
 To determine the authorization of a given client to perform a request, the
 Splinter REST API will be configured with a set of authorization handlers. These
-handlers will be called by the authorization middleware in the configured order
-with the client's identity (as determined by the set of identity providers) as
-well as data about the requested action, including a permission string and a set
-of contextual data. The authorization handlers will each attempt to determine if
+handlers will be called by the authorization guard in the configured order with
+the client's identity (as determined by the set of identity providers) as well
+as data about the requested action, including a permission string and a set of
+contextual data. The authorization handlers will each attempt to determine if
 the client should be granted permission to make the request.
 
 Each handler may allow, deny, or pass on the request. If a handler allows a
-request, the middleware will stop calling the authorization handlers and will
-pass on the request to the appropriate handler for the requested endpoint. If a
-handler denies a request, the middleware will stop calling the authorization
-handlers and will return a `401 Unauthorized` response to the client. If a
-handler passes on a request, the middleware will call the next authorization
-handler. If no authorization handler provides an allow or deny decision, the
-authorization middleware will deny the request with a `401 Unauthorized`
-response.
+request, the guard will stop calling the authorization handlers and will pass on
+the request to the appropriate handler for the requested endpoint. If a handler
+denies a request, the guard will stop calling the authorization handlers and
+will return a `401 Unauthorized` response to the client. If a handler passes on
+a request, the guard will call the next authorization handler. If no
+authorization handler provides an allow or deny decision, the authorization
+guard will deny the request with a `401 Unauthorized` response.
 
 Initially, three authorization handler implementations will be provided by
 Splinter: a file-backed store of admin keys, a database-backed store for
@@ -76,11 +74,11 @@ role-based access control, and a "maintenance mode" handler.
 ## Reference-level explanation
 [reference-level-explanation]: #reference-level-explanation
 
-### Authorization Middleware
+### Authorization Guard
 
-The authorization middleware for the Splinter REST API will be implemented in
-two parts: a framework-agnostic function for performing authorization, and a
-framework-specific middleware that calls the authorization function.
+The authorization guard for the Splinter REST API will be implemented in two
+parts: a framework-agnostic function for performing authorization, and a
+framework-specific component that calls the authorization function.
 
 The authorization function will be defined as follows:
 
@@ -122,7 +120,7 @@ fn authorize(
 }
 ```
 
-The framework-specific middleware will parse the request for the required data
+The framework-specific component will parse the request for the required data
 (endpoint and authorization header) and, along with the REST API's configured
 identity providers and authorization handlers, call the `authorize` function to
 determine if the client is permitted to make the request.
@@ -140,7 +138,7 @@ community/planning/oauth2_rest_api_authentication.md %}) document.
 The identity providers used by the REST API are configured indirectly. When
 building the Splinter REST API, one or more authentication types will be
 configured; based on the authentication types configured, the appropriate
-identity providers will be created and used in the authorization middleware.
+identity providers will be created and used in the authorization guard.
 
 The interface for identity providers will be defined using the following Rust
 trait, located in the `splinter::rest_api::auth::identity` module:
