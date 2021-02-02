@@ -21,17 +21,17 @@ of downtime for upgrades or single-point-of-failure issues.
 
 | Feature | Status | Documentation |
 | ------- | ------ | ------------- |
-| Circuit Deletion | Not Started | - |
-| Circuit Name | Under Development | - |
+| Circuit Deletion | Under Development | - |
+| Circuit Name | Complete | [splinter circuit propose]({% link docs/0.5/references/cli/splinter-circuit-propose.1.md %}), [splinter circuit show]({% link docs/0.5/references/cli/splinter-circuit-show.1.md %}), [splinter circuit list]({% link docs/0.5/references/cli/splinter-circuit-list.1.md %}) |
 | Circuit Template | Complete | [How-to]({% link docs/0.5/howto/using_circuit_templates.md %}), [Man page]({% link docs/0.5/references/cli/splinter-circuit-propose.1.md %}) |
 | Challenge Authorization | Not Started | - |
-| Cylinder Support | Under Development | [Repo](https://github.com/Cargill/cylinder) |
+| Cylinder Support | Complete | [Repo](https://github.com/Cargill/cylinder) |
 | Cloud-friendly Deployment | Under Development | [Admin Service Store Feature]({% link community/planning/admin_service_store.md %}), [Data Store Guidelines]({% link community/data_store_guidelines.md %}) |
-| Database - PostgreSQL Support | Under Development | - |
-| Database - SQLite Support | Under Development | - |
-| REST API - Authorization | Discussion | - |
-| REST API - Cylinder JWT Authentication | Under Development | - |
-| REST API - OAuth 2 Authentication | Under Development | - |
+| Database - PostgreSQL Support | Under Development | [Data Store Guidelines]({% link community/data_store_guidelines.md %}) |
+| Database - SQLite Support | Under Development | [Data Store Guidelines]({% link community/data_store_guidelines.md %}) |
+| REST API - Authorization | Under Development | [REST API Authorization Design]({% link community/planning/rest_api_authorization.md %}) |
+| REST API - Cylinder JWT Authentication | Complete | [Cylinder JWT Authentication]({% link community/planning/cylinder_jwt_authentication.md %}) |
+| REST API - OAuth 2 Authentication | Complete | [OAuth 2 REST API Authentication]({% link community/planning/oauth2_rest_api_authentication.md %}) |
 | Transact SQL Support | Under Development | [Code](https://github.com/hyperledger/transact/tree/master/libtransact/src/database) |
 | WebSocket Transport | Experimental | [Code](https://github.com/Cargill/splinter/tree/master/libsplinter/src/transport/ws) |
 
