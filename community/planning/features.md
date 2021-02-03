@@ -37,6 +37,11 @@ forum.
 
   A JSON Web Token module for the Cylinder Signing library.
 
+* [Cylinder JWT Authentication]({% link
+  community/planning/cylinder_jwt_authentication.md %})
+
+  Support of Cylinder JWT authentication for the Splinter REST API.
+
 * [OAuth 2 REST API Authentication]({% link
   community/planning/oauth2_rest_api_authentication.md %})
 
