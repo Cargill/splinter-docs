@@ -289,15 +289,17 @@ CLI for displaying this list in a table, CSV, or JSON format.
 Identity providers will resolve a request's `Authorization` header to a client
 identity. These providers will be configured for the REST API based on the
 authentication types supported. For instance, Biome credentials authentication
-would provide its own identity provider, as would Cylinder JWT authentication
-and OAuth authentication. For more on OAuth authentication, see the
-[OAuth 2 REST API Authentication]({% link
-community/planning/oauth2_rest_api_authentication.md %}) document.
+would provide its own identity provider, as would
+[Cylinder JWT authentication]({% link
+community/planning/cylinder_jwt_authentication.md %}) and
+[OAuth authentication]({%
+link community/planning/oauth2_rest_api_authentication.md %}).
 
-The identity providers used by the REST API are configured indirectly. When
-building the Splinter REST API, one or more authentication types will be
-configured; based on the authentication types configured, the appropriate
-identity providers will be created and used in the authorization guard.
+The identity providers used by the REST API will typically be configured
+indirectly. When building the Splinter REST API, one or more authentication
+types will be configured; based on the authentication types configured, the
+appropriate identity providers will be created and used in the authorization
+guard.
 
 The interface for identity providers will be defined using the following Rust
 trait, located in the `splinter::rest_api::auth::identity` module:
