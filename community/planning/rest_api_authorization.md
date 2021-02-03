@@ -340,7 +340,8 @@ pub enum BearerToken {
 
 Authorization handlers are responsible for answering questions about whether a
 client is permitted to perform a request. These handlers will be configured for
-the REST API based on which sources are required for verifying permissions.
+the REST API based on which sources are required for verifying permissions (see
+[Authorization Handler Configuration](#authorization-handler-configuration)).
 
 The interface for authorization handlers will be defined using the following
 Rust code, located in the `splinter::rest_api::auth::authorization` module:
@@ -688,6 +689,23 @@ CREATE TABLE IF NOT EXISTS assignments (
 );
 ```
 
+#### The "admin" Role
+
+The role-based authorization store will have a special, predefined `admin` role.
+The database-backed implementation will provide this role using the following
+migration:
+
+```sql
+INSERT INTO roles VALUES ('admin', 'Administrator');
+INSERT INTO role_permissions VALUES ('admin', '*');
+```
+
+This role is treated as a special case by both the `RoleBasedAuthorizationStore`
+and the `RoleBasedAuthorizationHandler`. The store will explicitly deny updating
+or removing this role using the `update_role` and `remove_role` methods. The
+handler will check if the provided identity has the admin role and, if it does,
+grant it the requested permission.
+
 #### Managing the Role-Based Authorization Store
 
 The role-based authorization store will provide REST API endpoints for managing
@@ -733,10 +751,12 @@ the Splinter CLI:
 The maintenance mode authorization handler will allow a Splinter node's "write"
 operations to be temporarily disabled. For the REST API, this means turning off
 transaction handling, circuit creation/update/deletion, and anything else that
-modifies the node's internal state. While in maintenance mode, the only clients
-that are able to perform write operations are the keys listed in the allow keys
-file or identities that have been assigned the special `admin` role in the
-role-based authorization store.
+modifies the node's internal state. Specifically, a write operation is
+considered to be any endpoint whose permission ID does not end in `.read`.
+
+While in maintenance mode, the only clients that are able to perform write
+operations are the keys listed in the allow keys file or identities that have
+been assigned the special `admin` role in the role-based authorization store.
 
 The maintenance mode authorization handler will be defined in the
 `splinter::rest_api::auth::authorization::maintenance` module as follows:
@@ -783,6 +803,19 @@ impl AuthorizationHandler for MaintenanceModeAuthorizationHandler {
 }
 ```
 
+The maintenance mode authorization handler will provide the following REST API
+endpoints:
+
+* `GET /authorization/maintenance` for checking if maintenance mode is enabled
+* `POST /authorization/maintenance` for enabling/disabling maintenance mode
+
+Additionally, the following commands will be added to the Splinter CLI for
+managing maintenance mode:
+
+* `splinter maintenance status`
+* `splinter maintenance enable`
+* `splinter maintenance disable`
+
 ### Authorization Handler Configuration
 
 Because the Splinter REST API evaluates the authorization handlers in order, the
@@ -810,8 +843,4 @@ guidelines.
 ## Unresolved questions
 [unresolved]: #unresolved
 
-* How is maintenance mode enabled? This may be done through a REST API endpoint
-  with a corresponding CLI subcommand.
-
-* Should the role-based authorization store have a predefined set of roles, such
-  as "admin"?
+None
