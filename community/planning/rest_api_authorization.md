@@ -143,6 +143,147 @@ The framework-specific piece of the authorization guard will handle the
 * `Unauthorized` - A `401 Unauthorized` response will be returned to the client
 * `UnknownEndpoint` - A `404 Not Found` response will be returned to the client
 
+### Permissions
+
+Permissions will be declared by all Splinter REST API endpoints. Permission
+definitions will use the following Rust enum defined in the
+`splinter::rest_api::auth::authorization` module:
+
+```rust
+/// A permission assigned to an endpoint
+pub enum Permission {
+    /// Check that the authenticated client has the specified permission.
+    Check {
+        /// The permission ID that's passed to [`AuthorizationHandler::has_permission`]
+        permission_id: &'static str,
+        /// The human-readable name for the permission
+        permission_display_name: &'static str,
+        /// A description for the permission
+        permission_description: &'static str,
+    },
+    /// Allow any request that has been authenticated (the client's identity has been determined).
+    /// This may be used by endpoints that need to know the client's identity but do not require a
+    /// special permission to be checked (the Biome key management and OAuth logout routes are an
+    /// example of this).
+    AllowAuthenticated,
+    /// Allow any request without checking for authorization.
+    AllowUnauthenticated,
+}
+```
+
+Each of these permissions is handled differently by the authorization guard:
+
+* `Check` - The authorization guard will check the client's identity and the
+  permission ID against the configured set of authorization handlers to
+  determine if the permission has been granted to the client. This is a standard
+  permission.
+* `AllowAuthenticated` - The authorization guard will only require that the
+  client's identity could be determined from the `Authorization` header by one
+  of the configured identity providers.
+* `AllowUnauthenticated` - The authorization guard will not perform any
+  authentication or authorization for the request. This is typically used for
+  login endpoints.
+
+Permissions may be shared by multiple endpoints; for example, the REST API
+endpoints for listing circuits and showing individual circuits will share the
+`circuit.read` permission.
+
+The permission IDs defined in `Permission::Check` declarations should consist of
+one or more namespaces separted by `.` and ending with either `.read` or
+`.write`. The `circuit.read` permission mentioned above is an example of a
+read-only permission; the ID `component.subcomponent.write` is an example of a
+write permission. This format is not enforced, but strongly encouraged.
+
+#### Permission Map
+
+These permissions are declared in the `Resource` definitions for all REST API
+endpoints. When the `Resource` definitions are added to the Splinter REST API's
+builder, the builder creates a specialized `PermissionMap` that will be used by
+the authorization guard to map requests--(method, endpoint) pairs--to the
+appropriate permissions. The `PermissionMap` will be defined in the
+`splinter::rest_api::auth::authorization` module as follows:
+
+```rust
+/// A map used to correlate requests with the permissions that guard them.
+pub(in crate::rest_api) struct PermissionMap {
+    internal: Vec<(RequestDefinition, Permission)>,
+}
+
+impl PermissionMap {
+    pub fn new() -> Self {
+        // contents omitted for brevity
+    }
+
+    /// Gets a list of all permissions.
+    pub fn permissions(&self) -> impl Iterator<Item = Permission> + '_ {
+        // contents omitted for brevity
+    }
+
+    /// Sets the permission for the given (method, endpoint) pair. The endpoint may contain path
+    /// variables surrounded by `{}`.
+    pub fn add_permission(&mut self, method: Method, endpoint: &str, permission: Permission) {
+        // contents omitted for brevity
+    }
+
+    /// Gets the permission for a request. This will attempt to match the method and endpoint to a
+    /// known (method, endpoint) pair, considering path variables of known endpoints.
+    pub fn get_permission(&self, method: &Method, endpoint: &str) -> Option<&Permission> {
+        // contents omitted for brevity
+    }
+
+    /// Takes the contents of another `PermissionMap` and merges them into itself. This consumes the
+    /// contents of the other map.
+    pub fn append(&mut self, other: &mut PermissionMap) {
+        // contents omitted for brevity
+    }
+}
+
+/// A (method, endpoint) definition that will be used to match requests
+struct RequestDefinition {
+    method: Method,
+    path: Vec<PathComponent>,
+}
+
+impl RequestDefinition {
+    pub fn new(method: Method, endpoint: &str) -> Self {
+        // contents omitted for brevity
+    }
+
+    /// Checks if the given request matches this definition, considering any variable path
+    /// components.
+    pub fn matches(&self, method: &Method, endpoint: &str) -> bool {
+        // contents omitted for brevity
+    }
+}
+
+/// A component of an endpoint path
+enum PathComponent {
+    /// A standard path component where matching is done on the internal string
+    Text(String),
+    /// A variable path component that matches any string
+    Variable,
+}
+
+impl From<&str> for PathComponent {
+    // contents omitted for brevity
+}
+
+impl PartialEq<&str> for PathComponent {
+    // contents omitted for brevity
+}
+```
+
+#### Permission Details
+
+To aid the discovery and assignment of permissions, the Splinter REST API will
+automatically provide a `GET /authorization/permissions` endpoint that will list
+all permissions declared by the REST API's configured endpoints. Each entry in
+the returned list will include the permission's ID, display name, and
+description.
+
+Additionally, the `splinter permissions` command will be added to the Splinter
+CLI for displaying this list in a table, CSV, or JSON format.
+
 ### Identity Providers
 
 Identity providers will resolve a request's `Authorization` header to a client
@@ -655,34 +796,6 @@ allowed to perform any action, even when maintenance mode is turned on, while
 the role-based permissions are ignored when a permission has been temporarily
 disabled by maintenance mode (unless the identity has the `admin` role).
 
-### Permission Definitions
-
-Permissions will be defined in the code for the various Splinter REST API
-endpoints. Permission definitions will use the following Rust enum defined in
-the `splinter::rest_api::auth::Authorization` module:
-
-```rust
-/// A permission assigned to an endpoint
-pub enum Permission {
-    /// Check that the authenticated client has the specified permission.
-    Check {
-        /// The permission ID that's passed to [`AuthorizationHandler::has_permission`]
-        permission_id: &'static str,
-        /// The human-readable name for the permission
-        permission_display_name: &'static str,
-        /// A description for the permission
-        permission_description: &'static str,
-    },
-    /// Allow any request that has been authenticated (the client's identity has been determined).
-    /// This may be used by endpoints that need to know the client's identity but do not require a
-    /// special permission to be checked (the Biome key management and OAuth logout routes are an
-    /// example of this).
-    AllowAuthenticated,
-    /// Allow any request without checking for authorization.
-    AllowUnauthenticated,
-}
-```
-
 ## Prior art
 [prior-art]: #prior-art
 
@@ -695,17 +808,8 @@ guidelines.
 ## Unresolved questions
 [unresolved]: #unresolved
 
-* How/where are permissions defined, and how are requests translated into
-  permissions? This design needs to take into account that some endpoints may
-  provide access to certain users based on some path or query parameters (such
-  as the Biome endpoints, where a normal user would likely have permission to
-  modify their own keys).
-
 * How is maintenance mode enabled? This may be done through a REST API endpoint
   with a corresponding CLI subcommand.
-
-* What is the list of permissions defined for the Splinter REST API, and which
-  permissions apply to which endpoints?
 
 * Should the role-based authorization store have a predefined set of roles, such
   as "admin"?
