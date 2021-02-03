@@ -27,16 +27,22 @@ behalf of the node, or modifying system state.
 
 Authorization for the Splinter REST API will be handled by an authorization
 guard. This component will inspect all REST API requests and attempt to
-verify if the client is permitted to make the request. This process is as
-follows:
+verify if the client is permitted to make the request. This process is generally
+as follows:
 
-1. Determine if the requested endpoint requires authorization
-1. Read the `Authorization` HTTP header
-1. Parse the authorization header into a known format
-1. Query a set of configured identity providers to match the authorization
-   header with a client identity
-1. Query a set of configured authorization handlers to determine if the client
-   is authorized to make the request
+1. Determine the permission that applies to the requested endpoint
+1. Parse the `Authorization` HTTP header into a known format
+1. Query the set of configured identity providers to resolve the authorization
+   header to a client identity
+1. Query the set of configured authorization handlers to determine if the client
+   has been granted the permission
+
+### Permissions
+
+Each REST API endpoint will declare a permission that is required to use the
+endpoint. When these endpoints are added to the REST API builder on startup,
+the REST API will assemble a map that it will use to determine which permission
+to check for a requested endpoint.
 
 ### Identity Providers
 
