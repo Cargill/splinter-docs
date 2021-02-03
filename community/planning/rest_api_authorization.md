@@ -85,34 +85,32 @@ The authorization function will be defined as follows:
 ```rust
 /// The possible outcomes of attempting to authorize a client
 enum AuthorizationResult {
-    /// The client was authorized to the given identity
-    Authorized {
-        identity: String,
-        authorization: Authorization,
-    },
+    /// The client was authorized to the given identity based on the authorization header
+    Authorized(Identity),
     /// The requested endpoint does not require authorization
     NoAuthorizationNecessary,
-    /// The authorization header could not be resolved to an identity or the
-    /// client is not authorized to make the given request
+    /// The authorization header is empty or invalid
     Unauthorized,
+    /// The request endpoint is not defined
+    UnknownEndpoint,
 }
 
-/// Uses the given identity providers to check authorization for the request.
-/// This function is framework-agnostic and intended as a helper for the REST
-/// API implementations.
+/// Uses the given identity providers to check authorization for the request. This function is
+/// backend-agnostic and intended as a helper for the backend REST API implementations.
 ///
 /// # Arguments
 ///
-/// * `endpoint` - The endpoint that is being requested. Example:
-///   "/endpoint/path"
+/// * `method` - The HTTP method used for the request
+/// * `endpoint` - The endpoint that is being requested. Example: "/endpoint/path"
 /// * `auth_header` - The value of the Authorization HTTP header for the request
-/// * `identity_providers` - The identity providers that will be used to check
-///   the client's identity
-/// * `authorization_handlers` - The authorization handlers that will be used to
-///   check the client's authorization
+/// * `identity_providers` - The identity providers that will be used to check the client's identity
+/// * `authorization_handlers` - The authorization handlers that will be used to check the client's
+///   permissions
 fn authorize(
+    method: &Method,
     endpoint: &str,
     auth_header: Option<&str>,
+    permission_map: &PermissionMap,
     identity_providers: &[Box<dyn IdentityProvider>],
     authorization_handlers: &[Box<dyn AuthorizationHandler>],
 ) -> AuthorizationResult {
@@ -146,25 +144,32 @@ trait, located in the `splinter::rest_api::auth::identity` module:
 ```rust
 /// A service that fetches identities from a backing provider
 pub trait IdentityProvider: Send + Sync {
+    /// Attempts to get the identity that corresponds to the given authorization header. This method
+    /// will return `Ok(None)` if the identity provider was not able to resolve the authorization
+    /// to an identity.
     fn get_identity(
         &self,
-        authorization: &Authorization
-    ) -> Result<String, IdentityProviderError>;
-
-    fn clone_box(&self) -> Box<dyn IdentityProvider>;
+        authorization: &AuthorizationHeader,
+    ) -> Result<Option<Identity>, InternalError>;
 }
 
-/// The authorization that is passed to an `IdentityProvider`
-#[derive(PartialEq)]
-pub enum Authorization {
+/// A parsed authorization header
+pub enum AuthorizationHeader {
     Bearer(BearerToken),
     Custom(String),
 }
 
 /// A bearer token of a specific type
-#[derive(PartialEq)]
 pub enum BearerToken {
-    // contents omitted for brevity
+    /// Contains a Biome JWT
+    Biome(String),
+    /// Contains a custom token, which is any bearer token that does not match one of the other
+    /// variants of this enum
+    Custom(String),
+    /// Contains a Cylinder JWT
+    Cylinder(String),
+    /// Contains an OAuth2 token
+    OAuth2(String),
 }
 ```
 
@@ -178,42 +183,36 @@ The interface for authorization handlers will be defined using the following
 Rust code, located in the `splinter::rest_api::auth::authorization` module:
 
 ```rust
-/// An error that may occur when using an [AuthorizationHandler]
-#[derive(Debug)]
-pub enum AuthorizationHandlerError {
-    InternalError(InternalError),
-}
+use crate::error::InternalError;
 
-impl fmt::Display for AuthorizationHandlerError {
-    // contents omitted for brevity
-}
+use super::identity::Identity;
 
-impl Error for AuthorizationHandlerError {
-    // contents omitted for brevity
-}
-
-/// An authorization handler's decision about whether to allow, deny, or pass on
-/// the request
+/// An authorization handler's decision about whether to allow, deny, or pass on the request
 pub enum AuthorizationHandlerResult {
+    /// The authorization handler has granted the requested permission
     Allow,
+    /// The authorization handler has denied the requested permission
     Deny,
+    /// The authorization handler is not able to determine if the requested permission should be
+    /// granted or denied
     Continue,
 }
 
-/// Determines if a client (identity) has the requested permissions (represented
-/// by the permission ID)
-pub trait AuthorizationHandler {
+/// Determines if a client has some permissions
+pub trait AuthorizationHandler: Send + Sync {
+    /// Determines if the given identity has the requested permission
     fn has_permission(
-        identity: &str,
-        permission_id: &str
-    ) -> Result<AuthorizationHandlerResult, AuthorizationHandlerError>;
+        &self,
+        identity: &Identity,
+        permission_id: &str,
+    ) -> Result<AuthorizationHandlerResult, InternalError>;=
 }
 ```
 
-### Admin Keys File Authorization Handler
+### Allow Keys File Authorization Handler
 
-An admin keys file will be used to grant all permissions to a set of keys. This
-file will be called `admin_keys`, and it will live in the Splinter daemon's
+An allow keys file will be used to grant all permissions to a set of keys. This
+file will be called `allow_keys`, and it will live in the Splinter daemon's
 configuration directory (`/etc/splinter` by default). This file will be a simple
 list of public keys, separated by newlines.
 
@@ -229,49 +228,65 @@ other permissions have been disabled, such as when the node is in "maintenance
 mode". This authorization source is a special case in this regard.
 
 This authorization handler will be defined in the
-`splinter::rest_api::auth::authorization::admin_keys` module as follows:
+`splinter::rest_api::auth::authorization::allow_keys` module as follows:
 
 ```rust
 use std::time::SystemTime;
 
-use cylinder::PublicKey;
-use super::{
-  AuthorizationHandler, AuthorizationHandlerError, AuthorizationHandlerResult
-};
+use crate::error::InternalError;
+use crate::rest_api::auth::identity::Identity;
+
+use super::{AuthorizationHandler, AuthorizationHandlerResult};
 
 /// A file-backed authorization handler that permits admin keys
-pub struct AdminKeysAuthorizationHandler {
+pub struct AllowKeysAuthorizationHandler {
+    internal: Arc<Mutex<Internal>>,
+}
+
+impl AllowKeysAuthorizationHandler {
+    /// Constructs a new `AllowKeysAuthorizationHandler`. If the backing file already exists, it
+    /// will be loaded and cached; if the backing file doesn't already exist, it will be created.
+    ///
+    /// # Arguments
+    ///
+    /// * `file_path` - The path of the backing allow keys file.
+    pub fn new(file_path: &str) -> Result<Self, InternalError> {
+        // contents omitted for brevity
+    }
+}
+
+impl AuthorizationHandler for AllowKeysAuthorizationHandler {
+    fn has_permission(
+        &self,
+        identity: &Identity,
+        _permission_id: &str,
+    ) -> Result<AuthorizationHandlerResult, InternalError> {
+        // Allow if `identity` is in the internal list of keys, otherwise continue
+    }
+}
+
+/// Internal state of the authorization handler
+struct Internal {
     file_path: String,
-    cached_keys: Vec<PublicKey>,
+    cached_keys: Vec<String>,
     last_read: SystemTime,
 }
 
-impl AdminKeysAuthorizationHandler {
-    /// Creates a new handler backed by the file at the given path. This
-    /// constructor will attempt to read the keys from the file; an error will
-    /// be returned if the read fails.
-    fn new(file_path: String) -> Result<Self, AuthorizationHandlerError> {
+impl Internal {
+    fn new(file_path: &str) -> Result<Self, InternalError> {
+        // load keys from file or create file if necessary
+    }
+
+    /// Gets the internal list of keys. If the backing file has been modified since the last read,
+    /// attempts to refresh the cache. If the file is unavailable, clears the cache.
+    fn get_keys(&mut self) -> &[String] {
         // contents omitted for brevity
     }
 
-    /// Gets the internal list of keys. If the backing file has been modified
-    /// since the last read, attempt to refresh the cache.
-    fn get_keys(&mut self) -> Vec<PublicKey> {
+    /// Reads the backing file and caches its contents, logging an error for any key that can't be
+    /// read
+    fn read_keys(&mut self) -> Result<(), InternalError> {
         // contents omitted for brevity
-    }
-
-    /// Reads the backing file and caches its contents.
-    fn read_keys(&mut self) -> Result<(), AuthorizationHandlerError> {
-        // contents omitted for brevity
-    }
-}
-
-impl AuthorizationHandler for AdminKeysAuthorizationHandler {
-    fn has_permission(
-        identity: &str,
-        _permission_id: &str
-    ) -> Result<AuthorizationHandlerResult, AuthorizationHandlerError> {
-        // check if `identity` is in the internal list of keys
     }
 }
 ```
@@ -285,21 +300,24 @@ database-backed store can be used to assign roles to both users and signing
 keys.
 
 This authorization handler will be defined in the
-`splinter::rest_api::auth::authorization::roles` module as follows:
+`splinter::rest_api::auth::authorization::rbac` module as follows:
 
 ```rust
-use super::{
-  AuthorizationHandler, AuthorizationHandlerError, AuthorizationHandlerResult
-};
+use crate::error::InternalError;
+use crate::rest_api::auth::authorization::{AuthorizationHandler, AuthorizationHandlerResult};
 
-/// An authorization handler that assigns permissions to roles and roles to
-/// identities
+use super::store::RoleBasedAuthorizationStore;
+
+/// A Role-based authorization handler.
 pub struct RoleBasedAuthorizationHandler {
-    store: Box<dyn RoleBasedAuthorizationStore>,
+    role_based_auth_store: Box<dyn RoleBasedAuthorizationStore>,
 }
 
 impl RoleBasedAuthorizationHandler {
-    // contents omitted for brevity
+    /// Construct a new role-based authorization handler with the given store.
+    pub fn new(role_based_auth_store: Box<dyn RoleBasedAuthorizationStore>) -> Self {
+        // contents omitted for brevity
+    }
 }
 
 impl AuthorizationHandler for RoleBasedAuthorizationHandler {
@@ -307,7 +325,8 @@ impl AuthorizationHandler for RoleBasedAuthorizationHandler {
         identity: &str,
         permission_id: &str
     ) -> Result<AuthorizationHandlerResult, AuthorizationHandlerError> {
-        // use the internal store to check the permissions for the identity
+        // Allow if `identity` has been assigned a role with the given permission in the store,
+        // otherwise continue
     }
 }
 ```
@@ -317,10 +336,17 @@ the `splinter::rest_api::auth::authorization::roles::store` module. This store
 will be defined using the following API:
 
 ```rust
+pub use error::RoleBasedAuthorizationStoreError;
+
+/// A Role is a named set of permissions.
 pub struct Role {
     id: String,
     display_name: String,
     permissions: Vec<String>,
+}
+
+impl Role {
+    // contents omitted for brevity
 }
 
 pub struct RoleBuilder {
@@ -349,14 +375,22 @@ impl RoleUpdateBuilder {
     }
 }
 
+/// An identity that may be assigned roles.
+pub enum Identity {
+    /// A public key-based identity.
+    Key(String),
+    /// A user ID-based identity.
+    User(String),
+}
+
+/// An assignment of roles to a particular identity.
 pub struct Assignment {
     identity: Identity,
     roles: Vec<String>,
 }
 
-pub enum Identity {
-    Key(String),
-    User(String),
+impl Assignment {
+    // contents omitted for brevity
 }
 
 pub struct AssignmentBuilder {
@@ -381,56 +415,80 @@ impl AssignmentUpdateBuilder {
     }
 }
 
-pub trait RoleBasedAuthorizationStore {
-    fn get_role(
-      &self,
-      id: &str,
-    ) -> Result<Option<Role>, RoleBasedAuthorizationStoreError>;
+/// Defines methods for CRUD operations on Role and assignment data.
+pub trait RoleBasedAuthorizationStore: Send + Sync {
+    /// Returns the role for the given ID, if one exists.
+    fn get_role(&self, id: &str) -> Result<Option<Role>, RoleBasedAuthorizationStoreError>;
 
+    /// Lists all roles.
     fn list_roles(
         &self,
-    ) -> Result<
-      Box<dyn ExactSizeIterator<Item = Role>>,
-      RoleBasedAuthorizationStoreError,
-    >;
+    ) -> Result<Box<dyn ExactSizeIterator<Item = Role>>, RoleBasedAuthorizationStoreError>;
 
-    fn add_role(
-      &self,
-      role: Role,
-  ) -> Result<(), RoleBasedAuthorizationStoreError>;
+    /// Adds a role.
+    ///
+    /// # Errors
+    ///
+    /// Returns a `ConstraintViolation` error if a duplicate role ID is added.
+    fn add_role(&self, role: Role) -> Result<(), RoleBasedAuthorizationStoreError>;
 
-    fn update_role(
-      &self,
-      role: Role,
-    ) -> Result<(), RoleBasedAuthorizationStoreError>;
+    /// Updates a role.
+    ///
+    /// # Errors
+    ///
+    /// Returns a `InvalidState` error if the role does not exist.
+    fn update_role(&self, role: Role) -> Result<(), RoleBasedAuthorizationStoreError>;
 
-    fn remove_role(
-      &self,
-      role_id: &str,
-    ) -> Result<(), RoleBasedAuthorizationStoreError>;
+    /// Removes a role.
+    ///
+    /// # Errors
+    ///
+    /// Returns a `InvalidState` error if the role does not exist.
+    fn remove_role(&self, role_id: &str) -> Result<(), RoleBasedAuthorizationStoreError>;
 
+    /// Returns the role for the given Identity, if one exists.
     fn get_assignment(
         &self,
         identity: &Identity,
     ) -> Result<Option<Assignment>, RoleBasedAuthorizationStoreError>;
 
+    /// Returns the assigned roles for the given Identity.
+    fn get_assigned_roles(
+        &self,
+        identity: &Identity,
+    ) -> Result<Box<dyn ExactSizeIterator<Item = Role>>, RoleBasedAuthorizationStoreError>;
+
+    /// Lists all assignments.
     fn list_assignments(
         &self,
-    ) -> Result<
-      Box<dyn ExactSizeIterator<Item = Assignment>>,
-      RoleBasedAuthorizationStoreError,
-    >;
+    ) -> Result<Box<dyn ExactSizeIterator<Item = Assignment>>, RoleBasedAuthorizationStoreError>;
 
+    /// Adds an assignment.
+    ///
+    /// # Errors
+    ///
+    /// Returns a `ConstraintViolation` error if there is a duplicate assignment of a role to an
+    /// identity.
     fn add_assignment(
         &self,
         assignment: Assignment,
     ) -> Result<(), RoleBasedAuthorizationStoreError>;
 
+    /// Updates an assignment.
+    ///
+    /// # Errors
+    ///
+    /// Returns a `InvalidState` error if the assignment does not exist.
     fn update_assignment(
         &self,
         assignment: Assignment,
     ) -> Result<(), RoleBasedAuthorizationStoreError>;
 
+    /// Removes an assignment.
+    ///
+    /// # Errors
+    ///
+    /// Returns a `InvalidState` error if the assignment does not exist.
     fn remove_assignment(
         &self,
         identity: &Identity,
@@ -448,15 +506,15 @@ CREATE TABLE IF NOT EXISTS roles (
 );
 
 CREATE TABLE IF NOT EXISTS role_permissions (
-    id           TEXT    NOT NULL,
+    role_id      TEXT    NOT NULL,
     permission   TEXT    NOT NULL,
-    PRIMARY KEY(id, permission),
-    FOREIGN KEY (id) REFERENCES roles(id) ON DELETE CASCADE
+    PRIMARY KEY(role_id, permission),
+    FOREIGN KEY (role_id) REFERENCES roles(id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS identities (
-    identity     TEXT    PRIMARY KEY,
-    type         INTEGER NOT NULL
+    identity      TEXT    PRIMARY KEY,
+    identity_type INTEGER NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS assignments (
@@ -475,14 +533,14 @@ provided by the store's trait. They will be:
 
 * `GET /authorization/roles`
 * `POST /authorization/roles`
-* `GET /authorization/roles/{id}`
-* `PATCH /authorization/roles/{id}`
-* `DELETE /authorization/roles/{id}`
-* `GET /authorization/identities`
-* `POST /authorization/identities`
-* `GET /authorization/identities/{identity}`
-* `PATCH /authorization/identities/{identity}`
-* `DELETE /authorization/identities/{identity}`
+* `GET /authorization/roles/{role_id}`
+* `PATCH /authorization/roles/{role_id}`
+* `DELETE /authorization/roles/{role_id}`
+* `GET /authorization/assignments`
+* `POST /authorization/assignments`
+* `GET /authorization/assignments/{identity_type}/{identity}`
+* `PATCH /authorization/assignments/{identity_type}/{identity}`
+* `DELETE /authorization/assignments/{identity_type}/{identity}`
 
 In addition to the REST API endpoints, a set of subcommands will be added to the
 `splinter` CLI to manage the authorization store. The following commands will be
@@ -490,9 +548,9 @@ supported by the authorization store's REST API:
 
 * `splinter role list [--format human,csv]`
 * `splinter role show [--format human,csv] ROLE-ID`
-* `splinter role create --perm PERMISSION-ID ... DISPLAY-NAME`
-* `splinter role update [--dry-run] --add-perm PERMISSION-ID --rm-perm
-  PERMISSION-ID ... ROLE-ID`
+* `splinter role create --perm PERMISSION-ID --display DISPLAY-NAME ... ROLE-ID`
+* `splinter role update [--dry-run] [--rm-all] [--force] --display DISPLAY-NAME
+  --add-perm PERMISSION-ID --rm-perm PERMISSION-ID ... ROLE-ID`
 * `splinter role delete ROLE-ID`
 * `splinter authid list [--type=key|user] [--format human,csv]`
 * `splinter authid show [--format human,csv] IDENTITY`
@@ -513,40 +571,51 @@ The maintenance mode authorization handler will allow a Splinter node's "write"
 operations to be temporarily disabled. For the REST API, this means turning off
 transaction handling, circuit creation/update/deletion, and anything else that
 modifies the node's internal state. While in maintenance mode, the only clients
-that are able to perform write operations are the keys listed in the admin keys
-file.
+that are able to perform write operations are the keys listed in the allow keys
+file or identities that have been assigned the special `admin` role in the
+role-based authorization store.
 
 The maintenance mode authorization handler will be defined in the
 `splinter::rest_api::auth::authorization::maintenance` module as follows:
 
 ```rust
-use super::{
-  AuthorizationHandler, AuthorizationHandlerError, AuthorizationHandlerResult
+use crate::error::InternalError;
+use crate::rest_api::auth::{
+  authorization::rbac::store::RoleBasedAuthorizationStore, identity::Identity
 };
 
-/// An authorization handler that can temporarily disable write operations
+use super::{AuthorizationHandler, AuthorizationHandlerResult};
+
+/// An authorization handler that allows write permissions to be temporarily revoked
 pub struct MaintenanceModeAuthorizationHandler {
-    writes_enabled: bool,
+    maintenance_mode: Arc<AtomicBool>,
+    rbac_store: Option<Box<dyn RoleBasedAuthorizationStore>>,
 }
 
 impl MaintenanceModeAuthorizationHandler {
-    fn new() -> Self {
-        Self { writes_enabled: true }
+    pub fn new(rbac_store: Option<Box<dyn RoleBasedAuthorizationStore>>) -> Self {
+        // contents omitted for brevity
     }
 
-    fn enable_writes(&mut self, enable_writes: bool) {
-        self.writes_enabled = enable_writes;
+    /// Returns whether or not maintenance mode is enabled
+    pub fn is_maintenance_mode_enabled(&self) -> bool {
+        // contents omitted for brevity
+    }
+
+    /// Sets whether or not maintenance mode is enabled
+    pub fn set_maintenance_mode(&self, maintenance_mode: bool) {
+        // contents omitted for brevity
     }
 
 }
 impl AuthorizationHandler for MaintenanceModeAuthorizationHandler {
     fn has_permission(
-        _identity: &str,
-        permission_id: &str
+        &self,
+        identity: &Identity,
+        permission_id: &str,
     ) -> Result<AuthorizationHandlerResult, AuthorizationHandlerError> {
-        // if permission is a write permission and writes are disabled,
-        // return AuthorizationHandlerResult::Deny, otherwise
-        // AuthorizationHandlerResult::Continue
+        // if permission is a write permission, writes are disabled, and identity does not have the
+        // "admin" role in the RBAC store, deny; otherwise continue
     }
 }
 ```
@@ -557,33 +626,47 @@ Because the Splinter REST API evaluates the authorization handlers in order, the
 order in which they're configured is important. To support the desired behavior,
 the authorization handlers will be configured in the following order:
 
-1. Admin keys file
+1. Allow keys file
 1. Maintenance mode
 1. Role-based
 
-This order ensures that the keys listed in the admin keys file are always
+This order ensures that the keys listed in the allow keys file are always
 allowed to perform any action, even when maintenance mode is turned on, while
 the role-based permissions are ignored when a permission has been temporarily
-disabled by maintenance mode.
+disabled by maintenance mode (unless the identity has the `admin` role).
 
 ### Permission Definitions
 
 Permissions will be defined in the code for the various Splinter REST API
-endpoints. Permission definitions will use the following Rust struct defined in
-the `splinter::rest_api::auth` module:
+endpoints. Permission definitions will use the following Rust enum defined in
+the `splinter::rest_api::auth::Authorization` module:
 
 ```rust
-pub struct Permission {
-    id: String,
-    display_name: String,
-    description: String,
+/// A permission assigned to an endpoint
+pub enum Permission {
+    /// Check that the authenticated client has the specified permission.
+    Check {
+        /// The permission ID that's passed to [`AuthorizationHandler::has_permission`]
+        permission_id: &'static str,
+        /// The human-readable name for the permission
+        permission_display_name: &'static str,
+        /// A description for the permission
+        permission_description: &'static str,
+    },
+    /// Allow any request that has been authenticated (the client's identity has been determined).
+    /// This may be used by endpoints that need to know the client's identity but do not require a
+    /// special permission to be checked (the Biome key management and OAuth logout routes are an
+    /// example of this).
+    AllowAuthenticated,
+    /// Allow any request without checking for authorization.
+    AllowUnauthenticated,
 }
 ```
 
 ## Prior art
 [prior-art]: #prior-art
 
-The `AdminKeysAuthorizationHandler` borrows its file-loading strategy from
+The `AllowKeysAuthorizationHandler` borrows its file-loading strategy from
 Splinter's `LocalYamlRegistry`.
 
 The `RoleBasedAuthorizationStore` is based on the standard Splinter store design
