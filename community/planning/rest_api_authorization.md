@@ -124,10 +124,24 @@ fn authorize(
 }
 ```
 
+The contents of the `authorize` function are described in the
+[guide-level explanation](#guide-level-explanation).
+
 The framework-specific component will parse the request for the required data
-(endpoint and authorization header) and, along with the REST API's configured
-identity providers and authorization handlers, call the `authorize` function to
-determine if the client is permitted to make the request.
+(method, endpoint, and authorization header) and, along with the REST API's
+configured permission map, identity providers, and authorization handlers, call
+the `authorize` function to determine if the client is permitted to make the
+request.
+
+The framework-specific piece of the authorization guard will handle the
+`AuthorizationResult` returned by the `authorize` function as follows:
+
+* `Authorized` - The returned identity will be injected into the request for
+  endpoints to use as needed (some endpoints perform operations based on the
+  authenticated user)
+* `NoAuthorizationNecessary` - No special actions are necessary
+* `Unauthorized` - A `401 Unauthorized` response will be returned to the client
+* `UnknownEndpoint` - A `404 Not Found` response will be returned to the client
 
 ### Identity Providers
 
@@ -686,9 +700,6 @@ guidelines.
   provide access to certain users based on some path or query parameters (such
   as the Biome endpoints, where a normal user would likely have permission to
   modify their own keys).
-
-* What is the set of data required by the `authorize` method and authorization
-  handlers?
 
 * How is maintenance mode enabled? This may be done through a REST API endpoint
   with a corresponding CLI subcommand.
