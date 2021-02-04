@@ -1,6 +1,16 @@
 # Copyright 2018-2020 Cargill Incorporated
-# Licensed under Creative Commons Attribution 4.0 International License
-# https://creativecommons.org/licenses/by/4.0/
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 
 openapi: '3.0.0'
 
@@ -106,7 +116,7 @@ paths:
         401:
           description: The client is unauthorized
         500:
-          description: An internal server error occurrred
+          description: An internal server error occurred
           content:
             application/json:
               schema:
@@ -145,7 +155,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
         500:
-          description: An internal server error occurrred
+          description: An internal server error occurred
           content:
             application/json:
               schema:
@@ -237,8 +247,10 @@ paths:
         This endpoint can be used to view all or some of the circuits that the
         node is a member of. If a node ID is provided via the "filter" query
         parameter, only circuits that have the given node ID as a member will be
-        returned; if no filter is provided, all of the node's circuits will be
-        returned.
+        returned. If a circuit status is provided via the "status" query
+        parameter, only circuits that have the given circuit status will be
+        returned; if no filter is provided, all of the node's `Active` circuits
+        will be returned.
       tags:
         - Circuits
       parameters:
@@ -261,6 +273,12 @@ paths:
         - name: filter
           in: query
           description: Node ID that must be present in the returned circuits
+          required: false
+          schema:
+            type: string
+        - name: status
+          in: query
+          description: Circuit status of the returned circuits
           required: false
           schema:
             type: string
@@ -287,7 +305,7 @@ paths:
         401:
           description: The client is unauthorized
         500:
-          description: An internal server error occurrred
+          description: An internal server error occurred
           content:
             application/json:
               schema:
@@ -326,7 +344,227 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
         500:
-          description: An internal server error occurrred
+          description: An internal server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /authorization/maintenance:
+    get:
+      tags:
+        - Authorization
+      description: Checks whether or not maintenance mode is enabled
+      parameters:
+        - $ref: "#/components/parameters/auth"
+        - $ref: "#/components/parameters/protocol_version"
+      responses:
+        200:
+          description: Successfully checked maintenance mode
+          content:
+            text/plain:
+              schema:
+                type: string
+                properties:
+                  message:
+                    type: string
+                    enum:
+                      - true
+                      - false
+        401:
+          description: The client is unauthorized
+    post:
+      tags:
+        - Authorization
+      description: Sets whether or not maintenance mode is enabled
+      parameters:
+        - $ref: "#/components/parameters/auth"
+        - $ref: "#/components/parameters/protocol_version"
+        - name: enabled
+          in: query
+          description: |
+            If "true", maintenance mode will be enabled; if "false", maintenance
+            mode will be disabled.
+          required: true
+          schema:
+            type: boolean
+      responses:
+        200:
+          description: Successfully checked maintenance mode
+          content:
+            text/plain:
+              schema:
+                type: string
+                properties:
+                  message:
+                    type: boolean
+        400:
+          description: Request was malformed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        401:
+          description: The client is unauthorized
+
+  /authorization/permissions:
+    get:
+      tags:
+        - Authorization
+        - Permissions
+      description: Fetches the list of all REST API permissions
+      parameters:
+        - $ref: "#/components/parameters/auth"
+        - $ref: "#/components/parameters/protocol_version"
+      responses:
+        200:
+          description: Successfully retrieved the list of REST API permissions
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: '#/components/schemas/Permission'
+        400:
+          description: Request was malformed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        401:
+          description: The client is unauthorized
+
+  /authorization/roles:
+    get:
+      summary: Fetches a list of roles
+      description: |
+        This endpoint can be used to view all of the available roles configured
+        for the node.  These roles control access to various permissions in the
+        system.
+
+        This endpoint requires the permission "authorization.rbac.read".
+      tags:
+        - Roles
+        - Permissions
+        - RBAC
+        - Authorization
+      parameters:
+        - $ref: "#/components/parameters/auth"
+        - $ref: "#/components/parameters/protocol_version"
+        - name: offset
+          in: query
+          description: paging offset
+          required: false
+          schema:
+            type: integer
+            default: 0
+        - name: limit
+          in: query
+          description: maximum number of items to return (max 100)
+          required: false
+          schema:
+            type: integer
+            default: 100
+      responses:
+        200:
+          description: Successfully retrieved the requested list of roles
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Role'
+                  paging:
+                    $ref: '#/components/schemas/Paging'
+        400:
+          description: Request was malformed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        401:
+          description: The client is unauthorized
+        500:
+          description: An internal server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      summary: Add a role
+      description: |
+        This endpoint can be used to add a new role to the Splinter Role-based
+        authorization system. The role must conform to the role schema and have
+        unique "role_id" value.
+      parameters:
+        - $ref: "#/components/parameters/auth"
+        - $ref: "#/components/parameters/protocol_version"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Role'
+      responses:
+        200:
+          description: The role was successfully added
+        400:
+          description: The request was malformed or the role was invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        401:
+          description: The client is unauthorized
+        500:
+          description: An internal server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /authorization/roles/{role_id}:
+    get:
+      summary: Fetches a role by its ID
+      description: |
+        This endpoint can be used to view a specific role.
+      tags:
+        - Roles
+      parameters:
+        - $ref: "#/components/parameters/auth"
+        - $ref: "#/components/parameters/protocol_version"
+        - name: role_id
+          in: path
+          description: ID of the role to fetch
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Successfully retrieved the requested role
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Role'
+        401:
+          description: The client is unauthorized
+        404:
+          description: The requested role was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: An internal server error occurred
           content:
             application/json:
               schema:
@@ -1284,6 +1522,93 @@ paths:
                 schema:
                   $ref: '#/components/schemas/ErrorBiome'
 
+  /biome/profiles:
+    get:
+      tags:
+        - Biome
+      description: List all user profiles
+      parameters:
+        - $ref: "#/components/parameters/auth"
+        - $ref: "#/components/parameters/protocol_version"
+      responses:
+        200:
+          description: List of profiles for all users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BiomeProfile'
+        401:
+          description: The client is unauthorized
+        500:
+          description: Internal server error occurred
+          content:
+            application/json:
+                schema:
+                  $ref: '#/components/schemas/ErrorBiome'
+
+  /biome/profiles/{user_id}:
+    get:
+      tags:
+      - Biome
+      description: Fetch a profile by ID
+      parameters:
+        - $ref: "#/components/parameters/auth"
+        - $ref: "#/components/parameters/protocol_version"
+        - name: user_id
+          in: path
+          description: ID of the user
+          required: true
+          schema:
+            type: string
+            example: "f35aacc1-a9cd-4eda-b6d0-2efaddf0c8a4"
+      responses:
+        200:
+          description: User profile
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BiomeProfile'
+        401:
+          description: The client is unauthorized
+        404:
+          description: Resource not found
+          content:
+            application/json:
+                schema:
+                  $ref: '#/components/schemas/ErrorBiome'
+        500:
+          description: Internal server error occurred
+          content:
+            application/json:
+                schema:
+                  $ref: '#/components/schemas/ErrorBiome'
+
+  /biome/profile:
+    get:
+      tags:
+        - Biome
+      description: Get the profile of the authenticated user
+      parameters:
+        - $ref: "#/components/parameters/auth"
+        - $ref: "#/components/parameters/protocol_version"
+      responses:
+        200:
+          description: User's profile
+          content:
+            application/json:
+                schema:
+                  $ref: '#/components/schemas/BiomeProfile'
+        401:
+          description: The client is unauthorized
+        500:
+          description: Internal server error occurred
+          content:
+            application/json:
+                schema:
+                  $ref: '#/components/schemas/ErrorBiome'
+
   /biome/keys:
     get:
       tags:
@@ -1834,6 +2159,14 @@ components:
           description: Human readable name for the circuit
           type: string
           nullable: true
+        circuit_status:
+            description: The status of the circuit
+            type: string
+            nullable: true
+            enum:
+              - Active
+              - Disbanded
+              - Abandoned
 
     CircuitService:
       type: object
@@ -1859,7 +2192,7 @@ components:
             - UpdateRoster
             - AddNode
             - RemoveNode
-            - Destroy
+            - Disband
         circuit_id:
           type: string
           example: 01234-ABCDE
@@ -1893,6 +2226,16 @@ components:
                 description: Human readable name for the circuit
                 type: string
                 nullable: true
+              circuit_version:
+                  description: The protocol version the circuit adheres to
+                  type: integer
+              circuit_status:
+                  description: The status of the circuit
+                  type: string
+                  enum:
+                    - Active
+                    - Disbanded
+                    - Abandoned
         votes:
           type: array
           items:
@@ -2035,6 +2378,70 @@ components:
           description: "Username of a user"
           example: "bob@biome.com"
 
+    Permission:
+      type: object
+      properties:
+        permission_id:
+          type: string
+          description: "Unique identifier for the permission"
+          example: "circuit.read"
+        permission_display_name:
+          type: string
+          description: "A human readable name of the permission"
+          example: "Circuit read"
+        permission_description:
+          type: string
+          description: "A helpful description of the permission"
+          example: "Allows the client to modify circuit state"
+
+    Role:
+      type: object
+      properties:
+        role_id:
+          type: string
+          description: "Unique identifier for the role"
+          example: "circuit-administrator"
+        display_name:
+          type: string
+          description: "A human readable name of the role."
+          example: "Circuit Administrator"
+        permissions:
+          type: array
+          description: "An array of permissions included with this role."
+          items:
+            type: string
+
+    BiomeProfile:
+      type: object
+      properties:
+        user_id:
+          type: string
+          description: "Internal unique identifier for the user"
+          example: "f35aacc1-a9cd-4eda-b6d0-2efaddf0c8a4"
+        subject:
+          type: string
+          description: "Oauth provider's unique identifier for the user"
+          example: "129367690558975733497"
+        name:
+          type: string
+          description: "User's name"
+          example: "Alice Foo"
+        given_name:
+          type: string
+          description: "The given name of the user"
+          example: "Alice"
+        family_name:
+          type: string
+          description: "The family name of the user"
+          example: "Foo"
+        email:
+          type: string
+          description: "The email address of the user"
+          example: "alice@gmail.com"
+        picture:
+          type: string
+          description: "The profile picture for the user's account"
+          example: "https://lh6.googleusercontent.com/AMZpcempiaceeiA/s96-c/photo.jpg"
 
 tags:
   - name: Biome

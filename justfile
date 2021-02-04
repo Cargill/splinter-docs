@@ -38,6 +38,11 @@ copy-docs:
         echo "\033[1m$cmd\033[0m"
         $cmd
 
+        # sync REST API spec from splinterd
+        cmd="rsync -v {{splinter_repo}}/splinterd/api/static/openapi.yaml docs/$version/references/api/openapi.yml"
+        echo "\033[1m$cmd\033[0m"
+        $cmd
+
         # Remove any templates that were copied over
         cmd="rm -v docs/$version/references/cli/*.example"
         echo "\033[1m$cmd\033[0m"
