@@ -43,4 +43,4 @@ jobs:
         - provider: script
           script: bash ci/publish-docker
           on:
-            branch: master
+            branch: main
