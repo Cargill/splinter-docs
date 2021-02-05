@@ -1,5 +1,4 @@
-#!/bin/bash
-# Copyright 2020 Cargill Incorporated
+# Copyright 2021 Cargill Incorporated
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,17 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-set -e
 
-cp _userconfig.yml.example _userconfig.yml
+# To include Google Analytics or enable the search page, replace the example
+# values below with your tokens and rename this file to _userconfig.yml
 
-sed -i "s#%GA_TOKEN%#$GOOGLE_ANALYTICS#g" _userconfig.yml
-sed -i "s#%GPSE_ID%#$GOOGLE_PSE#g" _userconfig.yml
-
-docker build \
-    --build-arg jekyll_env=production \
-    -t splintercommunity/splinter-docs \
-    -f ci/website.dockerfile \
-    .
-
-docker push splintercommunity/splinter-docs
+google_analytics: "%GA_TOKEN%"
+google_search_id: "%GPSE_ID%"

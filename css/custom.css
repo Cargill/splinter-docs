@@ -67,7 +67,11 @@ img {
     color: var(--text-color);
 }
 
-.nav-link.active *, .nav-link:hover * {
+.nav-link > span {
+    padding-bottom: 2px;
+}
+
+.nav-link.active > span, .nav-link:hover > span {
     border-bottom: 2px solid var(--splinter-fuchsia);
 }
 
@@ -541,4 +545,21 @@ td {
     border-radius: 5px;
     margin-bottom: 30px;
     padding: 20px;
+}
+
+/* Override Google Search Input */
+
+table.gsc-input {
+    table-layout: unset;
+    margin: unset;
+    margin-bottom: unset;
+}
+
+th {
+    padding: 5px;
+    border-bottom: 2px solid var(--light-splinter-fuchsia);
+}
+
+td {
+    padding: unset;
 }

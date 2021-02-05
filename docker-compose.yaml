@@ -28,7 +28,11 @@ services:
     entrypoint: |
       bash -c "
         rm -rf  _site .jekyll-cache
-        jekyll serve
+        if [ -f _userconfig.yml ]; then
+           jekyll serve --config _config.yml,_userconfig.yml
+        else
+           jekyll serve
+        fi
       "
 
   splinter-docs-redoc-0-4:

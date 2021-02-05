@@ -13,7 +13,6 @@
 # limitations under the License.
 
 url: https://www.splinter.dev
-google_analytics: "UA-177547765-1"
 
 plugins:
 - jekyll-default-layout
@@ -41,8 +40,10 @@ exclude:
   - CODEOWNERS
   - ci
   - docker*
+  - justfile
   - LICENSE
   - MAINTAINERS.md
+  - README.md
   - /docs/README.md
   - /*TEMPLATE_*.md
 
@@ -82,3 +83,9 @@ defaults:
         type: "pages"
       values:
         layout: "default"
+    - scope:
+        path: "search"
+        type: "pages"
+      values:
+        layout: "sidebars"
+        sidebar: "examples"

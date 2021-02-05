@@ -14,4 +14,5 @@
 
 #jekyll stuff
 .jekyll-cache/
+_userconfig.yml
 _site/

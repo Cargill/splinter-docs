@@ -44,7 +44,11 @@ ENV JEKYLL_ENV=$jekyll_env
 COPY . /srv/jekyll
 
 RUN rm -rf /srv/jekyll/_site \
- && jekyll build --verbose --destination /tmp
+ && if [ -f _userconfig.yml ] ; then \
+       jekyll build --config _config.yml,_userconfig.yml --verbose --destination /tmp ; \
+    else \
+       jekyll build --config _config.yml --verbose --destination /tmp ;\
+    fi
 
 # -------------=== log commit hash ===-------------
 
