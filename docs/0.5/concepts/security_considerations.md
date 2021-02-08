@@ -115,14 +115,6 @@ functionality in the Gameroom application (as described in
 [Gameroom Walkthrough: Behind scene
 1](../examples/gameroom/walkthrough/#i-1-behind-scene-1-alice-logs-into-acmes-gameroom-ui).
 
-**NOTE**: Currently, Biome doesn't support integration with an organization's
-identity provider (such as Active Directory). As a result, the current version
-of Biome is not appropriate for production deployment.
-This support is planned for the future. In the meantime, an application could
-implement a component that integrates user authentication from the
-organization's identity provider with Biome-style approach for mapping users to
-keys.
-
 For more information, see [Biome User
 Management]({% link docs/0.5/concepts/biome_user_management.md %}).
 
@@ -151,7 +143,28 @@ Permissions](https://sawtooth.hyperledger.org/docs/sabre/nightly/master/smart_pe
 and [Sawtooth Sabre Application Developer's
 Guide](https://sawtooth.hyperledger.org/docs/sabre/nightly/master/application_developer_guide.html).
 
-## Ports and REST API Connections
+## REST API Security
+
+The Splinter REST API provides authentication/authorization out-of-the-box.
+There are currently 3 types of client authentication that the REST API supports:
+Biome (user) credentials, OAuth2, and Cylinder JWT. Cylinder JWT authentication
+is enabled by default for the Splinter daemon, and administrators can configure
+which of the other authentication types is available on their node. Any
+combination of authentication types is allowed.
+
+The Splinter REST API provides 2 ways to configure authorization for clients: a
+file-based list of admin keys and a database-backed, role-based access control
+system. The REST API provides various permissions for its endpoints based on the
+part of the system they affect and if they are read or write operations. These
+permissions allow administrators to control which parts of the system a client
+or user can access and what kind of operations they can perform.
+
+For more information on REST API security and how to configure
+authentication/authorization for the `splinterd` REST API, see
+[Configuring REST API Authorization]({% link
+docs/0.5/howto/configuring_rest_api_authorization.md %}).
+
+## Ports and Connections
 
 By default, Splinter uses ports **8044** and **8080** for communication. Other
 nodes must be able to connect on port 8044.  Applications and CLIs used to
@@ -165,14 +178,3 @@ Splinter supports several connection protocols for node-to-node communication:
 * WebSocket secure (WSS) when the application protocol is HTTPS
 
 * Raw TCP (intended for development and testing only)
-
-Currently, the `splinterd` REST API supports authentication with Biome or OAuth,
-but does not yet provide authorization (except for the Biome endpoints). Anyone
-with access to a Splinter node on port 8080 that can authenticate will have
-unrestricted access to the REST API. Endpoint authorization is planned for the
-future. In the meantime, protecting port 8080 is recommended, either by blocking
-external access or allowing selective access with a mechanism such as a reverse
-proxy server or webserver.
-
-For more information, see [Planning a Splinter
-Deployment]({% link docs/0.5/howto/planning_splinter_deployment.md %}).
