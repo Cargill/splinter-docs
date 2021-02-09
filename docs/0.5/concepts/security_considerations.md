@@ -18,7 +18,9 @@ connections.
 
 Like [Hyperledger Sawtooth](https://sawtooth.hyperledger.org/) and other
 distributed ledgers, Splinter supports [key-based cryptographic
-signing](https://en.wikipedia.org/wiki/Public-key_cryptography).
+signing](https://en.wikipedia.org/wiki/Public-key_cryptography). Specifically,
+Splinter uses the [Cylinder](https://docs.rs/cylinder/0.2.2/cylinder/) library
+for loading keys, signing, and verifying signatures.
 
 Scabbard, the default distributed ledger service included in Splinter, uses
 public/private keys to sign all transactions that affect shared state. Each user
