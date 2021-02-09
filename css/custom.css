@@ -321,6 +321,12 @@ td {
     table-layout: fixed;
 }
 
+/* Auth Configuration tables */
+#roles-and-permissions + p + p + table {
+    width: 100%;
+    table-layout: fixed;
+}
+
 /* Landing Page Styles */
 
 #release-banner {

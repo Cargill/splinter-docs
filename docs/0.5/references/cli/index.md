@@ -13,6 +13,30 @@ interact with Splinter components.
 [`splinter`]({% link docs/0.5/references/cli/splinter.1.md %})
 Command-line interface for Splinter
 
+### Authorized Identity Management
+[`splinter authid`]({% link docs/0.5/references/cli/splinter-authid.1.md %})
+Provides authorized identity subcommands.
+
+[`splinter authid create`]({% link
+docs/0.5/references/cli/splinter-authid-create.1.md %})
+Creates an authorized identity on a Splinter node.
+
+[`splinter authid delete`]({% link
+docs/0.5/references/cli/splinter-authid-delete.1.md %})
+Deletes an authorized identity on a Splinter node.
+
+[`splinter authid list`]({% link
+docs/0.5/references/cli/splinter-authid-list.1.md %})
+Lists the authorized identities on a Splinter node.
+
+[`splinter authid show`]({% link
+docs/0.5/references/cli/splinter-authid-show.1.md %})
+Shows a specific authorized identity on a Splinter node.
+
+[`splinter authid update`]({% link
+docs/0.5/references/cli/splinter-authid-update.1.md %})
+Updates an authorized identity on a Splinter node.
+
 ### Certificate Management
 [`splinter cert`]({% link docs/0.5/references/cli/splinter-cert.1.md %})
 Provides certificate management subcommands
@@ -81,6 +105,31 @@ Displays information about a Splinter node
 ### Generates user and daemon keys for Splinter
 [`splinter keygen`]({% link docs/0.5/references/cli/splinter-keygen.1.md %})
 Generates user and daemon keys for Splinter
+
+### Role management
+
+[`splinter role`]({% link docs/0.5/references/cli/splinter-role.1.md %})
+Provides role subcommands.
+
+[`splinter role create`]({% link
+docs/0.5/references/cli/splinter-role-create.1.md %})
+Creates a role on a Splinter node.
+
+[`splinter role delete`]({% link
+docs/0.5/references/cli/splinter-role-delete.1.md %})
+Deletes a role on a Splinter node.
+
+[`splinter role list`]({% link docs/0.5/references/cli/splinter-role-list.1.md
+%})
+Lists the roles on a Splinter node.
+
+[`splinter role show`]({% link docs/0.5/references/cli/splinter-role-show.1.md
+%})
+Shows a specific role on a Splinter node.
+
+[`splinter role update`]({% link
+docs/0.5/references/cli/splinter-role-update.1.md %})
+Updates a role on a Splinter node.
 
 ## splinterd CLI
 
