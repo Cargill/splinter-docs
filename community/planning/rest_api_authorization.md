@@ -73,9 +73,9 @@ a request, the guard will call the next authorization handler. If no
 authorization handler provides an allow or deny decision, the authorization
 guard will deny the request with a `401 Unauthorized` response.
 
-Initially, three authorization handler implementations will be provided by
-Splinter: a file-backed store of admin keys, a database-backed store for
-role-based access control, and a "maintenance mode" handler.
+Initially, two authorization handler implementations will be provided by
+Splinter: a file-backed store of admin keys and a database-backed store for
+role-based access control.
 
 ## Reference-level explanation
 [reference-level-explanation]: #reference-level-explanation
@@ -387,9 +387,7 @@ intended purposes:
 * It provides a way to bootstrap permissions by allowing an administrator to set
 up the Splinter node using the Splinter CLI with one of the configured keys.
 
-* The keys defined in this file will have system-wide permissions even when all
-other permissions have been disabled, such as when the node is in "maintenance
-mode". This authorization source is a special case in this regard.
+* The keys defined in this file will have system-wide permissions
 
 This authorization handler will be defined in the
 `splinter::rest_api::auth::authorization::allow_keys` module as follows:
@@ -746,90 +744,13 @@ the Splinter CLI:
 * `--url <url>`
 * `--key <key-file>`
 
-### Maintenance Mode Authorization Handler
-
-The maintenance mode authorization handler will allow a Splinter node's "write"
-operations to be temporarily disabled. For the REST API, this means turning off
-transaction handling, circuit creation/update/deletion, and anything else that
-modifies the node's internal state. Specifically, a write operation is
-considered to be any endpoint whose permission ID does not end in `.read`.
-
-While in maintenance mode, the only clients that are able to perform write
-operations are the keys listed in the allow keys file or identities that have
-been assigned the special `admin` role in the role-based authorization store.
-
-The maintenance mode authorization handler will be defined in the
-`splinter::rest_api::auth::authorization::maintenance` module as follows:
-
-```rust
-use crate::error::InternalError;
-use crate::rest_api::auth::{
-  authorization::rbac::store::RoleBasedAuthorizationStore, identity::Identity
-};
-
-use super::{AuthorizationHandler, AuthorizationHandlerResult};
-
-/// An authorization handler that allows write permissions to be temporarily revoked
-pub struct MaintenanceModeAuthorizationHandler {
-    maintenance_mode: Arc<AtomicBool>,
-    rbac_store: Option<Box<dyn RoleBasedAuthorizationStore>>,
-}
-
-impl MaintenanceModeAuthorizationHandler {
-    pub fn new(rbac_store: Option<Box<dyn RoleBasedAuthorizationStore>>) -> Self {
-        // contents omitted for brevity
-    }
-
-    /// Returns whether or not maintenance mode is enabled
-    pub fn is_maintenance_mode_enabled(&self) -> bool {
-        // contents omitted for brevity
-    }
-
-    /// Sets whether or not maintenance mode is enabled
-    pub fn set_maintenance_mode(&self, maintenance_mode: bool) {
-        // contents omitted for brevity
-    }
-
-}
-impl AuthorizationHandler for MaintenanceModeAuthorizationHandler {
-    fn has_permission(
-        &self,
-        identity: &Identity,
-        permission_id: &str,
-    ) -> Result<AuthorizationHandlerResult, AuthorizationHandlerError> {
-        // if permission is a write permission, writes are disabled, and identity does not have the
-        // "admin" role in the RBAC store, deny; otherwise continue
-    }
-}
-```
-
-The maintenance mode authorization handler will provide the following REST API
-endpoints:
-
-* `GET /authorization/maintenance` for checking if maintenance mode is enabled
-* `POST /authorization/maintenance` for enabling/disabling maintenance mode
-
-Additionally, the following commands will be added to the Splinter CLI for
-managing maintenance mode:
-
-* `splinter maintenance status`
-* `splinter maintenance enable`
-* `splinter maintenance disable`
-
 ### Authorization Handler Configuration
 
-Because the Splinter REST API evaluates the authorization handlers in order, the
-order in which they're configured is important. To support the desired behavior,
-the authorization handlers will be configured in the following order:
+The authorization handlers will be configured in the following order by
+splinterd:
 
 1. Allow keys file
-1. Maintenance mode
 1. Role-based
-
-This order ensures that the keys listed in the allow keys file are always
-allowed to perform any action, even when maintenance mode is turned on, while
-the role-based permissions are ignored when a permission has been temporarily
-disabled by maintenance mode (unless the identity has the `admin` role).
 
 ## Prior art
 [prior-art]: #prior-art
