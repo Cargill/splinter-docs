@@ -1,7 +1,7 @@
 # Upgrading to Splinter v0.3.13 from Splinter v0.3.12
 
 <!--
-  Copyright 2018-2020 Cargill Incorporated
+  Copyright 2018-2021 Cargill Incorporated
   Licensed under Creative Commons Attribution 4.0 International License
   https://creativecommons.org/licenses/by/4.0/
 -->
