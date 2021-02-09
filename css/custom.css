@@ -316,7 +316,7 @@ td {
 
 /* Roadmap tables */
 
-#splinter-06 + table, #splinter-08 + p + table {
+#roadmap ~ table {
     width: 100%;
     table-layout: fixed;
 }
