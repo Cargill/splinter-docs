@@ -31,7 +31,7 @@ forum.
 
 Features listed here are no longer being worked on, either because they have
 been completed or abandoned. These documents represent the the intended design
-at the time the features were implemented. Due to Spinter's rapid development,
+at the time the features were implemented. Due to Splinter's rapid development,
 the current state of these features may differ somewhat from the original
 design.
 
