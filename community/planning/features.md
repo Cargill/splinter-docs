@@ -23,6 +23,7 @@ forum.
 | [Canopy 0.2]({% link community/planning/canopy_0.2.md %}) | New design of the Canopy system that enables dynamic loading of saplings and improved inter-sapling communication |
 | [Capabilities Repository]({% link community/planning/capabilities-repository.md %}) | A design for a repository and all the surrounding tools and formats for Splinter artifacts. These artifacts include saplings, smart contracts, and capabilities distributions. |
 | [Circuit Disband]({% link community/planning/circuit_disband.md %}) | Design for removing a circuit's networking capabilities |
+| [Circuit Purge]({% link community/planning/circuit_purge.md %}) | Design for removing a circuit's state data |
 | [REST API Authorization]({% link community/planning/rest_api_authorization.md %}) | Design for securing the Splinter REST API |
 | [REST API Maintenace Mode]({% link community/planning/rest_api_maintenance_mode.md %}) | Design for the maintenance mode authorization handler for the Splinter REST API |
 
