@@ -67,7 +67,8 @@ document and ultimately creates a circuit with a `Disbanded` `circuit_status`.
 The `CircuitAbandonRequest` enables a circuit to have a `circuit_status` of
 `Abandoned`. In both of these cases, the circuit networking will have been
 turned off. Once the circuit has been disbanded or abandoned, it is able to be
-purged.
+purged. The [Circuit Abandon]({% link community/planning/circuit_abandon.md %})
+feature document has more information on this operation.
 
 The `CircuitPurgeRequest` is defined in the admin protos as follows:
 

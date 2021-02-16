@@ -29,10 +29,12 @@ also remove the circuit’s networking capability.
 Abandoning a circuit is an alternative route to disbanding a circuit. A node
 may choose to abandon a circuit to disable the circuit's networking from their
 node's perspective. Other circuit members will then be unable to send the
-abandoning node any messages over the abandoned circuit. Disbanding, when
-compared to abandoning, is a safe operation as it requires all members to agree
-before a circuit is completely removed from the network. Once a circuit has
-been disbanded, it is only available locally. This means it has had it’s
+abandoning node any messages over the abandoned circuit. More information can
+be found in the [Circuit Abandon](
+{% link community/planning/circuit_abandon.md %}) feature document. Disbanding,
+when compared to abandoning, is a safe operation as it requires all members to
+agree before a circuit is completely removed from the network. Once a circuit
+has been disbanded, it is only available locally. This means it has had its
 networking capability removed, but the circuit and any service data remains in
 state.
 
@@ -145,7 +147,10 @@ administrators. As such, the disband feature allows time for each system
 administrator to come to a decision externally before agreeing to disband a
 circuit. This also gives administrators the option to reject the disbanding, to
 ensure each administrator has full control over the state of their Splinter
-network. Disbanding a circuit is a relatively safe operation.
+network. Disbanding a circuit is a safer operation compared to the available
+alternative. For information on abandoning a circuit, the alternative to
+disbanding, see the [Circuit Abandon](
+{% link community/planning/circuit_abandon.md %}) feature document.
 
 ## Prior art
 [prior-art]: #prior-art
