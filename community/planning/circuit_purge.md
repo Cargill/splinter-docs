@@ -118,6 +118,3 @@ that circuit in a single command.
 
 Prior to this feature, circuit deletion has not been implemented. Therefore,
 this design does not follow prior art.
-
-## Unresolved questions
-[unresolved]: #unresolved

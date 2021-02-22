@@ -153,6 +153,3 @@ network. Disbanding a circuit is a relatively safe operation.
 Prior to this feature, circuit deletion has not been implemented. The process
 of the disband feature does follow the design used to create a circuit, using
 the `CircuitCreate` message.
-
-## Unresolved questions
-[unresolved]: #unresolved
