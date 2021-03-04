@@ -51,6 +51,7 @@ first node, alpha.
         volumes:
           - alpha-var:/var/lib/splinter
           - ./config:/config
+          - allow_keys_alpha:/etc/splinter/allow_keys
         entrypoint: |
           bash -c "
             splinter cert generate --skip && \
@@ -139,7 +140,7 @@ will be used to identify the user who can sign circuit proposals and votes.
     ```
 
 1. Display the public key value and copy it to a scratch pad so it can be used
-in the next step. This example shows a sample key value; yours will be
+in the next steps. This example shows a sample key value; yours will be
 different.
 
     ```bash
@@ -186,6 +187,17 @@ to use the actual key value you copied instead of the example value shown below.
           organization: alpha
     ```
 
+1. Create the `allow_keys` file with the public key you copied above. This file
+tells Splinter that the public key is permitted to make all REST API requests
+(see [Configuring REST API Authorization]{% link
+docs/0.5/howto/configuring_rest_api_authorization.md %} for more info). Make
+sure to use the actual key value you copied instead of the example value shown
+below.
+
+    ```bash
+    $ echo "022f2e518a8440adef03fd951869c6c0d583bfa3606c733beef4500fbe4example" > allow_keys_alpha
+    ```
+
 1. Start the `alpha` node.
 
     ```bash
@@ -230,6 +242,7 @@ Congratulations! You've got a Splinter node up and running.
         volumes:
           - beta-var:/var/lib/splinter
           - ./config:/config
+          - allow_keys_beta:/etc/splinter/allow_keys
         entrypoint: |
           bash -c "
             splinter cert generate --skip && \
@@ -294,6 +307,14 @@ info about our node so they can add it to the alpha node registry.
         metadata:
           organization: alpha
     ```
+
+1. Create the `allow_keys` file for the beta node with the beta public key.
+Again, make sure to use the actual beta key value instead of the example value
+shown below.
+
+```bash
+$ echo "02edb9b9e3d652c0ff33408f7e99be0572b665ac34320229f7624b7c292example" > allow_keys_beta
+```
 
 1. Start the beta node.
 
@@ -375,9 +396,10 @@ beta nodes.
     Let's take a look at the options needed to create a circuit proposal.
 
     `--key /config/keys/beta.priv`: Private key file to use for signing the
-    transaction. This can be a relative or absolute file path, or it can be the
-    name of a .`priv` file in the `$HOME/.splinter/keys` directory. The target
-    file must contain a valid secp256k1 private key. This option is required.
+    transaction and authenticating with the Splinter REST API. This can be a
+    relative or absolute file path, or it can be the name of a .`priv` file in
+    the `$HOME/.splinter/keys` directory. The target file must contain a valid
+    secp256k1 private key. This option is required.
 
     `--url http://splinterd-beta:8080`: URL of the Splinter REST API
 
@@ -465,7 +487,7 @@ beta nodes.
     proposals` command on either node to display all committed proposals.
 
     ```bash
-    root@beta:/# splinter circuit proposals
+    root@beta:/# splinter circuit proposals --key /config/keys/beta.priv
     ID                  MANAGEMENT MEMBERS    COMMENTS
     El9jM-6bXjg example               beta;alpha
     ```
@@ -474,7 +496,7 @@ beta nodes.
 
     ```bash
     $ docker exec -it splinterd-alpha bash
-    root@alpha:/# splinter circuit proposals
+    root@alpha:/# splinter circuit proposals --key /config/keys/alpha.priv
     ID                 MANAGEMENT MEMBERS    COMMENTS
     El9jM-6bXjg example             beta;alpha
     ```
@@ -499,7 +521,7 @@ has been created.
     ```
 
     ```bash
-    root@alpha:/# splinter circuit list
+    root@alpha:/# splinter circuit list --key /config/keys/alpha.priv
     ID          MANAGEMENT MEMBERS
     El9jM-6bXjg example    beta;alpha
     ```
@@ -545,7 +567,7 @@ contract to. As in the rest of this tutorial, keys are stored in the
 circuit ID to use when uploading the smart contract.
 
     ```bash
-    $ docker exec splinterd-beta splinter circuit list
+    $ docker exec splinterd-beta splinter circuit list --key /config/keys/beta.priv
     ID          MANAGEMENT MEMBERS
     El9jM-6bXjg example    beta;alpha
     ```
@@ -592,9 +614,10 @@ as the contract’s owners.
     `--owners $(cat /config/keys/beta.pub)`: Owner of the contract registry.
 
     `--key /config/keys/beta.priv`: Private key file to use for signing the
-    transaction. This can be a relative or absolute file path, or it can be the
-    name of a `.priv` file in the `$HOME/.splinter/keys` directory. The target
-    file must contain a valid secp256k1 private key. This option is required.
+    transaction and authenticating with the Splinter REST API. This can be a
+    relative or absolute file path, or it can be the name of a `.priv` file in
+    the `$HOME/.splinter/keys` directory. The target file must contain a valid
+    secp256k1 private key. This option is required.
     _Note: Only     administrators of a circuit can create contract registries.
     You can run `splinter circuit show $CIRCUIT_ID` to view the admin keys of
     the services on the circuit._
@@ -682,12 +705,14 @@ the smart contract was successfully uploaded and transmitted across the circuit.
 
     ```bash
     root@scabbard-cli-beta:/# scabbard contract list \
+      --key /config/keys/beta.priv
       --url 'http://splinterd-alpha:8080' \
       --service-id $CIRCUIT_ID::gsAA
     NAME        VERSIONS OWNERS
     sawtooth_xo 1.0      02edb9b9e3d652f0df43408f7e99be1172b665ac34320229f7624b7c292e8cf4b0
 
     root@scabbard-cli-beta:/# scabbard contract list \
+      --key /config/keys/beta.priv
       --url 'http://splinterd-beta:8080' \
       --service-id $CIRCUIT_ID::gsBB
     NAME        VERSIONS OWNERS
