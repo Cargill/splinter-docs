@@ -27,8 +27,8 @@ of downtime for upgrades or single-point-of-failure issues.
 | Challenge Authorization | Not Started | - |
 | Cylinder Support | Complete | [Repo](https://github.com/Cargill/cylinder) |
 | Cloud-friendly Deployment | Under Development | [Admin Service Store Feature]({% link community/planning/admin_service_store.md %}), [Data Store Guidelines]({% link community/data_store_guidelines.md %}) |
-| Database - PostgreSQL Support | Under Development | [Data Store Guidelines]({% link community/data_store_guidelines.md %}) |
-| Database - SQLite Support | Under Development | [Data Store Guidelines]({% link community/data_store_guidelines.md %}) |
+| Database - PostgreSQL Support | Under Development | [Data Store Guidelines]({% link community/data_store_guidelines.md %}), [Configuring Splinter Daemon Database]({% link docs/0.5/howto/configure_database_storage.md %}) |
+| Database - SQLite Support | Under Development | [Data Store Guidelines]({% link community/data_store_guidelines.md %}), [Configuring Splinter Daemon Database]({% link docs/0.5/howto/configure_database_storage.md %}) |
 | REST API - Authorization | Under Development | [REST API Authorization Design]({% link community/planning/rest_api_authorization.md %}) |
 | REST API - Cylinder JWT Authentication | Complete | [Cylinder JWT Authentication]({% link community/planning/cylinder_jwt_authentication.md %}) |
 | REST API - OAuth 2 Authentication | Complete | [OAuth 2 REST API Authentication]({% link community/planning/oauth2_rest_api_authentication.md %}) |
