@@ -123,6 +123,24 @@ Displays information about a Splinter node
 [`splinter keygen`]({% link docs/0.5/references/cli/splinter-keygen.1.md %})
 Generates user and daemon keys for Splinter
 
+### Maintenance mode
+
+[`splinter maintenance`]({% link
+docs/0.5/references/cli/splinter-maintenance.1.md %}) Management functions for
+the maintenance mode *(experimental builds only)*
+
+[`splinter maintenance disable`]({% link
+docs/0.5/references/cli/splinter-maintenance-disable.1.md %}) Disables
+maintenance mode for a Splinter node *(experimental builds only)*
+
+[`splinter maintenance enable`]({% link
+docs/0.5/references/cli/splinter-maintenance-enable.1.md %}) Enables
+maintenance mode for a Splinter node *(experimental builds only)*
+
+[`splinter maintenance status`]({% link
+docs/0.5/references/cli/splinter-maintenance-status.1.md %}) Checks if
+maintenance mode is enabled for a Splinter node *(experimental builds only)*
+
 ### Role management
 
 [`splinter role`]({% link docs/0.5/references/cli/splinter-role.1.md %})
