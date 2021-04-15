@@ -141,6 +141,12 @@ maintenance mode for a Splinter node *(experimental builds only)*
 docs/0.5/references/cli/splinter-maintenance-status.1.md %}) Checks if
 maintenance mode is enabled for a Splinter node *(experimental builds only)*
 
+### REST API permissions
+
+[`splinter permissions`]({% link
+docs/0.5/references/cli/splinter-permissions.1.md %}) Lists REST API
+permissions
+
 ### Role management
 
 [`splinter role`]({% link docs/0.5/references/cli/splinter-role.1.md %})
