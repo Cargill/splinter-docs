@@ -147,6 +147,12 @@ maintenance mode is enabled for a Splinter node *(experimental builds only)*
 docs/0.5/references/cli/splinter-permissions.1.md %}) Lists REST API
 permissions
 
+### Registry management
+
+[`splinter registry add`]({% link
+docs/0.5/references/cli/splinter-registry-add.1.md %}) Add a node to the local
+registry *(experimental builds only)*
+
 ### Role management
 
 [`splinter role`]({% link docs/0.5/references/cli/splinter-role.1.md %})
