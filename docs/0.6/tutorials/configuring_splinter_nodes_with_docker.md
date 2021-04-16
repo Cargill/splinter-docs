@@ -592,6 +592,13 @@ beta nodes.
 Now that you have two Splinter nodes with a circuit between them, you can use
 this circuit to upload smart contracts and share data.
 
+## Removing a circuit
+
+Removing a circuit is enabled through disbanding or abandoning a circuit. The
+circuit may then be purged, as it is only available to each node locally. For
+more information on these processes, see the [Removing a Splinter Circuit]({%
+link docs/0.6/howto/removing_a_splinter_circuit.md %}) tutorial.
+
 ## Uploading a Smart Contract
 
 Splinter uses the
