@@ -128,7 +128,8 @@ for details on how to create and compile a smart contract
 4. Upload the smart contract.
 
    ``` console
-   $ scabbard contract upload ./my_contract.scar \
+   $ scabbard contract upload <contract_name>:<version_requirement> \
+       --path <path_to_contract_scar_file> \
        --key <path_to_alpha_node_private_key> \
        --url http://splinterd-alpha:8080 \
        --service-id $CIRCUIT_ID::scabbard-service-alpha
