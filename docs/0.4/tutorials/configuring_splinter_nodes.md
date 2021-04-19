@@ -575,7 +575,7 @@ as the contract’s owners.
 
     ```bash
     root@scabbard-cli-beta:/# scabbard cr create \
-      sawtooth_xo \
+      xo \
       --owners $(cat /config/keys/beta.pub) \
       --key /config/keys/beta.priv \
       --url 'http://splinterd-beta:8080' \
