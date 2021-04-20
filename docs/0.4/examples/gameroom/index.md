@@ -41,7 +41,7 @@ below.
    directory:
 
    ``` console
-   $ docker-compose -f examples/gameroom/docker-compose.yaml up --build
+   $ docker-compose --env-file=.env -f examples/gameroom/docker-compose.yaml up --build
    ```
 
     **Note:** To run Gameroom with experimental features enabled, set an
