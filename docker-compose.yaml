@@ -29,9 +29,9 @@ services:
       bash -c "
         rm -rf  _site .jekyll-cache
         if [ -f _userconfig.yml ]; then
-           jekyll serve --config _config.yml,_userconfig.yml
+           jekyll serve --watch --config _config.yml,_userconfig.yml
         else
-           jekyll serve
+           jekyll serve --watch
         fi
       "
 
