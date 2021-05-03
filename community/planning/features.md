@@ -20,6 +20,7 @@ forum.
 | [Admin Service Store]({% link community/planning/admin_service_store.md %}) | New design for storing circuit and circuit proposal state |
 | [Admin UI]({% link community/planning/admin_ui.md %}) | Splinter administration utility |
 | [Admin UI Profile Redesign]({% link community/planning/admin_ui_profile.md %}) | New designs for the profile page in the splinter Admin UI |
+| [Challenge Authorization]({% link community/planning/challenge_authorization.md %}) | New design for a secure peer authorization type |
 | [Canopy 0.2]({% link community/planning/canopy_0.2.md %}) | New design of the Canopy system that enables dynamic loading of saplings and improved inter-sapling communication |
 | [Capabilities Repository]({% link community/planning/capabilities-repository.md %}) | A design for a repository and all the surrounding tools and formats for Splinter artifacts. These artifacts include saplings, smart contracts, and capabilities distributions. |
 | [Circuit Abandon]({% link community/planning/circuit_abandon.md %}) | Design for abandoning a circuit |

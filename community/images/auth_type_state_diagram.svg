@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+  Copyright 2018-2021 Cargill Incorporated
+  Licensed under Creative Commons Attribution 4.0 International License
+  https://creativecommons.org/licenses/by/4.0/
+-->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xl="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" viewBox="-913.5 -1001.5 1214 1883" width="1214" height="1883">
+  <defs>
+    <font-face font-family="Helvetica Neue" font-size="16" panose-1="2 0 5 3 0 0 0 2 0 4" units-per-em="1000" underline-position="-100" underline-thickness="50" slope="0" x-height="517" cap-height="714" ascent="951.9958" descent="-212.99744" font-weight="400">
+      <font-face-src>
+        <font-face-name name="HelveticaNeue"/>
+      </font-face-src>
+    </font-face>
+    <marker orient="auto" overflow="visible" markerUnits="strokeWidth" id="FilledArrow_Marker" stroke-linejoin="miter" stroke-miterlimit="10" viewBox="-1 -4 10 8" markerWidth="10" markerHeight="8" color="#7f8080">
+      <g>
+        <path d="M 8 0 L 0 -3 L 0 3 Z" fill="currentColor" stroke="currentColor" stroke-width="1"/>
+      </g>
+    </marker>
+    <marker orient="auto" overflow="visible" markerUnits="strokeWidth" id="FilledArrow_Marker_2" stroke-linejoin="miter" stroke-miterlimit="10" viewBox="-1 -4 10 8" markerWidth="10" markerHeight="8" color="black">
+      <g>
+        <path d="M 8 0 L 0 -3 L 0 3 Z" fill="currentColor" stroke="currentColor" stroke-width="1"/>
+      </g>
+    </marker>
+  </defs>
+  <metadata> Produced by OmniGraffle 7.18.5\n2021-04-26 16:14:31 +0000</metadata>
+  <g id="AuthType_State_Diagram" stroke-dasharray="none" stroke="none" stroke-opacity="1" fill="none" fill-opacity="1">
+    <title>AuthType State Diagram</title>
+    <rect fill="white" x="-913.5" y="-1001.5" width="1214" height="1883"/>
+    <g id="AuthType_State_Diagram_Layer_1">
+      <title>Layer 1</title>
+      <g id="Graphic_88">
+        <rect x="-913" y="-1001" width="1213" height="934" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(-908 -996)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="0" y="15">Authorization of Local Node</tspan>
+        </text>
+      </g>
+      <g id="Graphic_87">
+        <rect x="-913" y="-53" width="1209" height="934" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(-908 -48)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="0" y="15">Authorization of Remote Node</tspan>
+        </text>
+      </g>
+      <g id="Graphic_83">
+        <circle cx="-771.875" cy="-736.3062" r="25.1250401472852" fill="#ccc"/>
+        <circle cx="-771.875" cy="-736.3062" r="25.1250401472852" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(-892.771 -709.5042)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="6394885e-19" y="15">WaitingForAuthProtocolResponse</tspan>
+        </text>
+      </g>
+      <g id="Graphic_80">
+        <circle cx="-370.875" cy="-736.3062" r="25.1250401472852" fill="#ccc"/>
+        <circle cx="-370.875" cy="-736.3062" r="25.1250401472852" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(-486.587 -709.5042)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="0" y="15">ReceivedAuthProtocolResponse</tspan>
+        </text>
+      </g>
+      <g id="Line_79">
+        <line x1="-746.75" y1="-736.3062" x2="-405.9" y2="-736.3062" marker-end="url(#FilledArrow_Marker)" stroke="#7f8080" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_78">
+        <rect x="-698.0979" y="-759.7542" width="241.424" height="46.895996" fill="white"/>
+        <text transform="translate(-693.0979 -754.7542)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="87.272" y="15">Receive</tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="0" y="33.448">AUTH_PROTOCOL_RESPONSE</tspan>
+        </text>
+      </g>
+      <g id="Graphic_77">
+        <circle cx="-370.875" cy="-964.8062" r="25.1250401472851" fill="#c0c0ff"/>
+        <circle cx="-370.875" cy="-964.8062" r="25.1250401472851" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(-479.187 -938.0042)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="0" y="15">WaitingForAuthTrustResponse</tspan>
+        </text>
+      </g>
+      <g id="Line_76">
+        <line x1="-370.875" y1="-761.4312" x2="-370.875" y2="-929.7812" marker-end="url(#FilledArrow_Marker)" stroke="#7f8080" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_75">
+        <circle cx="-370.875" cy="-507.8062" r="25.1250401472851" fill="#c0ffff"/>
+        <circle cx="-370.875" cy="-507.8062" r="25.1250401472851" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(-520.811 -481.0042)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="0" y="15">WaitingForAuthChallengeNonceResponse</tspan>
+        </text>
+      </g>
+      <g id="Line_74">
+        <line x1="-370.875" y1="-711.1812" x2="-370.875" y2="-542.83123" marker-end="url(#FilledArrow_Marker)" stroke="#7f8080" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_73">
+        <rect x="-467.715" y="-870.0292" width="193.68" height="46.895996" fill="white"/>
+        <text transform="translate(-462.715 -865.0292)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="73.168" y="15">Send</tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="1563194e-19" y="33.448">AUTH_TRUST_REQUEST</tspan>
+        </text>
+      </g>
+      <g id="Graphic_72">
+        <rect x="-521.643" y="-640.7027" width="301.536" height="46.895996" fill="white"/>
+        <text transform="translate(-516.643 -635.7027)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="127.096" y="15">Send</tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="5684342e-20" y="33.448">AUTH_CHALLENGE_NONCE_REQUEST</tspan>
+        </text>
+      </g>
+      <g id="Graphic_68">
+        <circle cx="239.625" cy="-540.8062" r="25.1250401472851" fill="#40ff40"/>
+        <circle cx="239.625" cy="-540.8062" r="25.1250401472851" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(201.113 -514.0042)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="6252776e-19" y="15">Authorized</tspan>
+        </text>
+      </g>
+      <g id="Graphic_67">
+        <circle cx="-370.875" cy="-333.80622" r="25.1250401472852" fill="#c0ffff"/>
+        <circle cx="-370.875" cy="-333.80622" r="25.1250401472852" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(-515.627 -307.00422)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="39790393e-20" y="15">ReceivedAuthChallengeNonceResponse</tspan>
+        </text>
+      </g>
+      <g id="Line_66">
+        <line x1="-350.23522" y1="-950.4716" x2="210.85392" y2="-560.7881" marker-end="url(#FilledArrow_Marker)" stroke="#7f8080" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_65">
+        <rect x="-177.8641" y="-782.9376" width="205.232" height="46.895996" fill="white"/>
+        <text transform="translate(-172.8641 -777.9376)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="69.176" y="15">Receive</tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="0" y="33.448">AUTH_TRUST_RESPONSE</tspan>
+        </text>
+      </g>
+      <g id="Line_60">
+        <line x1="-370.875" y1="-482.6812" x2="-370.875" y2="-368.83123" marker-end="url(#FilledArrow_Marker)" stroke="#7f8080" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_59">
+        <circle cx="-370.875" cy="-180.64222" r="25.1250401472851" fill="#c0ffff"/>
+        <circle cx="-370.875" cy="-180.64222" r="25.1250401472851" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(-516.827 -153.84022)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="0" y="15">WaitingForAuthChallengeSubmitRequest</tspan>
+        </text>
+      </g>
+      <g id="Graphic_58">
+        <rect x="-527.419" y="-446.2494" width="313.088" height="46.895996" fill="white"/>
+        <text transform="translate(-522.419 -441.2494)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="123.104" y="15">Receive</tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="0" y="33.448">AUTH_CHALLENGE_NONCE_RESPONSE</tspan>
+        </text>
+      </g>
+      <g id="Line_57">
+        <line x1="-370.875" y1="-308.6812" x2="-370.875" y2="-215.66723" marker-end="url(#FilledArrow_Marker)" stroke="#7f8080" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_56">
+        <rect x="-523.419" y="-277.65062" width="305.088" height="46.895996" fill="white"/>
+        <text transform="translate(-518.419 -272.65062)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="128.872" y="15">Send</tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="0" y="33.448">AUTH_CHALLENGE_SUBMIT_REQUEST</tspan>
+        </text>
+      </g>
+      <g id="Line_55">
+        <line x1="-349.2299" y1="-193.41173" x2="209.45315" y2="-523.00636" marker-end="url(#FilledArrow_Marker)" stroke="#7f8080" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_54">
+        <rect x="-197.24446" y="-399.9242" width="316.64" height="46.895996" fill="white"/>
+        <text transform="translate(-192.24445 -394.9242)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="124.88" y="15">Receive</tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="0" y="33.448">AUTH_CHALLENGE_SUBMIT_RESPONSE</tspan>
+        </text>
+      </g>
+      <g id="Graphic_46">
+        <circle cx="-370.875" cy="227.69378" r="25.1250401472852" fill="#ccc"/>
+        <circle cx="-370.875" cy="227.69378" r="25.1250401472852" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(-469.851 254.49578)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="5684342e-19" y="15">SentAuthProtocolResponse</tspan>
+        </text>
+      </g>
+      <g id="Graphic_43">
+        <circle cx="-370.875" cy="-.8062211" r="25.1250401472852" fill="#c0c0ff"/>
+        <circle cx="-370.875" cy="-.8062211" r="25.1250401472852" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(-467.931 25.99578)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="4973799e-19" y="15">ReceivedAuthTrustRequest</tspan>
+        </text>
+      </g>
+      <g id="Line_42">
+        <line x1="-370.875" y1="202.56877" x2="-370.875" y2="34.21879" marker-end="url(#FilledArrow_Marker)" stroke="#7f8080" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_41">
+        <circle cx="-370.875" cy="456.1938" r="25.1250401472852" fill="#c0ffff"/>
+        <circle cx="-370.875" cy="456.1938" r="25.1250401472852" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(-479.771 482.9958)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="6252776e-19" y="15">ReceivedAuthChallengeNonce</tspan>
+        </text>
+      </g>
+      <g id="Line_40">
+        <line x1="-370.875" y1="252.8188" x2="-370.875" y2="421.16877" marker-end="url(#FilledArrow_Marker)" stroke="#7f8080" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_39">
+        <rect x="-467.715" y="93.97081" width="193.68" height="46.895996" fill="white"/>
+        <text transform="translate(-462.715 98.97081)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="63.4" y="15">Receive</tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="1563194e-19" y="33.448">AUTH_TRUST_REQUEST</tspan>
+        </text>
+      </g>
+      <g id="Graphic_38">
+        <rect x="-521.643" y="323.2973" width="301.536" height="46.895996" fill="white"/>
+        <text transform="translate(-516.643 328.2973)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="117.328" y="15">Receive</tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="5684342e-20" y="33.448">AUTH_CHALLENGE_NONCE_REQUEST</tspan>
+        </text>
+      </g>
+      <g id="Graphic_37">
+        <circle cx="239.625" cy="423.1938" r="25.1250401472852" fill="#40ff40"/>
+        <circle cx="239.625" cy="423.1938" r="25.1250401472852" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(220.657 449.9958)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="756728e-18" y="15">Done</tspan>
+        </text>
+      </g>
+      <g id="Graphic_36">
+        <circle cx="-370.875" cy="630.1938" r="25.1250401472851" fill="#c0ffff"/>
+        <circle cx="-370.875" cy="630.1938" r="25.1250401472851" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(-516.827 656.9958)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="0" y="15">WaitingForAuthChallengeSubmitRequest</tspan>
+        </text>
+      </g>
+      <g id="Line_35">
+        <line x1="-350.23522" y1="13.528366" x2="210.85392" y2="403.2119" marker-end="url(#FilledArrow_Marker)" stroke="#7f8080" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_34">
+        <rect x="-177.8641" y="181.06242" width="205.232" height="46.895996" fill="white"/>
+        <text transform="translate(-172.8641 186.06242)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="78.944" y="15">Send</tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="0" y="33.448">AUTH_TRUST_RESPONSE</tspan>
+        </text>
+      </g>
+      <g id="Line_33">
+        <line x1="-370.875" y1="481.3188" x2="-370.875" y2="595.1688" marker-end="url(#FilledArrow_Marker)" stroke="#7f8080" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_32">
+        <circle cx="-370.875" cy="783.3578" r="25.1250401472851" fill="#c0ffff"/>
+        <circle cx="-370.875" cy="783.3578" r="25.1250401472851" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(-511.643 810.1598)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="2842171e-20" y="15">ReceivedAuthChallengeSubmitRequest</tspan>
+        </text>
+      </g>
+      <g id="Graphic_31">
+        <rect x="-527.419" y="517.7506" width="313.088" height="46.895996" fill="white"/>
+        <text transform="translate(-522.419 522.7506)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="135.096" y="15">Sent</tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="0" y="33.448">AUTH_CHALLENGE_NONCE_RESPONSE</tspan>
+        </text>
+      </g>
+      <g id="Line_30">
+        <line x1="-370.875" y1="655.3188" x2="-370.875" y2="748.3328" marker-end="url(#FilledArrow_Marker)" stroke="#7f8080" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_29">
+        <rect x="-523.419" y="686.3494" width="305.088" height="46.895996" fill="white"/>
+        <text transform="translate(-518.419 691.3494)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="119.104" y="15">Receive</tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="0" y="33.448">AUTH_CHALLENGE_SUBMIT_REQUEST</tspan>
+        </text>
+      </g>
+      <g id="Line_28">
+        <line x1="-349.2299" y1="770.5883" x2="209.45315" y2="440.99364" marker-end="url(#FilledArrow_Marker)" stroke="#7f8080" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_27">
+        <rect x="-197.24446" y="564.0758" width="316.64" height="46.895996" fill="white"/>
+        <text transform="translate(-192.24445 569.0758)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="134.648" y="15">Send</tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="0" y="33.448">AUTH_CHALLENGE_SUBMIT_RESPONSE</tspan>
+        </text>
+      </g>
+      <g id="Graphic_267">
+        <circle cx="-771.875" cy="227.69378" r="25.1250401472852" fill="#ccc"/>
+        <circle cx="-771.875" cy="227.69378" r="25.1250401472852" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(-881.515 254.49578)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="0" y="15">ReceivedAuthProtocolRequest</tspan>
+        </text>
+      </g>
+      <g id="Line_268">
+        <line x1="-746.75" y1="227.69378" x2="-405.9" y2="227.69378" marker-end="url(#FilledArrow_Marker_2)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_266">
+        <rect x="-714" y="202.56878" width="241.424" height="46.895996" fill="white"/>
+        <text transform="translate(-709 207.56878)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="97.04" y="15">Send</tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="0" y="33.448">AUTH_PROTOCOL_RESPONSE</tspan>
+        </text>
+      </g>
+    </g>
+  </g>
+</svg>
