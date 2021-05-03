@@ -172,7 +172,7 @@ Examples can be found at:
 
   - [Uploading Smart
     Contract]({% link docs/0.4/howto/uploading_smart_contract.md %})
-  - [Grid on Splinter](https://github.com/hyperledger/grid/tree/master/examples/splinter)
+  - [Grid on Splinter](https://github.com/hyperledger/grid/tree/main/examples/splinter)
 
 ## The scabbard CLI's upload command has been changed
 If you are using the experimental scabbard CLI to upload smart contracts, you
