@@ -81,40 +81,30 @@ signature will then be validated against the nonce and public key provided.
 ### Circuit and Proposal
 To properly support Challenge Authorization, circuit and proposal state will
 need to be extended to support setting multiple authorization types and adding a
-public key to circuit nodes.
+public key to circuit members.
 
 The changes are shown in YAML for easy documentation.
 
-The node definition needs to include the public keys that must be used and
+The member definition needs to include the public keys that must be used and
 verified in Challenge Authorization. The public keys are optional, and can be
 left unset if the node only participates in circuits that require Trust
-Authorization. Like endpoints, a node can have more than one public key. Any of
-these keys can be used for verification with Challenge Authorization.   
+Authorization.
 
-```yaml
-nodes:
-    acme-node-000:
-        id: acme-node-000
-        endpoints:
-              - \"tcps://splinterd-node-acme:8044\"
-    +   challenge_public_keys:
-    +         - PUBLIC_KEY
-    +         - PUBLIC_KEY
-
-```
-
-Authorization type stored in the circuit will be updated to be a list of
-authorization types. They should be in order of preference, the first being the
-preferred type. The values in this list will include the version, this will
-enable version Challenge Authorization version to be incremented outside of the
-protocol agreement described below.
+Authorization type stored in a circuit will be updated to support providing
+`Challenge`.
 
 ```yaml
 circuits:
     WBKLF-AAAAA:
         id: WBKLF-AAAAA
-        auth: Trust
-    +   authorization: ["Challenge-v1", "Trust-v1"]
+    +   authorization: "Challenge"
+    +   members:
+            node_1:
+                id: node_1
+                public_key: PUBLIC_KEY
+            node_2:
+                id: node_2
+                public_key: PUBLIC_KEY
 ```
 
 The AdminServiceStore will need to be updated to store this new information. The
@@ -130,42 +120,33 @@ authorization types need to be passed along with the endpoints.
 
 ```rust
 enum PeerAuthorizationType {
-    /// default value and enables v0 version of Trust Authorization
     Trust,
-    Trust_v1,
-    Challenge_v1 {
+    Challenge {
         public_key: PUBLIC_KEY
     }
 }
 ```
-
-For each different public key allowed for the node, a separate Authorization
-type should be included in the list.
 
 ```rust
 pub fn add_peer_ref(
     &self,
     peer_id: String,
     endpoints: Vec<String>,
-+   authorization: Vec<PeerAuthorizationType>,
++   authorization: PeerAuthorizationType,
 ) -> Result<PeerRef, PeerRefAddError>
 ```
 
 Then when a connection is requested from the connection manager `Connector` the
-possible `PeerAuthorizationType`s from the circuit are passed with the endpoint.
-When requesting a connection only one authorization type will be returned as a
-part of the Connected notification because a connection to the same endpoint
-that used a different authorization type must be treated as a different
-connection. Note, if Challenge and Trust is provided and both nodes are
-configured only for Trust, the authorization can still be completed by
-downgrading to Trust Authorization.
+possible `PeerAuthorizationType` from the circuit is passed with the endpoint.
+A Connection to the same endpoint that used a different authorization type must
+be treated as a different connection.
 
 ```rust
 pub fn request_connection(
     &self,
     endpoint: &str,
     connection_id: &str,
-+   authorization: Vec<PeerAuthorizationType>,
++   authorization: PeerAuthorizationType,
 ) -> Result<(), ConnectionManagerError>
 ```
 
@@ -175,12 +156,15 @@ pub enum ConnectionManagerNotification {
         endpoint: String,
         connection_id: String,
         identity: String,
-+       authorized_with: PeerAuthorizationType,
++       authorized_with: Vec<PeerAuthorizationType>,
     },
 ```
 
-The AuthorizationResult will need to be expanded to include the
-`PeerAuthorizationType` as well:
+The AuthorizationResult and Connected notification will need to be expanded to
+include the `PeerAuthorizationType` as well. This is a list because a splinter
+daemon will support multiple signing keys and will not always know which public
+key is the expected public key. To solve this problem the daemon will respond
+with a list of all of its public keys and signatures.
 
 ```rust
 pub enum AuthorizationResult {
@@ -188,7 +172,7 @@ pub enum AuthorizationResult {
         connection_id: String,
         identity: String,
         connection: Box<dyn Connection>,
-    +   authorized_with: PeerAuthorizationType,
+    +   authorized_with: Vec<PeerAuthorizationType>,
     },
     Unauthorized {
         connection_id: String,
@@ -258,10 +242,18 @@ message AuthChallengeNonceResponse {
 }
 ```
 
+The node will support multiple public/private key pairs. It may not know which
+key is the expected public key for authorization, so it will use each key pair
+to sign and create a list of SubmitRequest.
+
 ```proto
 message AuthChallengeSubmitRequest {
-  bytes public_key = 1;
-  bytes signature = 2;
+    SubmitRequest {
+        bytes public_key = 1;
+        bytes signature = 2;
+    }
+
+    repeated SubmitRequest submit_requests = 1
 }
 
 message AuthChallengeSubmitResponse {}
@@ -296,32 +288,73 @@ message AuthorizationError {
 ## Rationale and alternatives
 [rationale-and-alternatives]: #rationale-and-alternatives
 
-This design includes adding a list of public keys to the node definition that
-will be used for Challenge Authorization. One alternative would be to link a
-public key to a specific endpoint in the node definition.
+This design includes adding a public key to the member definition that will be
+used for Challenge Authorization. One alternative would be to link a public key
+to a specific endpoint in the node definition.
 
 ```yaml
 nodes:
     acme-node-000:
         id: acme-node-000
         endpoints:
-            endpoint-1:
-              challenge_public_key: PUBLIC_KEY
-              endpoint: "tcps://splinterd-node-acme:8044"
-            endpoint-2:
-              challenge_public_key: PUBLIC_KEY
-              endpoint: "tcps://splinterd-node-acme-2:8074"
+      endpoint-1:
+        challenge_public_key: PUBLIC_KEY
+        endpoint: "tcps://splinterd-node-acme:8044"
+      endpoint-2:
+        challenge_public_key: PUBLIC_KEY
+        endpoint: "tcps://splinterd-node-acme-2:8044"
 
 ```
 
+Instead of setting one authorization, it could be updated to be a list of
+authorization types in preference order. This would allow a circuit to be
+updated to support both authorization types at the same time. This, however,
+would require two separate updates to the circuit, the first to add the new
+authorization type, and another to remove the old authorization type after all
+nodes have updated to support the new authorization type. Instead, the
+authorization update should only be allowed if the node can support the new
+authorization type.
 
+```yaml
+circuits:
+    WBKLF-AAAAA:
+        id: WBKLF-AAAAA
+    +   authorization: ["Challenge", "Trust"]
+```
+
+Similarly, a member in a circuit could have multiple public keys but instead the
+splinter daemon will support multiple signing keys at once but only include one
+key in a circuit. This will allow a node to update its key in a circuit, while
+still supporting its old key in other circuits.
+
+Instead of submitting multiple submit requests for all of the supported keys,
+only one public key and signature could be returned. This however would require
+the expected public key to be returned with the nonce and this information may
+not always be available to the connecting node.
+
+```proto
+message AuthChallengeSubmitRequest {
+    bytes public_key = 1;
+    bytes signature = 2;
+}
+```
+
+Finally, the authorization types could be versioned explicitly like below.
+However, it was decided that the circuit schema version is enough to enforce
+what version of authorization type is expected.
+
+```yaml
+circuits:
+    WBKLF-AAAAA:
+        id: WBKLF-AAAAA
+    +   authorization: "Challenge-v1"
+```
 
 ## Prior art
 [prior-art]: #prior-art
 
 This implementation is influenced by the Challenge Authorization in
 [Hyperledger Sawtooth](https://sawtooth.hyperledger.org/docs/core/releases/latest/architecture/validator_network.html#authorization-types).
-
 
 ## Unresolved questions
 [unresolved]: #unresolved
