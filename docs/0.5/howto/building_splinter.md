@@ -9,10 +9,27 @@
 The `splinter` repository is available at
 [github.com/Cargill/splinter](https://github.com/Cargill/splinter).
 
-To build Splinter, run `cargo build` from the root directory. This command
-builds all of the Splinter components, including `libsplinter` (the main
-library), `splinterd` (the splinter daemon), the CLI, the client, and all
-examples in the `examples` directory.
+Splinter is built using latest stable [rust](https://www.rust-lang.org/), which
+you should install via [rustup](https://rustup.rs/).
+
+To install the remaining dependencies using a package manager, run one of the
+following commands.
+
+Homebrew  (OS X):
+```bash
+brew install openssl zeromq pkg-config protobuf postgresql
+```
+
+APT (Ubuntu):
+```bash
+apt install libssl-dev libzmq3-dev pkg-config libprotobuf-dev postgresql
+```
+
+Once you have the prerequisites installed, build Splinter by running `cargo
+build` from the root directory. This command builds all of the Splinter
+components, including `libsplinter` (the main library), `splinterd` (the
+splinter daemon), the CLI, the client, and all examples in the `examples`
+directory.
 
 To build individual components, run `cargo build` in the component directories.
 For example, to build only the splinter library, navigate to
