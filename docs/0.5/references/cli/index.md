@@ -51,6 +51,14 @@ mode %})
 Provides circuit management functionality.
 
 [`splinter circuit
+abandon`]({% link docs/0.5/references/cli/splinter-circuit-abandon.1.md %})
+Abandon an active circuit for this Splinter node.
+
+[`splinter circuit
+disband`]({% link docs/0.5/references/cli/splinter-circuit-list.1.md %})
+Propose that an active circuit is disbanded.
+
+[`splinter circuit
 list`]({% link docs/0.5/references/cli/splinter-circuit-list.1.md %})
 Displays the existing circuits for this Splinter node.
 
@@ -61,6 +69,15 @@ Lists the current circuit proposals.
 [`splinter circuit
 propose`]({% link docs/0.5/references/cli/splinter-circuit-propose.1.md %})
 Propose that a new circuit is created
+
+[`splinter circuit
+purge`]({% link docs/0.5/references/cli/splinter-circuit-purge.1.md %})
+Remove a circuit's local state.
+
+[`splinter circuit
+remove-proposal`]({%
+link docs/0.5/references/cli/splinter-circuit-remove-proposal.1.md %})
+Remove a circuit proposal.
 
 [`splinter circuit
 show`]({% link docs/0.5/references/cli/splinter-circuit-show.1.md %})
