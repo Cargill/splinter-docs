@@ -47,4 +47,5 @@ jobs:
         run: ./ci/publish-docker
         env:
           CARGO_TERM_COLOR: always
-
+          GOOGLE_ANALYTICS: ${{ secrets.GOOGLE_ANALYTICS }}
+          GPSE_ID: ${{ secrets.GPSE_ID }}
