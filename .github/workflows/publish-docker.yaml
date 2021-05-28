@@ -48,4 +48,4 @@ jobs:
         env:
           CARGO_TERM_COLOR: always
           GOOGLE_ANALYTICS: ${{ secrets.GOOGLE_ANALYTICS }}
-          GPSE_ID: ${{ secrets.GPSE_ID }}
+          GOOGLE_PSE: ${{ secrets.GOOGLE_PSE }}
