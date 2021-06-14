@@ -8,34 +8,34 @@
 
 ## splinter CLI
 The `splinter` command-line interface (CLI) provides a set of commands to
-interact with Splinter components.
+interact with Splinter components
 
 [`splinter`]({% link docs/0.5/references/cli/splinter.1.md %})
 Command-line interface for Splinter
 
 ### Authorized Identity Management
 [`splinter authid`]({% link docs/0.5/references/cli/splinter-authid.1.md %})
-Provides authorized identity subcommands.
+Provides authorized identity subcommands
 
 [`splinter authid create`]({% link
 docs/0.5/references/cli/splinter-authid-create.1.md %})
-Creates an authorized identity on a Splinter node.
+Creates an authorized identity on a Splinter node
 
 [`splinter authid delete`]({% link
 docs/0.5/references/cli/splinter-authid-delete.1.md %})
-Deletes an authorized identity on a Splinter node.
+Deletes an authorized identity on a Splinter node
 
 [`splinter authid list`]({% link
 docs/0.5/references/cli/splinter-authid-list.1.md %})
-Lists the authorized identities on a Splinter node.
+Lists the authorized identities on a Splinter node
 
 [`splinter authid show`]({% link
 docs/0.5/references/cli/splinter-authid-show.1.md %})
-Shows a specific authorized identity on a Splinter node.
+Shows a specific authorized identity on a Splinter node
 
 [`splinter authid update`]({% link
 docs/0.5/references/cli/splinter-authid-update.1.md %})
-Updates an authorized identity on a Splinter node.
+Updates an authorized identity on a Splinter node
 
 ### Certificate Management
 [`splinter cert`]({% link docs/0.5/references/cli/splinter-cert.1.md %})
@@ -48,7 +48,7 @@ mode %})
 
 ### Circuit Management
 [`splinter circuit`]({% link docs/0.5/references/cli/splinter-circuit.1.md %})
-Provides circuit management functionality.
+Provides circuit management functionality
 
 [`splinter circuit
 abandon`]({% link docs/0.5/references/cli/splinter-circuit-abandon.1.md %})
@@ -60,11 +60,11 @@ Propose that an active circuit is disbanded.
 
 [`splinter circuit
 list`]({% link docs/0.5/references/cli/splinter-circuit-list.1.md %})
-Displays the existing circuits for this Splinter node.
+Displays the existing circuits for this Splinter node
 
 [`splinter circuit
 proposals`]({% link docs/0.5/references/cli/splinter-circuit-proposals.1.md %})
-Lists the current circuit proposals.
+Lists the current circuit proposals
 
 [`splinter circuit
 propose`]({% link docs/0.5/references/cli/splinter-circuit-propose.1.md %})
@@ -123,42 +123,72 @@ Displays information about a Splinter node
 [`splinter keygen`]({% link docs/0.5/references/cli/splinter-keygen.1.md %})
 Generates user and daemon keys for Splinter
 
+### Maintenance mode
+
+[`splinter maintenance`]({% link
+docs/0.5/references/cli/splinter-maintenance.1.md %}) Management functions for
+the maintenance mode *(experimental builds only)*
+
+[`splinter maintenance disable`]({% link
+docs/0.5/references/cli/splinter-maintenance-disable.1.md %}) Disables
+maintenance mode for a Splinter node *(experimental builds only)*
+
+[`splinter maintenance enable`]({% link
+docs/0.5/references/cli/splinter-maintenance-enable.1.md %}) Enables
+maintenance mode for a Splinter node *(experimental builds only)*
+
+[`splinter maintenance status`]({% link
+docs/0.5/references/cli/splinter-maintenance-status.1.md %}) Checks if
+maintenance mode is enabled for a Splinter node *(experimental builds only)*
+
+### REST API permissions
+
+[`splinter permissions`]({% link
+docs/0.5/references/cli/splinter-permissions.1.md %}) Lists REST API
+permissions
+
+### Registry management
+
+[`splinter registry add`]({% link
+docs/0.5/references/cli/splinter-registry-add.1.md %}) Add a node to the local
+registry *(experimental builds only)*
+
 ### Role management
 
 [`splinter role`]({% link docs/0.5/references/cli/splinter-role.1.md %})
-Provides role subcommands.
+Provides role subcommands
 
 [`splinter role create`]({% link
 docs/0.5/references/cli/splinter-role-create.1.md %})
-Creates a role on a Splinter node.
+Creates a role on a Splinter node
 
 [`splinter role delete`]({% link
 docs/0.5/references/cli/splinter-role-delete.1.md %})
-Deletes a role on a Splinter node.
+Deletes a role on a Splinter node
 
 [`splinter role list`]({% link docs/0.5/references/cli/splinter-role-list.1.md
 %})
-Lists the roles on a Splinter node.
+Lists the roles on a Splinter node
 
 [`splinter role show`]({% link docs/0.5/references/cli/splinter-role-show.1.md
 %})
-Shows a specific role on a Splinter node.
+Shows a specific role on a Splinter node
 
 [`splinter role update`]({% link
 docs/0.5/references/cli/splinter-role-update.1.md %})
-Updates a role on a Splinter node.
+Updates a role on a Splinter node
 
 ## splinterd CLI
 
 The `splinterd` command-line interface (CLI) provides the command for running
-the Splinter daemon.
+the Splinter daemon
 
 [`splinterd`]({% link docs/0.5/references/cli/splinterd.1.md %})
 Starts the Splinter daemon
 
 ## scabbard CLI
 The `scabbard` command-line interface (CLI) provides a set of commands to
-interact with scabbard services.
+interact with scabbard services
 
 [`scabbard`]({% link docs/0.5/references/cli/scabbard.1.md %})
 Command-line interface for scabbard
