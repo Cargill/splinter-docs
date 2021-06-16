@@ -59,6 +59,9 @@ must be complete before an experimental feature can be moved into stable:
       comments. (Usually in the form of Rust doc.)
     * Features should be documented at a feature level in the Splinter Docs
       repo or/and have complete rust API doc comments.
+* New configuration settings or options have been added to the
+  [example splinterd config file](https://github.com/Cargill/splinter/blob/main/splinterd/packaging/splinterd.toml.example)
+  (where applicable).
 
 When all of the above items have been completed and merged, a final PR should be
 created that moves the features from experimental into stable. There should be
