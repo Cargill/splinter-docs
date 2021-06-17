@@ -61,8 +61,8 @@ configuration, and it's on of the supported authentication methods for the
 [Splinter Admin UI]({% link community/planning/admin_ui.md %}).
 
 Biome credentials can be enabled for the Splinter daemon by specifying the
-`--enable-biome` flag when running `splinterd`. For more details on this flag
-and running `splinterd`, see the
+`--enable-biome-credentials` flag when running `splinterd`. For more details on
+this flag and running `splinterd`, see the
 [`splinterd` man page]({% link docs/0.5/references/cli/splinterd.1.md %}).
 
 For more details about Biome and credentials, see
