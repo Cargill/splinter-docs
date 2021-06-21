@@ -718,3 +718,10 @@ the smart contract was successfully uploaded and transmitted across the circuit.
     NAME        VERSIONS OWNERS
     sawtooth_xo 1.0      02edb9b9e3d652f0df43408f7e99be1172b665ac34320229f7624b7c292e8cf4b0
     ```
+
+## Removing a circuit
+
+Removing a circuit is enabled through disbanding or abandoning a circuit. The
+circuit may then be purged, as it is only available to each node locally. For
+more information on these processes, see the [Removing a Splinter Circuit]({%
+link docs/0.5/howto/removing_a_splinter_circuit.md %}) tutorial.
