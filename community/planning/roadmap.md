@@ -21,6 +21,7 @@ of downtime for upgrades or single-point-of-failure issues.
 
 | Feature | Status | Documentation |
 | ------- | ------ | ------------- |
+| Basic Metrics | Under Development | - |
 | Circuit Deletion | Complete | [splinter circuit disband]({% link docs/0.5/references/cli/splinter-circuit-disband.1.md %}),  [splinter circuit abandon]({% link docs/0.5/references/cli/splinter-circuit-abandon.1.md %}),   [splinter circuit purge]({% link docs/0.5/references/cli/splinter-circuit-purge.1.md %}) |
 | Circuit Name | Complete | [splinter circuit propose]({% link docs/0.5/references/cli/splinter-circuit-propose.1.md %}), [splinter circuit show]({% link docs/0.5/references/cli/splinter-circuit-show.1.md %}), [splinter circuit list]({% link docs/0.5/references/cli/splinter-circuit-list.1.md %}) |
 | Circuit Template | Complete | [How-to]({% link docs/0.5/howto/using_circuit_templates.md %}), [Man page]({% link docs/0.5/references/cli/splinter-circuit-propose.1.md %}) |
