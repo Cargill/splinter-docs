@@ -18,6 +18,12 @@ file](https://github.com/Cargill/splinter/blob/master/docker/kubernetes/arcade.y
 can be used as a starting
 point for customizing your environment.
 
+Starting with `0.5.1` Splinter can also be installed using `apt`.
+Details can be found on the
+[0.5 releases page](https://www.splinter.dev/releases/0.5/download.html) and
+[Installing Splinter on Ubuntu](
+{% link docs/0.5/howto/installing_splinter_on_ubuntu.md %}).
+
 ## Hosting a Splinter Node
 
 Detailed information about planning your Splinter deployment can be found in
