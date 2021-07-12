@@ -26,6 +26,7 @@ forum.
 | [Circuit Abandon]({% link community/planning/circuit_abandon.md %}) | Design for abandoning a circuit |
 | [Circuit Disband]({% link community/planning/circuit_disband.md %}) | Design for removing a circuit's networking capabilities |
 | [Circuit Purge]({% link community/planning/circuit_purge.md %}) | Design for removing a circuit's state data |
+| [Libsawtooth Receipt Store]({% link community/planning/libsawtooth_receipt_store.md %}) | New design for a Receipt Store trait in libsawtooth |
 | [Oauth Profile]({% link community/planning/oauth_profile.md %}) | Design for retrieving profile information from OAuth providers |
 | [Proposal Removal]({% link community/planning/proposal_removal.md %}) | Design for removing a circuit proposal |
 | [REST API Authorization]({% link community/planning/rest_api_authorization.md %}) | Design for securing the Splinter REST API |
