@@ -192,6 +192,22 @@ permissions. Instructions focusing on docker can be found at
    It should be treated like a password and backed up securely. If you lose
    access to this key, you may lose access to data.
 
+1. Configure REST API authorization
+
+   The Splinter REST API is secure by default and will not accept any
+   unauthorized requests. Adding a public key to the `allow_keys` file
+   is the quickest way to configure authorization.
+
+   ```console
+   $ sudo bash -c "cat /home/username/.cylinder/keys/username.pub > /etc/splinter/allow_keys"
+   ```
+
+   Click these links for more about how the
+   [allow_keys file][allow_keys]
+   works or
+   [configuring REST API authorization][rest_api_auth]
+   using one of the many other available methods.
+
 1. Create a registry file
 
    A Splinter registry (or just “registry”) is a list of nodes that can be
@@ -352,6 +368,12 @@ $ ls -al /etc/splinter/splinterd.toml
 
 [splinterdatabase]: https://www.splinter.dev/docs/0.5/howto/configure_database_storage.html
 "Configuring Splinter Daemon Database"
+
+[allow_keys]: {% link docs/0.5/howto/configuring_rest_api_authorization.md %}#allow-keys-file
+"Configuring REST API authorization using the allow_keys file"
+
+[rest_api_auth]: {% link docs/0.5/howto/configuring_rest_api_authorization.md %}
+"Configuring REST API Authorization"
 
 [splinterregistry]: https://www.splinter.dev/docs/0.5/concepts/splinter_registry.html
 "Splinter Registry"
