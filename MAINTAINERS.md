@@ -5,11 +5,9 @@
 | --- | --- |
 | Andi Gunderson | agunde406 |
 | Caleb Hill | Caleb-Hill |
-| Anne Chenette | chenette |
 | Darian Plumb | dplumb94 |
 | Dave Cecchi | davececchi |
 | Davey Newhall | dnewh |
-| Eloá Franca Verona | eloaverona |
 | James Mitchell | jsmitchell |
 | Lee Bradley | leebradley |
 | Logan Seeley | ltseeley |
@@ -18,4 +16,10 @@
 | Ryan Beck-Buysse | rbuysse |
 | Shannyn Telander | shannynalayna |
 | Shawn Amundson | vaporos |
+
+# Retired Maintainers
+| Name | GitHub |
+| --- | --- |
+| Anne Chenette | chenette |
+| Eloá Franca Verona | eloaverona |
 | Zac Skalko | zapplebee |
