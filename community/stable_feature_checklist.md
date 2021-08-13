@@ -62,6 +62,10 @@ must be complete before an experimental feature can be moved into stable:
 * New configuration settings or options have been added to the
   [example splinterd config file](https://github.com/Cargill/splinter/blob/main/splinterd/packaging/splinterd.toml.example)
   (where applicable).
+* Any new cli commands or subcommands have been added to the Splinter CLI
+  [bash completions file](https://github.com/Cargill/splinter/blob/main/cli/packaging/ubuntu/completions/splinter)
+  (where applicable).
+
 
 When all of the above items have been completed and merged, a final PR should be
 created that moves the features from experimental into stable. There should be
