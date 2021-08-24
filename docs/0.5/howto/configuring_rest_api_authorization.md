@@ -332,7 +332,7 @@ identity, including the set of roles of which the identity is a member.
 For example, the authorized identities can be listed as follows:
 
 ```
-$ splinter auth list
+$ splinter authid list
 IDENTITY                                                           TYPE ROLES
 03d4a6ea6bae775622912b6cf49437098dc3bf06ca49ea331113e27ee0b14c7a3c key  2
 557C80AC-4C17-4A21-9E68-AB9AABD3C8CD                               user 2
