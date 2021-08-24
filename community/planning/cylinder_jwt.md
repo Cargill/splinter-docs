@@ -178,7 +178,7 @@ the provided `Verifier`
 
 ```rust
 trait Verifier {
-    fn algoritmn_name(&self) -> &str;
+    fn algorithm_name(&self) -> &str;
 }
 ```
 
