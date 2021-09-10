@@ -31,6 +31,7 @@ forum.
 | [Proposal Removal]({% link community/planning/proposal_removal.md %}) | Design for removing a circuit proposal |
 | [REST API Authorization]({% link community/planning/rest_api_authorization.md %}) | Design for securing the Splinter REST API |
 | [REST API Maintenace Mode]({% link community/planning/rest_api_maintenance_mode.md %}) | Design for the maintenance mode authorization handler for the Splinter REST API |
+| [Scabbard Back Pressure]({% link community/planning/scabbard_back_pressure.md %}) | Simple back pressure for the batch queue |
 
 ## Historical
 
