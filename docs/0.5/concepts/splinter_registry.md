@@ -202,7 +202,7 @@ following registry endpoints are provided by splinterd:
 * `DELETE /registry/nodes/{identity}` deletes a node from the registry
 
 For more information, see the
-<a href="/docs/0.4/api/#tag/Splinter-Registry" target="_blank">
+<a href="/docs/0.5/api/#tag/Splinter-Registry" target="_blank">
 Splinter registry routes REST API reference
 </a>.
 
