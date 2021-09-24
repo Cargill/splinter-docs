@@ -36,9 +36,12 @@ The Splinter daemon (splinterd) uses a **unified registry**, which aggregates
 data from multiple "source" registries. There are two types of sources:
 
 * The **internal registry** is a local, modifiable list of nodes that belongs
-  solely to the Splinter daemon. A unified registry has only one internal
-  registry. All modifications to the unified registry, like adding or updating a
-  node definition, are stored in the internal registry.
+  solely to the Splinter daemon and is stored in the configured database. A
+  unified registry has only one internal registry. All modifications to the
+  unified registry, like adding or updating a node definition, are stored in the
+  internal registry. For more information, see
+  [Configuring Splinter Daemon
+  Database]({% link docs/0.5/howto/configure_database_storage.md %}).
 
 * **External registries** are, as the name implies, managed externally. They are
   read-only to the unified registry, and they cannot be modified using the
@@ -199,7 +202,7 @@ following registry endpoints are provided by splinterd:
 * `DELETE /registry/nodes/{identity}` deletes a node from the registry
 
 For more information, see the
-<a href="/docs/0.4/api/#tag/Splinter-Registry" target="_blank">
+<a href="/docs/0.5/api/#tag/Splinter-Registry" target="_blank">
 Splinter registry routes REST API reference
 </a>.
 
