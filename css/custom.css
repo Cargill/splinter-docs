@@ -43,6 +43,12 @@ img {
     max-width: 100%;
 }
 
+blockquote {
+    background-color: var(--light-gray);
+    border-radius: 5px;
+    padding: 10px;
+}
+
 .btn-primary {
     background-color: var(--light-splinter-fuchsia);
     border-color: var(--light-splinter-fuchsia);
