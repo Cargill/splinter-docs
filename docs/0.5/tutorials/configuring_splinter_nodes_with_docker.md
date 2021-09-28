@@ -389,8 +389,8 @@ beta nodes.
       --service gsAA::alpha \
       --service-type *::scabbard \
       --management example \
-      --service-arg *::admin_keys=$(cat /config/keys/beta.pub) \
-      --service-peer-group gsBB,gsAA
+      --service-peer-group gsBB,gsAA \
+      --service-arg *::admin_keys=$(cat /config/keys/beta.pub)
     ```
 
     Let's take a look at the options needed to create a circuit proposal.
@@ -429,6 +429,11 @@ beta nodes.
     application authorization handler which handles the circuit’s change
     proposals.
 
+    `--service-peer-group gsBB,gsAA` Service peer group (a list of peer
+    services). Peer services are services used by peer nodes within a circuit.
+    This is the group of services that must come to consensus amongst the node
+    peers.
+
     `--service-arg *::admin_keys=$(cat /config/keys/beta.pub)`: String that
     passes key/value arguments to the specified service. As with
     `--service-type` above, the glob operator, `*`, can be used to match all or
@@ -436,10 +441,16 @@ beta nodes.
     key of the smart contract administrator who's is allowed to upload smart
     contracts to the circuit.
 
-    `--service-peer-group gsBB,gsAA` Service peer group (a list of peer
-    services). Peer services are services used by peer nodes within a circuit.
-    This is the group of services that must come to consensus amongst the node
-    peers.
+    > **NOTE:**
+    >  Due to changes in the CLI, if creating a circuit with a 0.4
+    >  splinter node the `--service-arg` must be wrapped in a JSON list.
+    >
+    >  `--service-arg *::admin_keys="[\"$(cat /config/keys/beta.pub)\"]" `
+    >
+    > To ensure the rest of the circuit configuration is compatible with 0.4
+    > add the following `--compat` options.
+    >
+    >  `--compat 0.4`
 
 
 1. The output of the `propose` command shows that it was submitted to the REST
