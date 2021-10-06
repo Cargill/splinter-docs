@@ -51,17 +51,18 @@ first node, alpha.
         volumes:
           - alpha-var:/var/lib/splinter
           - ./config:/config
-          - allow_keys_alpha:/etc/splinter/allow_keys
+          - ./allow_keys_alpha:/etc/splinter/allow_keys
         entrypoint: |
           bash -c "
             splinter cert generate --skip && \
+            splinter keygen --system --skip && \
+            splinter database migrate && \
             splinterd -v \
                 --node-id alpha \
                 --network-endpoints tcps://0.0.0.0:8044 \
                 --advertised-endpoints tcps://splinterd-alpha:8044 \
-                --rest-api-endpoint 0.0.0.0:8080 \
+                --rest-api-endpoint http://0.0.0.0:8080 \
                 --registries file:///config/alpha-registry.yaml \
-                --storage yaml \
                 --tls-insecure
           "
 
@@ -77,6 +78,14 @@ first node, alpha.
     `--skip`: Generates an x.509 certificate authority and insecure certificates
     for development purposes. The `--skip` option will ignore any existing files
     that may have been created already and create anything that's missing.
+
+    **`splinter keygen --system`**
+
+    `--system`: Generates a key pair for the Splinter daemon to use during
+    challenge authorization.
+
+    `--skip`: The `--skip` option will exit the subcommand successfully if the
+    key has already been created.
 
     **`splinterd`**
 
@@ -217,6 +226,19 @@ below.
     splinterd-alpha    | [2020-05-25 18:35:36.284] T["Service admin::alpha"] INFO [splinter::service::processor] Starting Service: admin::alpha
     ```
 
+1. Get the `alpha` node's challenge authorization public key.
+
+    You will also want to get the challenge authorization public key for this
+    Splinter daemon to use in creating the circuit as well. Note this is a
+    different key then what is used in the registry.
+
+    ```bash
+    $ docker exec -it splinterd-alpha bash
+    root@alpha:/# cat /etc/splinter/keys/splinterd.pub
+    0247483f1f0137f150d45df09555c4893eeddb038d6d681304c11482e42example
+    root@alpha:/ # exit
+    ```
+
 Congratulations! You've got a Splinter node up and running.
 
 ## Setting Up the Second Node
@@ -242,17 +264,18 @@ Congratulations! You've got a Splinter node up and running.
         volumes:
           - beta-var:/var/lib/splinter
           - ./config:/config
-          - allow_keys_beta:/etc/splinter/allow_keys
+          - ./allow_keys_beta:/etc/splinter/allow_keys
         entrypoint: |
           bash -c "
             splinter cert generate --skip && \
+            splinter keygen --system --skip && \
+            splinter database migrate && \
             splinterd -v \
                 --node-id beta \
                 --network-endpoints tcps://0.0.0.0:8044 \
                 --advertised-endpoints tcps://splinterd-beta:8044 \
-                --rest-api-endpoint 0.0.0.0:8080 \
+                --rest-api-endpoint http://0.0.0.0:8080 \
                 --registries file:///config/beta-registry.yaml \
-                --storage yaml \
                 --tls-insecure
           "
 
@@ -266,6 +289,7 @@ Congratulations! You've got a Splinter node up and running.
     root@3e307864c916:/# splinter keygen beta --key-dir /splinter-demo/config/keys/
     Writing private key file: /splinter-demo/config/keys/beta.priv
     writing public key file: /splinter-demo/config/keys/beta.pub
+
     root@3e307864c916:/# exit
     ```
 
@@ -312,9 +336,9 @@ info about our node so they can add it to the alpha node registry.
 Again, make sure to use the actual beta key value instead of the example value
 shown below.
 
-```bash
-$ echo "02edb9b9e3d652c0ff33408f7e99be0572b665ac34320229f7624b7c292example" > allow_keys_beta
-```
+    ```bash
+    $ echo "02edb9b9e3d652c0ff33408f7e99be0572b665ac34320229f7624b7c292example" > allow_keys_beta
+    ```
 
 1. Start the beta node.
 
@@ -377,6 +401,17 @@ proposal, such as the node and service IDs, service type, and the REST API URLs.
 For this tutorial, the next step provides the values you need for the alpha and
 beta nodes.
 
+1. Get the `beta` node's challenge authorization public key.
+
+    You will also want to get the challenge authorization public key for this
+    Splinter daemon to use in creating the circuit as well. Note this is a
+    different key then what is used in the registry.
+
+    ```bash
+    root@beta:/# cat /etc/splinter/keys/splinterd.pub
+    022796a19b0c0efe2c0399ebc8e9935c31bfcb09ebeeff44085cb43e26d0example
+    ```
+
 1. Run the `splinter circuit propose` command on the beta node.
 
     ```bash
@@ -385,12 +420,16 @@ beta nodes.
       --url http://0.0.0.0:8080  \
       --node beta::tcps://splinterd-beta:8044 \
       --node alpha::tcps://splinterd-alpha:8044 \
+      --node-public-key alpha::022796a19b0c0efe2c0399ebc8e9935c31bfcb09ebeeff44085cb43e26d0example \
+      --node-public-key beta::022796a19b0c0efe2c0399ebc8e9935c31bfcb09ebeeff44085cb43e26d0example \
       --service gsBB::beta \
       --service gsAA::alpha \
       --service-type *::scabbard \
       --management example \
+      --service-arg *::admin_keys=$(cat /config/keys/beta.pub) \
+      --service-arg "*::version=2" \
       --service-peer-group gsBB,gsAA \
-      --service-arg *::admin_keys=$(cat /config/keys/beta.pub)
+      --auth-type challenge
     ```
 
     Let's take a look at the options needed to create a circuit proposal.
@@ -409,7 +448,11 @@ beta nodes.
     specify its own node, if it is to be included on the circuit proposal.
     Repeat this option to specify multiple nodes.
 
-    `--node alpha::tcps://splinterd-alpha:8044`: Same as above.
+    `--node-public-key beta::PUBLIC_KEY`: When using challenge authorization,
+    every member in the circuit must have public key that will be used to
+    identify the node during connection.
+
+    `--node-public-key alpha::PUBLIC_KEY`: Same as above.
 
     `--service gsBB::beta`: Service ID and allowed nodes, using the format
     SERVICE-ID::ALLOWED-NODES. Service IDs are comprised of 4 ASCII alphanumeric
@@ -460,20 +503,28 @@ beta nodes.
     The circuit proposal was submitted successfully
     Circuit: El9jM-6bXjg
         Management Type: example
+        Circuit Status: Active
+        Schema Version: 2
 
         beta
+            Public Key: 022796a19b0c0efe2c0399ebc8e9935c31bfcb09ebeeff44085cb43e26d0example
             Service (scabbard): gsBB
               admin_keys:
                   02edb9b9e3d652f0df43408f7e99be1172b665ac34320229f7624b7c292e8cf4b0
               peer_services:
                   gsAA
+              version:
+                  2
 
         alpha
+            Public Key: 022796a19b0c0efe2c0399ebc8e9935c31bfcb09ebeeff44085cb43e26d0example
             Service (scabbard): gsAA
               admin_keys:
                   02edb9b9e3d652f0df43408f7e99be1172b665ac34320229f7624b7c292e8cf4b0
               peer_services:
                   gsBB
+              version:
+                  2
     ```
 
 1. Now, make sure the proposal was committed on both nodes.

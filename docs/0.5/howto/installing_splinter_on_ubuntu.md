@@ -192,6 +192,17 @@ permissions. Instructions focusing on docker can be found at
    It should be treated like a password and backed up securely. If you lose
    access to this key, you may lose access to data.
 
+   The Splinter daemon also requires a public/private key pair to be used for
+   identification when using challenge authorization. The key is stored in
+   the config directory and the key name defaults to `splinterd`. Multiple
+   system keys can be generated and all will be added to the daemon.
+
+   ```console
+   $ splinter keygen --system
+   Writing private key file: /etc/splinter/keys/splinterd.priv
+   writing public key file: /etc/splinter/keys/splinterd.pub
+   ```
+
 1. Configure REST API authorization
 
    The Splinter REST API is secure by default and will not accept any

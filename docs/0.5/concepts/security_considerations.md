@@ -30,9 +30,32 @@ and changes), as well as transaction-related functions performed by the Splinter
 daemon and application-specific services.
 
 Splinter also uses public/private keys to sign operations such
-as creating a circuit. For example, the admin service checks the signing key for
+as creating a circuit and identification between nodes during challenge
+authorization. For example, the admin service checks the signing key for
 each circuit payload and verifies that circuit proposals and votes are signed
 with the key of a circuit admin, as described in the next section.
+
+## Connection Authorization
+
+When Splinter nodes connect, they must go through a “handshake” to verify the
+identity of the other node. Splinter supports two authorization types, trust
+and challenge. The required authorization type is set within the circuit
+definition.
+
+Trust Authorization takes the identity provided from the node without further
+verification. Trust was the only authorization type implemented in 0.4, and
+should only be used for backwards compatibility or development.
+
+The authorization type that provides a better guarantee the nodes are actually
+who they say they are is challenge authorization. Challenge Authorization
+requires a node’s ID to be tied to a public key/private key pair and a node must
+prove they have access to that key by signing a random nonce, providing the
+resulting signature and their public key. The expected public key associated
+with a node is stored in the circuit member list, and therefore must be
+shared with other members of the network.
+
+**NOTE**: The challenge authorization key is different then the key discussed
+below for circuit admins.
 
 ## Circuit Administration
 
