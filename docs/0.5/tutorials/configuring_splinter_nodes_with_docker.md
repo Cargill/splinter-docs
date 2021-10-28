@@ -654,7 +654,7 @@ circuit list` command, not the example value shown below.
 from `splinter.dev`.
 
     ```bash
-    root@scabbard-cli-beta:/# curl -OLsS https://files.splinter.dev/scar/xo_0.4.2.scar
+    root@scabbard-cli-beta:/# curl -OLsS https://files.splinter.dev/scar/xo_0.5.1.scar
     ```
 
 1. Before you can upload the smart contract to the circuit, you'll need to
@@ -664,7 +664,7 @@ as the contract’s owners.
 
     ```bash
     root@scabbard-cli-beta:/# scabbard cr create \
-      sawtooth_xo \
+      xo \
       --owners $(cat /config/keys/beta.pub) \
       --key /config/keys/beta.priv \
       --url 'http://splinterd-beta:8080' \
@@ -723,7 +723,7 @@ as the contract’s owners.
 contract to the circuit.
 
     ```bash
-    root@scabbard-cli-beta:/# scabbard contract upload xo:0.4.2 \
+    root@scabbard-cli-beta:/# scabbard contract upload xo:0.5.1 \
       --path . \
       --key /config/keys/beta.priv \
       --url 'http://splinterd-beta:8080' \
@@ -767,16 +767,16 @@ the smart contract was successfully uploaded and transmitted across the circuit.
 
     ```bash
     root@scabbard-cli-beta:/# scabbard contract list \
-      --key /config/keys/beta.priv
+      --key /config/keys/alpha.priv \
       --url 'http://splinterd-alpha:8080' \
       --service-id $CIRCUIT_ID::gsAA
     NAME        VERSIONS OWNERS
-    sawtooth_xo 1.0      02edb9b9e3d652f0df43408f7e99be1172b665ac34320229f7624b7c292e8cf4b0
+    xo 1.0      02edb9b9e3d652f0df43408f7e99be1172b665ac34320229f7624b7c292e8cf4b0
 
     root@scabbard-cli-beta:/# scabbard contract list \
-      --key /config/keys/beta.priv
+      --key /config/keys/beta.priv \
       --url 'http://splinterd-beta:8080' \
       --service-id $CIRCUIT_ID::gsBB
     NAME        VERSIONS OWNERS
-    sawtooth_xo 1.0      02edb9b9e3d652f0df43408f7e99be1172b665ac34320229f7624b7c292e8cf4b0
+    xo 1.0      02edb9b9e3d652f0df43408f7e99be1172b665ac34320229f7624b7c292e8cf4b0
     ```
