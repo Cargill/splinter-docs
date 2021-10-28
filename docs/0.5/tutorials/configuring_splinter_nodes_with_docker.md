@@ -45,7 +45,7 @@ first node, alpha.
     services:
 
       splinterd-alpha:
-        image: splintercommunity/splinterd:latest
+        image: splintercommunity/splinterd:0.5
         container_name: splinterd-alpha
         hostname: alpha
         volumes:
@@ -258,7 +258,7 @@ Congratulations! You've got a Splinter node up and running.
     services:
 
       splinterd-beta:
-        image: splintercommunity/splinterd:latest
+        image: splintercommunity/splinterd:0.5
         container_name: splinterd-beta
         hostname: beta
         volumes:
@@ -618,7 +618,7 @@ contract to. As in the rest of this tutorial, keys are stored in the
 
     ```bash
     scabbard-cli-beta:
-      image: splintercommunity/scabbard-cli:0.4
+      image: splintercommunity/scabbard-cli:0.5
       container_name: scabbard-cli-beta
       hostname: scabbard-cli-beta
       volumes:
