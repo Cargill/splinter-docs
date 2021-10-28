@@ -460,7 +460,7 @@ beta nodes.
     proposals` command on either node to display all committed proposals.
 
     ```bash
-    root@beta:/# splinter circuit proposals
+    root@beta:/# splinter circuit proposals --url http://0.0.0.0:8080
     ID                  MANAGEMENT MEMBERS    COMMENTS
     El9jM-6bXjg example               beta;alpha
     ```
@@ -469,7 +469,7 @@ beta nodes.
 
     ```bash
     $ docker exec -it splinterd-alpha bash
-    root@alpha:/# splinter circuit proposals
+    root@alpha:/# splinter circuit proposals --url http://0.0.0.0:8080
     ID                 MANAGEMENT MEMBERS    COMMENTS
     El9jM-6bXjg example             beta;alpha
     ```
@@ -485,8 +485,8 @@ beta nodes.
     --accept
     ```
 
-1. Look at the logs (or run `splinter circuit list`) to verify that the circuit
-has been created.
+1. Look at the logs (or run `splinter circuit list --url http://0.0.0.0:8080`)
+   to verify that the circuit has been created.
 
     ```bash
     splinterd-alpha    | [2020-05-25 19:12:08.030] T["actix-rt:worker:1"] INFO [actix_web::middleware::logger] 127.0.0.1:55348 "POST /admin/submit HTTP/1.1" 202 0 "-" "-" 0.002233
@@ -494,7 +494,7 @@ has been created.
     ```
 
     ```bash
-    root@alpha:/# splinter circuit list
+    root@alpha:/# splinter circuit list --url http://0.0.0.0:8080
     ID          MANAGEMENT MEMBERS
     El9jM-6bXjg example    beta;alpha
     ```
@@ -540,7 +540,7 @@ contract to. As in the rest of this tutorial, keys are stored in the
 circuit ID to use when uploading the smart contract.
 
     ```bash
-    $ docker exec splinterd-beta splinter circuit list
+    $ docker exec splinterd-beta splinter circuit list --url http://0.0.0.0:8080
     ID          MANAGEMENT MEMBERS
     El9jM-6bXjg example    beta;alpha
     ```
