@@ -45,7 +45,7 @@ first node, alpha.
     services:
 
       splinterd-alpha:
-        image: splintercommunity/splinterd:latest
+        image: splintercommunity/splinterd:0.5
         container_name: splinterd-alpha
         hostname: alpha
         volumes:
@@ -258,7 +258,7 @@ Congratulations! You've got a Splinter node up and running.
     services:
 
       splinterd-beta:
-        image: splintercommunity/splinterd:latest
+        image: splintercommunity/splinterd:0.5
         container_name: splinterd-beta
         hostname: beta
         volumes:
@@ -549,7 +549,7 @@ beta nodes.
     proposals` command on either node to display all committed proposals.
 
     ```bash
-    root@beta:/# splinter circuit proposals --key /config/keys/beta.priv
+    root@beta:/# splinter circuit proposals --key /config/keys/beta.priv --url http://0.0.0.0:8080
     ID                  MANAGEMENT MEMBERS    COMMENTS
     El9jM-6bXjg example               beta;alpha
     ```
@@ -558,7 +558,7 @@ beta nodes.
 
     ```bash
     $ docker exec -it splinterd-alpha bash
-    root@alpha:/# splinter circuit proposals --key /config/keys/alpha.priv
+    root@alpha:/# splinter circuit proposals --key /config/keys/alpha.priv --url http://0.0.0.0:8080
     ID                 MANAGEMENT MEMBERS    COMMENTS
     El9jM-6bXjg example             beta;alpha
     ```
@@ -574,8 +574,8 @@ beta nodes.
     --accept
     ```
 
-1. Look at the logs (or run `splinter circuit list`) to verify that the circuit
-has been created.
+1. Look at the logs (or run `splinter circuit list --key /config/keys/alpha.priv
+   --url http://0.0.0.0:8080`) to verify that the circuit has been created.
 
     ```bash
     splinterd-alpha    | [2020-05-25 19:12:08.030] T["actix-rt:worker:1"] INFO [actix_web::middleware::logger] 127.0.0.1:55348 "POST /admin/submit HTTP/1.1" 202 0 "-" "-" 0.002233
@@ -583,7 +583,7 @@ has been created.
     ```
 
     ```bash
-    root@alpha:/# splinter circuit list --key /config/keys/alpha.priv
+    root@alpha:/# splinter circuit list --key /config/keys/alpha.priv --url http://0.0.0.0:8080
     ID          MANAGEMENT MEMBERS
     El9jM-6bXjg example    beta;alpha
     ```
@@ -618,7 +618,7 @@ contract to. As in the rest of this tutorial, keys are stored in the
 
     ```bash
     scabbard-cli-beta:
-      image: splintercommunity/scabbard-cli:0.4
+      image: splintercommunity/scabbard-cli:0.5
       container_name: scabbard-cli-beta
       hostname: scabbard-cli-beta
       volumes:
@@ -629,7 +629,7 @@ contract to. As in the rest of this tutorial, keys are stored in the
 circuit ID to use when uploading the smart contract.
 
     ```bash
-    $ docker exec splinterd-beta splinter circuit list --key /config/keys/beta.priv
+    $ docker exec splinterd-beta splinter circuit list --key /config/keys/beta.priv --url http://0.0.0.0:8080
     ID          MANAGEMENT MEMBERS
     El9jM-6bXjg example    beta;alpha
     ```
@@ -654,7 +654,7 @@ circuit list` command, not the example value shown below.
 from `splinter.dev`.
 
     ```bash
-    root@scabbard-cli-beta:/# curl -OLsS https://files.splinter.dev/scar/xo_0.4.2.scar
+    root@scabbard-cli-beta:/# curl -OLsS https://files.splinter.dev/scar/xo_0.5.1.scar
     ```
 
 1. Before you can upload the smart contract to the circuit, you'll need to
@@ -664,7 +664,7 @@ as the contract’s owners.
 
     ```bash
     root@scabbard-cli-beta:/# scabbard cr create \
-      sawtooth_xo \
+      xo \
       --owners $(cat /config/keys/beta.pub) \
       --key /config/keys/beta.priv \
       --url 'http://splinterd-beta:8080' \
@@ -723,7 +723,7 @@ as the contract’s owners.
 contract to the circuit.
 
     ```bash
-    root@scabbard-cli-beta:/# scabbard contract upload xo:0.4.2 \
+    root@scabbard-cli-beta:/# scabbard contract upload xo:0.5.1 \
       --path . \
       --key /config/keys/beta.priv \
       --url 'http://splinterd-beta:8080' \
@@ -767,16 +767,16 @@ the smart contract was successfully uploaded and transmitted across the circuit.
 
     ```bash
     root@scabbard-cli-beta:/# scabbard contract list \
-      --key /config/keys/beta.priv
+      --key /config/keys/alpha.priv \
       --url 'http://splinterd-alpha:8080' \
       --service-id $CIRCUIT_ID::gsAA
     NAME        VERSIONS OWNERS
-    sawtooth_xo 1.0      02edb9b9e3d652f0df43408f7e99be1172b665ac34320229f7624b7c292e8cf4b0
+    xo 1.0      02edb9b9e3d652f0df43408f7e99be1172b665ac34320229f7624b7c292e8cf4b0
 
     root@scabbard-cli-beta:/# scabbard contract list \
-      --key /config/keys/beta.priv
+      --key /config/keys/beta.priv \
       --url 'http://splinterd-beta:8080' \
       --service-id $CIRCUIT_ID::gsBB
     NAME        VERSIONS OWNERS
-    sawtooth_xo 1.0      02edb9b9e3d652f0df43408f7e99be1172b665ac34320229f7624b7c292e8cf4b0
+    xo 1.0      02edb9b9e3d652f0df43408f7e99be1172b665ac34320229f7624b7c292e8cf4b0
     ```
