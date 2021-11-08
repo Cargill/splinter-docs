@@ -7,11 +7,8 @@
 -->
 
 If you're planning to configure a new Splinter node and join a Splinter network,
- this guide explains what you need to know before you start.
-
-Splinter works with a wide variety of deployment patterns. This guide summarizes
-how to use Docker containers, a basic Kubernetes pod, and Amazon Elastic
-Kubernetes Services (Amazon EKS).
+this guide explains what you need to know before you start. This guide
+summarizes how to use Docker containers.
 
 See [Security Considerations]({% link
 docs/0.5/concepts/security_considerations.md %})
@@ -107,9 +104,8 @@ A local database optionally saves Splinter data (transaction-based changes from
 Splinter's state delta export function) as well as any application data that
 must be persisted across restarts.
 
-> **Important:** Splinter requires shared storage (such as a Docker volume or
-> Kubernetes persistent volume) for `/var/lib/splinter`, which contains circuit
-> definitions and shared state.
+> **Important:** Splinter requires shared storage (such as a Docker volume
+> for `/var/lib/splinter`, which contains circuit definitions and shared state.
 
 ![]({% link docs/0.5/images/splinter-deployment-application-pattern.png %}
 'Splinter application pattern')
@@ -128,38 +124,9 @@ can use the Splinter command-line interface (CLI) to interact with splinterd.
 ![]({% link docs/0.5/images/splinter-deployment-docker.png %}
 "Splinter Docker deployment")
 
-## Basic Kubernetes Deployment
-
-For a basic deployment of Splinter on Kubernetes, one Pod contains the
-containers for each component. Although many deployment patterns are possible,
-this pattern has been tested with the Splinter examples.
-
-* The splinterd container requires a persistent volume for `/var/lib/splinter`.
-
-* If your application requires persistent data across restarts, configure a
-  persistent volume  for the database container.
-
-![]({% link docs/0.5/images/splinter-deployment-kubernetes.png %}
-"Splinter Kubernetes deployment")
-
-## Amazon EKS Deployment
-
-This example of Amazon EKS deployment uses a classic load balancer (CLB) as the
-ingress and Amazon Elastic Block Storage (EBS) as the backing store for
-persistent volumes. Although many deployment patterns are possible, this pattern
-has been tested with the Splinter examples.
-
-* The splinterd container requires an EBS persistent volume for `/var/lib/splinter`.
-
-* If your application requires persistent data across restarts, configure an EBS
-  persistent volume  for the database container.
-
-![]({% link docs/0.5/images/splinter-deployment-amazonEKS.png %}
-"Splinter Amazon EKS deployment")
-
 ## Summary
 
-This topic summarizes three basic approaches for deploying Splinter, but
+This topic summarizes a basic approach for deploying Splinter, but
 many other patterns are possible. You can customize a Splinter deployment for
 your organization, as long as you meet the networking requirements: Your node
 is accessible from the internet on a well-known URL using **port 8044** and

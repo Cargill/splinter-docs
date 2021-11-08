@@ -11,12 +11,7 @@
 Currently, Splinter is packaged as Docker images hosted on
 [Docker Hub](https://hub.docker.com/u/splintercommunity/). This means
 Splinter can be deployed anywhere a Docker image can run. Most examples will
-focus on Docker Compose, but if you choose to go with a Kubernetes
-deployment, we have an example of our gameroom demo app designed to work well
-with Minikube in the github repository. The [arcade.yaml
-file](https://github.com/Cargill/splinter/blob/master/docker/kubernetes/arcade.yaml)
-can be used as a starting
-point for customizing your environment.
+focus on Docker Compose.
 
 Starting with `0.5.1` Splinter can also be installed using `apt`.
 Details can be found on the
@@ -179,7 +174,7 @@ image tags and explains what each tag means.
 ### Upgrading Splinter
 
 Upgrading Splinter is usually as simple as updating the version number of the
-Splinter images in your Docker Compose file or Kubernetes manifest, then
+Splinter images in your Docker Compose file, then
 redeploying. However, breaking changes will be introduced from time to time.
 Comprehensive upgrade instructions for each version can be found in the
 [Upgrading]({% link releases/0.4/upgrading/README.md %})
