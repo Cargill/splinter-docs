@@ -135,10 +135,7 @@ verify that they have permission for the requested operation.
 It's important to note that the private keys stored in Biome are encrypted
 on the client side; Splinter does not re-encrypt private keys within the REST
 API. The client application is responsible for encryption before submitting a
-private key. For an example of client-encrypted keys, see the login
-functionality in the Gameroom application (as described in
-[Gameroom Walkthrough: Behind scene
-1](../examples/gameroom/walkthrough/#i-1-behind-scene-1-alice-logs-into-acmes-gameroom-ui).
+private key.
 
 For more information, see [Biome User
 Management]({% link docs/0.5/concepts/biome_user_management.md %}).

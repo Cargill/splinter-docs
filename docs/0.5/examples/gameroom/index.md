@@ -12,10 +12,6 @@ state, as managed by two-phase commit consensus between the participants. This
 example application, as configured, sets up Splinter nodes for two imaginary
 organizations: Acme Corporation and Bubba Bakery.
 
-To learn about the Splinter functionality that powers this deceptively simple
-application, see the [Gameroom Technical
-Walkthrough]({% link docs/0.5/examples/gameroom/walkthrough/index.md %}).
-
 ## Running the Gameroom Demo with Docker
 
 **Note:** For the Kubernetes instructions, see [Running the Gameroom demo in
