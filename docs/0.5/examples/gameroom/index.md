@@ -14,9 +14,6 @@ organizations: Acme Corporation and Bubba Bakery.
 
 ## Running the Gameroom Demo with Docker
 
-**Note:** For the Kubernetes instructions, see [Running the Gameroom demo in
-Kubernetes](https://github.com/Cargill/splinter/blob/master/docker/kubernetes/README.md).
-
 This demo uses the Sabre smart contract engine provided in
 [Sawtooth Sabre](https://github.com/hyperledger/sawtooth-sabre) and the XO smart
 contract provided in the [Hyperledger Sawtooth Rust
