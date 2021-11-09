@@ -55,7 +55,7 @@ abandon`]({% link docs/0.5/references/cli/splinter-circuit-abandon.1.md %})
 Abandon an active circuit for this Splinter node.
 
 [`splinter circuit
-disband`]({% link docs/0.5/references/cli/splinter-circuit-list.1.md %})
+disband`]({% link docs/0.5/references/cli/splinter-circuit-disband.1.md %})
 Propose that an active circuit is disbanded.
 
 [`splinter circuit
