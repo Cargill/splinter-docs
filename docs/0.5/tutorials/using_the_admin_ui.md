@@ -11,12 +11,10 @@ user profiles, circuit proposals, and circuits on a Splinter network.
 
 This tutorial shows how to use the Splinter Admin UI with an example scenario
 that creates a circuit between Alice at Acme Corporation and Bob at Bubba's
-Bakery. (See the
-[Gameroom Walkthrough]({% link docs/0.5/examples/gameroom/walkthrough/index.md %})
-for more information about Alice and Bob.) This example uses Docker containers
-that configure and start a node for each organization, `acme-node-000` and
-`bubba-node-000`, as well as an external database for each node and a single
-external registry for node and key information.
+Bakery. This example uses Docker containers that configure and start a node for
+each organization, `acme-node-000` and `bubba-node-000`, as well as an external
+database for each node and a single external registry for node and key
+information.
 
 As Alice, you will register as a new user and add user keys to your profile,
 then propose a circuit and view the proposal summary. As Bob, you'll register
