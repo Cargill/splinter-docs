@@ -46,8 +46,8 @@ This procedure requires a local development environment that includes the
 
 1. If you want to change the default certificate directory, set the
    `SPLINTER_CERT_DIR` environment variable. (Otherwise, you could
-   use the `--tls-cert_dir` option with the `splinter` and `splinterd`
-   commands in this procedure.)
+   use the `--cert-dir` option with `splinter` and `--tls-cert-dir` with
+   `splinterd` commands in this procedure.)
 
 1. Run the following command to generate certificates and keys.
 
@@ -77,8 +77,7 @@ This procedure requires a local development environment that includes the
    connect to another Splinter node.
 
    ``` console
-   $ splinterd --node-id node-000 --tls-insecure --network-endpoints tcps://127.0.0.1:8044 \
-   --storage yaml
+   $ splinterd --node-id node-000 --tls-insecure --network-endpoints tcps://127.0.0.1:8044
    [2020-02-04 15:40:29.763] T["main"] WARN [splinterd] Starting TlsTransport in insecure mode
    ```
 
@@ -93,37 +92,39 @@ This procedure requires a local development environment that includes the
      keys were used, add `-vv` to increase the logging level.
 
    ``` console
-   $ splinterd --node-id node-000 --tls-insecure -vv --network-endpoints tcps://127.0.0.1:8044 \
-    --storage yaml
+   $ splinterd --node-id node-000 --tls-insecure -vv --network-endpoints tcps://127.0.0.1:8044
    .
    .
-   [2020-02-13 08:50:30.574] T["main"] DEBUG [splinterd] Loading configuration file
-   [2020-02-13 08:50:30.592] T["main"] DEBUG [splinterd::config] Config: storage: yaml (source: CommandLine)
-   [2020-02-13 08:50:30.592] T["main"] DEBUG [splinterd::config] Config: transport: tls (source: CommandLine)
-   [2020-02-13 08:50:30.592] T["main"] WARN [splinterd::config] Starting TlsTransport in insecure mode
-   [2020-02-13 08:50:30.592] T["main"] DEBUG [splinterd::config] Config: tls_cert_dir: /etc/splinter/certs/ (source: Default)
-   [2020-02-13 08:50:30.592] T["main"] DEBUG [splinterd::config] Config: tls_client_cert: /etc/splinter/certs/client.crt (source: Default)
-   [2020-02-13 08:50:30.593] T["main"] DEBUG [splinterd::config] Config: tls_client_key: /etc/splinter/certs/private/client.key (source: Default)
-   [2020-02-13 08:50:30.593] T["main"] DEBUG [splinterd::config] Config: tls_server_cert: /etc/splinter/certs/server.crt (source: Default)
-   [2020-02-13 08:50:30.593] T["main"] DEBUG [splinterd::config] Config: tls_server_key: /etc/splinter/certs/private/server.key (source: Default)
-   [2020-02-13 08:50:30.593] T["main"] DEBUG [splinterd::config] Config: service_endpoint: tcp://127.0.0.1:8043 (source: Default)
-   [2020-02-13 08:50:30.593] T["main"] DEBUG [splinterd::config] Config: network_endpoints: ["tcps://127.0.0.1:8044"] (source: Default)
-   [2020-02-13 08:50:30.593] T["main"] DEBUG [splinterd::config] Config: advertised_endpoints: ["tcps://127.0.0.1:8044"] (source: Default)
-   [2020-02-13 08:50:30.593] T["main"] DEBUG [splinterd::config] Config: peers: [] (source: Default)
-   [2020-02-13 08:50:30.593] T["main"] DEBUG [splinterd::config] Config: node_id: node-000 (source: CommandLine)
-   [2020-02-13 08:50:30.593] T["main"] DEBUG [splinterd::config] Config: display_name: Node node-000 (source: Default)
-   [2020-02-13 08:50:30.593] T["main"] DEBUG [splinterd::config] Config: bind: 127.0.0.1:8080 (source: Default)
-   [2020-02-13 08:50:30.593] T["main"] DEBUG [splinterd::config] Config: registries: [] (source: Default)
-   [2020-02-13 08:50:30.593] T["main"] DEBUG [splinterd::config] Config: registry_auto_refresh: 600 (source: Default)
-   [2020-02-13 08:50:30.593] T["main"] DEBUG [splinterd::config] Config: registry_forced_refresh: 10 (source: Default)
-   [2020-02-13 08:50:30.593] T["main"] DEBUG [splinterd::config] Config: state_dir: /var/lib/splinter/ (source: Default)
-   [2020-02-13 08:50:30.593] T["main"] DEBUG [splinterd::config] Config: heartbeat: 30 (source: Default)
-   [2020-02-13 08:50:30.593] T["main"] DEBUG [splinterd::config] Config: admin_timeout: 30s (source: Default)
-   [2020-02-13 08:50:30.593] T["main"] DEBUG [splinterd::config] Config: tls_insecure: true (source: CommandLine)
-   [2020-02-13 08:50:30.593] T["main"] DEBUG [splinterd::config] Config: no_tls: false (source: Default)
-   [2020-02-13 08:50:30.615] T["main"] DEBUG [splinterd::daemon] Listening for peer connections on tcps://127.0.0.1:8044
-   [2020-02-13 08:50:30.615] T["main"] DEBUG [splinterd::daemon] Listening for service connections on tcps://127.0.0.1:8043
-   [2020-02-13 08:50:30.615] T["main"] INFO [splinterd::daemon] Starting SpinterNode with ID node-000
+   [2021-11-10 11:24:40.483] T[main] WARN [splinterd::transport] Starting TlsTransport in insecure mode
+   [2021-11-10 11:24:40.484] T[main] DEBUG [splinterd::transport] Using client certificate file: "/etc/splinter/certs/client.crt"
+   [2021-11-10 11:24:40.484] T[main] DEBUG [splinterd::transport] Using client key file: "/etc/splinter/certs/private/client.key"
+   [2021-11-10 11:24:40.484] T[main] DEBUG [splinterd::transport] Using server certificate file: "/etc/splinter/certs/server.crt"
+   [2021-11-10 11:24:40.484] T[main] DEBUG [splinterd::transport] Using server key file: "/etc/splinter/certs/private/server.key"
+   [2021-11-10 11:24:40.499] T[main] DEBUG [splinterd::config] Config: config_dir: /etc/splinter (source: Default)
+   [2021-11-10 11:24:40.499] T[main] DEBUG [splinterd::config] Config: tls_ca_file: /etc/splinter/certs/ca.pem (source: Default)
+   [2021-11-10 11:24:40.499] T[main] DEBUG [splinterd::config] Config: tls_cert_dir: /etc/splinter/certs (source: Default)
+   [2021-11-10 11:24:40.499] T[main] DEBUG [splinterd::config] Config: tls_client_cert: /etc/splinter/certs/client.crt (source: Default)
+   [2021-11-10 11:24:40.499] T[main] DEBUG [splinterd::config] Config: tls_client_key: /etc/splinter/certs/private/client.key (source: Default)
+   [2021-11-10 11:24:40.499] T[main] DEBUG [splinterd::config] Config: tls_server_cert: /etc/splinter/certs/server.crt (source: Default)
+   [2021-11-10 11:24:40.499] T[main] DEBUG [splinterd::config] Config: tls_server_key: /etc/splinter/certs/private/server.key (source: Default)
+   [2021-11-10 11:24:40.499] T[main] DEBUG [splinterd::config] Config: network_endpoints: ["tcps://127.0.0.1:8044"] (source: CommandLine)
+   [2021-11-10 11:24:40.499] T[main] DEBUG [splinterd::config] Config: advertised_endpoints: ["tcps://127.0.0.1:8044"] (source: Default)
+   [2021-11-10 11:24:40.499] T[main] DEBUG [splinterd::config] Config: peers: [] (source: Default)
+   [2021-11-10 11:24:40.499] T[main] DEBUG [splinterd::config] Config: peering_key: "splinterd" (source: Default)
+   [2021-11-10 11:24:40.500] T[main] DEBUG [splinterd::config] Config: rest_api_endpoint: http://127.0.0.1:8080 (source: Default)
+   [2021-11-10 11:24:40.500] T[main] DEBUG [splinterd::config] Config: registries: [] (source: Default)
+   [2021-11-10 11:24:40.500] T[main] DEBUG [splinterd::config] Config: registry_auto_refresh: 600 (source: Default)
+   [2021-11-10 11:24:40.500] T[main] DEBUG [splinterd::config] Config: registry_forced_refresh: 10 (source: Default)
+   [2021-11-10 11:24:40.500] T[main] DEBUG [splinterd::config] Config: state_dir: /var/lib/splinter (source: Default)
+   [2021-11-10 11:24:40.500] T[main] DEBUG [splinterd::config] Config: heartbeat: 30 (source: Default)
+   [2021-11-10 11:24:40.500] T[main] DEBUG [splinterd::config] Config: admin_timeout: 30s (source: Default)
+   [2021-11-10 11:24:40.500] T[main] DEBUG [splinterd::config] database: /var/lib/splinter/splinter_state.db (source: Default)
+   [2021-11-10 11:24:40.500] T[main] DEBUG [splinterd::config] Config: tls_insecure: true (source: CommandLine)
+   [2021-11-10 11:24:40.500] T[main] DEBUG [splinterd::config] Config: no_tls: false (source: Default)
+   [2021-11-10 11:24:40.500] T[main] DEBUG [splinterd::config] Config: enable_biome_credentials: false (source: CommandLine)
+   [2021-11-10 11:24:40.500] T[main] DEBUG [splinterd::config] Config: strict_ref_counts: false (source: Environment)
+   [2021-11-10 11:24:40.534] T[main] DEBUG [splinterd::daemon] Listening for peer connections on ["tcps://127.0.0.1:8044"]
+   [2021-11-10 11:24:40.548] T[main] INFO [splinterd::daemon] Starting SpinterNode with ID node-000
    .
    .
    ```
@@ -150,8 +151,8 @@ This procedure requires a local development environment that includes the
   ```
 
   To create missing certificates and keys when some files already
-   exist, add the `--skip` flag. The command will ignore the existing
-   files and create any files that are missing.
+  exist, add the `--skip` flag. The command will ignore the existing
+  files and create any files that are missing.
 
   ``` console
   $ splinter cert generate --skip
