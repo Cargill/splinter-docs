@@ -173,7 +173,7 @@ After registering a new user, add the user's public and private keys.
        `splinter-ui`, then open a bash shell in the container:
 
     ```
-    docker-compose run generate-registry bash
+    docker-compose -f docker-compose-biome.yaml run generate-registry bash
     ```
 
     b. Display Alice's public and private keys:
@@ -194,33 +194,35 @@ After registering a new user, add the user's public and private keys.
     ![]({% link docs/0.5/images/adminui_profile_alice_no_keys.png %}
     "Profile page (no keys yet)")
 
-1. On the Profile page, click the orange **+** icon to display the **Add key**
-   dialog.
+1. On the Profile page, click the pink **New Key** button to go to the
+   **Create Key** page.
 
-1. In the Add key dialog, enter a key name (such as `alice`), then copy the key
-   values from the `generate-registry` terminal window and paste them here.
+   ![]({% link docs/0.5/images/adminui_alice_create_key_empty.png %}
+    "Create key page")
 
-   Tip: Do **not** press Enter or Return after pasting a key value.
+1. On the create key page, enter a key name (such as `alice`), then copy the key
+   values from the `generate-registry` terminal window and paste them here, then
+   enter a password for the key.
 
     ![]({% link docs/0.5/images/adminui_add_key_alice.png %} "Admin UI: Add key values")
 
-1. Click the **Next** button, then enter Alice's password and click **Submit**.
-
-    ![]({% link docs/0.5/images/adminui_add_key_password.png %}
-    "Admin UI: Enter password to add a key")
+1. Click the **Submit** button.
 
    If the operation was successful, the Profile page displays Alice's public
    key. At this point, it is an inactive key. The Admin UI can store
    multiple key pairs for each user, but one key pair must be marked as active.
 
+   ![]({% link docs/0.5/images/adminui_profile_alice_inactive_key.png %}
+    "Admin UI: Profile page with inactive key")
+
 1. To make Alice's key active, follow these steps.
 
-   a. Hover over the key, then click **Set active**.
+   a. Hover over the icon in the action column, then click the check mark icon.
 
    ![]({% link docs/0.5/images/adminui_profile_alice_set_active_key.png %}
    "Admin UI: Set active key")
 
-   b. Enter Alice's password when prompted.
+   b. Enter the password that was set for the key when prompted.
 
    c. If the operation was successful, the key is now marked as **Active**.
 
@@ -244,14 +246,13 @@ After registering a new user, add the user's public and private keys.
 
 1. Click **Propose New Circuit**. The **Add nodes** form shows the nodes that
   are available for the circuit, with the local node (`acme-node-000`)
-  preselected. Select the checkbox for **Node beta-node-000**, then click
-  **Next**.
+  preselected. Select **Node beta-node-000**, then click **Next**.
 
     ![]({% link docs/0.5/images/adminui_propose_2_add_beta.png %}
     "Propose Circuit: Add beta node")
 
-1. On the **Add services** form, enter the following service information for
-   the alpha node.
+1. On the **Add services** form, click the **Add Service** button and enter the
+   following service information for the alpha node.
 
    | Item | Value |
    |------|-------|
@@ -271,8 +272,8 @@ After registering a new user, add the user's public and private keys.
    ![]({% link docs/0.5/images/adminui_propose_3_add_services_alpha.png %}
    "Propose Circuit: Add alpha service")
 
-4. Click the green check to submit alpha's service information. If the operation
-   was successful, the green check changes to a pencil (edit) icon.
+4. Click the **Add** button to submit alpha's service information. If the
+   operation was successful, the service will be shown in the table.
 
    ![]({% link docs/0.5/images/adminui_propose_4_submit_service_alpha.png %}
    "Propose Circuit: Alpha service confirmed")
@@ -280,8 +281,8 @@ After registering a new user, add the user's public and private keys.
    Otherwise, an error displays so you can correct the information and
    resubmit it.
 
-5. Click the pink **+** icon at the bottom of the form to add another service
-   form, then enter the service information for the beta node.
+5. Click the **Add Service** button at the top of the form to add another
+   service, then enter the service information for the beta node.
 
    | Item | Value |
    |------|-------|
@@ -301,16 +302,16 @@ After registering a new user, add the user's public and private keys.
    ![]({% link docs/0.5/images/adminui_propose_5_add_services_beta.png %}
    "Propose Circuit: Add beta service")
 
-1. Click the green check to submit beta's service information.
+1. Click the **Add** button to submit beta's service information.
 
     ![]({% link docs/0.5/images/adminui_propose_6_submit_service_beta.png %}
     "Propose Circuit: Beta service confirmed")
 
 1. Review the service information for both nodes, then click **Next**.
 
-1. On the **Add circuit details** form, enter `gameroom` as the circuit
-   management type, and enter an optional comment if you would like. Then
-   click **Next**.
+1. On the **Add circuit details** form, enter a display name for the circuit,
+   enter `gameroom` as the circuit management type, and enter an
+   optional comment if you would like. Then click **Next**.
 
     ![]({% link docs/0.5/images/adminui_propose_7_circuit_details.png %}
     "Propose Circuit: Add circuit details")
@@ -361,13 +362,6 @@ After registering a new user, add the user's public and private keys.
 
     ![]({% link docs/0.5/images/adminui_circuits_proposal_details.png %}
     "Circuit proposal details")
-
-1. To see even more information, click on a node. The page expands to show
-   service details for the node.
-
-    ![]({% link
-    docs/0.5/images/adminui_circuits_proposal_details_service_info.png %}
-    "Circuit proposal details with service information")
 
 ## Voting on a Circuit Proposal
 
@@ -431,17 +425,12 @@ As a user on the other node, Bob must vote to accept or reject the proposal.
 
 ## Logging Out
 
-1. Click the profile icon to display the Profile page.
+1. Hover over the profile icon to display the **Logout** button.
 
-   ![]({% link docs/0.5/images/adminui_profile_alice_active_key.png %}
+   ![]({% link docs/0.5/images/adminui_alice_logout_button.png %}
    "Admin UI: Profile page")
 
-1. Click **Actions** (in the upper right).
-
-    ![]({% link docs/0.5/images/adminui_profile_actions_menu.png %}
-    "Actions menu on Profile page")
-
-2. In the drop-down menu, click **Logout**.
+1. Click **Logout**.
 
     ![]({% link docs/0.5/images/adminui_actions_logout_alice.png %}
     "Actions menu: Logout")
@@ -468,8 +457,10 @@ As a user on the other node, Bob must vote to accept or reject the proposal.
     ```
 
 1. To remove the Docker containers (including all user and circuit information),
-   run the following command:
+   run one of the following commands, depending on the `docker-compose` file
+   that was used:
 
     ```
-    docker-compose down --volumes
+    docker-compose -f docker-compose-biome.yaml down --volumes
+    docker-compose -f docker-compose-oauth.yaml down --volumes
     ```
