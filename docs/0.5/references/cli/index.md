@@ -44,7 +44,7 @@ Provides certificate management subcommands
 [`splinter cert
 generate`]({% link docs/0.5/references/cli/splinter-cert-generate.1.md %})
 Generates test certificates and keys for running splinterd with TLS (in insecure
-mode %})
+mode)
 
 ### Circuit Management
 [`splinter circuit`]({% link docs/0.5/references/cli/splinter-circuit.1.md %})
@@ -103,13 +103,17 @@ Displays all available circuit templates
 vote`]({% link docs/0.5/references/cli/splinter-circuit-vote.1.md %})
 Submits a vote to accept or reject a circuit proposal
 
-### Database Management Functions for Biome
+### Database Management Functions
 [`splinter database`]({% link docs/0.5/references/cli/splinter-database.1.md %})
-Provides database management functions for Biome
+Provides database management functions
 
 [`splinter database
 migrate`]({% link docs/0.5/references/cli/splinter-database-migrate.1.md %})
-Updates the Biome database for a new Splinter release
+Updates the database for a new Splinter release
+
+[`splinter
+upgrade`]({% link docs/0.5/references/cli/splinter-database-migrate.1.md %})
+Upgrade Splinter by importing file system state files to a database
 
 ### Display information about node and network health
 [`splinter health`]({% link docs/0.5/references/cli/splinter-health.1.md %})
@@ -149,9 +153,16 @@ permissions
 
 ### Registry management
 
+[`splinter registry`]({% link
+docs/0.5/references/cli/splinter-registry.1.md %}) Splinter registry commands
+
 [`splinter registry add`]({% link
 docs/0.5/references/cli/splinter-registry-add.1.md %}) Add a node to the local
 registry *(experimental builds only)*
+
+[`splinter registry build`]({% link
+docs/0.5/references/cli/splinter-registry-build.1.md %}) Add a node to a YAML
+file
 
 ### Role management
 
@@ -177,6 +188,11 @@ Shows a specific role on a Splinter node
 [`splinter role update`]({% link
 docs/0.5/references/cli/splinter-role-update.1.md %})
 Updates a role on a Splinter node
+
+### User management
+[`splinter user list`]({% link
+docs/0.5/references/cli/splinter-user-list.1.md %})
+Displays the existing users for this Splinter node
 
 ## splinterd CLI
 
