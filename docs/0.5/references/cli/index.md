@@ -269,20 +269,3 @@ Updates the owners of a Sabre namespace
 
 [`scabbard perm`]({% link docs/0.5/references/cli/scabbard-perm.1.md %})
 Sets or deletes a Sabre namespace permission
-
-### Smart Permissions Management
-
-[`scabbard sp`]({% link docs/0.5/references/cli/scabbard-sp.1.md %})
-Provides management of Sabre smart permissions
-
-[`scabbard sp
-create`]({% link docs/0.5/references/cli/scabbard-sp-create.1.md %})
-Creates a Sabre smart permission
-
-[`scabbard sp
-delete`]({% link docs/0.5/references/cli/scabbard-sp-delete.1.md %})
-Deletes a Sabre smart permission
-
-[`scabbard sp
-update`]({% link docs/0.5/references/cli/scabbard-sp-update.1.md %})
-Updates an existing Sabre smart permission
