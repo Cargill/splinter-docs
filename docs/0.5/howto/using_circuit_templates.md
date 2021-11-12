@@ -56,6 +56,8 @@ rules:
           value: [$(ADMIN_KEYS)]
         - key: 'peer_services'
           value: '$(ALL_OTHER_SERVICES)'
+        - key: 'version'
+          value: '2'
         first-service: 'a000'
     set-metadata:
         encoding: json
@@ -144,7 +146,7 @@ set-metadata:
 This rule is associated with a function used to set the `metadata` field of the
 `CreateCircuitBuilder`. The rule’s options allow for specifying the details
 necessary for the function associated with the template rule to assign that
-builder value. The `scabbard_admin_keys` key’s value is `[“$(ADMIN_KEYS)”],
+builder value. The `scabbard_admin_keys` key’s value is `[“$(ADMIN_KEYS)”]`,
 which refers to the value assigned to the `ADMIN_KEYS` argument inserted into a
 list. Similarly, the `alias` key would be assigned the value assigned to the
 `GAMEROOM_NAME` argument value. This example also shows the `encoding` option,
@@ -249,12 +251,12 @@ for the circuit proposal may also be included using the command’s other option
 More information on this command can be found in the circuit propose CLI
 [reference]({% link docs/0.5/references/cli/splinter-circuit-propose.1.md %}).
 
-NOTE: Template files within Splinter are stored by default in
-`/usr/share/splinter/circuit-templates` unless the `SPLINTER_CIRCUIT_TEMPLATE_PATH`
-environment variable is set. If using a template file outside of the paths
-specified by this environment variable or the default directory, use the full
-path when specifying the `template` option to ensure the correct template file
-is used when proposing the circuit.
+> NOTE: Template files within Splinter are stored by default in
+> `/usr/share/splinter/circuit-templates` unless the
+> `SPLINTER_CIRCUIT_TEMPLATE_PATH` environment variable is set. If using a
+> template file outside of the paths specified by this environment variable or
+> the default directory, use the full path when specifying the `template` option
+> to ensure the correct template file is used when proposing the circuit.
 
 This command proposes a simple circuit with one other node using the `template`
 option.
@@ -290,11 +292,11 @@ circuit template file in an application.
     let template = CircuitCreateTemplate::from_yaml_file("gameroom.yaml")?;
     ```
 
-    NOTE: All available circuit templates are packaged in the default circuit
-    template directory, `/usr/share/splinter/circuit-templates`. Unless the
-    `SPLINTER_CIRCUIT_TEMPLATE_PATH` is set, in which case all directories
-    specified using this environment variable are searched for the template
-    files.
+    > NOTE: All available circuit templates are packaged in the default circuit
+    > template directory, `/usr/share/splinter/circuit-templates`. Unless the
+    > `SPLINTER_CIRCUIT_TEMPLATE_PATH` is set, in which case all directories
+    > specified using this environment variable are searched for the template
+    >   files.
 
 2. The args of the `CircuitCreateTemplate` object created in the step above
    must be set. Each entry in the args section of the circuit template holds
@@ -345,22 +347,23 @@ circuit template file in an application.
     ```
 
 3. Once all of the required arguments have been set, the circuit template object
-   may be turned into builder objects that are converted to the finalized object
+   may be applied to builder objects that are converted to the finalized object
    once all of the necessary circuit information is gathered. This is done as
    follows:
 
     ```rust
-    let (create_circuit_builder, service_builders) = template.into_builders()?;
+      let mut create_circuit_builder = CreateCircuitBuilder::new()
+            .with_authorization_type(&AuthorizationType::Trust);
+
+      create_circuit_builder = template
+        .apply_to_builder(create_circuit_builder)?;
     ```
 
-    This method will return an error if any of the required arguments have not
-    been set. The `create_circuit_builder` is a `CreateCircuitBuilder` object
-    while the `service_builders` is a list of `SplinterServiceBuilder` objects.
-    Both of these types of builder objects are used to compile the necessary
-    information to propose a circuit.
+    The `create_circuit_builder` is a `CreateCircuitBuilder` which is
+    used to compile the necessary information to propose a circuit.
 
     At this point, all of the rules are applied to the circuit template. This
-    means that the builders are assigned values based on the rules using the
+    means that the builder is assigned values based on the rules using the
     values from the arguments. In the gameroom circuit template, this includes
     the `create-services`, `set-management-type`, and `set-metadata` rules.
     rules are predefined functions that use the values set for the template’s
@@ -415,7 +418,10 @@ circuit template file in an application.
         first-service: 'a000'
     ```
 
-4. After the builder objects have been generated from the `CircuitCreateTemplate`,
+    The list of `SplinterServiceBuilder` are then built and the resulting
+    `SplinterServices` are added to the `CreateCircuitBuilder`'s `roster` field
+
+4. After the builder has been updated for the `CircuitCreateTemplate`,
    any remaining information may be added to any of the builders. The Gameroom
    example includes filling in the `members` field of the `CreateCircuitBuilder`.
 
@@ -427,25 +433,6 @@ circuit template file in an application.
 
     ```rust
     create_circuit_builder.with_members(members);
-    ```
-
-    Additionally, the list of services must be added to the
-    `CircuitCreateTemplate` in the `roster` field. The `roster` field takes a
-    list of `SplinterService` objects. In an earlier step, we generated a list
-    of `SplinterServiceBuilder` objects. Each of these can be turned into a
-    `SplinterService` object using the `build` method and do not require any
-    additional information to successfully build.
-
-    ```rust
-    service_builder.build()?;
-    ```
-
-    Once each `SplinterServiceBuilder` has been built, the list can be added to
-    the `CircuitCreateTemplate`. The `services_list` is the list of
-    `SplinterService` objects created previously.
-
-    ```rust
-    create_circuit_builder.with_roster(services_list);
     ```
 
 5. At this point, all necessary information has been added to the
@@ -463,4 +450,5 @@ submitted to the circuit template and the builder objects.
 
  * Splinter `circuit-template` CLI commands:
 [list]({% link docs/0.5/references/cli/splinter-circuit-template-list.1.md %}),
-[show]({% link docs/0.5/references/cli/splinter-circuit-template-show.1.md %})
+[show]({% link docs/0.5/references/cli/splinter-circuit-template-show.1.md %}),
+[arguments]({% link docs/0.5/references/cli/splinter-circuit-template-arguments.1.md%})
