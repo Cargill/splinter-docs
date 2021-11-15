@@ -33,6 +33,7 @@ forum.
 | [REST API Maintenace Mode]({% link community/planning/rest_api_maintenance_mode.md %}) | Design for the maintenance mode authorization handler for the Splinter REST API |
 | [Scabbard Back Pressure]({% link community/planning/scabbard_back_pressure.md %}) | Simple back pressure for the batch queue |
 | [Scabbard Diesel Receipt Store]({% link community/planning/scabbard_diesel_receipt_store.md %}) | Diesel backed receipt store migrations and configuration in scabbard |
+| [Transact SQL Merkle State]({% link community/planning/transact_sql_merkle_state.md %}) | Transact Merkle State stored in Postgres and/or SQLite |
 
 ## Historical
 
