@@ -15,8 +15,9 @@ Splinter supports both [SQLite](https://sqlite.org) and
 development situations, or very small testing deployments. The latter is
 well-suited for production deployments.
 
-Services, such as scabbard, are responsible for managing their own state
-persistence. As a result, these are not necessarily stored in the same database.
+Services, such as scabbard, may provide alternative methods for managing their
+own state persistence. As a result, these are not necessarily stored in the same
+database.
 
 ### Requirements
 
@@ -111,3 +112,22 @@ configuration option.  This option can be set in several ways.
 
   If no `--database` option is provided, the default value of
   `splinter_state.db` will be used.
+
+### Scabbard State Configuration
+
+The Splinter daemon includes the scabbard service for use in circuits. Scabbard
+state is stored in the same database as the rest of the daemon. This includes
+data such as transaction receipts, the current commit hash, and transaction
+merkle state.
+
+Scabbard may also be configured to store the transaction merkle state using
+LMDB. This is enabled using the flag `--scabbard-state`. For example
+
+```
+$ splinterd --scabbard-state lmdb
+```
+
+This setting maybe chosen either for using existing services data (after
+upgrading, for example) or for particularly performance-sensitive installations.
+Once this is used LMDB must be enabled for all restarts of a given Splinter
+daemon.
