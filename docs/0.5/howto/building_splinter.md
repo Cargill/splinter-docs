@@ -26,9 +26,9 @@ apt install libssl-dev libzmq3-dev pkg-config libprotobuf-dev postgresql
 ```
 
 Once you have the prerequisites installed, build Splinter by running `cargo
-build` from the root directory. This command builds all of the Splinter
-components, including `libsplinter` (the main library), `splinterd` (the
-splinter daemon), the CLI, the client, and all examples in the `examples`
+build` from the root of the Splinter repository. This command builds all of the
+Splinter components, including `libsplinter` (the main library), `splinterd`
+(the splinter daemon), the CLI, the client, and all examples in the `examples`
 directory.
 
 To build individual components, run `cargo build` in the component directories.
@@ -37,15 +37,16 @@ For example, to build only the splinter library, navigate to
 
 To build Splinter using Docker, run
 `docker-compose -f docker-compose-installed.yaml build` from the root
-directory. This command builds Docker images for all of the Splinter
-components, including `libsplinter` (the main library), `splinterd`
+of the Splinter repository. This command builds Docker images for all of the
+Splinter components, including `libsplinter` (the main library), `splinterd`
 (the splinter daemon), the CLI, the client, and all examples in the `examples`
 directory.
 
 To build individual components using Docker, run
 `docker-compose -f docker-compose-installed.yaml build <component>`
-from the root directory. For example, to build only the splinter daemon,
-run `docker-compose -f docker-compose-installed.yaml build splinterd`.
+from the root of the Splinter repository. For example, to build only the
+splinter daemon, run `docker-compose -f docker-compose-installed.yaml build
+splinterd`.
 
 To use Docker to build Splinter with experimental features enabled, set an
 environment variable in your shell before running the build commands (for
