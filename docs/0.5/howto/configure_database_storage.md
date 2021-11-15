@@ -1,4 +1,4 @@
-## Configuring Splinter Daemon Database 
+## Configuring Splinter Daemon Database
 
 <!--
   Copyright 2018-2021 Cargill Incorporated
@@ -8,7 +8,7 @@
 
 Much of the runtime data maintained by a splinter daemon is persisted in a
 database instance.  This includes things like circuit state and node registry
-information. 
+information.
 
 Splinter supports both [SQLite](https://sqlite.org) and
 [PostgreSQL](https://www.postgresql.org) databases. The former is useful for
@@ -31,7 +31,7 @@ Splinter supports Postgres version 9.5 and above
 ### Connection Strings
 
 Connections to databases are established via a string appropriate for the
-database target.  
+database target.
 
 For postgres, this string is a standard URI format
 
