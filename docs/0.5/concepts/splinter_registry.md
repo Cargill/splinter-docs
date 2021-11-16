@@ -146,7 +146,7 @@ When using the config file option, the registries should be specified as a TOML
 array. This example is equivalent to the CLI examples:
 
 ``` toml
-registries = ["file:///path/to/local_registry.yaml, https://www.example.com/remote_registry.yaml"]
+registries = ["file:///path/to/local_registry.yaml", "https://www.example.com/remote_registry.yaml"]
 ```
 
 ### Configuring Remote YAML File Refreshes

@@ -97,7 +97,7 @@ configuration option.  This option can be set in several ways.
   Alternatively:
 
   ```
-  $ export SPLINTER_DATA_DIR=/my_splinter_data
+  $ export SPLINTER_STATE_DIR=/my_splinter_data
   ```
 
   where the resulting SQLite database files will be found in
