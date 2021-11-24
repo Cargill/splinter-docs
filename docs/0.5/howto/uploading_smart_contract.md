@@ -117,7 +117,7 @@ for details on how to create and compile a smart contract
 
     ``` console
     $ scabbard cr create my_contract \
-        --owner <alpha_node_public_key> \
+        --owners <alpha_node_public_key> \
         --key <path_to_alpha_node_private_key> \
         --url http://splinterd-alpha:8080 \
         --service-id $CIRCUIT_ID::a000
@@ -141,7 +141,7 @@ for details on how to create and compile a smart contract
 
     ``` console
     $ scabbard ns create 5b7349 \
-       --owner <alpha_node_public_key> \
+       --owners <alpha_node_public_key> \
        --key <path_to_alpha_node_private_key> \
        --url http://splinterd-alpha:8080 \
        --service-id $CIRCUIT_ID::a000
