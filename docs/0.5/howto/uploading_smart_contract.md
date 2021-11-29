@@ -38,6 +38,7 @@ for details on how to create and compile a smart contract
         --service b000::beta-node-000 \
         --service-peer-group b000,a000 \
         --service-arg *::admin_keys=<alpha_node_pub_key> \
+        --service-arg *::version=2 \
         --service-type *::scabbard \
         --management tutorial
     ```
@@ -69,9 +70,9 @@ for details on how to create and compile a smart contract
     c. Vote to accept the circuit on node beta.
 
     ``` console
-    $ splinter circuit vote \
+    $ splinter circuit vote $CIRCUIT_ID --accept \
         --key <path_to_beta_private_key> \
-        --url http://splinterd-beta:8080 $CIRCUIT_ID --accept
+        --url http://splinterd-beta:8080 \
     ```
 
     You have now established a circuit between node alpha and node beta based
@@ -116,7 +117,7 @@ for details on how to create and compile a smart contract
 
     ``` console
     $ scabbard cr create my_contract \
-        --owner <alpha_node_public_key> \
+        --owners <alpha_node_public_key> \
         --key <path_to_alpha_node_private_key> \
         --url http://splinterd-alpha:8080 \
         --service-id $CIRCUIT_ID::a000
@@ -140,7 +141,7 @@ for details on how to create and compile a smart contract
 
     ``` console
     $ scabbard ns create 5b7349 \
-       --owner <alpha_node_public_key> \
+       --owners <alpha_node_public_key> \
        --key <path_to_alpha_node_private_key> \
        --url http://splinterd-alpha:8080 \
        --service-id $CIRCUIT_ID::a000
@@ -162,7 +163,8 @@ for details on how to create and compile a smart contract
 7. List uploaded smart contracts.
 
     ``` console
-    $ scabbard contract list -U 'http://splinterd-beta:8080' \
+    $ scabbard contract list \
+        --url 'http://splinterd-beta:8080' \
         --service-id $CIRCUIT_ID::b000
 
     NAME        VERSIONS OWNERS
@@ -173,7 +175,7 @@ for details on how to create and compile a smart contract
 
     ``` console
     $ scabbard contract show my_contract:1.0 \
-        -U 'http://splinterd-beta:8080' \
+        --url 'http://splinterd-beta:8080' \
         --service-id $CIRCUIT_ID::b000
 
     name: my_contract
