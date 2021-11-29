@@ -111,19 +111,15 @@ encoder = "[{d(%Y-%m-%d %H:%M:%S%.3f)}] T[{T}] {l} [{M}] {m}\n"
 
 [loggers.root]
 appenders = ["stdout"]
-level = "Trace"
-
-[loggers.tokio]
-appenders = ["stdout"]
 level = "Warn"
 
-[loggers.tokio_reactor]
+[loggers.splinter]
 appenders = ["stdout"]
-level = "Warn"
+level = "Info"
 
-[loggers.hyper]
+[loggers.splinterd]
 appenders = ["stdout"]
-level = "Warn"
+level = "Info"
 ```
 
 ### Redirect Splinter Daemon logs to file
@@ -178,15 +174,11 @@ logged to stdout. This is not recommended and may cause performance issues.
 appenders = ["stdout"]
 level = "Trace"
 
-[loggers.tokio]
+[loggers.splinter]
 level = "Trace"
 
-[loggers.tokio_reactor]
+[loggers.splinterd]
 level = "Trace"
-
-[loggers.hyper]
-level = "Trace"
-
 ```
 
 ## Procedure
