@@ -198,8 +198,8 @@ to use the actual key value you copied instead of the example value shown below.
 
 1. Create the `allow_keys` file with the public key you copied above. This file
 tells Splinter that the public key is permitted to make all REST API requests
-(see [Configuring REST API Authorization]{% link
-docs/0.6/howto/configuring_rest_api_authorization.md %} for more info). Make
+(see [Configuring REST API Authorization]({% link
+docs/0.6/howto/configuring_rest_api_authorization.md %}) for more info). Make
 sure to use the actual key value you copied instead of the example value shown
 below.
 
