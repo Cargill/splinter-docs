@@ -532,17 +532,17 @@ beta nodes.
     a. Check the logs on alpha.
 
     ```bash
-    splinterd-alpha    | [2020-05-25 18:38:04.406] T["Peer Manager"] INFO [splinter::peer] Received peer connection from beta (remote endpoint: tcps://172.19.0.3:56964)
-    splinterd-alpha    | [2020-05-25 18:45:28.616] T["consensus-admin::alpha"] INFO [splinter::admin::service::shared] committed changes for new circuit proposal El9jM-6bXjg
-    splinterd-alpha    | [2020-05-25 18:45:28.616] T["consensus-admin::alpha"] INFO [splinter::admin::service::consensus] Committed proposal 36373565346133356336653865376462616137333935333030636363393135316161343134396634313066326636623563393637626262353932386532643137
+    splinterd-alpha    | [2021-12-03 20:08:30.561] T["Peer Manager"] INFO [splinter::peer] Received peer connection from Challenge ( public_key: 03b2cdc74ff0255b8d28737e87c075888706b92ad0399a4a0af0ac3d87432a7943 ) (remote endpoint: tcps://172.27.0.3:38678)
+    splinterd-alpha    | [2021-12-03 20:08:31.430] T["consensus-admin::alpha"] INFO [splinter::admin::service::shared] committed changes for new circuit proposal to create circuit El9jM-6bXjg
+    splinterd-alpha    | [2021-12-03 20:08:31.430] T["consensus-admin::alpha"] INFO [splinter::admin::service::consensus] Committed proposal 36373565346133356336653865376462616137333935333030636363393135316161343134396634313066326636623563393637626262353932386532643137
     ```
 
     b. Check the logs on beta.
 
     ```bash
-    splinterd-beta    | [2020-05-25 18:38:04.408] T["Peer Manager"] INFO [splinter::peer] Pending peer alpha connected via tcps://splinterd-alpha:8044
-    splinterd-beta    | [2020-05-25 18:45:28.720] T["consensus-admin::beta"] INFO [splinter::admin::service::shared] committed changes for new circuit proposal El9jM-6bXjg
-    splinterd-beta    | [2020-05-25 18:45:28.720] T["consensus-admin::beta"] INFO [splinter::admin::service::consensus] Committed proposal 36373565346133356336653865376462616137333935333030636363393135316161343134396634313066326636623563393637626262353932386532643137
+    splinterd-beta    | [2021-12-03 20:08:30.460] T["Peer Manager"] INFO [splinter::peer] Pending peer Challenge ( public_key: 036eead5eef388fe3d4f953c1622fe618bd323d828a79521689bffc56773075c1b ) connected via tcps://splinterd-alpha:8044
+    splinterd-beta    | [2021-12-03 20:08:31.440] T["consensus-admin::beta"] INFO [splinter::admin::service::shared] committed changes for new circuit proposal to create circuit El9jM-6bXjg
+    splinterd-beta    | [2021-12-03 20:08:31.441] T["consensus-admin::beta"] INFO [splinter::admin::service::consensus] Committed proposal 36373565346133356336653865376462616137333935333030636363393135316161343134396634313066326636623563393637626262353932386532643137
     ```
 
     >Tip: Rather than inspecting the logs, you can run the `splinter circuit
