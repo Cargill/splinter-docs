@@ -17,13 +17,13 @@ Starting with `0.5.1` Splinter can also be installed using `apt`.
 Details can be found on the
 [0.5 releases page](https://www.splinter.dev/releases/0.5/download.html) and
 [Installing Splinter on Ubuntu](
-{% link docs/0.5/howto/installing_splinter_on_ubuntu.md %}).
+{% link docs/0.6/howto/installing_splinter_on_ubuntu.md %}).
 
 ## Hosting a Splinter Node
 
 Detailed information about planning your Splinter deployment can be found in
 [Planning a Splinter Deployment](
-{% link docs/0.5/howto/planning_splinter_deployment.md %})
+{% link docs/0.6/howto/planning_splinter_deployment.md %})
 how-to document. This section summarizes some especially important information.
 
 ### Network Configuration
@@ -100,7 +100,7 @@ A Splinter registry is used to locate Splinter nodes for the purpose of creating
 circuits. Registries can be local, remote, or both. For the differences between
 the two types of registries, instructions for configuring a registry, and
 recommendations, see the
-[Splinter Registry]({% link docs/0.5/concepts/splinter_registry.md %})
+[Splinter Registry]({% link docs/0.6/concepts/splinter_registry.md %})
 page.
 
 
@@ -109,7 +109,7 @@ page.
 **REST API**
 
 See the
-[Ports and REST API Connections](/docs/0.5/concepts/security_considerations.html#ports-and-rest-api-connections)
+[Ports and REST API Connections](/docs/0.6/concepts/security_considerations.html#ports-and-rest-api-connections)
 section of the "Security Considerations" document for details about REST API
 security.
 
@@ -133,7 +133,7 @@ For development or non-production uses, Splinter can be run in "insecure" mode
 with self-signed certificates. For the instructions on generating these
 certificates and enabling insecure mode, see
 [Generating Insecure Certificates for Development](
-{% link docs/0.5/howto/generating_insecure_certificates_for_development.md %}).
+{% link docs/0.6/howto/generating_insecure_certificates_for_development.md %}).
 
 **Authorization**
 

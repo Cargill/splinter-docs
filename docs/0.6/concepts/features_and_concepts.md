@@ -23,7 +23,7 @@ private conversations between nodes using circuits and services.
 A Splinter application provides a set of distributed services that can
 communicate with each other across a Splinter circuit.
 
-![]({% link docs/0.5/images/diagram-splinter-circuits+3companies.svg %}
+![]({% link docs/0.6/images/diagram-splinter-circuits+3companies.svg %}
 "Splinter private circuits with shared state")
 
 ## Designed for privacy
@@ -52,7 +52,7 @@ Splinter works across a network.
      created.
 
 
-![]({% link docs/0.5/images/diagram-splinter-smartcontractdeployment.svg %}
+![]({% link docs/0.6/images/diagram-splinter-smartcontractdeployment.svg %}
 "Splinter smart contract deployment at runtime")
 
 ## Agile with smart contracts
@@ -82,5 +82,5 @@ Splinter works across a network.
    - _**Authorization**_ for circuit management can be delegated to application
      code and defined by business policies.
 
-![]({% link docs/0.5/images/diagram-splinter-twopartycircuit.svg %}
+![]({% link docs/0.6/images/diagram-splinter-twopartycircuit.svg %}
 "Two-party Splinter circuit")

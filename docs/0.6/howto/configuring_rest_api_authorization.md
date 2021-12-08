@@ -37,7 +37,7 @@ that makes requests to the Splinter REST API takes a `--key` argument for
 specifying a Cylinder private key file for generating a JWT; this JWT is then
 used to authenticate REST API requests. For an example, see the
 [`splinter circuit propose` man page]({% link
-docs/0.5/references/cli/splinter-circuit-propose.1.md %}).
+docs/0.6/references/cli/splinter-circuit-propose.1.md %}).
 
 For other clients, Cylinder provides a convenient API for creating and signing
 JWTs as part of its Rust crate. This functionality is provided by the
@@ -63,10 +63,10 @@ configuration, and it's on of the supported authentication methods for the
 Biome credentials can be enabled for the Splinter daemon by specifying the
 `--enable-biome-credentials` flag when running `splinterd`. For more details on
 this flag and running `splinterd`, see the
-[`splinterd` man page]({% link docs/0.5/references/cli/splinterd.1.md %}).
+[`splinterd` man page]({% link docs/0.6/references/cli/splinterd.1.md %}).
 
 For more details about Biome and credentials, see
-[Biome User Management]({% link docs/0.5/concepts/biome_user_management.md %}).
+[Biome User Management]({% link docs/0.6/concepts/biome_user_management.md %}).
 
 ### OAuth
 
@@ -121,7 +121,7 @@ settings:
 
 For more details on how to configure OAuth for `splinterd`, see the
 "Authorization Configuration" section of the
-[`splinterd` man page]({% link docs/0.5/references/cli/splinterd.1.md %}).
+[`splinterd` man page]({% link docs/0.6/references/cli/splinterd.1.md %}).
 
 ## Authorization Configuration
 
@@ -214,8 +214,8 @@ splinter node.
 
 The CLI has two subcommands for displaying information about the existing roles
 on a splinter node: [`splinter role list`]({% link
-docs/0.5/references/cli/splinter-role-list.1.md %}) and [`splinter role
-show`]({% link docs/0.5/references/cli/splinter-role-show.1.md %}).  The `list`
+docs/0.6/references/cli/splinter-role-list.1.md %}) and [`splinter role
+show`]({% link docs/0.6/references/cli/splinter-role-show.1.md %}).  The `list`
 subcommand displays all of the roles that exist on the node.  The `show`
 subcommand displays details about a specific role, including the set of
 permissions available to members of that role.
@@ -246,7 +246,7 @@ Id: circuit_admin
 ###### Creating Roles
 
 Roles are created via the [`splinter role create`]({% link
-docs/0.5/references/cli/splinter-role-create.1.md %}) subcommand.  The roles
+docs/0.6/references/cli/splinter-role-create.1.md %}) subcommand.  The roles
 require at least one permission and a display name.  The following example will
 create a role with two permissions.
 
@@ -275,7 +275,7 @@ Id: my_role
 ###### Modifying Roles
 
 Roles are modified via the [`splinter role update`]({% link
-docs/0.5/references/cli/splinter-role-update.1.md %}) subcommand.  A role's
+docs/0.6/references/cli/splinter-role-update.1.md %}) subcommand.  A role's
 display name and permissions can both be optionally modified, however the
 requirement that there is still at least one permission stands.
 
@@ -295,7 +295,7 @@ details, but removes the ability to read status information from the node.
 ###### Deleting roles
 
 Finally, roles are deleted via the [`splinter role delete`]({% link
-docs/0.5/references/cli/splinter-role-delete.1.md %}) subcommand.  Any
+docs/0.6/references/cli/splinter-role-delete.1.md %}) subcommand.  Any
 authorized identities will have their membership of that role removed.
 
 The following example deletes the role updated in the previous section.
@@ -323,8 +323,8 @@ identities are local to a splinter node.
 
 The CLI has two subcommands for displaying information about the existing
 authorized identities on a splinter node: [`splinter authid list`]({% link
-docs/0.5/references/cli/splinter-authid-list.1.md %}) and [`splinter authid
-show`]({% link docs/0.5/references/cli/splinter-authid-show.1.md %}).  The
+docs/0.6/references/cli/splinter-authid-list.1.md %}) and [`splinter authid
+show`]({% link docs/0.6/references/cli/splinter-authid-show.1.md %}).  The
 `list` subcommand displays all of the authorized identities that exist on the
 node.  The `show` subcommand displays details about a specific authorized
 identity, including the set of roles of which the identity is a member.
@@ -352,7 +352,7 @@ ID: 557C80AC-4C17-4A21-9E68-AB9AABD3C8CD
 ###### Creating Authorized Identities
 
 Authorized identities are created via the [`splinter authid create`]({% link
-docs/0.5/references/cli/splinter-authid-create.1.md %}) subcommand.  An identity
+docs/0.6/references/cli/splinter-authid-create.1.md %}) subcommand.  An identity
 is either a user id or a public key, one of which is required.  The identity
 must also have at least one role specified.
 
@@ -380,7 +380,7 @@ ID: 03d4a6ea6bae775622912b6cf49437098dc3bf06ca49ea331113e27ee0b14c7a3c
 ###### Modifying Authorized Identities
 
 Authorized identities are updated via the [`splinter authid update`]({% link
-docs/0.5/references/cli/splinter-authid-update.1.md %}) subcommand.  Roles may
+docs/0.6/references/cli/splinter-authid-update.1.md %}) subcommand.  Roles may
 be added or removed, however the identity must still have at least one role
 specified.
 
@@ -399,7 +399,7 @@ still allows it to read them.
 ###### Deleting Authorized Identities
 
 Finally, authorized identities are deleted via the [`splinter authid delete`]({%
-link docs/0.5/references/cli/splinter-authid-delete.1.md %}) subcommand. An
+link docs/0.6/references/cli/splinter-authid-delete.1.md %}) subcommand. An
 identity removed immediately loses its access to any of their permitted REST API
 endpoints.
 

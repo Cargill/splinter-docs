@@ -11,7 +11,7 @@ this guide explains what you need to know before you start. This guide
 summarizes how to use Docker containers.
 
 See [Security Considerations]({% link
-docs/0.5/concepts/security_considerations.md %})
+docs/0.6/concepts/security_considerations.md %})
 for information about admin roles and permissions.
 
 ## Overview
@@ -28,7 +28,7 @@ A Splinter deployment usually has the following items:
 
 *   A web UI (brower-based user interface) for interacting with the application.
 
-![]({% link docs/0.5/images/splinter-deployment-overview.png %}
+![]({% link docs/0.6/images/splinter-deployment-overview.png %}
 "Splinter deployment overview")
 
 ## Splinter Architecture
@@ -55,7 +55,7 @@ nodes, by using **circuits** and **services**.
   the services within a circuit.
 
 For more information, see [Features and
-Concepts]({% link docs/0.5/concepts/features_and_concepts.md %}).
+Concepts]({% link docs/0.6/concepts/features_and_concepts.md %}).
 
 ## Network Configuration
 
@@ -84,7 +84,7 @@ Communication over this connection is encrypted with TLS.
 We recommend redirecting web server traffic from port 80 to port 443, which
 sends all HTTP requests to the TLS port.
 
-![]({% link docs/0.5/images/splinter-deployment-network-config.png %}
+![]({% link docs/0.6/images/splinter-deployment-network-config.png %}
 "Splinter network configuration")
 
 ## Application Pattern
@@ -93,7 +93,7 @@ Users generally access the application with web-based apps that interact with
 Splinter through a web server and server-side application. Splinter includes
 **Canopy**, a distributed-application UI framework that dynamically loads
 distributed UI components called _Saplings_. See [Canopy Application
-Framework]({% link docs/0.5/concepts/canopy_application_framework.md %}) for
+Framework]({% link docs/0.6/concepts/canopy_application_framework.md %}) for
 more information.
 
 The server-side application (application server) is commonly a single
@@ -107,7 +107,7 @@ must be persisted across restarts.
 > **Important:** Splinter requires shared storage (such as a Docker volume
 > for `/var/lib/splinter`, which contains circuit definitions and shared state.
 
-![]({% link docs/0.5/images/splinter-deployment-application-pattern.png %}
+![]({% link docs/0.6/images/splinter-deployment-application-pattern.png %}
 'Splinter application pattern')
 
 ## Docker Deployment
@@ -121,7 +121,7 @@ can use the Splinter command-line interface (CLI) to interact with splinterd.
 * If your application requires persistent data across restarts, configure a
   Docker data volume for the database container.
 
-![]({% link docs/0.5/images/splinter-deployment-docker.png %}
+![]({% link docs/0.6/images/splinter-deployment-docker.png %}
 "Splinter Docker deployment")
 
 ## Summary

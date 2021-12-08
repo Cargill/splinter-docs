@@ -30,11 +30,11 @@ any necessary explanation (optional, if already explained above).
 
  2. Use in-line Markdown syntax to include the image in this topic:
 
-    ![alt_text_for_hovering]({% link docs/0.5/images/name.png }) "Image title"
+    ![alt_text_for_hovering]({% link docs/0.6/images/name.png }) "Image title"
 -->
 
 <center>
-![Placeholder image]({% link docs/0.5/images/TEMPLATE_placeholder_image.png })
+![Placeholder image]({% link docs/0.6/images/TEMPLATE_placeholder_image.png })
 </center>
 
 ## Descriptive Heading (Optional)

@@ -365,29 +365,29 @@ $ ls -al /etc/splinter/splinterd.toml
 -rw-r----- 1 root splinterd 2104 Jun 22 22:02 /etc/splinter/registry.yaml
 ```
 
-[splinterplanning]: https://www.splinter.dev/docs/0.5/howto/planning_splinter_deployment.html
+[splinterplanning]: https://www.splinter.dev/docs/0.6/howto/planning_splinter_deployment.html
 "Planing a Splinter Deployment"
 
-[splinterhosting]: https://www.splinter.dev/docs/0.5/howto/hosting_a_splinter_node.html
+[splinterhosting]: https://www.splinter.dev/docs/0.6/howto/hosting_a_splinter_node.html
 "Hosting a Splinter Node"
 
-[splinterdocker]: https://www.splinter.dev/docs/0.5/tutorials/configuring_splinter_nodes.html
+[splinterdocker]: https://www.splinter.dev/docs/0.6/tutorials/configuring_splinter_nodes.html
 "Configuring Splinter nodes with Docker"
 
-[splintercerts]: https://www.splinter.dev/docs/0.5/concepts/splinter_certificates.html
+[splintercerts]: https://www.splinter.dev/docs/0.6/concepts/splinter_certificates.html
 "Splinter Certificates"
 
-[splinterdatabase]: https://www.splinter.dev/docs/0.5/howto/configure_database_storage.html
+[splinterdatabase]: https://www.splinter.dev/docs/0.6/howto/configure_database_storage.html
 "Configuring Splinter Daemon Database"
 
-[allow_keys]: {% link docs/0.5/howto/configuring_rest_api_authorization.md %}#allow-keys-file
+[allow_keys]: {% link docs/0.6/howto/configuring_rest_api_authorization.md %}#allow-keys-file
 "Configuring REST API authorization using the allow_keys file"
 
-[rest_api_auth]: {% link docs/0.5/howto/configuring_rest_api_authorization.md %}
+[rest_api_auth]: {% link docs/0.6/howto/configuring_rest_api_authorization.md %}
 "Configuring REST API Authorization"
 
-[splinterregistry]: https://www.splinter.dev/docs/0.5/concepts/splinter_registry.html
+[splinterregistry]: https://www.splinter.dev/docs/0.6/concepts/splinter_registry.html
 "Splinter Registry"
 
-[splinterdman]: https://www.splinter.dev/docs/0.5/references/cli/splinterd.1.html
+[splinterdman]: https://www.splinter.dev/docs/0.6/references/cli/splinterd.1.html
 "Splinter Daemon man page"

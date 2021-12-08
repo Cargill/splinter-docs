@@ -19,7 +19,7 @@ database structure and table names.
 
 Biome is part of the Splinter daemon, `splinterd`. The `splinterd` REST API
 exposes this functionality as Biome-specific endpoints. The
-[splinterd REST API Reference](/docs/0.5/api/) provides documentation and
+[splinterd REST API Reference](/docs/0.6/api/) provides documentation and
 examples for the Biome routes and request/response format.
 
 This topic explains Biome's architecture, then illustrates how Biome works with
@@ -128,7 +128,7 @@ REST API endpoints for the following tasks:
 * Log a user out with `/biome/logout`
 
 For details on each request and response, see the `biome` routes in the
-[splinterd REST API Reference](/docs/0.5/api/#tag/Biome).
+[splinterd REST API Reference](/docs/0.6/api/#tag/Biome).
 
 ### Registering a New User
 
@@ -212,7 +212,7 @@ store the user's keys in the Biome database.
 
 This example assumes that the user's public and private key files already exist.
 For information on generating these keys, see the [splinter-keygen(1) man
-page]({% link docs/0.5/references/cli/splinter-keygen.1.md %}).
+page]({% link docs/0.6/references/cli/splinter-keygen.1.md %}).
 
 **Important**: For security reasons, it is highly recommended to encrypt the
 private key.  The encryption method is left to the calling application; Biome
@@ -419,7 +419,7 @@ The `splinterd` REST API exposes the following Biome-specific endpoints.
 
 <br>
 For more information, see the `biome` routes in the
-[splinterd REST API Reference](/docs/0.5/api/#tag/Biome).
+[splinterd REST API Reference](/docs/0.6/api/#tag/Biome).
 
 ### Biome Database Tables
 

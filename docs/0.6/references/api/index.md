@@ -11,4 +11,4 @@ endpoints allow external applications to access Splinter functionality such as
 Biome user management, the Splinter registry, circuit proposals and management,
 smart contract functions with the scabbard service, and more.
 
-* [splinterd REST API Reference](/docs/0.5/api/)
+* [splinterd REST API Reference](/docs/0.6/api/)

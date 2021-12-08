@@ -93,7 +93,7 @@ message CircuitManagementPayload {
 
 This request may be submitted via the Splinter CLI. For more information on the
 `splinter-circuit-remove-proposal` command, see the [man page entry]({%
-link docs/0.5/references/cli/splinter-circuit-remove-proposal.1.md %}).
+link docs/0.6/references/cli/splinter-circuit-remove-proposal.1.md %}).
 
 ### Notifying other proposal members
 

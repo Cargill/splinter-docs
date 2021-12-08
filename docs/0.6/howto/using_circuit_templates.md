@@ -209,7 +209,7 @@ Additionally, all of the template `arguments` may be displayed using the
 `splinter-circuit-template-arguments` command. More information about the
 `splinter-circuit-template-*` commands can be found in the circuit template
 CLI
-[reference]({% link docs/0.5/references/cli/splinter-circuit-template.1.md %}).
+[reference]({% link docs/0.6/references/cli/splinter-circuit-template.1.md %}).
 
 The template is put into action using the `splinter-circuit-propose` command’s
 `template` option. The `template` option takes the template name and then uses
@@ -249,7 +249,7 @@ arguments, any custom-set arguments using the `propose` command’s other option
 will take precedence over the default template values. Any additional information
 for the circuit proposal may also be included using the command’s other options.
 More information on this command can be found in the circuit propose CLI
-[reference]({% link docs/0.5/references/cli/splinter-circuit-propose.1.md %}).
+[reference]({% link docs/0.6/references/cli/splinter-circuit-propose.1.md %}).
 
 > NOTE: Template files within Splinter are stored by default in
 > `/usr/share/splinter/circuit-templates` unless the
@@ -449,6 +449,6 @@ submitted to the circuit template and the builder objects.
 ## For More Information
 
  * Splinter `circuit-template` CLI commands:
-[list]({% link docs/0.5/references/cli/splinter-circuit-template-list.1.md %}),
-[show]({% link docs/0.5/references/cli/splinter-circuit-template-show.1.md %}),
-[arguments]({% link docs/0.5/references/cli/splinter-circuit-template-arguments.1.md%})
+[list]({% link docs/0.6/references/cli/splinter-circuit-template-list.1.md %}),
+[show]({% link docs/0.6/references/cli/splinter-circuit-template-show.1.md %}),
+[arguments]({% link docs/0.6/references/cli/splinter-circuit-template-arguments.1.md%})

@@ -216,7 +216,7 @@ Links Below
 [apt]: https://www.splinter.dev/releases/0.5/download.html#apt-repository
 "Splinter apt instructions"
 
-[manpage]: https://www.splinter.dev/docs/0.5/references/cli/splinterd.1.html
+[manpage]: https://www.splinter.dev/docs/0.6/references/cli/splinterd.1.html
 "splinterd man page"
 
 [exampletoml]: https://github.com/Cargill/splinter/blob/main/splinterd/packaging/splinterd.toml.example

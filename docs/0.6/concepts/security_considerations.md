@@ -75,11 +75,11 @@ Likewise, the circuit admin's private key is required when voting on a circuit
 proposal with the `--key` option in the `splinter circuit vote` command.
 
 For more information, see [Splinter
-Registry]({% link docs/0.5/concepts/splinter_registry.md %}) and the man pages
+Registry]({% link docs/0.6/concepts/splinter_registry.md %}) and the man pages
 [splinter-circuit-propose(1)]({% link
-docs/0.5/references/cli/splinter-circuit-propose.1.md %})
+docs/0.6/references/cli/splinter-circuit-propose.1.md %})
 and [splinter-circuit-vote(1)]({% link
-docs/0.5/references/cli/splinter-circuit-vote.1.md %}).
+docs/0.6/references/cli/splinter-circuit-vote.1.md %}).
 
 ## Smart Contract Administration with Scabbard
 
@@ -108,17 +108,17 @@ contract registry and namespace.
   --owners`.
 
 For more information, see [Uploading a Smart
-Contract]({% link docs/0.5/howto/uploading_smart_contract.md %}),
+Contract]({% link docs/0.6/howto/uploading_smart_contract.md %}),
 [the Grid
 README](https://github.com/hyperledger/grid/blob/master/examples/splinter/README.md#demonstrate-grid-smart-contract-functionality),
 and the man pages
 [splinter-circuit-propose(1)]({% link
-docs/0.5/references/cli/splinter-circuit-propose.1.md %}),
+docs/0.6/references/cli/splinter-circuit-propose.1.md %}),
 [scabbard-contract-upload(1)]({% link
-docs/0.5/references/cli/scabbard-contract-upload.1.md %}),
-[scabbard-cr(1)]({% link docs/0.5/references/cli/scabbard-cr.1.md %}),
-[scabbard-ns(1)]({% link docs/0.5/references/cli/scabbard-ns.1.md %}),
-and [scabbard-perm(1)]({% link docs/0.5/references/cli/scabbard-perm.1.md %}).
+docs/0.6/references/cli/scabbard-contract-upload.1.md %}),
+[scabbard-cr(1)]({% link docs/0.6/references/cli/scabbard-cr.1.md %}),
+[scabbard-ns(1)]({% link docs/0.6/references/cli/scabbard-ns.1.md %}),
+and [scabbard-perm(1)]({% link docs/0.6/references/cli/scabbard-perm.1.md %}).
 
 ## User and Credential Management with Biome
 
@@ -138,7 +138,7 @@ API. The client application is responsible for encryption before submitting a
 private key.
 
 For more information, see [Biome User
-Management]({% link docs/0.5/concepts/biome_user_management.md %}).
+Management]({% link docs/0.6/concepts/biome_user_management.md %}).
 
 ## Smart Permissions for Organizations and Agents with Pike
 
@@ -184,7 +184,7 @@ or user can access and what kind of operations they can perform.
 For more information on REST API security and how to configure
 authentication/authorization for the `splinterd` REST API, see
 [Configuring REST API Authorization]({% link
-docs/0.5/howto/configuring_rest_api_authorization.md %}).
+docs/0.6/howto/configuring_rest_api_authorization.md %}).
 
 ## Ports and Connections
 
