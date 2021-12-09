@@ -182,11 +182,11 @@ The available permissions include:
 | authorization.permissions.read | Allows the client to read REST API permissions | `/authorization/permissions` |
 | authorization.rbac.read | Allows the client to read roles, identities, and role assignments | `/authorization/roles`, `/authorization/assignments` |
 | authorization.rbac.write | Allows the client to modify roles, identities, and role assignments | `/authorization/roles`, `/authorization/assignments` |
+| biome.profile.read | Allows the client to view all Biome user profiles | `/biome/profiles` |
 | biome.user.read | Allows the client to view all Biome users | `/biome/users` |
 | biome.user.write | Allows the client to modify all Biome users | `/biome/users` |
 | circuit.read | Allows the client to read circuit state | `/admin/circuits`, `/admin/proposals` |
 | circuit.write | Allows the client to modify circuit state | `/admin/circuits`, `/admin/proposals`, `/admin/submit`|
-| health.read | Allows the client to check node health | |
 | registry.read | Allows the client to read the registry | `/registry/nodes` |
 | registry.write | Allows the client to modify the registry |`/registry/nodes` |
 | scabbard.read | Allows the client to read scabbard services' state and batch statuses | `/scabbard/*` |
