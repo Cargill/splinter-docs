@@ -57,7 +57,7 @@ Splinter REST API provides a Biome JWT that can be used to authenticate future
 requests.
 
 Biome credentials is a quick and easy way to allow users to login with minimal
-configuration, and it's on of the supported authentication methods for the
+configuration, and it's one of the supported authentication methods for the
 [Splinter Admin UI]({% link community/planning/admin_ui.md %}).
 
 Biome credentials can be enabled for the Splinter daemon by specifying the
