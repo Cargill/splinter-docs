@@ -32,6 +32,8 @@ RewriteEngine on\n\
 RewriteCond %{REQUEST_FILENAME} !-d\n\
 RewriteCond %{REQUEST_FILENAME} !-f\n\
 RewriteRule ^/(.*).md$ /\$1.html [NC,L,R]\n\
+RewriteRule ^/docs/0.5$ /docs/0.6/ [NC,L,R]\n\
+RewriteRule ^/docs/0.5/(.*)$ /docs/0.6/\$1 [NC,L,R]\n\
 \n\
 " >>/usr/local/apache2/conf/httpd.conf
 
