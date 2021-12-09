@@ -57,7 +57,7 @@ Splinter REST API provides a Biome JWT that can be used to authenticate future
 requests.
 
 Biome credentials is a quick and easy way to allow users to login with minimal
-configuration, and it's on of the supported authentication methods for the
+configuration, and it's one of the supported authentication methods for the
 [Splinter Admin UI]({% link community/planning/admin_ui.md %}).
 
 Biome credentials can be enabled for the Splinter daemon by specifying the
@@ -182,11 +182,11 @@ The available permissions include:
 | authorization.permissions.read | Allows the client to read REST API permissions | `/authorization/permissions` |
 | authorization.rbac.read | Allows the client to read roles, identities, and role assignments | `/authorization/roles`, `/authorization/assignments` |
 | authorization.rbac.write | Allows the client to modify roles, identities, and role assignments | `/authorization/roles`, `/authorization/assignments` |
+| biome.profile.read | Allows the client to view all Biome user profiles | `/biome/profiles` |
 | biome.user.read | Allows the client to view all Biome users | `/biome/users` |
 | biome.user.write | Allows the client to modify all Biome users | `/biome/users` |
 | circuit.read | Allows the client to read circuit state | `/admin/circuits`, `/admin/proposals` |
 | circuit.write | Allows the client to modify circuit state | `/admin/circuits`, `/admin/proposals`, `/admin/submit`|
-| health.read | Allows the client to check node health | |
 | registry.read | Allows the client to read the registry | `/registry/nodes` |
 | registry.write | Allows the client to modify the registry |`/registry/nodes` |
 | scabbard.read | Allows the client to read scabbard services' state and batch statuses | `/scabbard/*` |
@@ -264,7 +264,7 @@ details.
 The details for the new role can be displayed via the `show` subcommand:
 
 ```
-$ splinter role show circuit_admin
+$ splinter role show my_role
 Id: my_role
     Name: My Role
     Permissions:
