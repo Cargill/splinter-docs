@@ -73,6 +73,12 @@ defaults:
         layout: "sidebars"
         sidebar: "0.6"
     - scope:
+        path: "docs/0.7"
+        type: "pages"
+      values:
+        layout: "sidebars"
+        sidebar: "0.7"
+    - scope:
         path: "community"
         type: "pages"
       values:

@@ -19,10 +19,10 @@ Finally, you will upload an example smart contract.
 
 For planning information, general considerations, and node-management tips, see
 [Planning a Splinter Deployment](
-{% link docs/0.6/howto/planning_splinter_deployment.md %})
+{% link docs/0.7/howto/planning_splinter_deployment.md %})
 and
 [Hosting a Splinter Node](
-{% link docs/0.6/howto/hosting_a_splinter_node.md %}).
+{% link docs/0.7/howto/hosting_a_splinter_node.md %}).
 
 **NOTE:** The steps in this tutorial were tested with Docker 19.03.8 and Docker
 Compose 1.25.5.
@@ -162,7 +162,7 @@ is a list of nodes that can be browsed (and sometimes directly managed) by an
 administrator. Registries can be local, like the yaml file you're creating, or
 remotely accessed over HTTP. See the
 [Splinter registry documentation](
-{% link docs/0.6/concepts/splinter_registry.md %})
+{% link docs/0.7/concepts/splinter_registry.md %})
 for more details.
 
     ```bash
@@ -199,7 +199,7 @@ to use the actual key value you copied instead of the example value shown below.
 1. Create the `allow_keys` file with the public key you copied above. This file
 tells Splinter that the public key is permitted to make all REST API requests
 (see [Configuring REST API Authorization]{% link
-docs/0.6/howto/configuring_rest_api_authorization.md %} for more info). Make
+docs/0.7/howto/configuring_rest_api_authorization.md %} for more info). Make
 sure to use the actual key value you copied instead of the example value shown
 below.
 

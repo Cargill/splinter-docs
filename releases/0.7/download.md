@@ -1,4 +1,4 @@
-# Splinter v0.6 Downloads
+# Splinter v0.7 Downloads
 
 <!--
   Copyright 2018-2021 Cargill Incorporated
@@ -11,8 +11,8 @@
 Clone the core [GitHub repository](https://github.com/Cargill/splinter/)
 to view the Splinter source code, demo applications, and example Docker compose
 files for starting up a Splinter network. Learn
-[how to build Splinter]({% link docs/0.6/howto/building_splinter.md %}) and more
-by browsing the [Splinter documentation]({% link docs/0.6/index.md %}).
+[how to build Splinter]({% link docs/0.7/howto/building_splinter.md %}) and more
+by browsing the [Splinter documentation]({% link docs/0.7/index.md %}).
 
 See [Repositories]({% link community/repositories.md %}) for the other Splinter
 repositories in this project.

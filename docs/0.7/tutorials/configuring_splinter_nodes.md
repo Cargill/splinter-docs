@@ -1,5 +1,5 @@
 ---
-redirect_to: docs/0.6/tutorials/configuring_splinter_nodes_with_docker.html
+redirect_to: docs/0.7/tutorials/configuring_splinter_nodes_with_docker.html
 ---
 
 <!--

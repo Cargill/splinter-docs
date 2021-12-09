@@ -67,6 +67,22 @@ services:
         redoc-cli serve openapi.yml -w -p 4002
       "
 
+  splinter-docs-redoc-0-7:
+    container_name: splinter-docs-redoc-0-7
+    image: splinter-docs-redoc
+    build:
+      dockerfile: docker/splinter-docs-redoc
+      context: .
+    ports:
+      - 4003:4003
+    volumes:
+      - .:/project
+    entrypoint: |
+      bash -c "
+        cd /project/docs/0.7/references/api
+        redoc-cli serve openapi.yml -w -p 4003
+      "
+
   splinter-docs-apache:
     container_name: splinter-docs-apache
     image: splinter-docs-apache

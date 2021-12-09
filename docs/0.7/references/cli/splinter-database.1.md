@@ -49,4 +49,4 @@ SEE ALSO
 ========
 | `splinter-database-migrate(1)`
 |
-| Splinter documentation: https://www.splinter.dev/docs/0.6/
+| Splinter documentation: https://www.splinter.dev/docs/0.7/

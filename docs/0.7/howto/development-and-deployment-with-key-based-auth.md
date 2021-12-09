@@ -17,7 +17,7 @@ These applications include daemon processes and other applications where
 access is not tied to a single user. They also include CLIs whose operation are
 tied to a user, but unable to use other authentication methods, such as OAuth.
 
-![]({% link docs/0.6/images/key-auth-process-relationships.png %}
+![]({% link docs/0.7/images/key-auth-process-relationships.png %}
 "Splinter deployment overview")
 
 ## Non-user applications
@@ -71,4 +71,4 @@ Authorization: Bearer Cylinder:<encoded Cylinder JWT>
 ## See Also
 
 Follow the guide for [Configuring REST API Authorization]({% link
-docs/0.6/howto/configuring_rest_api_authorization.md %}) for more information.
+docs/0.7/howto/configuring_rest_api_authorization.md %}) for more information.

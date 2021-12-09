@@ -233,7 +233,7 @@ these features often change before they are stabilized. (Biome is an example of
 a Splinter component that was added as an experimental feature.) Developer
 feedback is strongly encouraged for experimental features.
 
-Splinter provides [Gameroom]({% link docs/0.6/examples/gameroom/index.md %}) as
+Splinter provides [Gameroom]({% link docs/0.7/examples/gameroom/index.md %}) as
 a complete example for building smart-contract-based applications with the
 Splinter platform.
 
