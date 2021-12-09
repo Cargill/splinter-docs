@@ -264,7 +264,7 @@ details.
 The details for the new role can be displayed via the `show` subcommand:
 
 ```
-$ splinter role show circuit_admin
+$ splinter role show my_role
 Id: my_role
     Name: My Role
     Permissions:
