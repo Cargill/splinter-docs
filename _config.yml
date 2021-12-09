@@ -67,11 +67,11 @@ defaults:
         layout: "sidebars"
         sidebar: "0.4"
     - scope:
-        path: "docs/0.5"
+        path: "docs/0.6"
         type: "pages"
       values:
         layout: "sidebars"
-        sidebar: "0.5"
+        sidebar: "0.6"
     - scope:
         path: "community"
         type: "pages"

@@ -24,14 +24,16 @@ LoadModule proxy_wstunnel_module modules/mod_proxy_wstunnel.so\n\
 LoadModule rewrite_module modules/mod_rewrite.so\n\
 ProxyPass /docs/0.4/api/ http://splinter-docs-redoc-0-4:4001/\n\
 ProxyPassReverse /docs/0.4/api/ http://splinter-docs-redoc-0-4:4001/\n\
-ProxyPass /docs/0.5/api/ http://splinter-docs-redoc-0-5:4002/\n\
-ProxyPassReverse /docs/0.5/api/ http://splinter-docs-redoc-0-5:4002/\n\
+ProxyPass /docs/0.6/api/ http://splinter-docs-redoc-0-6:4002/\n\
+ProxyPassReverse /docs/0.6/api/ http://splinter-docs-redoc-0-6:4002/\n\
 ProxyPass / http://splinter-docs:4000/\n\
 ProxyPassReverse / http://splinter-docs:4000/\n\
 RewriteEngine on\n\
 RewriteCond %{REQUEST_FILENAME} !-d\n\
 RewriteCond %{REQUEST_FILENAME} !-f\n\
 RewriteRule ^/(.*).md$ /\$1.html [NC,L,R]\n\
+RewriteRule ^/docs/0.5$ /docs/0.6/ [NC,L,R]\n\
+RewriteRule ^/docs/0.5/(.*)$ /docs/0.6/\$1 [NC,L,R]\n\
 \n\
 " >>/usr/local/apache2/conf/httpd.conf
 
