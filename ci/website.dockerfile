@@ -70,16 +70,13 @@ COPY --from=jekyll /tmp/ /usr/local/apache2/htdocs/
 COPY --from=redoc /index_0.4.html /usr/local/apache2/htdocs/docs/0.4/api/index.html
 COPY --from=redoc /index_0.6.html /usr/local/apache2/htdocs/docs/0.6/api/index.html
 COPY --from=git /commit-hash /commit-hash
+COPY apache/rewrite.conf /usr/local/apache2/conf/rewrite.conf
 
 RUN echo "\
 \n\
 ServerName splinter.dev\n\
+Include /usr/local/apache2/conf/rewrite.conf\n\
 AddDefaultCharset utf-8\n\
-LoadModule rewrite_module modules/mod_rewrite.so\n\
-RewriteEngine on\n\
-RewriteCond %{REQUEST_FILENAME} !-d\n\
-RewriteCond %{REQUEST_FILENAME} !-f\n\
-RewriteRule ^/(.*).md$ /\$1.html [NC,L,R]\n\
 \n\
 " >>/usr/local/apache2/conf/httpd.conf
 
