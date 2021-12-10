@@ -115,35 +115,9 @@ Updates the database for a new Splinter release
 upgrade`]({% link docs/0.6/references/cli/splinter-database-migrate.1.md %})
 Upgrade Splinter by importing file system state files to a database
 
-### Display information about node and network health
-[`splinter health`]({% link docs/0.6/references/cli/splinter-health.1.md %})
-Displays information about node and network health
-
-[`splinter health
-status`]({% link docs/0.6/references/cli/splinter-health-status.1.md %})
-Displays information about a Splinter node
-
 ### Generates user and daemon keys for Splinter
 [`splinter keygen`]({% link docs/0.6/references/cli/splinter-keygen.1.md %})
 Generates user and daemon keys for Splinter
-
-### Maintenance mode
-
-[`splinter maintenance`]({% link
-docs/0.6/references/cli/splinter-maintenance.1.md %}) Management functions for
-the maintenance mode *(experimental builds only)*
-
-[`splinter maintenance disable`]({% link
-docs/0.6/references/cli/splinter-maintenance-disable.1.md %}) Disables
-maintenance mode for a Splinter node *(experimental builds only)*
-
-[`splinter maintenance enable`]({% link
-docs/0.6/references/cli/splinter-maintenance-enable.1.md %}) Enables
-maintenance mode for a Splinter node *(experimental builds only)*
-
-[`splinter maintenance status`]({% link
-docs/0.6/references/cli/splinter-maintenance-status.1.md %}) Checks if
-maintenance mode is enabled for a Splinter node *(experimental builds only)*
 
 ### REST API permissions
 
@@ -155,10 +129,6 @@ permissions
 
 [`splinter registry`]({% link
 docs/0.6/references/cli/splinter-registry.1.md %}) Splinter registry commands
-
-[`splinter registry add`]({% link
-docs/0.6/references/cli/splinter-registry-add.1.md %}) Add a node to the local
-registry *(experimental builds only)*
 
 [`splinter registry build`]({% link
 docs/0.6/references/cli/splinter-registry-build.1.md %}) Add a node to a YAML
