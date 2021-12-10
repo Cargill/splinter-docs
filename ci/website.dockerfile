@@ -23,6 +23,7 @@ COPY . /project
 
 RUN redoc-cli bundle /project/docs/0.4/references/api/openapi.yml -o index_0.4.html
 RUN redoc-cli bundle /project/docs/0.6/references/api/openapi.yml -o index_0.6.html
+RUN redoc-cli bundle /project/docs/0.7/references/api/openapi.yml -o index_0.7.html
 
 # -------------=== jekyll build ===-------------
 
@@ -69,6 +70,7 @@ FROM httpd:2.4
 COPY --from=jekyll /tmp/ /usr/local/apache2/htdocs/
 COPY --from=redoc /index_0.4.html /usr/local/apache2/htdocs/docs/0.4/api/index.html
 COPY --from=redoc /index_0.6.html /usr/local/apache2/htdocs/docs/0.6/api/index.html
+COPY --from=redoc /index_0.7.html /usr/local/apache2/htdocs/docs/0.7/api/index.html
 COPY --from=git /commit-hash /commit-hash
 
 RUN echo "\

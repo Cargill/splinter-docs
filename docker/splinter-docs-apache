@@ -26,6 +26,8 @@ ProxyPass /docs/0.4/api/ http://splinter-docs-redoc-0-4:4001/\n\
 ProxyPassReverse /docs/0.4/api/ http://splinter-docs-redoc-0-4:4001/\n\
 ProxyPass /docs/0.6/api/ http://splinter-docs-redoc-0-6:4002/\n\
 ProxyPassReverse /docs/0.6/api/ http://splinter-docs-redoc-0-6:4002/\n\
+ProxyPass /docs/0.7/api/ http://splinter-docs-redoc-0-7:4003/\n\
+ProxyPassReverse /docs/0.7/api/ http://splinter-docs-redoc-0-7:4003/\n\
 ProxyPass / http://splinter-docs:4000/\n\
 ProxyPassReverse / http://splinter-docs:4000/\n\
 RewriteEngine on\n\
