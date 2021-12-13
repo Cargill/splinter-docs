@@ -111,6 +111,10 @@ Provides database management functions
 migrate`]({% link docs/0.7/references/cli/splinter-database-migrate.1.md %})
 Updates the database for a new Splinter release
 
+[`splinter state
+migrate`]({% link docs/0.7/references/cli/splinter-state-migrate.1.md %})
+Move scabbard state to or from LMDB
+
 [`splinter
 upgrade`]({% link docs/0.7/references/cli/splinter-database-migrate.1.md %})
 Upgrade Splinter by importing file system state files to a database
