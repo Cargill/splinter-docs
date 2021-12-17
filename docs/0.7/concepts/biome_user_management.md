@@ -104,12 +104,13 @@ submodules in the Rust-language `libsplinter` library, so that customized
 Splinter applications can choose some functions but not use others. The `biome`
 module in the `libsplinter` library includes the following submodules:
 
+* `client`
 * `credentials`
 * `key_management`
-* `migrations`
 * `notifications`
+* `oauth`
+* `profile`
 * `refresh_tokens`
-* `rest_api`
 
 For more information, see the `biome` module in the [splinter Rust API
 Reference](https://docs.rs/splinter/latest/splinter/biome/index.html).
@@ -415,6 +416,24 @@ The `splinterd` REST API exposes the following Biome-specific endpoints.
        are correct.
    </td>
   </tr>
+  <tr>
+   <td><code>/biome/profiles</code>
+   </td>
+   <td>Lists all user profiles.
+   </td>
+  </tr>
+  <tr>
+   <td><code>/biome/profiles/{user-id}</code>
+   </td>
+   <td>Fetches the profile information associated with the given user ID.
+   </td>
+  </tr>
+  <tr>
+   <td><code>/biome/profile</code>
+   </td>
+   <td>Fetches the profile information of the authenticated user.
+   </td>
+  </tr>
 </table>
 
 <br>
@@ -425,4 +444,4 @@ For more information, see the `biome` routes in the
 
 The following diagram shows the structure of the Biome database tables.
 
-<img alt="Biome database schema" width="500" height="756" src="../images/biome_database_schema.svg">
+<img alt="Biome database schema" width="400" height="1100" src="../images/biome_database_schema.svg">
