@@ -181,7 +181,7 @@ may be in different directories or named differently.
    ``` toml
    ...
    # List of certificate authority certificates (*.pem files).
-   ca_certs = "/etc/splinter/certs/ca.pem"
+   tls_ca_file = "/etc/splinter/certs/ca.pem"
 
    # A certificate signed by a certificate authority. Used by the daemon when it
    # is acting as a client (sending messages)
@@ -213,7 +213,7 @@ renew every 90 days.
 Links Below
 -->
 
-[apt]: https://www.splinter.dev/releases/0.5/download.html#apt-repository
+[apt]: https://www.splinter.dev/releases/0.7/download.html#apt-repository
 "Splinter apt instructions"
 
 [manpage]: https://www.splinter.dev/docs/0.7/references/cli/splinterd.1.html
@@ -225,7 +225,7 @@ Links Below
 [leclients]: https://letsencrypt.org/docs/client-options/
 "Let's Encrypt Client Options"
 
-[certbot]: https://certbot.eff.org/lets-encrypt/ubuntufocal-other
+[certbot]: https://certbot.eff.org/instructions?ws=other&os=ubuntufocal
 "Certbot Instructions Page"
 
 [wherecert]: https://certbot.eff.org/docs/using.html#where-are-my-certificates
