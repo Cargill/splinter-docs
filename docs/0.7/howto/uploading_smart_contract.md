@@ -13,12 +13,10 @@ two nodes and upload a smart contract via the circuit.
 
 * A splinter network with at least two nodes running. The tutorial will refer
   to the two nodes as "alpha" and "beta" respectively
-* The scabbard command line tool installed with
-  [experimental features]({% link docs/0.7/howto/building_splinter.md %})
-  enabled
-* The splinter command line tool installed with
-  [experimental features]({% link docs/0.7/howto/building_splinter.md %})
-  enabled
+* The scabbard command line tool
+  [installed]({% link docs/0.7/howto/building_splinter.md %})
+* The splinter command line tool
+  [installed]({% link docs/0.7/howto/building_splinter.md %})
 * A compiled smart contract. Check [here](https://sawtooth.hyperledger.org/docs/sabre/nightly/master/application_developer_guide.html#)
 for details on how to create and compile a smart contract
 
