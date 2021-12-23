@@ -38,7 +38,8 @@ for details on how to create and compile a smart contract
         --service-arg *::admin_keys=<alpha_node_pub_key> \
         --service-arg *::version=2 \
         --service-type *::scabbard \
-        --management tutorial
+        --management tutorial \
+        --auth-type trust
     ```
 
     The `--service-arg`s supplied are specific to the scabbard service and are
