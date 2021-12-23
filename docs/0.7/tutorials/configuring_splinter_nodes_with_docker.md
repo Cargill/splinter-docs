@@ -45,7 +45,7 @@ first node, alpha.
     services:
 
       splinterd-alpha:
-        image: splintercommunity/splinterd:0.5
+        image: splintercommunity/splinterd:main
         container_name: splinterd-alpha
         hostname: alpha
         volumes:
@@ -103,15 +103,12 @@ first node, alpha.
     network endpoint for daemon-to-daemon communication between Splinter nodes,
     if the `network-endpoint` is not public.
 
-    `--rest-api-endpoint 0.0.0.0:8080`:  Specifies the address and the port that
-    the `splinterd` REST API will listen on.
+    `--rest-api-endpoint http://0.0.0.0:8080`:  Specifies the address and the
+    port that the `splinterd` REST API will listen on.
 
     `--registries file:///config/alpha-registry.yaml`:  Defines one or more
     read-only Splinter registry files. This will be covered in more detail
     later. Notice that this is using a Docker bind mount.
-
-    `--storage`:  When set to `yaml`, the splinterd will store the Splinter
-    state files in YAML files stored in the Splinter state directory.
 
     `--tls-insecure`:  Turns off certificate authority validation for TLS
     connections; all peer certificates are accepted. This flag is intended for
@@ -198,8 +195,8 @@ to use the actual key value you copied instead of the example value shown below.
 
 1. Create the `allow_keys` file with the public key you copied above. This file
 tells Splinter that the public key is permitted to make all REST API requests
-(see [Configuring REST API Authorization]{% link
-docs/0.7/howto/configuring_rest_api_authorization.md %} for more info). Make
+(see [Configuring REST API Authorization]({% link
+docs/0.7/howto/configuring_rest_api_authorization.md %}) for more info). Make
 sure to use the actual key value you copied instead of the example value shown
 below.
 
@@ -258,7 +255,7 @@ Congratulations! You've got a Splinter node up and running.
     services:
 
       splinterd-beta:
-        image: splintercommunity/splinterd:0.5
+        image: splintercommunity/splinterd:main
         container_name: splinterd-beta
         hostname: beta
         volumes:
@@ -291,6 +288,9 @@ Congratulations! You've got a Splinter node up and running.
     writing public key file: /splinter-demo/config/keys/beta.pub
 
     root@3e307864c916:/# exit
+
+    $ cat config/keys/beta.pub
+    02edb9b9e3d652c0ff33408f7e99be0572b665ac34320229f7624b7c292example
     ```
 
 1. Next, create a node registry file for beta. You'll have to ask the alpha
@@ -358,7 +358,7 @@ window).
     ```
 
     ```bash
-        ---
+      ---
       - identity: alpha
         endpoints:
           - tcps://splinterd-alpha:8044
@@ -502,9 +502,10 @@ beta nodes.
     ```bash
     The circuit proposal was submitted successfully
     Circuit: El9jM-6bXjg
-        Management Type: example
+        Display Name: -
         Circuit Status: Active
         Schema Version: 2
+        Management Type: example
 
         beta
             Public Key: 022796a19b0c0efe2c0399ebc8e9935c31bfcb09ebeeff44085cb43e26d0example
@@ -532,17 +533,17 @@ beta nodes.
     a. Check the logs on alpha.
 
     ```bash
-    splinterd-alpha    | [2020-05-25 18:38:04.406] T["Peer Manager"] INFO [splinter::peer] Received peer connection from beta (remote endpoint: tcps://172.19.0.3:56964)
-    splinterd-alpha    | [2020-05-25 18:45:28.616] T["consensus-admin::alpha"] INFO [splinter::admin::service::shared] committed changes for new circuit proposal El9jM-6bXjg
-    splinterd-alpha    | [2020-05-25 18:45:28.616] T["consensus-admin::alpha"] INFO [splinter::admin::service::consensus] Committed proposal 36373565346133356336653865376462616137333935333030636363393135316161343134396634313066326636623563393637626262353932386532643137
+    splinterd-alpha    | [2021-12-03 20:08:30.561] T["Peer Manager"] INFO [splinter::peer] Received peer connection from Challenge ( public_key: 03b2cdc74ff0255b8d28737e87c075888706b92ad0399a4a0af0ac3d87432a7943 ) (remote endpoint: tcps://172.27.0.3:38678)
+    splinterd-alpha    | [2021-12-03 20:08:31.430] T["consensus-admin::alpha"] INFO [splinter::admin::service::shared] committed changes for new circuit proposal to create circuit El9jM-6bXjg
+    splinterd-alpha    | [2021-12-03 20:08:31.430] T["consensus-admin::alpha"] INFO [splinter::admin::service::consensus] Committed proposal 36373565346133356336653865376462616137333935333030636363393135316161343134396634313066326636623563393637626262353932386532643137
     ```
 
     b. Check the logs on beta.
 
     ```bash
-    splinterd-beta    | [2020-05-25 18:38:04.408] T["Peer Manager"] INFO [splinter::peer] Pending peer alpha connected via tcps://splinterd-alpha:8044
-    splinterd-beta    | [2020-05-25 18:45:28.720] T["consensus-admin::beta"] INFO [splinter::admin::service::shared] committed changes for new circuit proposal El9jM-6bXjg
-    splinterd-beta    | [2020-05-25 18:45:28.720] T["consensus-admin::beta"] INFO [splinter::admin::service::consensus] Committed proposal 36373565346133356336653865376462616137333935333030636363393135316161343134396634313066326636623563393637626262353932386532643137
+    splinterd-beta    | [2021-12-03 20:08:30.460] T["Peer Manager"] INFO [splinter::peer] Pending peer Challenge ( public_key: 036eead5eef388fe3d4f953c1622fe618bd323d828a79521689bffc56773075c1b ) connected via tcps://splinterd-alpha:8044
+    splinterd-beta    | [2021-12-03 20:08:31.440] T["consensus-admin::beta"] INFO [splinter::admin::service::shared] committed changes for new circuit proposal to create circuit El9jM-6bXjg
+    splinterd-beta    | [2021-12-03 20:08:31.441] T["consensus-admin::beta"] INFO [splinter::admin::service::consensus] Committed proposal 36373565346133356336653865376462616137333935333030636363393135316161343134396634313066326636623563393637626262353932386532643137
     ```
 
     >Tip: Rather than inspecting the logs, you can run the `splinter circuit
@@ -618,7 +619,7 @@ contract to. As in the rest of this tutorial, keys are stored in the
 
     ```bash
     scabbard-cli-beta:
-      image: splintercommunity/scabbard-cli:0.5
+      image: splintercommunity/scabbard-cli:main
       container_name: scabbard-cli-beta
       hostname: scabbard-cli-beta
       volumes:

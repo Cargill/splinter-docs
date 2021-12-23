@@ -45,7 +45,7 @@ first node, alpha.
     services:
 
       splinterd-alpha:
-        image: splintercommunity/splinterd:0.5
+        image: splintercommunity/splinterd:0.6
         container_name: splinterd-alpha
         hostname: alpha
         volumes:
@@ -103,15 +103,12 @@ first node, alpha.
     network endpoint for daemon-to-daemon communication between Splinter nodes,
     if the `network-endpoint` is not public.
 
-    `--rest-api-endpoint 0.0.0.0:8080`:  Specifies the address and the port that
-    the `splinterd` REST API will listen on.
+    `--rest-api-endpoint http://0.0.0.0:8080`:  Specifies the address and the
+    port that the `splinterd` REST API will listen on.
 
     `--registries file:///config/alpha-registry.yaml`:  Defines one or more
     read-only Splinter registry files. This will be covered in more detail
     later. Notice that this is using a Docker bind mount.
-
-    `--storage`:  When set to `yaml`, the splinterd will store the Splinter
-    state files in YAML files stored in the Splinter state directory.
 
     `--tls-insecure`:  Turns off certificate authority validation for TLS
     connections; all peer certificates are accepted. This flag is intended for
@@ -258,7 +255,7 @@ Congratulations! You've got a Splinter node up and running.
     services:
 
       splinterd-beta:
-        image: splintercommunity/splinterd:0.5
+        image: splintercommunity/splinterd:0.6
         container_name: splinterd-beta
         hostname: beta
         volumes:
@@ -291,6 +288,9 @@ Congratulations! You've got a Splinter node up and running.
     writing public key file: /splinter-demo/config/keys/beta.pub
 
     root@3e307864c916:/# exit
+
+    $ cat config/keys/beta.pub
+    02edb9b9e3d652c0ff33408f7e99be0572b665ac34320229f7624b7c292example
     ```
 
 1. Next, create a node registry file for beta. You'll have to ask the alpha
@@ -358,7 +358,7 @@ window).
     ```
 
     ```bash
-        ---
+      ---
       - identity: alpha
         endpoints:
           - tcps://splinterd-alpha:8044
@@ -502,9 +502,10 @@ beta nodes.
     ```bash
     The circuit proposal was submitted successfully
     Circuit: El9jM-6bXjg
-        Management Type: example
+        Display Name: -
         Circuit Status: Active
         Schema Version: 2
+        Management Type: example
 
         beta
             Public Key: 022796a19b0c0efe2c0399ebc8e9935c31bfcb09ebeeff44085cb43e26d0example
@@ -618,7 +619,7 @@ contract to. As in the rest of this tutorial, keys are stored in the
 
     ```bash
     scabbard-cli-beta:
-      image: splintercommunity/scabbard-cli:0.5
+      image: splintercommunity/scabbard-cli:0.6
       container_name: scabbard-cli-beta
       hostname: scabbard-cli-beta
       volumes:
