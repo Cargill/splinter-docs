@@ -188,7 +188,7 @@ permissions. Instructions focusing on docker can be found at
    writing public key file: /foo/shared_dir/shared_key.pub
    ```
 
-   This keypair will be used as part of the identity of your Splinter node.
+   These keypairs will be used as part of your identity on your Splinter node.
    It should be treated like a password and backed up securely. If you lose
    access to this key, you may lose access to data.
 
