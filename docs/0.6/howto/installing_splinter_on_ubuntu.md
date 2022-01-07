@@ -43,9 +43,9 @@ permissions. Instructions focusing on docker can be found at
 
    ```console
    $ splinter --version
-   splinter-cli 0.5.x
+   splinter-cli 0.6.x
    $ splinterd --version
-   splinterd 0.5.x
+   splinterd 0.6.x
    ```
 
 1. Generate certificates
@@ -122,7 +122,7 @@ permissions. Instructions focusing on docker can be found at
    Verify that the db file was created with the correct permissions.
 
    ```console
-   $ ls -al /var/lib/splinter/splinter_state.db
+   $ sudo -u splinterd ls -al /var/lib/splinter/splinter_state.db
    -rw-r----- 1 splinterd splinterd 339968 Jun 22 19:25 /var/lib/splinter/splinter_state.db
    ```
 
@@ -183,12 +183,12 @@ permissions. Instructions focusing on docker can be found at
    the keys to a shared location that everyone has access to.
 
    ```console
-   $ sudo splinter keygen --key-dir /foo/shared_dir shared_key
+   $ splinter keygen --key-dir /foo/shared_dir shared_key
    Writing private key file: /foo/shared_dir/shared_key.priv
    writing public key file: /foo/shared_dir/shared_key.pub
    ```
 
-   This keypair will be used as part of the identity of your Splinter node.
+   These keypairs will be used as part of your identity on your Splinter node.
    It should be treated like a password and backed up securely. If you lose
    access to this key, you may lose access to data.
 
@@ -198,7 +198,7 @@ permissions. Instructions focusing on docker can be found at
    system keys can be generated and all will be added to the daemon.
 
    ```console
-   $ splinter keygen --system
+   $ sudo splinter keygen --system --group splinterd
    Writing private key file: /etc/splinter/keys/splinterd.priv
    writing public key file: /etc/splinter/keys/splinterd.pub
    ```
