@@ -116,7 +116,7 @@ migrate`]({% link docs/0.6/references/cli/splinter-state-migrate.1.md %})
 Move scabbard state to or from LMDB
 
 [`splinter
-upgrade`]({% link docs/0.6/references/cli/splinter-database-migrate.1.md %})
+upgrade`]({% link docs/0.6/references/cli/splinter-upgrade.1.md %})
 Upgrade Splinter by importing file system state files to a database
 
 ### Generates user and daemon keys for Splinter
