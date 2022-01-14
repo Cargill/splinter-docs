@@ -36,7 +36,7 @@ first node, alpha.
    $ vi alpha-node.yaml
    ```
 
-   ```bash
+   ```yaml
    version: "3.7"
 
    volumes:
@@ -166,7 +166,7 @@ for more details.
    $ vi config/alpha-registry.yaml
    ```
 
-   ```bash
+   ```yaml
    ---
    - identity:
      endpoints:
@@ -181,7 +181,7 @@ for more details.
 1. Fill in the registry file with information about the `alpha` node. Make sure
 to use the actual key value you copied instead of the example value shown below.
 
-   ```bash
+   ```yaml
    ---
    - identity: alpha
      endpoints:
@@ -311,7 +311,7 @@ info about our node so they can add it to the alpha node registry.
    $ vi config/beta-registry.yaml
    ```
 
-   ```bash
+   ```yaml
    ---
    - identity: beta
      endpoints:
@@ -357,7 +357,7 @@ window).
    $ vi config/alpha-registry.yaml
    ```
 
-   ```bash
+   ```yaml
    ---
    - identity: alpha
      endpoints:

@@ -36,7 +36,7 @@ first node, alpha.
    $ vi alpha-node.yaml
    ```
 
-   ```bash
+   ```yaml
    version: "3.7"
 
    volumes:
@@ -246,7 +246,7 @@ Congratulations! You've got a Splinter node up and running.
    $ vi beta-node.yaml
    ```
 
-   ```bash
+   ```yaml
    version: "3.7"
 
    volumes:
@@ -311,7 +311,7 @@ info about our node so they can add it to the alpha node registry.
    $ vi config/beta-registry.yaml
    ```
 
-   ```bash
+   ```yaml
    ---
    - identity: beta
      endpoints:
