@@ -32,41 +32,41 @@ Compose 1.25.5.
 1. Start by opening a terminal window and creating a Docker Compose file for the
 first node, alpha.
 
-    ```bash
-    $ vi alpha-node.yaml
-    ```
+   ```bash
+   $ vi alpha-node.yaml
+   ```
 
-    ```bash
-    version: "3.7"
+   ```bash
+   version: "3.7"
 
-    volumes:
-      alpha-var:
+   volumes:
+     alpha-var:
 
-    services:
+   services:
 
-      splinterd-alpha:
-        image: splintercommunity/splinterd:main
-        container_name: splinterd-alpha
-        hostname: alpha
-        volumes:
-          - alpha-var:/var/lib/splinter
-          - ./config:/config
-          - ./allow_keys_alpha:/etc/splinter/allow_keys
-        entrypoint: |
-          bash -c "
-            splinter cert generate --skip && \
-            splinter keygen --system --skip && \
-            splinter database migrate && \
-            splinterd -v \
-                --node-id alpha \
-                --network-endpoints tcps://0.0.0.0:8044 \
-                --advertised-endpoints tcps://splinterd-alpha:8044 \
-                --rest-api-endpoint http://0.0.0.0:8080 \
-                --registries file:///config/alpha-registry.yaml \
-                --tls-insecure
-          "
+     splinterd-alpha:
+       image: splintercommunity/splinterd:0.6
+       container_name: splinterd-alpha
+       hostname: alpha
+       volumes:
+         - alpha-var:/var/lib/splinter
+         - ./config:/config
+         - ./allow_keys_alpha:/etc/splinter/allow_keys
+       entrypoint: |
+         bash -c "
+           splinter cert generate --skip && \
+           splinter keygen --system --skip && \
+           splinter database migrate && \
+           splinterd -v \
+               --node-id alpha \
+               --network-endpoints tcps://0.0.0.0:8044 \
+               --advertised-endpoints tcps://splinterd-alpha:8044 \
+               --rest-api-endpoint http://0.0.0.0:8080 \
+               --registries file:///config/alpha-registry.yaml \
+               --tls-insecure
+         "
 
-    ```
+   ```
 
     This Compose file sets up a single Splinter node. Notice that the
     `/var/lib/splinter` directory uses a Docker volume for persistence.
@@ -242,41 +242,41 @@ Congratulations! You've got a Splinter node up and running.
 
 1. Open a new terminal window and create the beta Compose file.
 
-    ```bash
-    $ vi beta-node.yaml
-    ```
+   ```bash
+   $ vi beta-node.yaml
+   ```
 
-    ```bash
-    version: "3.7"
+   ```bash
+   version: "3.7"
 
-    volumes:
-      beta-var:
+   volumes:
+     beta-var:
 
-    services:
+   services:
 
-      splinterd-beta:
-        image: splintercommunity/splinterd:main
-        container_name: splinterd-beta
-        hostname: beta
-        volumes:
-          - beta-var:/var/lib/splinter
-          - ./config:/config
-          - ./allow_keys_beta:/etc/splinter/allow_keys
-        entrypoint: |
-          bash -c "
-            splinter cert generate --skip && \
-            splinter keygen --system --skip && \
-            splinter database migrate && \
-            splinterd -v \
-                --node-id beta \
-                --network-endpoints tcps://0.0.0.0:8044 \
-                --advertised-endpoints tcps://splinterd-beta:8044 \
-                --rest-api-endpoint http://0.0.0.0:8080 \
-                --registries file:///config/beta-registry.yaml \
-                --tls-insecure
-          "
+     splinterd-beta:
+       image: splintercommunity/splinterd:0.6
+       container_name: splinterd-beta
+       hostname: beta
+       volumes:
+         - beta-var:/var/lib/splinter
+         - ./config:/config
+         - ./allow_keys_beta:/etc/splinter/allow_keys
+       entrypoint: |
+         bash -c "
+           splinter cert generate --skip && \
+           splinter keygen --system --skip && \
+           splinter database migrate && \
+           splinterd -v \
+               --node-id beta \
+               --network-endpoints tcps://0.0.0.0:8044 \
+               --advertised-endpoints tcps://splinterd-beta:8044 \
+               --rest-api-endpoint http://0.0.0.0:8080 \
+               --registries file:///config/beta-registry.yaml \
+               --tls-insecure
+         "
 
-    ```
+   ```
 
 1. Create the circuit admin keys for Beta.
 
@@ -307,30 +307,30 @@ info about our node so they can add it to the alpha node registry.
     GitHub, solves some of the problems associated with out-of-band information
     sharing._
 
-    ```bash
-    $ vi config/beta-registry.yaml
-    ```
+   ```bash
+   $ vi config/beta-registry.yaml
+   ```
 
-    ```bash
-      ---
-      - identity: beta
-        endpoints:
-          - tcps://splinterd-beta:8044
-        display_name: beta
-        keys:
-          - 02edb9b9e3d652c0ff33408f7e99be0572b665ac34320229f7624b7c292example
-        metadata:
-          organization: beta
+   ```bash
+   ---
+   - identity: beta
+     endpoints:
+       - tcps://splinterd-beta:8044
+     display_name: beta
+     keys:
+       - 02edb9b9e3d652c0ff33408f7e99be0572b665ac34320229f7624b7c292example
+     metadata:
+       organization: beta
 
-      - identity: alpha
-        endpoints:
-          - tcps://splinterd-alpha:8044
-        display_name: alpha
-        keys:
-          - 022f2e518a8440adef03fd951869c6c0d583bfa3606c733beef4500fbe4example
-        metadata:
-          organization: alpha
-    ```
+   - identity: alpha
+     endpoints:
+       - tcps://splinterd-alpha:8044
+     display_name: alpha
+     keys:
+       - 022f2e518a8440adef03fd951869c6c0d583bfa3606c733beef4500fbe4example
+     metadata:
+       organization: alpha
+   ```
 
 1. Create the `allow_keys` file for the beta node with the beta public key.
 Again, make sure to use the actual beta key value instead of the example value
@@ -353,31 +353,31 @@ window).
 
 1. Add the information about the beta node to the registry for alpha.
 
-    ```bash
-    $ vi config/alpha-registry.yaml
-    ```
+   ```bash
+   $ vi config/alpha-registry.yaml
+   ```
 
-    ```bash
-      ---
-      - identity: alpha
-        endpoints:
-          - tcps://splinterd-alpha:8044
-        display_name: alpha
-        keys:
-          - 022f2e518a8440adef03fd951869c6c0d583bfa3606c733beef4500fbe4example
-        metadata:
-          organization: alpha
+   ```yaml
+   ---
+   - identity: alpha
+     endpoints:
+       - tcps://splinterd-alpha:8044
+     display_name: alpha
+     keys:
+       - 022f2e518a8440adef03fd951869c6c0d583bfa3606c733beef4500fbe4example
+     metadata:
+       organization: alpha
 
-      - identity: beta
-        endpoints:
-          - tcps://splinterd-beta:8044
-        display_name: beta
-        keys:
-          - 02edb9b9e3d652c0ff33408f7e99be0572b665ac34320229f7624b7c292example
-        metadata:
-          organization: beta
+   - identity: beta
+     endpoints:
+       - tcps://splinterd-beta:8044
+     display_name: beta
+     keys:
+       - 02edb9b9e3d652c0ff33408f7e99be0572b665ac34320229f7624b7c292example
+     metadata:
+       organization: beta
 
-    ```
+   ```
 
 You don't have to restart the alpha Splinter node after this change, because
 Splinter automatically checks for changes to the node registry.
