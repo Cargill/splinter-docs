@@ -17,13 +17,13 @@
 
 Frequently Searched Topics:
 
-[0.4 Release Overview](https://splinter.dev/releases/0.4/)
+[0.6 Release Overview]({% link releases/0.6/index.md %})
 
-[Splinter Glossary](https://splinter.dev/docs/0.4/glossary/glossary.html)
+[Splinter Glossary]({% link docs/0.6/glossary/glossary.md %})
 
-[CLI Command Reference](https://splinter.dev/docs/0.4/references/cli/cli_command_reference.html)
+[CLI Command Reference]({% link docs/0.6/references/cli/index.md %})
 
-[Splinter REST API reference](https://splinter.dev/docs/0.4/api/)
+[Splinter REST API reference]({% link docs/0.6/references/api/index.md %})
 
 </div>
 
