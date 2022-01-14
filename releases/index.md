@@ -1,5 +1,5 @@
 ---
-redirect_to: /releases/0.4/
+redirect_to: /releases/0.6/
 ---
 <!--
   Copyright 2018-2021 Cargill Incorporated
