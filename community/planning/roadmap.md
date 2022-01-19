@@ -32,34 +32,6 @@ Scabbard can processes at both a circuit level and per process/node.
 | Splinter Workload | Not Started | - |
 | Transact Sabre | Under Development | - |
 
-
-
-## Splinter v0.8
-
-This release is still in early planning.
-
-This release will likely contain high availability and failover support for
-transaction processing. The high availability journey begins here because
-transaction processing involves technically complex parts of the system:
-a merkle tree with provable state agreement and consensus algorithms.  High
-availability of other Splinter components will continue in subsequent releases.
-
-The release will likely also contain performance metrics collection and
-performance tuning of transaction processing.
-
-Thus, Splinter v0.8 is expected to be suitable for low-to-medium-volume
-production environments which can withstand some amount of downtime for
-upgrades or single-point-of-failure issues (due to remaining non-HA
-components).
-
-| Feature | Status | Documentation |
-| ------- | ------ | ------------- |
-| Advanced Blockchain (Sawtooth) Support | Under Development | - |
-| External Services Support | Not Started | - |
-| Performance Metrics | Not Started | - |
-| Scabbard Clusters | Not Started | - |
-| ... | - | - |
-
 ## Past Roadmaps
 
 The following are roadmaps for completed past releases.
