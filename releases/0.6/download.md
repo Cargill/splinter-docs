@@ -40,33 +40,12 @@ interacting with a Splinter node:
 
 ## Apt repository
 
-Splinter is installable on Ubuntu Focal via the official apt repositories.
+Splinter is installable on Ubuntu Focal via the official apt repository.
 
 Release versions:
 
 ``` console
 $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys --recv-keys B1DF8C00ACEB5855
-$ sudo add-apt-repository "deb [arch=amd64] http://repo.splinter.dev/ubuntu/extraball focal stable"
-$ sudo apt install splinter-cli splinter-daemon
-```
-
-Nightly builds and builds with experimental features are also available. Nightly
-and experimental builds may contain features that are incomplete or
-non-functional. These are provided for testing purposes only and should not be
-used in any non-development environment.
-
-Nightly builds:
-
-``` console
-$ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys --recv-keys A5CB08A81FD29ED9
-$ sudo add-apt-repository "deb [arch=amd64] http://repo.splinter.dev/ubuntu/extraball/nightly focal main"
-$ sudo apt install splinter-cli splinter-daemon
-```
-
-Experimental builds:
-
-``` console
-$ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys --recv-keys A5CB08A81FD29ED9
-$ sudo add-apt-repository "deb [arch=amd64] http://repo.splinter.dev/ubuntu/extraball/nightly focal experimental"
+$ sudo add-apt-repository "deb [arch=amd64] http://repo.splinter.dev/ubuntu/flipper focal stable"
 $ sudo apt install splinter-cli splinter-daemon
 ```
