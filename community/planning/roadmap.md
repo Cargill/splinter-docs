@@ -8,10 +8,6 @@
 
 The following is a tentative roadmap to future releases.
 
-Splinter uses an odd/even release numbering. Even minor numbers (v0.4, v0.6)
-are stable releases, while odd minor numbers (v0.3, v0.5) are developer
-releases.  Only stable releases are covered on the roadmap.
-
 ## Splinter v0.8
 
 This release is still in early planning.
