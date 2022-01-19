@@ -8,6 +8,32 @@
 
 The following is a tentative roadmap to future releases.
 
+## Splinter v0.7
+
+Splinter v0.7 provides a robust Scabbard service with an architecture to support
+high availability work moving forward. The high availability journey begins here
+because transaction processing involves technically complex parts of the system:
+a merkle tree with provable state agreement and consensus algorithms.
+
+The release will also include an orders of magnitude increase in txn/sec that
+Scabbard can processes at both a circuit level and per process/node.
+
+| Feature | Status | Documentation |
+| ------- | ------ | ------------- |
+| Actix Upgrade | Discussion | - |
+| Augrim 2PC | Discussion | - |
+| Augrim 3PC | Discussion | - |
+| Cylinder Keygen | Under Development | - |
+| Dynamic Circuits | Not Started | - |
+| Error Command | Not Started | - |
+| Expose Integration Test API | Not Started | - |
+| REST API crate | Not Started | - |
+| Sawtooth Journal Abstraction | Discussion | - |
+| Splinter Workload | Not Started | - |
+| Transact Sabre | Under Development | - |
+
+
+
 ## Splinter v0.8
 
 This release is still in early planning.
