@@ -19,6 +19,7 @@ forum.
 | ------- | ----------- |
 | [Canopy 0.2]({% link community/planning/canopy_0.2.md %}) | New design of the Canopy system that enables dynamic loading of saplings and improved inter-sapling communication |
 | [Capabilities Repository]({% link community/planning/capabilities-repository.md %}) | A design for a repository and all the surrounding tools and formats for Splinter artifacts. These artifacts include saplings, smart contracts, and capabilities distributions. |
+| [Publisher for Scabbard v0.7]({% link community/planning/publisher_for_scabbard_v0.7.md%})| A new design for the publishing component for Scabbard |
 | [REST API Maintenance Mode]({% link community/planning/rest_api_maintenance_mode.md %}) | Design for the maintenance mode authorization handler for the Splinter REST API |
 
 ## Historical
