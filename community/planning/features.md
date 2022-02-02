@@ -17,6 +17,7 @@ forum.
 
 | Feature | Description |
 | ------- | ----------- |
+| [Abstract Queue]({% link community/planning/abstract_queue.md %}) | A design for a generic durable queue, to replace the `PendingBatchQueue` |
 | [Artifacts]({% link community/planning/artifact_store.md %}) | A design for the traits for published artifacts and their stores |
 | [Canopy 0.2]({% link community/planning/canopy_0.2.md %}) | New design of the Canopy system that enables dynamic loading of saplings and improved inter-sapling communication |
 | [Capabilities Repository]({% link community/planning/capabilities-repository.md %}) | A design for a repository and all the surrounding tools and formats for Splinter artifacts. These artifacts include saplings, smart contracts, and capabilities distributions. |
