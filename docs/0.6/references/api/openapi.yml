@@ -1,4 +1,4 @@
-# Copyright 2018-2021 Cargill Incorporated
+# Copyright 2018-2022 Cargill Incorporated
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
 openapi: '3.0.0'
 
 info:
-  version: 0.6.1
+  version: 0.6.5
   title: splinterd API
   description: REST API for the Splinter daemon
 
@@ -26,7 +26,7 @@ paths:
   /status:
     get:
       tags:
-        - diagnostics
+        - Diagnostics
       description: |
         Used to check if server is successfully running
 
@@ -367,6 +367,191 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 
+  /authorization/assignments:
+    parameters:
+      - $ref: "#/components/parameters/auth"
+      - $ref: "#/components/parameters/protocol_version"
+    get:
+      tags:
+        - Authorization
+      summary: Get all assignments
+      description: |
+        Gets all assignments.
+
+        This endpoint requires the permission "authorization.rbac.read".
+
+      parameters:
+        - $ref: "#/components/parameters/paging"
+      responses:
+        200:
+          description: Get list of all assignments
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  $ref: "#/components/schemas/Assignment"
+        400:
+          description: Malformed query
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                code: "400"
+                message: "Malformed Query"
+        500:
+          description: Internal error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                code: "500"
+                message: "Internal Server Error"
+    post:
+      tags:
+        - Authorization
+      summary:
+        Add a new assignment
+      description:
+        Adds a new assignment
+
+        This endpoint requires the permission "authorization.rbac.write".
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AssignmentPayload'
+      responses:
+        200:
+          description: The assignment has been added
+        400:
+          description: Invalid assignment
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                code: "400"
+                message: "Invalid assignment payload"
+        500:
+          description: Internal error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                code: "500"
+                message: "Internal Server Error"
+
+  /authorization/assignments/{identity_type}/{identity}:
+    parameters:
+      - $ref: "#/components/parameters/auth"
+      - $ref: "#/components/parameters/protocol_version"
+      - $ref: "#/components/parameters/identity_type"
+      - $ref: "#/components/parameters/identity"
+    get:
+      tags:
+        - Authorization
+      summary:
+        Get assignment
+      description: |
+        Gets the assignment associated with the identity.
+
+        This endpoint requires the permission "authorization.rbac.read".
+      responses:
+        200:
+          description: Assignment associated with the identity
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AssignmentData"
+        404:
+          description: Assignment not found for given identity.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              example:
+                code: "404"
+                message: "Assignment not found"
+        500:
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              example:
+                code: "500"
+                message: "Internal Server Error"
+
+    patch:
+      tags:
+        - Authorization
+      summary:
+        Update assignment.
+      description: |
+        Updates the assignment associated with the identity.
+
+        This endpoint requires the permission "authorization.rbac.write".
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AssignmentUpdate"
+      responses:
+        200:
+          description: Updated assignment associated with identity
+        404:
+          description: Identity not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              example:
+                code: "404"
+                message: "Identity not found"
+        409:
+          description: Assignment violates state constraints
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              example:
+                code: "409"
+                message: "Assignment is invalid"
+        500:
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              example:
+                code: "500"
+                message: "Internal Server Error"
+
+    delete:
+      tags:
+        - Authorization
+      description: |
+        Removes the assignment associated with the identity and identity_type.
+
+        This endpoint requires the permission "authorization.rbac.write".
+      responses:
+        200:
+          description: Assignment is removed.
+        500:
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              example:
+                code: "500"
+                message: "Internal Server Error"
+
   /authorization/maintenance:
     get:
       tags:
@@ -389,8 +574,8 @@ paths:
                   message:
                     type: string
                     enum:
-                      - true
-                      - false
+                      - "true"
+                      - "false"
         '401':
           description: The client is unauthorized
     post:
@@ -1136,15 +1321,13 @@ paths:
           content:
             application/json:
               schema:
-                type: object
                 properties:
                   message:
                     type: string
                     example: "User created successfully"
                   data:
                     type: object
-                    example:
-                      ref: '#/components/schemas/BiomeNewUser'
+                    $ref: '#/components/schemas/BiomeNewUser'
         '400':
           description: Invalid request
           content:
@@ -1491,11 +1674,14 @@ paths:
             schema:
               properties:
                 username:
+                  type: string
                   description: Existing username of user
                 hashed_password:
+                  type: string
                   description: |
                     Hashed password to be used for user authentication
                 new_password:
+                  type: string
                   description: |
                     Hash of the new password to be used for user authentication
                 new_key_pairs:
@@ -1505,9 +1691,6 @@ paths:
               required:
                 - username
                 - hashed_password
-                - display_name
-                - public_key
-                - encrypted_private_key
               example:
                 username: alice@acme.com
                 hashed_password: |-
@@ -1597,7 +1780,7 @@ paths:
       description: |
         List all user profiles
 
-        This endpoint requires the permission "biome.user.read".
+        This endpoint requires the permission "biome.profile.read".
       parameters:
         - $ref: "#/components/parameters/auth"
         - $ref: "#/components/parameters/protocol_version"
@@ -1626,7 +1809,7 @@ paths:
       description: |
         Fetch a profile by ID
 
-        This endpoint requires the permission "biome.user.read".
+        This endpoint requires the permission "biome.profile.read".
       parameters:
         - $ref: "#/components/parameters/auth"
         - $ref: "#/components/parameters/protocol_version"
@@ -1760,8 +1943,10 @@ paths:
             schema:
               properties:
                 public_key:
+                  type: string
                   description: Public key
                 new_display_name:
+                  type: string
                   description: |
                     Updated display name for the key
               required:
@@ -2159,7 +2344,94 @@ components:
         type: integer
         example: 2
 
+    identity_type:
+      name: identity_type
+      description: Enum of possible identity types.
+      in: path
+      required: true
+      schema:
+        type: string
+        enum:
+          - key
+          - user
+
+    identity:
+      name: identity
+      description: The unique identity string.
+      in: path
+      required: true
+      schema:
+        type: string
+
+    paging:
+      name: paging_query 
+      in: query
+      description: An offset and limit for paginated results.
+      required: true
+      schema:
+        type: object
+        properties:
+          limit:
+            type: integer
+          offset:
+            type: integer
   schemas:
+    BiomeNewUser:
+      additionalProperties: false
+      properties:
+        user_id:
+          type: string
+        username:
+          type: string
+
+    Assignment:
+      properties:
+        identity:
+          type: object
+          $ref: '#/components/schemas/Identity'
+        roles:
+          type: array
+          items:
+            type: string
+
+    AssignmentData:
+      properties:
+        data:
+          type: object
+          $ref: '#/components/schemas/Assignment'
+
+    AssignmentUpdate:
+      properties:
+        roles:
+          type: array
+          items:
+            type: string
+
+    AssignmentPayload:
+      properties:
+        identity:
+          type: object
+          $ref: '#/components/schemas/IdentityPayload'
+        roles:
+          type: array
+          items:
+            type: string
+
+    IdentityPayload:
+      properties:
+        key:
+          type: string
+        user:
+          type: string
+
+    Identity:
+      additionalProperties: false
+      properties:
+        key:
+          type: string
+        User:
+          type: string
+
     Error:
       additionalProperties: false
       properties:
@@ -2176,7 +2448,7 @@ components:
         code:
           description: Error code
           type: string
-          example: 400
+          example: "400"
         message:
           description: A message describing the error that occurred
           type: string
@@ -2184,13 +2456,26 @@ components:
       required:
         - message
 
+    ErrorResponse:
+      additionalProperties: false
+      properties:
+        code:
+          description: Http response code
+          type: string
+          example: "400"
+        message:
+          description: A message describing the error that occurred.
+          type: string
+          example: "Invalid query"
+
+
     Status:
       additionalProperties: false
       properties:
         version:
           description: Rest API version
           type: string
-          example: "0.6.1"
+          example: "0.6.5"
         node_id:
           description: Node id
           type: string
@@ -2200,6 +2485,7 @@ components:
           type: string
           example: Cargill Node 009
         service_endpoint:
+          type: string
           description: The node's service endpoint
           example: tcp://foo.bar.biz
         network_endpoints:
@@ -2645,3 +2931,13 @@ components:
 tags:
   - name: Biome
     description: Routes supporting user management in Splinter applications. Optionally compiled.
+  - name: Proposals
+  - name: Admin Service
+  - name: Circuits
+  - name: Authorization
+  - name: Permissions
+  - name: Roles
+  - name: RBAC
+  - name: Splinter Registry
+  - name: Scabbard
+  - name: OAuth
