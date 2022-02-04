@@ -21,6 +21,7 @@ forum.
 | [Capabilities Repository]({% link community/planning/capabilities-repository.md %}) | A design for a repository and all the surrounding tools and formats for Splinter artifacts. These artifacts include saplings, smart contracts, and capabilities distributions. |
 | [Publisher for Scabbard v0.7]({% link community/planning/publisher_for_scabbard_v0.7.md%})| A new design for the publishing component for Scabbard |
 | [REST API Maintenance Mode]({% link community/planning/rest_api_maintenance_mode.md %}) | Design for the maintenance mode authorization handler for the Splinter REST API |
+| [StoreCommand for Scabbard v0.7]({% link community/planning/store_command_for_scabbard_v0.7.md %}) | A design for a component that makes database updates |
 
 ## Historical
 
