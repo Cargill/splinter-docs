@@ -15,7 +15,7 @@
 openapi: '3.0.0'
 
 info:
-  version: 0.6.5
+  version: 0.6.7
   title: splinterd API
   description: REST API for the Splinter daemon
 
@@ -2475,7 +2475,7 @@ components:
         version:
           description: Rest API version
           type: string
-          example: "0.6.5"
+          example: "0.6.7"
         node_id:
           description: Node id
           type: string
@@ -2590,6 +2590,7 @@ components:
                       type: array
                       items:
                         type: integer
+                        description: Byte array for arbitrary error data. Each byte is represented as an unsigned integer ranging from 0-255.
 
     Circuit:
       type: object
