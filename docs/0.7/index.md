@@ -245,7 +245,7 @@ the Merkle-Radix tree, allowing multiple nodes or services to prove they have
 the same data down to the last bit, cryptographically.
 
 The Scabbard service implements a [Sawtooth-style event
-system](https://sawtooth.hyperledger.org/docs/core/releases/1.0/architecture/events_and_transactions_receipts.html)
+system](https://sawtooth.hyperledger.org/docs/1.2/architecture/events_and_transactions_receipts.html)
 so that applications can subscribe to events of interest. **State delta export**
 allows an application to materialize the state data from the Merkle-radix tree
 to another database, event stream, log, or other mechanism. This allows
