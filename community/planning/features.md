@@ -22,6 +22,7 @@ forum.
 | [Circuit and Service Identifiers as Rust structs]({% link community/planning/ids_as_rust_structs.md %}) | Reduction in possible runtime errors when using identifiers |
 | [Publisher for Scabbard v0.7]({% link community/planning/publisher_for_scabbard_v0.7.md%})| A new design for the publishing component for Scabbard |
 | [REST API Maintenance Mode]({% link community/planning/rest_api_maintenance_mode.md %}) | Design for the maintenance mode authorization handler for the Splinter REST API |
+| [StoreCommand for Scabbard v0.7]({% link community/planning/store_command_for_scabbard_v0.7.md %}) | A design for a component that makes database updates |
 
 ## Historical
 
