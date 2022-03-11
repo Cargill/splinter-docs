@@ -252,6 +252,9 @@ to another database, event stream, log, or other mechanism. This allows
 applications to query and analyze the smart contract state in their own
 business-specific databases.
 
+To read state delta events in real time, use [State Delta Subscriptions via Web
+Sockets]({% link docs/0.7/howto/state_delta_websockets.md %}).
+
 ## Complex Patterns for Data Flow
 
 Splinter has clear benefits when compared to traditional EDI systems and ETL
