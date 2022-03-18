@@ -24,6 +24,7 @@ forum.
 | [Publisher for Scabbard v0.7]({% link community/planning/publisher_for_scabbard_v0.7.md%})| A new design for the publishing component for Scabbard |
 | [REST API Maintenance Mode]({% link community/planning/rest_api_maintenance_mode.md %}) | Design for the maintenance mode authorization handler for the Splinter REST API |
 | [Service Lifecycle]({% link community/planning/service_lifecycle.md %}) | Design for transitioning through the service lifecycle |
+| [Service Timer]({% link community/planning/service_timer.md %}) | Design for the Timer that will periodically wake up services |
 | [StoreCommand for Scabbard v0.7]({% link community/planning/store_command_for_scabbard_v0.7.md %}) | A design for a component that makes database updates |
 | [Trait Adapter Pattern]({% link community/planning/trait_adapter_pattern.md %}) | Design for the Trait Adapter Pattern|
 
