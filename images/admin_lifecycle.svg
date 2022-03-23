@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:dc="http://purl.org/dc/elements/1.1/" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xl="http://www.w3.org/1999/xlink" viewBox="76 650 844 425" width="844" height="425">
+  <defs>
+    <marker orient="auto" overflow="visible" markerUnits="strokeWidth" id="FilledArrow_Marker" stroke-linejoin="miter" stroke-miterlimit="10" viewBox="-1 -4 10 8" markerWidth="10" markerHeight="8" color="black">
+      <g>
+        <path d="M 8 0 L 0 -3 L 0 3 Z" fill="currentColor" stroke="currentColor" stroke-width="1"/>
+      </g>
+    </marker>
+  </defs>
+  <metadata> Produced by OmniGraffle 7.19.5\n2022-03-17 16:25:46 +0000</metadata>
+  <g id="Simplified_Admin_Lifecycle" stroke-opacity="1" stroke="none" fill="none" stroke-dasharray="none" fill-opacity="1">
+    <title>Simplified Admin Lifecycle</title>
+    <g id="Simplified_Admin_Lifecycle_Layer_1">
+      <title>Layer 1</title>
+      <g id="Graphic_2">
+        <path d="M 426.376 915.8 L 426.376 878.2 C 426.376 875.6056 434.776 873.5 445.126 873.5 C 455.476 873.5 463.876 875.6056 463.876 878.2 L 463.876 915.8 C 463.876 918.3944 455.476 920.5 445.126 920.5 C 434.776 920.5 426.376 918.3944 426.376 915.8" fill="white"/>
+        <path d="M 426.376 915.8 L 426.376 878.2 C 426.376 875.6056 434.776 873.5 445.126 873.5 C 455.476 873.5 463.876 875.6056 463.876 878.2 L 463.876 915.8 C 463.876 918.3944 455.476 920.5 445.126 920.5 C 434.776 920.5 426.376 918.3944 426.376 915.8 M 426.376 878.2 C 426.376 880.7944 434.776 882.9 445.126 882.9 C 455.476 882.9 463.876 880.7944 463.876 878.2" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_3">
+        <rect x="83.5" y="691.5" width="309" height="289.5" fill="white"/>
+        <rect x="83.5" y="691.5" width="309" height="289.5" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_4">
+        <rect x="497.752" y="707" width="421.5" height="367" fill="white"/>
+        <rect x="497.752" y="707" width="421.5" height="367" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_5">
+        <rect x="105.5" y="722.724" width="87.5" height="68" fill="#c0ffc0"/>
+        <rect x="105.5" y="722.724" width="87.5" height="68" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(110.5 738.276)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="15.774" y="15">Admin </tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="12.238" y="33.448">Service</tspan>
+        </text>
+      </g>
+      <g id="Graphic_6">
+        <rect x="245" y="742.5" width="113" height="68" fill="#c0ffff"/>
+        <rect x="245" y="742.5" width="113" height="68" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(250 758.052)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="2.02" y="15">SyncLifecycle</tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="20.244" y="33.448">Interface</tspan>
+        </text>
+      </g>
+      <g id="Graphic_7">
+        <rect x="133.501" y="827" width="75.5" height="68" fill="#c0ffc0"/>
+        <rect x="133.501" y="827" width="75.5" height="68" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(138.501 842.552)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="1.198" y="15">Lifecycle</tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="1.038" y="33.448">Dispatch</tspan>
+        </text>
+      </g>
+      <g id="Graphic_9">
+        <rect x="638.5" y="742.5" width="80.5" height="68" fill="#c0ffff"/>
+        <rect x="638.5" y="742.5" width="80.5" height="68" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(643.5 758.052)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="3.698" y="15">Lifecycle</tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="3.402" y="33.448">Executor</tspan>
+        </text>
+      </g>
+      <g id="Graphic_10">
+        <rect x="745.002" y="720" width="149" height="68" fill="#c0ffff"/>
+        <rect x="745.002" y="720" width="149" height="68" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(750.002 735.552)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x=".444" y="15">LifecycleCommand</tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="33.652" y="33.448">Generator</tspan>
+        </text>
+      </g>
+      <g id="Graphic_11">
+        <rect x="509" y="842.5" width="125.5" height="68" fill="#c0ffff"/>
+        <rect x="509" y="842.5" width="125.5" height="68" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(514 858.052)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="1.134" y="15">StoreCommand</tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="21.31" y="33.448">Execuotor</tspan>
+        </text>
+      </g>
+      <g id="Graphic_12">
+        <rect x="799.002" y="837.5" width="95" height="47" fill="white"/>
+        <rect x="799.002" y="837.5" width="95" height="47" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(804.002 853.832)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="12" fill="black" x="5.168" y="11">EchoLifecycle</tspan>
+        </text>
+      </g>
+      <g id="Graphic_13">
+        <rect x="164.5" y="1006" width="113" height="68" fill="white"/>
+        <rect x="164.5" y="1006" width="113" height="68" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(169.5 1030.776)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="6.604" y="15">Orchestrator</tspan>
+        </text>
+      </g>
+      <g id="Graphic_14">
+        <rect x="261.1885" y="866.552" width="113" height="68" fill="#c0ffff"/>
+        <rect x="261.1885" y="866.552" width="113" height="68" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(266.1885 891.328)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x=".836" y="15">LifecycleStore</tspan>
+        </text>
+      </g>
+      <g id="Graphic_15">
+        <text transform="translate(81.49999 663)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="0" y="15">Process Boundary for Admin Service</tspan>
+        </text>
+      </g>
+      <g id="Graphic_16">
+        <text transform="translate(502.752 655.5)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="7105427e-19" y="15">Process Boundary for Echo Service</tspan>
+        </text>
+      </g>
+      <g id="Graphic_17">
+        <rect x="573.068" y="987" width="113" height="68" fill="#c0ffff"/>
+        <rect x="573.068" y="987" width="113" height="68" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(578.068 1011.776)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x=".836" y="15">LifecycleStore</tspan>
+        </text>
+      </g>
+      <g id="Graphic_18">
+        <rect x="703.5" y="916.75" width="131" height="47" fill="white"/>
+        <rect x="703.5" y="916.75" width="131" height="47" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(708.5 933.082)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="12" fill="black" x="5.474" y="11">“EchoCommmands”</tspan>
+        </text>
+      </g>
+      <g id="Graphic_20">
+        <rect x="791" y="996" width="80.5" height="59" fill="white"/>
+        <rect x="791" y="996" width="80.5" height="59" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(796 1018.332)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="12" fill="black" x="7.248" y="11">EchoStore</tspan>
+        </text>
+      </g>
+      <g id="Line_21">
+        <line x1="156.4236" y1="790.724" x2="162.03362" y2="817.3133" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Line_23">
+        <line x1="180.70053" y1="895" x2="208.89947" y2="996.4615" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Line_25">
+        <line x1="209.001" y1="836.5094" x2="240.7868" y2="815.8881" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Line_26">
+        <line x1="305.93692" y1="810.5" x2="311.9705" y2="856.7352" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Line_27">
+        <line x1="374.1885" y1="898.9772" x2="416.47984" y2="897.7984" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Line_28">
+        <line x1="578.9952" y1="987" x2="472.0919" y2="915.1291" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Line_29">
+        <line x1="671.9108" y1="810.5" x2="638.3595" y2="977.2944" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Line_30">
+        <line x1="642.37" y1="810.5" x2="615.36295" y2="835.7402" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Line_31">
+        <line x1="719" y1="770.0658" x2="735.2261" y2="767.472" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Line_32">
+        <line x1="509" y1="886.659" x2="473.64875" y2="892.3823" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Line_33">
+        <line x1="719" y1="796.7747" x2="791.0074" y2="833.0463" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Line_34">
+        <line x1="823.5203" y1="884.5" x2="798.9035" y2="909.672" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Line_35">
+        <line x1="786.1598" y1="963.75" x2="803.8707" y2="988.0047" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Line_36">
+        <line x1="358" y1="776.5" x2="628.6" y2="776.5" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4.0,4.0" stroke-width="1"/>
+      </g>
+      <g id="Graphic_37">
+        <text transform="translate(424.382 752)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="5968559e-19" y="15">Alarm</tspan>
+        </text>
+      </g>
+    </g>
+  </g>
+</svg>
