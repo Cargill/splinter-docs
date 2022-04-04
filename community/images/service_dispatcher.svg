@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xl="http://www.w3.org/1999/xlink" xmlns:dc="http://purl.org/dc/elements/1.1/" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="566.5 985.5 508 649" width="508" height="649">
+  <defs>
+    <marker orient="auto" overflow="visible" markerUnits="strokeWidth" id="FilledArrow_Marker" stroke-linejoin="miter" stroke-miterlimit="10" viewBox="-1 -4 10 8" markerWidth="10" markerHeight="8" color="black">
+      <g>
+        <path d="M 8 0 L 0 -3 L 0 3 Z" fill="currentColor" stroke="currentColor" stroke-width="1"/>
+      </g>
+    </marker>
+  </defs>
+  <g id="Service_TNG__Message_Dispatch" stroke-opacity="1" fill="none" stroke="none" fill-opacity="1" stroke-dasharray="none">
+    <title>Service TNG: Message Dispatch</title>
+    <g id="Service_TNG__Message_Dispatch_Layer_1">
+      <title>Layer 1</title>
+      <g id="Graphic_2">
+        <rect x="567" y="986" width="507" height="347" fill="#c0ffff"/>
+        <rect x="567" y="986" width="507" height="347" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(572 991)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="0" y="15">ServiceDispatcher</tspan>
+        </text>
+      </g>
+      <g id="Graphic_3">
+        <rect x="830" y="1202" width="173" height="104" fill="#c0ffc0"/>
+        <rect x="830" y="1202" width="173" height="104" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(835 1244.776)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="7.14" y="15">ServiceTypeResolver</tspan>
+        </text>
+      </g>
+      <g id="Graphic_4">
+        <rect x="638" y="1202" width="173" height="104" fill="#c0ffc0"/>
+        <rect x="638" y="1202" width="173" height="104" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(643 1235.552)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="21.052" y="15">MessageHandler </tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="39.564" y="33.448">TaskRunner</tspan>
+        </text>
+      </g>
+      <g id="Graphic_6">
+        <rect x="783" y="1027" width="173" height="104" fill="#c0ffc0"/>
+        <rect x="783" y="1027" width="173" height="104" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(788 1060.552)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="21.052" y="15">MessageHandler </tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="54.54" y="33.448">Factory</tspan>
+        </text>
+      </g>
+      <g id="Graphic_7">
+        <rect x="792" y="1038" width="173" height="104" fill="#c0ffc0"/>
+        <rect x="792" y="1038" width="173" height="104" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(797 1071.552)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="21.052" y="15">MessageHandler </tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="54.54" y="33.448">Factory</tspan>
+        </text>
+      </g>
+      <g id="Graphic_8">
+        <rect x="801" y="1050" width="173" height="104" fill="#c0ffc0"/>
+        <rect x="801" y="1050" width="173" height="104" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(806 1083.552)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="21.052" y="15">MessageHandler </tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="54.54" y="33.448">Factory</tspan>
+        </text>
+      </g>
+      <g id="Graphic_10">
+        <rect x="625" y="1530" width="173" height="104" fill="#c0ffff"/>
+        <rect x="625" y="1530" width="173" height="104" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(630 1563.552)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="21.052" y="15">MessageHandler </tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="21.924" y="33.448">TaskRunner Impl</tspan>
+        </text>
+      </g>
+      <g id="Line_11">
+        <line x1="775.73905" y1="1333" x2="727.3885" y2="1520.4139" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_12">
+        <rect x="778" y="1379.5" width="173" height="104" fill="#c0ffff"/>
+        <rect x="778" y="1379.5" width="173" height="104" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(783 1404.052)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="21.052" y="15">MessageHandler </tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="36.9" y="33.448">Factory Impl</tspan>
+        </text>
+      </g>
+      <g id="Graphic_13">
+        <path d="M 718 1414.6618 C 718 1406.8465 717.2253 1405.8796 711.5663 1398.1452 L 711.50655 1398.0652 C 705.8177 1390.25 705.7585 1390.25 699.9202 1390.25 C 692.1464 1390.25 657 1390.25 657 1390.25 L 657 1472.75 L 718 1472.75 L 718 1414.6618 Z" fill="white"/>
+        <path d="M 718 1414.6618 C 718 1406.8465 717.2253 1405.8796 711.5663 1398.1452 L 711.50655 1398.0652 C 705.8177 1390.25 705.7585 1390.25 699.9202 1390.25 C 692.1464 1390.25 657 1390.25 657 1390.25 L 657 1472.75 L 718 1472.75 L 718 1414.6618 Z M 718 1414.2592 C 718 1406.8465 717.9402 1406.8465 705.7585 1406.8465 L 705.7585 1406.8465 C 705.7585 1390.3308 705.7585 1390.25 700.2777 1390.25" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(662 1413.052)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="9.94" y="15">Msg </tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="5.204" y="33.448">Bytes</tspan>
+        </text>
+      </g>
+    </g>
+  </g>
+</svg>
