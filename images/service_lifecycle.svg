@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:dc="http://purl.org/dc/elements/1.1/" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xl="http://www.w3.org/1999/xlink" viewBox="-23 281 671 230" width="671" height="230">
+  <defs>
+    <linearGradient x1="0" x2="1" id="Gradient" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#c0ffc0"/>
+      <stop offset="1" stop-color="#3ac3bb"/>
+    </linearGradient>
+    <linearGradient id="Obj_Gradient" xl:href="#Gradient" gradientTransform="translate(-11.956313 506.5784) rotate(-37) scale(166.42464)"/>
+    <linearGradient x1="0" x2="1" id="Gradient_2" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ada5fa"/>
+      <stop offset="1" stop-color="#f9a7a4"/>
+    </linearGradient>
+    <linearGradient id="Obj_Gradient_2" xl:href="#Gradient_2" gradientTransform="translate(481.0155 464.85416) rotate(-6) scale(159.8447)"/>
+    <linearGradient x1="0" x2="1" id="Gradient_3" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#48f1e6"/>
+      <stop offset="1" stop-color="#ada5fa"/>
+    </linearGradient>
+    <linearGradient id="Obj_Gradient_3" xl:href="#Gradient_3" gradientTransform="translate(232.6273 496.3105) rotate(-28) scale(169.59714)"/>
+    <marker orient="auto" overflow="visible" markerUnits="strokeWidth" id="FilledArrow_Marker" stroke-linejoin="miter" stroke-miterlimit="10" viewBox="-1 -4 10 8" markerWidth="10" markerHeight="8" color="black">
+      <g>
+        <path d="M 8 0 L 0 -3 L 0 3 Z" fill="currentColor" stroke="currentColor" stroke-width="1"/>
+      </g>
+    </marker>
+  </defs>
+  <metadata> Produced by OmniGraffle 7.19.5\n2022-03-17 16:25:46 +0000</metadata>
+  <g id="Service_Lifecycle" stroke-opacity="1" stroke="none" fill="none" stroke-dasharray="none" fill-opacity="1">
+    <title>Service Lifecycle</title>
+    <g id="Service_Lifecycle_Layer_1">
+      <title>Layer 1</title>
+      <g id="Graphic_12">
+        <text transform="translate(197.2615 315)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="23" fill="black" x="0" y="22">Lifecycle of a Service</tspan>
+        </text>
+      </g>
+      <g id="Graphic_5">
+        <ellipse cx="54.5" cy="456.5" rx="76.5001222394951" ry="36.7500587228947" fill="url(#Obj_Gradient)"/>
+        <ellipse cx="54.5" cy="456.5" rx="76.5001222394951" ry="36.7500587228947" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(-1.7 447.276)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="23.6" y="15">Prepared</tspan>
+        </text>
+      </g>
+      <g id="Graphic_7">
+        <ellipse cx="560.5" cy="456.5" rx="76.500122239495" ry="36.7500587228947" fill="url(#Obj_Gradient_2)"/>
+        <ellipse cx="560.5" cy="456.5" rx="76.500122239495" ry="36.7500587228947" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(504.3 447.276)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="30.568" y="15">Retired</tspan>
+        </text>
+      </g>
+      <g id="Graphic_8">
+        <ellipse cx="307.5" cy="456.5" rx="76.500122239495" ry="36.7500587228947" fill="url(#Obj_Gradient_3)"/>
+        <ellipse cx="307.5" cy="456.5" rx="76.500122239495" ry="36.7500587228947" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(251.3 447.276)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="24.656" y="15">Finalized</tspan>
+        </text>
+      </g>
+      <g id="Graphic_10">
+        <rect x="14.5" y="282" width="80" height="35" fill="#c0ffc0"/>
+        <rect x="14.5" y="282" width="80" height="35" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(19.5 290.276)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="18.864" y="15">New</tspan>
+        </text>
+      </g>
+      <g id="Graphic_11">
+        <rect x="518.5" y="287" width="84" height="35" fill="#ffc0c0"/>
+        <rect x="518.5" y="287" width="84" height="35" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(523.5 295.276)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="2.768" y="15">Removed</tspan>
+        </text>
+      </g>
+      <g id="Graphic_17">
+        <text transform="translate(150 487)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="0" y="15">Finalize</tspan>
+        </text>
+      </g>
+      <g id="Graphic_19">
+        <text transform="translate(-17 354)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="0" y="15">Prepare</tspan>
+        </text>
+      </g>
+      <g id="Graphic_24">
+        <text transform="translate(411.4 487)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="831335e-18" y="15">Retire</tspan>
+        </text>
+      </g>
+      <g id="Graphic_25">
+        <text transform="translate(601 354)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="0" y="15">Purge</tspan>
+        </text>
+      </g>
+      <g id="Line_26">
+        <line x1="54.5" y1="317" x2="54.5" y2="409.85" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Line_27">
+        <line x1="131.00004" y1="456.5" x2="221.09996" y2="456.5" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Line_28">
+        <line x1="384.00004" y1="456.5" x2="474.09996" y2="456.5" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Line_29">
+        <line x1="560.5" y1="419.75" x2="560.5" y2="331.9" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+    </g>
+  </g>
+</svg>
