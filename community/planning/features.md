@@ -22,6 +22,7 @@ forum.
 | [Circuit and Service Identifiers as Rust structs]({% link community/planning/ids_as_rust_structs.md %}) | Reduction in possible runtime errors when using identifiers |
 | [Echo Service]({% link community/planning/echo_service_design.md %}) | Design for the splinter echo service |
 | [Publisher for Scabbard v0.7]({% link community/planning/publisher_for_scabbard_v0.7.md%})| A new design for the publishing component for Scabbard |
+| [RefSet for libsawtooth 0.8]({% link community/planning/ref_set.md %}) | A design for a generic reference set to replace `BlockManager` and apply the same concept to Batches. |
 | [REST API Maintenance Mode]({% link community/planning/rest_api_maintenance_mode.md %}) | Design for the maintenance mode authorization handler for the Splinter REST API |
 | [Service Lifecycle]({% link community/planning/service_lifecycle.md %}) | Design for transitioning through the service lifecycle |
 | [Service Timer]({% link community/planning/service_timer.md %}) | Design for the Timer that will periodically wake up services |
