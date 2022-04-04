@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:dc="http://purl.org/dc/elements/1.1/" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xl="http://www.w3.org/1999/xlink" viewBox="-4 475 648 427" width="648" height="427">
+  <defs>
+    <marker orient="auto" overflow="visible" markerUnits="strokeWidth" id="FilledArrow_Marker" stroke-linejoin="miter" stroke-miterlimit="10" viewBox="-1 -4 10 8" markerWidth="10" markerHeight="8" color="black">
+      <g>
+        <path d="M 8 0 L 0 -3 L 0 3 Z" fill="currentColor" stroke="currentColor" stroke-width="1"/>
+      </g>
+    </marker>
+  </defs>
+  <metadata> Produced by OmniGraffle 7.19.5\n2022-03-17 16:25:46 +0000</metadata>
+  <g id="Timer" stroke-opacity="1" stroke="none" fill="none" stroke-dasharray="none" fill-opacity="1">
+    <title>Timer</title>
+    <g id="Timer_Layer_1">
+      <title>Layer 1</title>
+      <g id="Graphic_2">
+        <rect x="100.5" y="515" width="543" height="386" fill="white"/>
+        <rect x="100.5" y="515" width="543" height="386" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_3">
+        <text transform="translate(110 480)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="20" fill="black" x="5115908e-19" y="19">Timer</tspan>
+        </text>
+      </g>
+      <g id="Graphic_9">
+        <rect x="132.396" y="570" width="298.5" height="298.5" fill="white"/>
+        <rect x="132.396" y="570" width="298.5" height="298.5" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_10">
+        <text transform="translate(116.5 542.5)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="682121e-18" y="15">TimerThread</tspan>
+        </text>
+      </g>
+      <g id="Line_16">
+        <line x1="243.896" y1="639.4175" x2="277.99602" y2="639.35164" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_5">
+        <rect x="158.396" y="621.75" width="85.5" height="35.5" fill="white"/>
+        <rect x="158.396" y="621.75" width="85.5" height="35.5" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_6">
+        <rect x="171.396" y="633.25" width="85.5" height="35.5" fill="white"/>
+        <rect x="171.396" y="633.25" width="85.5" height="35.5" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_13">
+        <rect x="287.896" y="621.5" width="85.5" height="35.5" fill="white"/>
+        <rect x="287.896" y="621.5" width="85.5" height="35.5" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_12">
+        <rect x="300.896" y="633" width="85.5" height="35.5" fill="white"/>
+        <rect x="300.896" y="633" width="85.5" height="35.5" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_11">
+        <rect x="316.896" y="645" width="85.5" height="35.5" fill="white"/>
+        <rect x="316.896" y="645" width="85.5" height="35.5" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(321.896 648.414)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="12" fill="black" x="1.636" y="11">TimerHandler</tspan>
+          <tspan font-family="Helvetica Neue" font-size="12" fill="black" x="17.53" y="25.336">Factory</tspan>
+        </text>
+      </g>
+      <g id="Line_18">
+        <line x1="272.896" y1="662.9175" x2="306.99602" y2="662.85164" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Line_17">
+        <line x1="256.896" y1="650.9175" x2="290.99602" y2="650.85164" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_8">
+        <rect x="187.396" y="645.25" width="85.5" height="35.5" fill="white"/>
+        <rect x="187.396" y="645.25" width="85.5" height="35.5" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(192.396 654.804)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="14" fill="black" x="4.696" y="13">TimerFilter</tspan>
+        </text>
+      </g>
+      <g id="Graphic_19">
+        <rect x="194.396" y="742.5" width="187" height="81.5" fill="white"/>
+        <rect x="194.396" y="742.5" width="187" height="81.5" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_20">
+        <text transform="translate(199.396 711.5)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="8668621e-19" y="15">ThreadPool</tspan>
+        </text>
+      </g>
+      <g id="Graphic_21">
+        <rect x="223.396" y="759.698" width="105" height="35.5" fill="white"/>
+        <rect x="223.396" y="759.698" width="105" height="35.5" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(228.396 769.252)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="14" fill="black" x="5.367" y="13">TimerHandler</tspan>
+        </text>
+      </g>
+      <g id="Line_22">
+        <line x1="346.68533" y1="680.5" x2="294.69475" y2="751.7026" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_23">
+        <rect x="481.5" y="769.5" width="115" height="85.5" fill="white"/>
+        <rect x="481.5" y="769.5" width="115" height="85.5" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(486.5 803.026)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="12.196" y="15">Pacemaker</tspan>
+        </text>
+      </g>
+      <g id="Graphic_24">
+        <rect x="481.5" y="561" width="115" height="85.5" fill="white"/>
+        <rect x="481.5" y="561" width="115" height="85.5" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(486.5 594.526)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="11.604" y="15">TimerAlarm</tspan>
+        </text>
+      </g>
+      <g id="Graphic_26">
+        <path d="M 642.5 692.7695 L 642.5 723.2305 L 470.16016 723.2305 L 470.16016 734.724 L 435.5 708 L 470.16016 681.276 L 470.16016 692.7695 Z" fill="white"/>
+        <path d="M 642.5 692.7695 L 642.5 723.2305 L 470.16016 723.2305 L 470.16016 734.724 L 435.5 708 L 470.16016 681.276 L 470.16016 692.7695 Z" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Line_27">
+        <line x1="539" y1="646.5" x2="539" y2="682.8695" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Line_28">
+        <line x1="539" y1="769.5" x2="539" y2="733.1305" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_29">
+        <path d="M -3.5 680.25 L -3.5 628.25 C -3.5 624.662 10.5 621.75 27.75 621.75 C 45 621.75 59 624.662 59 628.25 L 59 680.25 C 59 683.838 45 686.75 27.75 686.75 C 10.5 686.75 -3.5 683.838 -3.5 680.25" fill="white"/>
+        <path d="M -3.5 680.25 L -3.5 628.25 C -3.5 624.662 10.5 621.75 27.75 621.75 C 45 621.75 59 624.662 59 628.25 L 59 680.25 C 59 683.838 45 686.75 27.75 686.75 C 10.5 686.75 -3.5 683.838 -3.5 680.25 M -3.5 628.25 C -3.5 631.838 10.5 634.75 27.75 634.75 C 45 634.75 59 631.838 59 628.25" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(1.5 648.276)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="15.138" y="15">DB</tspan>
+        </text>
+      </g>
+      <g id="Graphic_31">
+        <text transform="translate(489.5 698.776)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="31.202" y="15">Wakeup</tspan>
+        </text>
+      </g>
+      <g id="Line_32">
+        <line x1="187.396" y1="661.1518" x2="68.89076" y2="656.0286" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+    </g>
+  </g>
+</svg>
