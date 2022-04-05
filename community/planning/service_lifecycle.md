@@ -89,8 +89,8 @@ pub trait Lifecycle<K> {
     ) -> Result<Box<dyn StoreCommand<Context = K>>, InternalError>;
 
     fn into_lifecycle<C, R>(
-    self,
-    converter: C
+        self,
+        converter: C
     ) -> IntoLifecycle<Self, C, Self::Arguments, R, K>
     where
         Self: Sized,
