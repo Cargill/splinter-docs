@@ -49,7 +49,7 @@ A `TimerHandler` is run when there is work to be performed and together with
 ```rust
 pub struct MyTimerHandler { ... }
 
-impl TimerHandler for MyTimerFilter {
+impl TimerHandler for MyTimerHandler {
     type Message = MyMessage;
 
     fn handle_timer(
@@ -151,7 +151,7 @@ pub trait TimerHandlerFactory: Send {
     type Message;
 
     fn new_handler(
-      &self
+        &self
     ) -> Result<Box<dyn TimerHandler<Message = Self::Message>>, InternalError>;
 
     fn clone_box(&self) -> Box<dyn TimerHandlerFactory<Message = Self::Message>>;
@@ -180,6 +180,7 @@ impl Timer {
         }
 }
 ```
+
 On start up the Timer takes a list of `TimerFilters` and their associated
 `TimerHandlerFactory`. The factories must return a handler that can handle
 messages of type `Vec<u8>`. This can always be achieved by implementing a
@@ -187,7 +188,6 @@ messages of type `Vec<u8>`. This can always be achieved by implementing a
 `into_handler` method. See [Trait Adapter
 Pattern]({% link community/planning/trait_adapter_pattern.md%}) for more
 information.
-
 
 On wake up, the Timer will check each `TimerFilter` for pending work.  For each
 `FullyQualifiedServiceId` returned from the filter, the associated
