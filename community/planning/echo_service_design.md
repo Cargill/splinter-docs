@@ -52,9 +52,10 @@ the factories, `MessageHandlerFactory` and `TimerHandlerFactory`.
 ### EchoTimerFilter
 
 The `EchoTimerFilter` contains an echo store factory and implements the
-`TimerFilter` trait. The `filter` method returns the list of service IDs of
-services that need to be handled. A service needs to be handled if it has at
-least one peer service and is in the `EchoServiceStatus::Finalized` state.
+[`TimerFilter` trait](service_timer.html#timerfilter-trait).
+The `filter` method returns the list of service IDs of services that need to be
+handled. A service needs to be handled if it has at least one peer service and
+is in the `EchoServiceStatus::Finalized` state.
 
 ```rust
 pub struct EchoTimerFilter {
@@ -118,9 +119,10 @@ pub enum EchoMessage {
 
 The `EchoTimerHandler` struct contains an `EchoStore` and a time stamp used to
 determine when to simulate an error. `EchoTimerHandler` implements the
-`TimerHandler` trait. The `handle_timer` function in the implementation sends
-messages to a service's peers at a given rate, emulating errors periodically,
-based on the `EchoArguments` set for that service.
+[`TimerHandler` trait](service_timer.html#timerhandler-trait).
+The `handle_timer` function in the implementation sends messages to a service's
+peers at a given rate, emulating errors periodically, based on the
+`EchoArguments` set for that service.
 
 ```rust
 pub struct EchoTimerHandler {
@@ -150,11 +152,12 @@ impl TimerHandler for EchoTimerHandler {
 ### EchoMessageHandler
 
 The `EchoMessageHandler` struct contains an `EchoStore` and implements the
-`MessageHandler` trait. The `handle_message` function takes a sender, the
-service ID of the sending service, the service ID of the receiving service and a
-message, as arguments. Depending on the type of `EchoMessage`, either a response
-message will be sent to the sender service or the database will be updated to
-reflect that a response was received.
+[`MessageHandler` trait](service_message_handling.html#message-handlers).
+The `handle_message` function takes a sender, the service ID of the sending
+service, the service ID of the receiving service and a message, as arguments.
+Depending on the type of `EchoMessage`, either a response message will be sent
+to the sender service or the database will be updated to reflect that a response
+was received.
 
 ```rust
 pub struct EchoMessageHandler {
@@ -185,7 +188,8 @@ impl MessageHandler for EchoMessageHandler {
 ### EchoLifecycle
 
 The `EchoLifecycle` struct contains an `EchoStoreFactory` and implements the
-`Lifecycle` trait. Each of the methods in the `Lifecycle` implementation
+[`Lifecycle` trait](service_lifecycle.html#lifecycle-trait).
+Each of the methods in the `Lifecycle` implementation
 returns a
 [`StoreCommand`]({% link community/planning/store_command_for_scabbard_v0.7.md %})
 which when executed, will make the appropriate updates to the underlying
@@ -241,9 +245,10 @@ where
 
 ### EchoMessageByteConverter
 
-The `EchoMessageByteConverter` implements the `MessageConverter` trait. The
-`to_left` method converts bytes to an `EchoMessage` and the `to_right` method
-does the inverse.
+The `EchoMessageByteConverter` implements the
+[`MessageConverter` trait](trait_adapter_pattern.html#converter-trait).
+The `to_left` method converts bytes to an `EchoMessage` and the `to_right`
+method does the inverse.
 
 ```rust
 #[derive(Clone)]
@@ -262,9 +267,10 @@ impl MessageConverter<EchoMessage, Vec<u8>> for EchoMessageByteConverter {
 
 ### EchoArgumentsVecConverter
 
-The `EchoArgumentsVecConverter` implements the `ArgumentsConverter` trait. The
-`to_left` method converts a list of tuples to `EchoArguments` and the `to_right`
-method does the inverse.
+The `EchoArgumentsVecConverter` implements the
+[`ArgumentsConverter` trait](trait_adapter_pattern.html#converter-trait).
+The `to_left` method converts a list of tuples to `EchoArguments` and the
+`to_right` method does the inverse.
 
 ```rust
 pub struct EchoArgumentsVecConverter {}
@@ -283,4 +289,10 @@ impl ArgumentsConverter<EchoArguments, Vec<(String, String)>> for EchoArgumentsV
 ## Prior art
 [prior-art]: #prior-art
 
-This service implements the new service API design for splinter.
+This service implements the new service API design for splinter. For more
+information see:
+* [Service Lifecycle]({% link community/planning/service_lifecycle.md %})
+* [Service Message
+  Handling]({% link community/planning/service_message_handling.md %})
+* [Service Timer]({% link community/planning/service_timer.md %})
+* [Trait Adapter Pattern]({% link community/planning/trait_adapter_pattern.md %})
