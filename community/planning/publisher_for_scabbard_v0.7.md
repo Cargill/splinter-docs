@@ -1,3 +1,7 @@
+---
+tags: [Mermaid]
+mermaid: true
+---
 # Publisher for Scabbard v0.7
 
 <!--
@@ -534,3 +538,169 @@ exist, as publisher threads correlated to the number of `PublishHandles`?
 The current Hyperledger Transact implementation requires several threads running
 for the transaction execution. How this API may be improved to reduce the
 number of threads required is yet to be determined.
+
+## Sequence Diagrams
+
+### Finalize Artifact
+
+<div class="mermaid">
+sequenceDiagram
+    participant Coordinator
+    participant PublisherFactory
+    Participant PublishHandle
+    participant PendingBatches
+    participant BatchVerifier
+    participant BatchVerifierFactory
+    participant ArtifactCreator
+    participant ArtifactCreatorFactory
+    rect rgb(192, 192, 192)
+    Note over PublisherFactory,PendingBatches: Setup publishing for an Artifact
+    Coordinator ->>+ PublisherFactory: Start publishing
+    PublisherFactory ->> BatchVerifierFactory: Create Batch Verifier
+    BatchVerifierFactory -->> PublisherFactory: Return BatchVerifier
+    activate BatchVerifier
+    PublisherFactory ->> ArtifactCreatorFactory: Create ArtifactCreator
+    ArtifactCreatorFactory -->> PublisherFactory: Return ArtifactCreator
+    PublisherFactory ->> PublishHandle: PublishHandle::new()
+    PublishHandle -->> PublisherFactory: Return PublishHandle
+    %% update for functions calls
+    PublisherFactory -->>-  Coordinator: Return PublishHandle
+    end
+    rect rgb(192, 192, 192)
+    Note over PublisherFactory,PendingBatches: Processing batches
+    loop When a new batch is available
+        Coordinator ->> PublishHandle: A Batch is available
+        loop Drain pending batches
+            PublishHandle ->> PendingBatches:  Request a pending Batch
+            PendingBatches -->> PublishHandle: Some(Batch)
+            PublishHandle ->> BatchVerifier: Add Batch to BatchVerifier
+        end
+    end
+    end
+    rect rgb(192, 192, 192)
+    Note over PublisherFactory,BatchVerifier: Publish a new Artifact
+    Coordinator ->> PublishHandle: Notify of RequestForStart
+    PublishHandle ->> BatchVerifier: Finalize publishing
+    BatchVerifier -->> PublishHandle: Vec&lt;BatchExecutionResult&gt;
+    deactivate BatchVerifier
+    PublishHandle ->> +ArtifactCreator: Create Artifact
+    ArtifactCreator -->>- PublishHandle: Return Artifact
+    PublishHandle -->> Coordinator: Publish Artifact
+    end
+</div>
+
+### Cancel Artifact
+
+<div class="mermaid">
+sequenceDiagram
+    participant Coordinator
+    participant PublisherFactory
+    Participant PublishHandle
+    participant PendingBatches
+    participant BatchVerifier
+    participant BatchVerifierFactory
+    participant ArtifactCreator
+    participant ArtifactCreatorFactory
+    rect rgb(192, 192, 192)
+    Note over PublisherFactory,PendingBatches: Setup publishing for an Artifact
+    Coordinator ->>+ PublisherFactory: Start publishing
+    PublisherFactory ->> BatchVerifierFactory: Create Batch Verifier
+    BatchVerifierFactory -->> PublisherFactory: Return BatchVerifier
+    activate BatchVerifier
+    PublisherFactory ->> ArtifactCreatorFactory: Create ArtifactCreator
+    ArtifactCreatorFactory -->> PublisherFactory: Return ArtifactCreator
+    PublisherFactory ->> PublishHandle: PublishHandle::new()
+    PublishHandle -->> PublisherFactory: Return PublishHandle
+    %% update for functions calls
+    PublisherFactory -->>-  Coordinator: Return PublishHandle
+    end
+    rect rgb(192, 192, 192)
+    Note over PublisherFactory,PendingBatches: Processing batches
+    loop When a new batch is available
+        Coordinator ->> PublishHandle: A Batch is available
+        loop Drain pending batches
+            PublishHandle ->> PendingBatches:  Request a pending Batch
+            PendingBatches -->> PublishHandle: Some(Batch)
+            PublishHandle ->> BatchVerifier: Add Batch to BatchVerifier
+        end
+    end
+    end
+    rect rgb(192, 192, 192)
+    Note over PublisherFactory,PendingBatches: Cancel building current Artifact
+    Coordinator ->> PublishHandle: Notify of Cancel
+    PublishHandle ->> BatchVerifier: Cancel publishing
+    BatchVerifier -->> PublishHandle: Return
+    deactivate BatchVerifier
+    PublishHandle -->> Coordinator: Return (consume self)
+    end
+</div>
+
+### BatchVerifier
+
+<div class="mermaid">
+sequenceDiagram
+    participant Publisher
+    participant BatchVerifierFactory
+    participant BatchVerifier
+    participant Executor
+    participant Scheduler
+    rect rgb(192, 192, 192)
+    Note over BatchVerifier,Executor: Create and start BatchVerifier
+    Publisher ->> BatchVerifierFactory: start(context)
+    BatchVerifierFactory ->> BatchVerifier: start(scope, state)
+    BatchVerifier ->> Executor:  new(txn_handlers, context_manager)
+    Executor -->> BatchVerifier: Result Executor, Err
+    BatchVerifier ->>+ Executor: start()
+    Executor -->> BatchVerifier: Result (), Err
+    BatchVerifier ->> Scheduler: new(context_manager, current_state_root)
+    Scheduler -->> BatchVerifier: Result Scheduler, Err
+    %% add callback/channel
+    BatchVerifier ->> Scheduler: set_result_callback(callback)
+    Scheduler -->> BatchVerifier: Result (), Err
+    BatchVerifier ->> Executor: execute(Scheduler.take_task_iterator, Scheduler.new_notifier)
+    activate Scheduler
+    Executor -->> BatchVerifier: Result (), Err
+    BatchVerifier -->> BatchVerifierFactory: Result Self, Err
+    BatchVerifierFactory ->> Publisher: Result BatchVerifier, Err
+    end
+
+    rect rgb(192, 192, 192)
+    Note over BatchVerifier,Executor: Add batches for execution
+    loop When Publisher adds a Batch
+        Publisher ->> BatchVerifier: add_batch(Batch)
+        BatchVerifier ->> Scheduler: add_batch(Batch)
+        Scheduler -->> BatchVerifier: Result (), Err
+        BatchVerifier -->> Publisher: Result (), Err
+    end
+    end
+
+    rect rgb(192, 192, 192)
+    Note over BatchVerifier,Executor: Execute batch and send results over callback
+    %% add collect results
+    %% adds execution loop
+    loop When results are returned from the callback
+        Scheduler ->> Executor: Execute batch from Scheduler
+        Executor -->> BatchVerifier: BatchResult through callback
+    end
+    end
+
+    %% split the two below into alternatives
+    rect rgb(192, 192, 192)
+    Note over BatchVerifierFactory,Executor: Stop execution and gets results
+    alt Finalize execution
+    Publisher ->> BatchVerifier: finalize()
+    BatchVerifier ->> Scheduler: finalize()
+    Scheduler -->> BatchVerifier: Result (), Err
+    BatchVerifier ->> Scheduler: cancel() // abort all batches that have not completed
+    Scheduler -->> BatchVerifier: Result (), Err
+    BatchVerifier -->> Publisher: Result Vec&lt;BatchExecutionResult&gt;, Err
+    else Cancel execution
+    Publisher ->> BatchVerifier: cancel()
+    BatchVerifier ->> Scheduler: cancel()
+    Scheduler -->> BatchVerifier: Result (), Err
+    BatchVerifier -->> Publisher: Result (), Err
+    end
+    deactivate Scheduler
+    deactivate Executor
+    end
+</div>
