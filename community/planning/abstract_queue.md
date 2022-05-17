@@ -1,3 +1,8 @@
+---
+tags: [Mermaid]
+mermaid: true
+---
+
 # Abstract Queue
 <!--
   Copyright 2018-2022 Cargill Incorporated
@@ -156,6 +161,39 @@ pub trait QueueCommand {
     fn execute(&self, ctx: &Self::Context) -> Result<(), InternalError>;
 }
 ```
+
+### Example
+
+This sequence diagram shows the how this queue design would interact within a
+sawtooth-style publishing context.
+
+<div class="mermaid">
+sequenceDiagram
+    participant C as Coordinator
+    participant P as Publisher
+    participant Q as Queue
+    participant QC as QueueCommands
+    participant V as BatchVerifier
+    participant R as RefSet
+    C ->> P: Start Publishing
+    rect rgb(192, 192, 256)
+    note right of P: While constructing artifact
+    loop Adding batches to artifact
+        P ->>+ Q: try_next()
+        Q -->>- P: Some(RefId)
+        P ->> V: RefId
+        V ->>+ R: RefId
+        R -->>- V: Lease&lt;Batch&gt;
+        V ->>P: BatchResult
+    end
+    end
+    C ->> P: Publish
+    rect rgb(192, 192, 256)
+    note right of P: Marking queue items as verified
+    P ->>+ QC: complete(ref_ids)
+    QC-->>- P: TransferToken&lt;Released&gt;
+    end
+</div>
 
 ## Drawbacks
 [drawbacks]: #drawbacks
