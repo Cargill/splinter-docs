@@ -24,6 +24,7 @@ forum.
 | [Publisher for Scabbard v0.7]({% link community/planning/publisher_for_scabbard_v0.7.md%})| A new design for the publishing component for Scabbard |
 | [RefSet for libsawtooth 0.8]({% link community/planning/ref_set.md %}) | A design for a generic reference set to replace `BlockManager` and apply the same concept to Batches. |
 | [REST API Maintenance Mode]({% link community/planning/rest_api_maintenance_mode.md %}) | Design for the maintenance mode authorization handler for the Splinter REST API |
+| [Scribe for Scabbard v0.7]({% link community/planning/scribe_for_scabbard_v0.7.md %}) | A design for the scribe component for Scabbard |
 | [Service Lifecycle]({% link community/planning/service_lifecycle.md %}) | Design for transitioning through the service lifecycle |
 | [Service Message Handling]({% link community/planning/service_message_handling.md %}) | A design for a set of components that handles stateless service message handling |
 | [Service Timer]({% link community/planning/service_timer.md %}) | Design for the Timer that will periodically wake up services |
