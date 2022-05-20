@@ -166,8 +166,8 @@ image tags and explains what each tag means.
 | 0.4-dev          | Most recent build of 0-4 branch                           |
 | 0.4              | Most recent 0.4 release                                   |
 | 0.4-experimental | Most recent build of 0-4 branch, features=experimental    |
-| master           | Most recent build of master branch, features=default      |
-| experimental     | Most recent build of master branch, features=experimental |
+| main             | Most recent build of main branch, features=default        |
+| experimental     | Most recent build of main branch, features=experimental   |
 | 0.5              | Most recent 0.5 release                                   |
 | 0.5.x            | Exact 0.5 release                                         |
 

@@ -4033,7 +4033,7 @@ managed by two-phase commit consensus between the parties.
 
 **Note**: This demo uses the Sabre smart contract engine provided in
 [Sawtooth Sabre](https://sawtooth.hyperledger.org/docs/sabre/nightly/master/sabre_transaction_family.html)
-and the XO smart contract provided in the [Hyperledger Sawtooth Rust SDK](https://github.com/hyperledger/sawtooth-sdk-rust/tree/master/examples/xo_rust).
+and the XO smart contract provided in the [Hyperledger Sawtooth Rust SDK](https://github.com/hyperledger/sawtooth-sdk-rust/tree/main/examples/xo_rust).
 
 
 This example application includes a docker-compose file that sets up Splinter

@@ -71,7 +71,7 @@ follow these guidelines:
     address](https://help.github.com/articles/setting-your-commit-email-address-in-git/).
 
 * **Important**: If you need to rebase your pull request, be sure to rebase it
-  against the current master branch. Do not merge the current master branch
+  against the current main branch. Do not merge the current main branch
   with your topic branch. Do not use the "Update Branch" button provided by
   GitHub on the pull request page.
 

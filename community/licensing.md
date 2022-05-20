@@ -9,7 +9,7 @@
 ## Software
 
 Splinter software is licensed under the [Apache License Version
-2.0](https://github.com/Cargill/splinter/blob/master/LICENSE) software license.
+2.0](https://github.com/Cargill/splinter/blob/main/LICENSE) software license.
 
 ## Documentation
 

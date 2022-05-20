@@ -187,5 +187,5 @@ for details on how to create and compile a smart contract
 
 ## For More Information
 
- * [Smart Contract Upload in Grid](https://github.com/hyperledger/grid/blob/master/examples/splinter/README.md)
+ * [Smart Contract Upload in Grid](https://github.com/hyperledger/grid/blob/main/examples/splinter/README.md)
  * [Sabre Transaction Family Spec](https://sawtooth.hyperledger.org/docs/sabre/nightly/master/sabre_transaction_family.html#)

@@ -17,7 +17,7 @@ organizations: Acme Corporation and Bubba Bakery.
 This demo uses the Sabre smart contract engine provided in
 [Sawtooth Sabre](https://github.com/hyperledger/sawtooth-sabre) and the XO smart
 contract provided in the [Hyperledger Sawtooth Rust
-SDK](https://github.com/hyperledger/sawtooth-sdk-rust/tree/master/examples/xo_rust).
+SDK](https://github.com/hyperledger/sawtooth-sdk-rust/tree/main/examples/xo_rust).
 
 **Prerequisites**:
 This demo requires [Docker Engine](https://docs.docker.com/engine)
