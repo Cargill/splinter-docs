@@ -354,7 +354,7 @@ circuits:
 [prior-art]: #prior-art
 
 This implementation is influenced by the Challenge Authorization in
-[Hyperledger Sawtooth](https://sawtooth.hyperledger.org/docs/core/releases/latest/architecture/validator_network.html#authorization-types).
+[Hyperledger Sawtooth](https://sawtooth.hyperledger.org/docs/1.2/architecture/validator_network.html#Authorization_Types).
 
 ## Unresolved questions
 [unresolved]: #unresolved

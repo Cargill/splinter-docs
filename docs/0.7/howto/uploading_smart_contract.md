@@ -17,7 +17,7 @@ two nodes and upload a smart contract via the circuit.
   [installed]({% link docs/0.7/howto/building_splinter.md %})
 * The splinter command line tool
   [installed]({% link docs/0.7/howto/building_splinter.md %})
-* A compiled smart contract. Check [here](https://sawtooth.hyperledger.org/docs/sabre/nightly/master/application_developer_guide.html#)
+* A compiled smart contract. Check [here](https://sawtooth.hyperledger.org/docs/1.2/sabre/application_developer_guide.html)
 for details on how to create and compile a smart contract
 
 ## Procedure
@@ -188,4 +188,4 @@ for details on how to create and compile a smart contract
 ## For More Information
 
  * [Smart Contract Upload in Grid](https://github.com/hyperledger/grid/blob/main/examples/splinter/README.md)
- * [Sabre Transaction Family Spec](https://sawtooth.hyperledger.org/docs/sabre/nightly/master/sabre_transaction_family.html#)
+ * [Sabre Transaction Family Spec](https://sawtooth.hyperledger.org/docs/1.2/sabre/sabre_transaction_family.html)

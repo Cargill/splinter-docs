@@ -2078,7 +2078,7 @@ Next, the Bubba Bakery admin service notifies the Acme node that it's ready to
 create services. After the Acme node responds (described in "Behind Scene 6"),
 the Bubba Bakery admin service initializes its scabbard service for the new
 gameroom. Scabbard is the Splinter service for Gameroom that includes the
-[Sawtooth Sabre](https://sawtooth.hyperledger.org/docs/sabre/nightly/master/sabre_transaction_family.html)
+[Sawtooth Sabre](https://sawtooth.hyperledger.org/docs/1.2/sabre/sabre_transaction_family.html)
 transaction handler and [Hyperledger Transact](https://crates.io/crates/transact),
 using two-phase commit consensus to agree on state. Gameroom uses this service
 to store the XO smart contract and manage XO state. Finally, the Gameroom daemon
@@ -2601,7 +2601,7 @@ and all members are ready to create services (covered in
 the Bubba Bakery admin service makes a call to the service orchestrator to
 initialize the scabbard service for the new gameroom. As described above,
 scabbard is the Splinter service for Gameroom that includes the
-[Sawtooth Sabre](https://sawtooth.hyperledger.org/docs/sabre/nightly/master/sabre_transaction_family.html)
+[Sawtooth Sabre](https://sawtooth.hyperledger.org/docs/1.2/sabre/sabre_transaction_family.html)
 transaction handler and [Hyperledger Transact](https://crates.io/crates/transact),
 using two-phase commit consensus to agree on state. Gameroom uses this service
 to store the XO smart contract and manage XO state.
@@ -2834,7 +2834,7 @@ is responsible for adding the XO smart contract.
 To add the XO smart contract, the Acme Gameroom daemon creates a series of
 transactions to set the permissions surrounding the smart contract and to
 submit the smart contract itself. For more information, see the
-[Sawtooth Sabre](https://sawtooth.hyperledger.org/docs/sabre/nightly/master/sabre_transaction_family.html)
+[Sawtooth Sabre](https://sawtooth.hyperledger.org/docs/1.2/sabre/sabre_transaction_family.html)
 documentation.
 
 The Acme Gameroom daemon bundles these transactions into a batch, serializes
@@ -2847,7 +2847,7 @@ local Splinter node:
 ```
 
 For more information about batches, see "Transactions and Batches" in the
-[Sawtooth Architecture](https://sawtooth.hyperledger.org/docs/core/releases/latest/architecture/transactions_and_batches.html)
+[Sawtooth Architecture](https://sawtooth.hyperledger.org/docs/1.2/architecture/transactions_and_batches.html)
 documentation.
 
 When the Acme scabbard service receives this batch, it must agree with the
@@ -3126,7 +3126,7 @@ new game request is handled.
 3. The Acme client bundles the Sabre payload into a batch, then serializes the
    batch into an array of bytes. (For more information, see "Transactions and
    Batches" in the
-   [Sawtooth Architecture](https://sawtooth.hyperledger.org/docs/core/releases/latest/architecture/transactions_and_batches.html)
+   [Sawtooth Architecture](https://sawtooth.hyperledger.org/docs/1.2/architecture/transactions_and_batches.html)
    documentation.)
 
 4. The Acme client sends the batch to the Acme Gameroom REST API.
@@ -3419,7 +3419,7 @@ section summarizes these steps.
     c. The Acme client bundles the Sabre payload into a batch, then
        serializes the batch into an array of bytes. (For more information,
        see "Transactions and Batches" in the
-       [Sawtooth Architecture](https://sawtooth.hyperledger.org/docs/core/releases/latest/architecture/transactions_and_batches.html)
+       [Sawtooth Architecture](https://sawtooth.hyperledger.org/docs/1.2/architecture/transactions_and_batches.html)
        documentation.)
 
     d. The Acme client posts the batch to the Acme Gameroom REST API (see
@@ -4032,7 +4032,7 @@ managed by two-phase commit consensus between the parties.
 
 
 **Note**: This demo uses the Sabre smart contract engine provided in
-[Sawtooth Sabre](https://sawtooth.hyperledger.org/docs/sabre/nightly/master/sabre_transaction_family.html)
+[Sawtooth Sabre](https://sawtooth.hyperledger.org/docs/1.2/sabre/sabre_transaction_family.html)
 and the XO smart contract provided in the [Hyperledger Sawtooth Rust SDK](https://github.com/hyperledger/sawtooth-sdk-rust/tree/main/examples/xo_rust).
 
 
@@ -5089,7 +5089,7 @@ and is not yet ready for use. The Gameroom application uses the term
 #### scabbard
 <p class="glossary-definition">
 Splinter service that includes the
-<a href="https://sawtooth.hyperledger.org/docs/sabre/nightly/master/sabre_transaction_family.html">
+<a href="https://sawtooth.hyperledger.org/docs/1.2/sabre/sabre_transaction_family.html">
 Sawtooth Sabre</a> transaction handler and
 <a href="https://crates.io/crates/transact">Hyperledger Transact</a>, using
 two-phase commit consensus to agree on state. This application-specific service
