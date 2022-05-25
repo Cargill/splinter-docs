@@ -57,8 +57,8 @@ of downtime for upgrades or single-point-of-failure issues.
 | REST API - Authorization | Complete | [REST API Authorization Design]({% link community/planning/rest_api_authorization.md %}) |
 | REST API - Cylinder JWT Authentication | Complete | [Cylinder JWT Authentication]({% link community/planning/cylinder_jwt_authentication.md %}) |
 | REST API - OAuth 2 Authentication | Complete | [OAuth 2 REST API Authentication]({% link community/planning/oauth2_rest_api_authentication.md %}) |
-| Transact SQL Support | Complete | [Code](https://github.com/hyperledger/transact/tree/master/libtransact/src/database) |
-| WebSocket Transport | Experimental | [Code](https://github.com/Cargill/splinter/tree/master/libsplinter/src/transport/ws) |
+| Transact SQL Support | Complete | [Code](https://github.com/hyperledger/transact/tree/main/libtransact/src/database) |
+| WebSocket Transport | Experimental | [Code](https://github.com/Cargill/splinter/tree/main/libsplinter/src/transport/ws) |
 
 
 ## Additional Information

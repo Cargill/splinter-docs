@@ -57,5 +57,5 @@ contracts.
 For more information, see the [Grid
 documentation](https://grid.hyperledger.org/docs/).
 
-<a href ="https://github.com/hyperledger/grid/blob/master/examples/splinter/README.md"
+<a href ="https://github.com/hyperledger/grid/blob/main/examples/splinter/README.md"
 type="button" class="btn btn-primary">Try Grid on Splinter ➜</a><br>&nbsp;<br>

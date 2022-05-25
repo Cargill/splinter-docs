@@ -85,7 +85,7 @@ contract registry and namespace.
 For more information, see [Uploading a Smart
 Contract]({% link docs/0.4/howto/uploading_smart_contract.md %}),
 [the Grid
-README](https://github.com/hyperledger/grid/blob/master/examples/splinter/README.md#demonstrate-grid-smart-contract-functionality),
+website](https://grid.hyperledger.org/docs/0.3/grid_on_sawtooth.html#demonstrate-grid-smart-contract-functionality),
 and the man pages
 [splinter-circuit-propose(1)]({% link
 docs/0.4/references/cli/splinter-circuit-propose.1.md %}),
@@ -145,11 +145,11 @@ For an example of a smart contract that uses Pike smart permissions, see the
 "intkey-multiply" smart contract in Sawtooth Sabre.
 
 For more information, see the [Pike Transaction Family
-Specification](https://grid.hyperledger.org/docs/grid/nightly/master/transaction_family_specifications/pike_transaction_family.html),
+Specification](https://grid.hyperledger.org/docs/0.3/pike_smart_contract_specification.html),
 [Sawtooth Sabre: Smart
-Permissions](https://sawtooth.hyperledger.org/docs/sabre/nightly/master/smart_permissions.html),
+Permissions](https://sawtooth.hyperledger.org/docs/1.2/sabre/smart_permissions.html),
 and [Sawtooth Sabre Application Developer's
-Guide](https://sawtooth.hyperledger.org/docs/sabre/nightly/master/application_developer_guide.html).
+Guide](https://sawtooth.hyperledger.org/docs/1.2/sabre/application_developer_guide.html).
 
 ## Ports and REST API Connections
 

@@ -81,7 +81,7 @@ can be written using any framework.
 
 [Hyperledger Grid](https://github.com/hyperledger/grid) provides an example
 Canopy application called
-[Grid UI](https://github.com/hyperledger/grid/tree/master/ui/grid-ui),
+[Grid UI](https://github.com/hyperledger/grid/tree/main/ui/grid-ui),
 which includes Grid saplings that can communicate with the Grid daemon's REST
 API. The Grid UI application imports CanopyJS to provide an
 interface for Grid saplings to share functionality such as user, key, and
@@ -89,7 +89,7 @@ session management. Also, Grid UI demonstrates Canopy theming by
 featuring the default Grid branding and theme.
 
 See the [Grid UI
-README](https://github.com/hyperledger/grid/tree/master/ui/grid-ui/README.md)
+README](https://github.com/hyperledger/grid/tree/main/ui/grid-ui/README.md)
 to learn how to run, test, and build this Canopy application.
 
 ## Disclaimer
