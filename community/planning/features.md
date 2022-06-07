@@ -28,6 +28,7 @@ forum.
 | [Service Lifecycle]({% link community/planning/service_lifecycle.md %}) | Design for transitioning through the service lifecycle |
 | [Service Message Handling]({% link community/planning/service_message_handling.md %}) | A design for a set of components that handles stateless service message handling |
 | [Service Timer]({% link community/planning/service_timer.md %}) | Design for the Timer that will periodically wake up services |
+| [Splinter v0.7 Database]({% link community/planning/splinter_v0.7_database.md %}) | Design for the Splinter v0.7 database tables |
 | [StoreCommand for Scabbard v0.7]({% link community/planning/store_command_for_scabbard_v0.7.md %}) | A design for a component that makes database updates |
 | [Trait Adapter Pattern]({% link community/planning/trait_adapter_pattern.md %}) | Design for the Trait Adapter Pattern|
 
