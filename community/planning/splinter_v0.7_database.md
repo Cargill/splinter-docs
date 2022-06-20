@@ -215,7 +215,6 @@ erDiagram
 
     consensus_2pc_update_context_action {
         Int8 action_id PK
-        Text service_id FK
         Text coordinator
         BigInt epoch
         BigInt last_commit_epoch
@@ -230,7 +229,6 @@ erDiagram
 
     consensus_2pc_send_message_action {
         Int8 action_id PK
-        Text service_id FK
         BigInt epoch
         Text receiver_service_id
         Text message_type
@@ -243,7 +241,6 @@ erDiagram
 
     consensus_2pc_notification_action {
         Int8 action_id PK
-        Text service_id FK
         Text notification_type
         Text dropped_message
         Binary request_for_vote_value
@@ -254,7 +251,6 @@ erDiagram
 
     consensus_2pc_update_context_action_participant {
         Int8 action_id PK
-        Text service_id FK
         Text process
         Text vote
     }
@@ -280,7 +276,6 @@ erDiagram
 
     consensus_2pc_deliver_event {
         Int8 event_id PK
-        Text service_id FK
         BigInt epoch
         Text receiver_service_id
         Text message_type
@@ -293,7 +288,6 @@ erDiagram
 
     consensus_2pc_start_event {
         Int8 event_id PK
-        Text service_id FK
         Binary value
     }
 
@@ -302,7 +296,6 @@ erDiagram
 
     consensus_2pc_vote_event {
         Int8 event_id PK
-        Text service_id FK
         Text vote
     }
 
@@ -471,7 +464,6 @@ CREATE TABLE consensus_2pc_context_participant (
 table! {
     consensus_2pc_deliver_event (event_id) {
         event_id -> Int8,
-        service_id -> Text,
         epoch -> BigInt,
         receiver_service_id -> Text,
         message_type -> Text,
@@ -488,7 +480,6 @@ table! {
        Column        |            Type            | Collation | Nullable | Default
 ---------------------+----------------------------+-----------+----------+---------
  event_id            | integer                    |           | not null |
- service_id          | text                       |           | not null |
  epoch               | bigint                     |           | not null |
  receiver_service_id | text                       |           | not null |
  message_type        | deliver_event_message_type |           | not null |
@@ -501,7 +492,6 @@ Check constraints:
     "consensus_2pc_deliver_event_check1" CHECK (vote_request IS NOT NULL OR message_type <> 'VOTEREQUEST'::deliver_event_message_type)
 Foreign-key constraints:
     "consensus_2pc_deliver_event_event_id_fkey" FOREIGN KEY (event_id) REFERENCES consensus_2pc_event(id) ON DELETE CASCADE
-    "consensus_2pc_deliver_event_service_id_fkey" FOREIGN KEY (service_id) REFERENCES consensus_2pc_context(service_id) ON DELETE CASCADE
 ```
 
 #### SQLite
@@ -509,7 +499,6 @@ Foreign-key constraints:
 ```sql
 CREATE TABLE consensus_2pc_deliver_event (
     event_id                  INTEGER PRIMARY KEY,
-    service_id                TEXT NOT NULL,
     epoch                     BIGINT NOT NULL,
     receiver_service_id       TEXT NOT NULL,
     message_type              TEXT NOT NULL
@@ -518,8 +507,7 @@ CREATE TABLE consensus_2pc_deliver_event (
     CHECK ( (vote_response IN ('TRUE', 'FALSE')) OR (message_type != 'VOTERESPONSE') ),
     vote_request              BINARY
     CHECK ( (vote_request IS NOT NULL) OR (message_type != 'VOTEREQUEST') ),
-    FOREIGN KEY (event_id) REFERENCES consensus_2pc_event(id) ON DELETE CASCADE,
-    FOREIGN KEY (service_id) REFERENCES consensus_2pc_context(service_id) ON DELETE CASCADE
+    FOREIGN KEY (event_id) REFERENCES consensus_2pc_event(id) ON DELETE CASCADE
 );
 ```
 
@@ -578,7 +566,6 @@ CREATE TABLE consensus_2pc_event (
 table! {
     consensus_2pc_notification_action (action_id) {
         action_id -> Int8,
-        service_id -> Text,
         notification_type -> Text,
         dropped_message -> Nullable<Text>,
         request_for_vote_value -> Nullable<Binary>,
@@ -593,7 +580,6 @@ table! {
          Column         |       Type        | Collation | Nullable | Default
 ------------------------+-------------------+-----------+----------+---------
  action_id              | integer           |           | not null |
- service_id             | text              |           | not null |
  notification_type      | notification_type |           | not null |
  dropped_message        | text              |           |          |
  request_for_vote_value | bytea             |           |          |
@@ -604,7 +590,6 @@ Check constraints:
     "consensus_2pc_notification_action_check1" CHECK (request_for_vote_value IS NOT NULL OR notification_type <> 'PARTICIPANTREQUESTFORVOTE'::notification_type)
 Foreign-key constraints:
     "consensus_2pc_notification_action_action_id_fkey" FOREIGN KEY (action_id) REFERENCES consensus_2pc_action(id) ON DELETE CASCADE
-    "consensus_2pc_notification_action_service_id_fkey" FOREIGN KEY (service_id) REFERENCES consensus_2pc_context(service_id) ON DELETE CASCADE
 ```
 
 #### SQLite
@@ -612,15 +597,13 @@ Foreign-key constraints:
 ```sql
 CREATE TABLE consensus_2pc_notification_action (
     action_id                 INTEGER PRIMARY KEY,
-    service_id                TEXT NOT NULL,
     notification_type         TEXT NOT NULL
     CHECK ( notification_type IN ('REQUESTFORSTART', 'COORDINATORREQUESTFORVOTE', 'PARTICIPANTREQUESTFORVOTE', 'COMMIT', 'ABORT', 'MESSAGEDROPPED') ),
     dropped_message           TEXT
     CHECK ( (dropped_message IS NOT NULL) OR (notification_type != 'MESSAGEDROPPED') ),
     request_for_vote_value    BINARY
     CHECK ( (request_for_vote_value IS NOT NULL) OR (notification_type != 'PARTICIPANTREQUESTFORVOTE') ),
-    FOREIGN KEY (action_id) REFERENCES consensus_2pc_action(id) ON DELETE CASCADE,
-    FOREIGN KEY (service_id) REFERENCES consensus_2pc_context(service_id) ON DELETE CASCADE
+    FOREIGN KEY (action_id) REFERENCES consensus_2pc_action(id) ON DELETE CASCADE
 );
 ```
 
@@ -632,7 +615,6 @@ CREATE TABLE consensus_2pc_notification_action (
 table! {
     consensus_2pc_send_message_action (action_id) {
         action_id -> Int8,
-        service_id -> Text,
         epoch -> BigInt,
         receiver_service_id -> Text,
         message_type -> Text,
@@ -649,7 +631,6 @@ table! {
        Column        |     Type     | Collation | Nullable | Default
 ---------------------+--------------+-----------+----------+---------
  action_id           | integer      |           | not null |
- service_id          | text         |           | not null |
  epoch               | bigint       |           | not null |
  receiver_service_id | text         |           | not null |
  message_type        | message_type |           | not null |
@@ -662,7 +643,6 @@ Check constraints:
     "consensus_2pc_send_message_action_check1" CHECK (vote_request IS NOT NULL OR message_type <> 'VOTEREQUEST'::message_type)
 Foreign-key constraints:
     "consensus_2pc_send_message_action_action_id_fkey" FOREIGN KEY (action_id) REFERENCES consensus_2pc_action(id) ON DELETE CASCADE
-    "consensus_2pc_send_message_action_service_id_fkey" FOREIGN KEY (service_id) REFERENCES consensus_2pc_context(service_id) ON DELETE CASCADE
 ```
 
 #### SQLite
@@ -670,7 +650,6 @@ Foreign-key constraints:
 ```sql
 CREATE TABLE consensus_2pc_send_message_action (
     action_id                 INTEGER PRIMARY KEY,
-    service_id                TEXT NOT NULL,
     epoch                     BIGINT NOT NULL,
     receiver_service_id       TEXT NOT NULL,
     message_type              TEXT NOT NULL
@@ -679,8 +658,7 @@ CREATE TABLE consensus_2pc_send_message_action (
     CHECK ( (vote_response IN ('TRUE', 'FALSE')) OR (message_type != 'VOTERESPONSE') ),
     vote_request              BINARY
     CHECK ( (vote_request IS NOT NULL) OR (message_type != 'VOTEREQUEST') ),
-    FOREIGN KEY (action_id) REFERENCES consensus_2pc_action(id) ON DELETE CASCADE,
-    FOREIGN KEY (service_id) REFERENCES consensus_2pc_context(service_id) ON DELETE CASCADE
+    FOREIGN KEY (action_id) REFERENCES consensus_2pc_action(id) ON DELETE CASCADE
 );
 ```
 
@@ -692,7 +670,6 @@ CREATE TABLE consensus_2pc_send_message_action (
 table! {
     consensus_2pc_start_event (event_id) {
         event_id -> Int8,
-        service_id -> Text,
         value -> Binary,
     }
 }
@@ -705,13 +682,11 @@ table! {
    Column   |  Type   | Collation | Nullable | Default
 ------------+---------+-----------+----------+---------
  event_id   | integer |           | not null |
- service_id | text    |           | not null |
  value      | bytea   |           |          |
 Indexes:
     "consensus_2pc_start_event_pkey" PRIMARY KEY, btree (event_id)
 Foreign-key constraints:
     "consensus_2pc_start_event_event_id_fkey" FOREIGN KEY (event_id) REFERENCES consensus_2pc_event(id) ON DELETE CASCADE
-    "consensus_2pc_start_event_service_id_fkey" FOREIGN KEY (service_id) REFERENCES consensus_2pc_context(service_id) ON DELETE CASCADE
 ```
 
 #### SQLite
@@ -719,10 +694,8 @@ Foreign-key constraints:
 ```sql
 CREATE TABLE consensus_2pc_start_event (
     event_id                  INTEGER PRIMARY KEY,
-    service_id                TEXT NOT NULL,
     value                     BINARY,
-    FOREIGN KEY (event_id) REFERENCES consensus_2pc_event(id) ON DELETE CASCADE,
-    FOREIGN KEY (service_id) REFERENCES consensus_2pc_context(service_id) ON DELETE CASCADE
+    FOREIGN KEY (event_id) REFERENCES consensus_2pc_event(id) ON DELETE CASCADE
 );
 ```
 
@@ -734,7 +707,6 @@ CREATE TABLE consensus_2pc_start_event (
 table! {
     consensus_2pc_update_context_action (action_id) {
         action_id -> Int8,
-        service_id -> Text,
         coordinator -> Text,
         epoch -> BigInt,
         last_commit_epoch -> Nullable<BigInt>,
@@ -754,7 +726,6 @@ table! {
          Column         |     Type      | Collation | Nullable | Default
 ------------------------+---------------+-----------+----------+---------
  action_id              | integer       |           | not null |
- service_id             | text          |           | not null |
  coordinator            | text          |           | not null |
  epoch                  | bigint        |           | not null |
  last_commit_epoch      | bigint        |           |          |
@@ -771,7 +742,6 @@ Check constraints:
     "consensus_2pc_update_context_action_check2" CHECK (decision_timeout_start IS NOT NULL OR state <> 'VOTED'::context_state)
 Foreign-key constraints:
     "consensus_2pc_update_context_action_action_id_fkey" FOREIGN KEY (action_id) REFERENCES consensus_2pc_action(id) ON DELETE CASCADE
-    "consensus_2pc_update_context_action_service_id_fkey" FOREIGN KEY (service_id) REFERENCES consensus_2pc_context(service_id) ON DELETE CASCADE
 ```
 
 #### SQLite
@@ -779,7 +749,6 @@ Foreign-key constraints:
 ```sql
 CREATE TABLE consensus_2pc_update_context_action (
     action_id                 INTEGER PRIMARY KEY,
-    service_id                TEXT NOT NULL,
     coordinator               TEXT NOT NULL,
     epoch                     BIGINT NOT NULL,
     last_commit_epoch         BIGINT,
@@ -792,8 +761,7 @@ CREATE TABLE consensus_2pc_update_context_action (
     decision_timeout_start    BIGINT
     CHECK ( (decision_timeout_start IS NOT NULL) OR ( state != 'VOTED') ),
     action_alarm  BIGINT,
-    FOREIGN KEY (action_id) REFERENCES consensus_2pc_action(id) ON DELETE CASCADE,
-    FOREIGN KEY (service_id) REFERENCES consensus_2pc_context(service_id) ON DELETE CASCADE
+    FOREIGN KEY (action_id) REFERENCES consensus_2pc_action(id) ON DELETE CASCADE
 );
 ```
 
@@ -805,7 +773,6 @@ CREATE TABLE consensus_2pc_update_context_action (
 table! {
     consensus_2pc_update_context_action_participant (action_id) {
         action_id -> Int8,
-        service_id -> Text,
         process -> Text,
         vote -> Nullable<Text>,
     }
@@ -819,7 +786,6 @@ Table "public.consensus_2pc_update_context_action_participant"
    Column   |  Type   | Collation | Nullable | Default
 ------------+---------+-----------+----------+---------
  action_id  | integer |           | not null |
- service_id | text    |           | not null |
  process    | text    |           | not null |
  vote       | text    |           |          |
 Indexes:
@@ -836,7 +802,6 @@ Foreign-key constraints:
 ```sql
 CREATE TABLE consensus_2pc_update_context_action_participant (
     action_id                 INTEGER PRIMARY KEY,
-    service_id                TEXT NOT NULL,
     process                   TEXT NOT NULL,
     vote                      TEXT
     CHECK ( vote IN ('TRUE' , 'FALSE') OR vote IS NULL ),
@@ -853,7 +818,6 @@ CREATE TABLE consensus_2pc_update_context_action_participant (
 table! {
     consensus_2pc_vote_event (event_id) {
         event_id -> Int8,
-        service_id -> Text,
         vote -> Text,
     }
 }
@@ -866,7 +830,6 @@ table! {
    Column   |  Type   | Collation | Nullable | Default
 ------------+---------+-----------+----------+---------
  event_id   | integer |           | not null |
- service_id | text    |           | not null |
  vote       | text    |           |          |
 Indexes:
     "consensus_2pc_vote_event_pkey" PRIMARY KEY, btree (event_id)
@@ -874,7 +837,6 @@ Check constraints:
     "consensus_2pc_vote_event_vote_check" CHECK (vote = ANY (ARRAY['TRUE'::text, 'FALSE'::text]))
 Foreign-key constraints:
     "consensus_2pc_vote_event_event_id_fkey" FOREIGN KEY (event_id) REFERENCES consensus_2pc_event(id) ON DELETE CASCADE
-    "consensus_2pc_vote_event_service_id_fkey" FOREIGN KEY (service_id) REFERENCES consensus_2pc_context(service_id) ON DELETE CASCADE
 ```
 
 ### SQLite
@@ -882,11 +844,9 @@ Foreign-key constraints:
 ```sql
 CREATE TABLE consensus_2pc_vote_event (
     event_id                  INTEGER PRIMARY KEY,
-    service_id                TEXT NOT NULL,
     vote                      TEXT
     CHECK ( vote IN ('TRUE' , 'FALSE') ),
-    FOREIGN KEY (event_id) REFERENCES consensus_2pc_event(id) ON DELETE CASCADE,
-    FOREIGN KEY (service_id) REFERENCES consensus_2pc_context(service_id) ON DELETE CASCADE
+    FOREIGN KEY (event_id) REFERENCES consensus_2pc_event(id) ON DELETE CASCADE
 );
 ```
 
