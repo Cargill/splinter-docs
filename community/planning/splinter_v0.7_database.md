@@ -209,7 +209,6 @@ erDiagram
         TEXT service_id FK
         TIMESTAMP created_at
         BIGINT executed_at
-        INTEGER position
     }
     consensus_2pc_action }o--|| consensus_2pc_context: contains
 
@@ -270,7 +269,6 @@ erDiagram
          Text service_id FK
          Timestamp created_at
          BigInt executed_at
-         Integer position
          Text event_type
     }
 
@@ -314,7 +312,6 @@ table! {
         service_id -> Text,
         created_at -> Timestamp,
         executed_at -> Nullable<BigInt>,
-        position -> Integer,
     }
 }
 ```
@@ -329,7 +326,6 @@ table! {
  service_id  | text                        |           | not null |
  created_at  | timestamp without time zone |           | not null | CURRENT_TIMESTAMP
  executed_at | bigint                      |           |          |
- position    | integer                     |           | not null |
 Indexes:
     "consensus_2pc_action_pkey" PRIMARY KEY, btree (id)
 Foreign-key constraints:
@@ -344,7 +340,6 @@ CREATE TABLE consensus_2pc_action (
     service_id                TEXT NOT NULL,
     created_at                TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     executed_at               BIGINT,
-    position                  INTEGER NOT NULL,
     FOREIGN KEY (service_id) REFERENCES consensus_2pc_context(service_id) ON DELETE CASCADE
 );
 ```
@@ -522,7 +517,6 @@ table! {
         service_id -> Text,
         created_at -> Timestamp,
         executed_at -> Nullable<BigInt>,
-        position -> Integer,
         event_type -> Text,
     }
 }
@@ -538,7 +532,6 @@ table! {
  service_id  | text                        |           | not null |
  created_at  | timestamp without time zone |           | not null | CURRENT_TIMESTAMP
  executed_at | bigint                      |           |          |
- position    | integer                     |           | not null |
  event_type  | event_type                  |           | not null |
 Indexes:
     "consensus_2pc_event_pkey" PRIMARY KEY, btree (id)
@@ -552,7 +545,6 @@ CREATE TABLE consensus_2pc_event (
     service_id                TEXT NOT NULL,
     created_at                TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     executed_at               BIGINT,
-    position                  INTEGER NOT NULL,
     event_type                TEXT NOT NULL
     CHECK ( event_type IN ('ALARM', 'DELIVER', 'START', 'VOTE') )
 );
