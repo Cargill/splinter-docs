@@ -208,8 +208,8 @@ erDiagram
         BigInt epoch
         Text vote
     }
-    consensus_2pc_context_participant }o--|| consensus_2pc_context: contains
-);
+    consensus_2pc_context }o--|| scabbard_service: contains
+    consensus_2pc_context_participant }o--|| scabbard_service: contains
 </div>
 
 ### Actions
@@ -219,8 +219,6 @@ algorithm, and represents work which must be performed.
 
 <div class="mermaid">
 erDiagram
-    consensus_2pc_context {}
-
     consensus_2pc_action {
         INTEGER id PK
         TEXT circuit_id FK
@@ -228,7 +226,7 @@ erDiagram
         TIMESTAMP created_at
         BIGINT executed_at
     }
-    consensus_2pc_action }o--|| consensus_2pc_context: contains
+    consensus_2pc_action }o--|| scabbard_service: contains
 
     consensus_2pc_update_context_action {
         Int8 action_id PK
@@ -242,7 +240,6 @@ erDiagram
         BigInt action_alarm
     }
     consensus_2pc_action ||--o| consensus_2pc_update_context_action: is
-    consensus_2pc_update_context_action }o--|| consensus_2pc_context: contains
 
     consensus_2pc_send_message_action {
         Int8 action_id PK
@@ -254,7 +251,6 @@ erDiagram
     }
 
     consensus_2pc_action ||--o| consensus_2pc_send_message_action: is
-    consensus_2pc_send_message_action }o--|| consensus_2pc_context: contains
 
     consensus_2pc_notification_action {
         Int8 action_id PK
@@ -264,7 +260,6 @@ erDiagram
     }
 
     consensus_2pc_action ||--o| consensus_2pc_notification_action: is
-    consensus_2pc_notification_action }o--|| consensus_2pc_context: contains
 
     consensus_2pc_update_context_action_participant {
         Int8 action_id PK
@@ -273,7 +268,6 @@ erDiagram
     }
 
 consensus_2pc_action ||--o| consensus_2pc_update_context_action_participant: is
-consensus_2pc_update_context_action_participant }o--|| consensus_2pc_context: contains
 </div>
 
 ### Events
@@ -291,6 +285,8 @@ erDiagram
          Text event_type
     }
 
+    consensus_2pc_event }o--|| scabbard_service: contains
+
     consensus_2pc_deliver_event {
         Int8 event_id PK
         BigInt epoch
@@ -301,7 +297,6 @@ erDiagram
     }
 
     consensus_2pc_event ||--o| consensus_2pc_deliver_event: is
-    consensus_2pc_deliver_event }o--|| consensus_2pc_context: contains
 
     consensus_2pc_start_event {
         Int8 event_id PK
@@ -309,7 +304,6 @@ erDiagram
     }
 
     consensus_2pc_event ||--o| consensus_2pc_start_event: is
-    consensus_2pc_start_event }o--|| consensus_2pc_context: contains
 
     consensus_2pc_vote_event {
         Int8 event_id PK
@@ -317,7 +311,6 @@ erDiagram
     }
 
     consensus_2pc_event ||--o| consensus_2pc_vote_event: is
-    consensus_2pc_vote_event }o--|| consensus_2pc_context: contains
 </div>
 
 ### consensus_2pc_action
@@ -349,6 +342,8 @@ table! {
  executed_at | bigint                      |           |          |
 Indexes:
     "consensus_2pc_action_pkey" PRIMARY KEY, btree (id)
+Foreign-key constraints:
+    "consensus_2pc_action_circuit_id_service_id_fkey" FOREIGN KEY (circuit_id, service_id) REFERENCES scabbard_service(circuit_id, service_id)
 ```
 
 #### SQLite
@@ -359,7 +354,8 @@ CREATE TABLE consensus_2pc_action (
     circuit_id                TEXT NOT NULL,
     service_id                TEXT NOT NULL,
     created_at                TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    executed_at               BIGINT
+    executed_at               BIGINT,
+    FOREIGN KEY (circuit_id, service_id) REFERENCES scabbard_service(circuit_id, service_id)
 );
 ```
 
@@ -404,6 +400,8 @@ Check constraints:
     "consensus_2pc_context_check" CHECK (vote_timeout_start IS NOT NULL OR state <> 'VOTING'::context_state)
     "consensus_2pc_context_check1" CHECK ((vote = ANY (ARRAY['TRUE'::text, 'FALSE'::text])) OR state <> 'VOTED'::context_state)
     "consensus_2pc_context_check2" CHECK (decision_timeout_start IS NOT NULL OR state <> 'VOTED'::context_state)
+Foreign-key constraints:
+    "consensus_2pc_context_circuit_id_service_id_fkey" FOREIGN KEY (circuit_id, service_id) REFERENCES scabbard_service(circuit_id, service_id)
 ```
 
 #### SQLite
@@ -423,7 +421,8 @@ CREATE TABLE consensus_2pc_context (
     CHECK ( (vote IN ('TRUE' , 'FALSE')) OR ( state != 'VOTED') ),
     decision_timeout_start    BIGINT
     CHECK ( (decision_timeout_start IS NOT NULL) OR ( state != 'VOTED') ),
-    PRIMARY KEY(circuit_id, service_id)
+    PRIMARY KEY(circuit_id, service_id),
+    FOREIGN KEY (circuit_id, service_id) REFERENCES scabbard_service(circuit_id, service_id)
 );
 ```
 
@@ -458,6 +457,8 @@ Indexes:
     "consensus_2pc_context_participant_pkey" PRIMARY KEY, btree (circuit_id, service_id, process)
 Check constraints:
     "consensus_2pc_context_participant_vote_check" CHECK ((vote = ANY (ARRAY['TRUE'::text, 'FALSE'::text])) OR vote IS NULL)
+Foreign-key constraints:
+    "consensus_2pc_context_participant_circuit_id_service_id_fkey" FOREIGN KEY (circuit_id, service_id) REFERENCES scabbard_service(circuit_id, service_id)
 ```
 
 #### SQLite
@@ -470,7 +471,8 @@ CREATE TABLE consensus_2pc_context_participant (
     process                   TEXT NOT NULL,
     vote                      TEXT
     CHECK ( vote IN ('TRUE' , 'FALSE') OR vote IS NULL ),
-    PRIMARY KEY (circuit_id, service_id, process)
+    PRIMARY KEY (circuit_id, service_id, process),
+    FOREIGN KEY (circuit_id, service_id) REFERENCES scabbard_service(circuit_id, service_id)
 );
 ```
 
@@ -560,6 +562,8 @@ table! {
  event_type  | event_type                  |           | not null |
 Indexes:
     "consensus_2pc_event_pkey" PRIMARY KEY, btree (id)
+Foreign-key constraints:
+    "consensus_2pc_event_circuit_id_service_id_fkey" FOREIGN KEY (circuit_id, service_id) REFERENCES scabbard_service(circuit_id, service_id)
 ```
 
 #### SQLite
@@ -572,7 +576,8 @@ CREATE TABLE consensus_2pc_event (
     created_at                TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     executed_at               BIGINT,
     event_type                TEXT NOT NULL
-    CHECK ( event_type IN ('ALARM', 'DELIVER', 'START', 'VOTE') )
+    CHECK ( event_type IN ('ALARM', 'DELIVER', 'START', 'VOTE') ),
+    FOREIGN KEY (circuit_id, service_id) REFERENCES scabbard_service(circuit_id, service_id)
 );
 ```
 
