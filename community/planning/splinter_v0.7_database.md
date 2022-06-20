@@ -10,12 +10,14 @@ mermaid: true
 <div class="mermaid">
 erDiagram
     scabbard_service {
+        Text circuit_id PK
         Text service_id PK
         Text status
         Text consensus
     }
 
     scabbard_alarm {
+        Text circuit_id PK
         Text service_id PK
         Text alarm_type PK
         BigInt alarm
@@ -24,6 +26,7 @@ erDiagram
     scabbard_alarm }o--|| scabbard_service: contains
 
     scabbard_peer {
+        Text circuit_id PK
         Text service_id PK
         Text peer_service_id PK
     }
@@ -37,7 +40,8 @@ erDiagram
 
 ```rust
 table! {
-    scabbard_alarm (service_id, alarm_type) {
+    scabbard_alarm (circuit_id, service_id, alarm_type) {
+        circuit_id -> Text,
         service_id -> Text,
         alarm_type -> Text,
         alarm -> BigInt,
@@ -51,25 +55,27 @@ table! {
               Table "public.scabbard_alarm"
    Column   |    Type    | Collation | Nullable | Default
 ------------+------------+-----------+----------+---------
+ circuit_id | text       |           | not null |
  service_id | text       |           | not null |
  alarm_type | alarm_type |           | not null |
  alarm      | bigint     |           | not null |
 Indexes:
-    "scabbard_alarm_pkey" PRIMARY KEY, btree (service_id, alarm_type)
+    "scabbard_alarm_pkey" PRIMARY KEY, btree (circuit_id, service_id, alarm_type)
 Foreign-key constraints:
-    "scabbard_alarm_service_id_fkey" FOREIGN KEY (service_id) REFERENCES scabbard_service(service_id) ON DELETE CASCADE
+    "scabbard_alarm_service_id_fkey" FOREIGN KEY (circuit_id, service_id) REFERENCES scabbard_service(circuit_id, service_id) ON DELETE CASCADE
 ```
 
 #### SQLite
 
 ```sql
 CREATE TABLE scabbard_alarm (
+    circuit_id                TEXT NOT NULL,
     service_id                TEXT NOT NULL,
     alarm_type                TEXT NOT NULL
     CHECK ( alarm_type IN ('TWOPHASECOMMIT')),
     alarm                     BIGINT NOT NULL,
-    FOREIGN KEY (service_id) REFERENCES scabbard_service(service_id) ON DELETE CASCADE,
-    PRIMARY KEY (service_id, alarm_type)
+    FOREIGN KEY (circuit_id, service_id) REFERENCES scabbard_service(circuit_id, service_id) ON DELETE CASCADE,
+    PRIMARY KEY (circuit_id, service_id, alarm_type)
 );
 ```
 
@@ -79,7 +85,8 @@ CREATE TABLE scabbard_alarm (
 
 ```rust
 table! {
-    scabbard_peer (service_id, peer_service_id) {
+    scabbard_peer (circuit_id, service_id, peer_service_id) {
+        circuit_id  -> Text,
         service_id  -> Text,
         peer_service_id  -> Text,
     }
@@ -92,22 +99,24 @@ table! {
               Table "public.scabbard_peer"
      Column      | Type | Collation | Nullable | Default
 -----------------+------+-----------+----------+---------
+ circuit_id      | text |           | not null |
  service_id      | text |           | not null |
  peer_service_id | text |           | not null |
 Indexes:
-    "scabbard_peer_pkey" PRIMARY KEY, btree (service_id, peer_service_id)
+    "scabbard_peer_pkey" PRIMARY KEY, btree (circuit_id, service_id, peer_service_id)
 Foreign-key constraints:
-    "scabbard_peer_service_id_fkey" FOREIGN KEY (service_id) REFERENCES scabbard_service(service_id)
+    "scabbard_peer_service_id_fkey" FOREIGN KEY (circuit_id, service_id) REFERENCES scabbard_service(circuit_id, service_id)
 ```
 
 #### SQLite
 
 ```sql
 CREATE TABLE scabbard_peer (
+    circuit_id       TEXT NOT NULL,
     service_id       TEXT NOT NULL,
     peer_service_id  TEXT,
-    PRIMARY KEY(service_id, peer_service_id),
-    FOREIGN KEY(service_id) REFERENCES scabbard_service(service_id)
+    PRIMARY KEY(circuit_id, service_id, peer_service_id),
+    FOREIGN KEY(circuit_id, service_id) REFERENCES scabbard_service(circuit_id, service_id)
 );
 ```
 
@@ -117,7 +126,8 @@ CREATE TABLE scabbard_peer (
 
 ```rust
 table! {
-    scabbard_service (service_id) {
+    scabbard_service (circuit_id, service_id) {
+        circuit_id  -> Text,
         service_id  -> Text,
         consensus -> Text,
         status -> Text,
@@ -131,22 +141,26 @@ table! {
                                Table "public.scabbard_service"
    Column   |             Type             | Collation | Nullable |          Default
 ------------+------------------------------+-----------+----------+---------------------------
+ circuit_id | text                         |           | not null |
  service_id | text                         |           | not null |
  status     | scabbard_service_status_type |           | not null |
  consensus  | scabbard_consensus           |           | not null | '2PC'::scabbard_consensus
 Indexes:
-    "scabbard_service_pkey" PRIMARY KEY, btree (service_id)
+    "scabbard_service_pkey" PRIMARY KEY, btree (circuit_id, service_id)
 ```
 
 #### SQLite
 
 ```sql
 CREATE TABLE scabbard_service (
-    service_id       TEXT PRIMARY KEY NOT NULL,
+    circuit_id       TEXT NOT NULL,
+    service_id       TEXT NOT NULL,
     status           TEXT NOT NULL
     CHECK ( status IN ('PREPARED', 'FINALIZED', 'RETIRED') )
 , consensus Text NOT NULL DEFAULT '2PC'
-  CHECK ( consensus IN ('2PC') ));
+  CHECK ( consensus IN ('2PC') ),
+  PRIMARY KEY(circuit_id, service_id)
+);
 ```
 
 ### scabbard_v3_commit_history
@@ -155,7 +169,8 @@ CREATE TABLE scabbard_service (
 
 ```rust
 table! {
-    scabbard_v3_commit_history (service_id, epoch) {
+    scabbard_v3_commit_history (circuit_id, service_id, epoch) {
+        circuit_id  -> Text,
         service_id  -> Text,
         epoch -> BigInt,
         value -> VarChar,
@@ -176,6 +191,7 @@ These tables persist specific Augrim data structures.
 <div class="mermaid">
 erDiagram
     consensus_2pc_context {
+        Text circuit_id PK
         Text service_id PK
         Text coordinator
         BigInt epoch
@@ -186,6 +202,7 @@ erDiagram
         BigInt decision_timeout_start
     }
     consensus_2pc_context_participant {
+        Text circuit_id PK
         Text service_id PK
         Text process PK
         BigInt epoch
@@ -206,6 +223,7 @@ erDiagram
 
     consensus_2pc_action {
         INTEGER id PK
+        TEXT circuit_id FK
         TEXT service_id FK
         TIMESTAMP created_at
         BIGINT executed_at
@@ -266,6 +284,7 @@ A consensus event is input into the consensus algorithm.
 erDiagram
     consensus_2pc_event {
          Int8 id PK
+         Text circuit_id FK
          Text service_id FK
          Timestamp created_at
          BigInt executed_at
@@ -309,6 +328,7 @@ erDiagram
 table! {
     consensus_2pc_action (id) {
         id -> Int8,
+        circuit_id -> Text,
         service_id -> Text,
         created_at -> Timestamp,
         executed_at -> Nullable<BigInt>,
@@ -323,13 +343,14 @@ table! {
    Column    |            Type             | Collation | Nullable |                     Default
 -------------+-----------------------------+-----------+----------+--------------------------------------------------
  id          | bigint                      |           | not null | nextval('consensus_2pc_action_id_seq'::regclass)
+ circuit_id  | text                        |           | not null |
  service_id  | text                        |           | not null |
  created_at  | timestamp without time zone |           | not null | CURRENT_TIMESTAMP
  executed_at | bigint                      |           |          |
 Indexes:
     "consensus_2pc_action_pkey" PRIMARY KEY, btree (id)
 Foreign-key constraints:
-    "consensus_2pc_action_service_id_fkey" FOREIGN KEY (service_id) REFERENCES consensus_2pc_context(service_id) ON DELETE CASCADE
+    "consensus_2pc_action_service_id_fkey" FOREIGN KEY (circuit_id, service_id) REFERENCES consensus_2pc_context(circuit_id, service_id) ON DELETE CASCADE
 ```
 
 #### SQLite
@@ -337,10 +358,11 @@ Foreign-key constraints:
 ```sql
 CREATE TABLE consensus_2pc_action (
     id                        INTEGER PRIMARY KEY AUTOINCREMENT,
+    circuit_id                TEXT NOT NULL,
     service_id                TEXT NOT NULL,
     created_at                TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     executed_at               BIGINT,
-    FOREIGN KEY (service_id) REFERENCES consensus_2pc_context(service_id) ON DELETE CASCADE
+    FOREIGN KEY (circuit_id, service_id) REFERENCES consensus_2pc_context(circuit_id, service_id) ON DELETE CASCADE
 );
 ```
 
@@ -350,7 +372,8 @@ CREATE TABLE consensus_2pc_action (
 
 ```rust
 table! {
-    consensus_2pc_context (service_id) {
+    consensus_2pc_context (circuit_id, service_id) {
+        circuit_id -> Text,
         service_id -> Text,
         coordinator -> Text,
         epoch -> BigInt,
@@ -369,6 +392,7 @@ table! {
                   Table "public.consensus_2pc_context"
          Column         |     Type      | Collation | Nullable | Default
 ------------------------+---------------+-----------+----------+---------
+ circuit_id             | text          |           | not null |
  service_id             | text          |           | not null |
  coordinator            | text          |           | not null |
  epoch                  | bigint        |           | not null |
@@ -378,7 +402,7 @@ table! {
  vote                   | text          |           |          |
  decision_timeout_start | bigint        |           |          |
 Indexes:
-    "consensus_2pc_context_pkey" PRIMARY KEY, btree (service_id)
+    "consensus_2pc_context_pkey" PRIMARY KEY, btree (circuit_id, service_id)
 Check constraints:
     "consensus_2pc_context_check" CHECK (vote_timeout_start IS NOT NULL OR state <> 'VOTING'::context_state)
     "consensus_2pc_context_check1" CHECK ((vote = ANY (ARRAY['TRUE'::text, 'FALSE'::text])) OR state <> 'VOTED'::context_state)
@@ -389,7 +413,8 @@ Check constraints:
 
 ```sql
 CREATE TABLE consensus_2pc_context (
-    service_id                TEXT PRIMARY KEY,
+    circuit_id                TEXT NOT NULL,
+    service_id                TEXT NOT NULL,
     coordinator               TEXT NOT NULL,
     epoch                     BIGINT NOT NULL,
     last_commit_epoch         BIGINT,
@@ -400,7 +425,8 @@ CREATE TABLE consensus_2pc_context (
     vote                      TEXT
     CHECK ( (vote IN ('TRUE' , 'FALSE')) OR ( state != 'VOTED') ),
     decision_timeout_start    BIGINT
-    CHECK ( (decision_timeout_start IS NOT NULL) OR ( state != 'VOTED') )
+    CHECK ( (decision_timeout_start IS NOT NULL) OR ( state != 'VOTED') ),
+    PRIMARY KEY(circuit_id, service_id)
 );
 ```
 
@@ -410,7 +436,8 @@ CREATE TABLE consensus_2pc_context (
 
 ```rust
 table! {
-    consensus_2pc_context_participant (service_id, process) {
+    consensus_2pc_context_participant (circuit_id, service_id, process) {
+        circuit_id -> Text,
         service_id -> Text,
         epoch -> BigInt,
         process -> Text,
@@ -425,29 +452,31 @@ table! {
    Table "public.consensus_2pc_context_participant"
    Column   |  Type  | Collation | Nullable | Default
 ------------+--------+-----------+----------+---------
+ circuit_id | text   |           | not null |
  service_id | text   |           | not null |
  epoch      | bigint |           | not null |
  process    | text   |           | not null |
  vote       | text   |           |          |
 Indexes:
-    "consensus_2pc_context_participant_pkey" PRIMARY KEY, btree (service_id, process)
+    "consensus_2pc_context_participant_pkey" PRIMARY KEY, btree (circuit_id, service_id, process)
 Check constraints:
     "consensus_2pc_context_participant_vote_check" CHECK ((vote = ANY (ARRAY['TRUE'::text, 'FALSE'::text])) OR vote IS NULL)
 Foreign-key constraints:
-    "consensus_2pc_context_participant_service_id_fkey" FOREIGN KEY (service_id) REFERENCES consensus_2pc_context(service_id) ON DELETE CASCADE
+    "consensus_2pc_context_participant_service_id_fkey" FOREIGN KEY (circuit_id, service_id) REFERENCES consensus_2pc_context(circuit_id, service_id) ON DELETE CASCADE
 ```
 
 #### SQLite
 
 ```sql
 CREATE TABLE consensus_2pc_context_participant (
+    circuit_id                TEXT NOT NULL,
     service_id                TEXT NOT NULL,
     epoch                     BIGINT NOT NULL,
     process                   TEXT NOT NULL,
     vote                      TEXT
     CHECK ( vote IN ('TRUE' , 'FALSE') OR vote IS NULL ),
-    PRIMARY KEY (service_id, process),
-    FOREIGN KEY (service_id) REFERENCES consensus_2pc_context(service_id) ON DELETE CASCADE
+    PRIMARY KEY (circuit_id, service_id, process),
+    FOREIGN KEY (circuit_id, service_id) REFERENCES consensus_2pc_context(circuit_id, service_id) ON DELETE CASCADE
 );
 ```
 
@@ -514,6 +543,7 @@ CREATE TABLE consensus_2pc_deliver_event (
 table! {
     consensus_2pc_event (id) {
         id -> Int8,
+        circuit_id -> Text,
         service_id -> Text,
         created_at -> Timestamp,
         executed_at -> Nullable<BigInt>,
@@ -529,6 +559,7 @@ table! {
    Column    |            Type             | Collation | Nullable |                     Default
 -------------+-----------------------------+-----------+----------+-------------------------------------------------
  id          | bigint                      |           | not null | nextval('consensus_2pc_event_id_seq'::regclass)
+ circuit_id  | text                        |           | not null |
  service_id  | text                        |           | not null |
  created_at  | timestamp without time zone |           | not null | CURRENT_TIMESTAMP
  executed_at | bigint                      |           |          |
@@ -542,6 +573,7 @@ Indexes:
 ```sql
 CREATE TABLE consensus_2pc_event (
     id                        INTEGER PRIMARY KEY AUTOINCREMENT,
+    circuit_id                TEXT NOT NULL,
     service_id                TEXT NOT NULL,
     created_at                TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     executed_at               BIGINT,
