@@ -349,8 +349,6 @@ table! {
  executed_at | bigint                      |           |          |
 Indexes:
     "consensus_2pc_action_pkey" PRIMARY KEY, btree (id)
-Foreign-key constraints:
-    "consensus_2pc_action_service_id_fkey" FOREIGN KEY (circuit_id, service_id) REFERENCES consensus_2pc_context(circuit_id, service_id) ON DELETE CASCADE
 ```
 
 #### SQLite
@@ -361,8 +359,7 @@ CREATE TABLE consensus_2pc_action (
     circuit_id                TEXT NOT NULL,
     service_id                TEXT NOT NULL,
     created_at                TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    executed_at               BIGINT,
-    FOREIGN KEY (circuit_id, service_id) REFERENCES consensus_2pc_context(circuit_id, service_id) ON DELETE CASCADE
+    executed_at               BIGINT
 );
 ```
 
@@ -461,8 +458,6 @@ Indexes:
     "consensus_2pc_context_participant_pkey" PRIMARY KEY, btree (circuit_id, service_id, process)
 Check constraints:
     "consensus_2pc_context_participant_vote_check" CHECK ((vote = ANY (ARRAY['TRUE'::text, 'FALSE'::text])) OR vote IS NULL)
-Foreign-key constraints:
-    "consensus_2pc_context_participant_service_id_fkey" FOREIGN KEY (circuit_id, service_id) REFERENCES consensus_2pc_context(circuit_id, service_id) ON DELETE CASCADE
 ```
 
 #### SQLite
@@ -475,8 +470,7 @@ CREATE TABLE consensus_2pc_context_participant (
     process                   TEXT NOT NULL,
     vote                      TEXT
     CHECK ( vote IN ('TRUE' , 'FALSE') OR vote IS NULL ),
-    PRIMARY KEY (circuit_id, service_id, process),
-    FOREIGN KEY (circuit_id, service_id) REFERENCES consensus_2pc_context(circuit_id, service_id) ON DELETE CASCADE
+    PRIMARY KEY (circuit_id, service_id, process)
 );
 ```
 
