@@ -835,7 +835,7 @@ CREATE TABLE consensus_2pc_update_context_action_participant (
 
 ### consensus_2pc_vote_event
 
-### Diesel
+#### Diesel
 
 ```rust
 table! {
@@ -846,7 +846,7 @@ table! {
 }
 ```
 
-### PostgreSQL
+#### PostgreSQL
 
 ```
         Table "public.consensus_2pc_vote_event"
@@ -862,7 +862,7 @@ Foreign-key constraints:
     "consensus_2pc_vote_event_event_id_fkey" FOREIGN KEY (event_id) REFERENCES consensus_2pc_event(id) ON DELETE CASCADE
 ```
 
-### SQLite
+#### SQLite
 
 ```sql
 CREATE TABLE consensus_2pc_vote_event (
