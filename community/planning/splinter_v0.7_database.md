@@ -226,6 +226,7 @@ erDiagram
         TEXT service_id FK
         TIMESTAMP created_at
         BIGINT executed_at
+        TEXT action_type
     }
     consensus_2pc_action }o--|| scabbard_service: contains
 
@@ -327,6 +328,7 @@ table! {
         service_id -> Text,
         created_at -> Timestamp,
         executed_at -> Nullable<BigInt>,
+        action_type -> Text,
     }
 }
 ```
@@ -342,6 +344,7 @@ table! {
  service_id  | text                        |           | not null |
  created_at  | timestamp without time zone |           | not null | CURRENT_TIMESTAMP
  executed_at | bigint                      |           |          |
+ action_type | text                        |           | not null |
 Indexes:
     "consensus_2pc_action_pkey" PRIMARY KEY, btree (id)
 Foreign-key constraints:
@@ -357,6 +360,7 @@ CREATE TABLE consensus_2pc_action (
     service_id                TEXT NOT NULL,
     created_at                TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     executed_at               BIGINT,
+    action_type               TEXT,
     FOREIGN KEY (circuit_id, service_id) REFERENCES scabbard_service(circuit_id, service_id)
 );
 ```
@@ -887,6 +891,7 @@ CREATE TABLE consensus_2pc_vote_event (
 
 ```sql
 SELECT id,
+       action_type,
        consensus_2pc_action.circuit_id,
        consensus_2pc_action.service_id,
        consensus_2pc_notification_action.notification_type as n_notification_type,
@@ -910,7 +915,7 @@ SELECT id,
        consensus_2pc_update_context_action_participant.vote as ucp_vote,
        consensus_2pc_update_context_action_participant.decision_ack as ucp_decision_ack,
        created_at,
-       executed_at
+       executed_at,
 FROM consensus_2pc_action
 LEFT JOIN consensus_2pc_notification_action ON consensus_2pc_action.id=consensus_2pc_notification_action.action_id
 LEFT JOIN consensus_2pc_send_message_action ON consensus_2pc_action.id=consensus_2pc_send_message_action.action_id
