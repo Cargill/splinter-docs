@@ -527,7 +527,7 @@ CREATE TABLE consensus_2pc_deliver_event (
     epoch                     BIGINT NOT NULL,
     receiver_service_id       TEXT NOT NULL,
     message_type              TEXT NOT NULL
-    CHECK ( message_type IN ('VOTERESPONSE', 'DECISIONREQUEST', 'VOTEREQUEST', 'COMMIT', 'ABORT') ),
+    CHECK ( message_type IN ('VOTERESPONSE', 'DECISIONREQUEST', 'VOTEREQUEST', 'COMMIT', 'ABORT', 'DECISION_ACK') ),
     vote_response             TEXT
     CHECK ( (vote_response IN ('TRUE', 'FALSE')) OR (message_type != 'VOTERESPONSE') ),
     vote_request              BINARY
@@ -681,7 +681,7 @@ CREATE TABLE consensus_2pc_send_message_action (
     epoch                     BIGINT NOT NULL,
     receiver_service_id       TEXT NOT NULL,
     message_type              TEXT NOT NULL
-    CHECK ( message_type IN ('VOTERESPONSE', 'DECISIONREQUEST', 'VOTEREQUEST', 'COMMIT', 'ABORT') ),
+    CHECK ( message_type IN ('VOTERESPONSE', 'DECISIONREQUEST', 'VOTEREQUEST', 'COMMIT', 'ABORT', 'DECISION_ACK') ),
     vote_response             TEXT
     CHECK ( (vote_response IN ('TRUE', 'FALSE')) OR (message_type != 'VOTERESPONSE') ),
     vote_request              BINARY
