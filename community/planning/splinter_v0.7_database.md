@@ -198,7 +198,7 @@ erDiagram
         BigInt last_commit_epoch
         Text state
         BigInt vote_timer_start
-        Text vote
+        Boolean vote
         BigInt decision_timeout_start
     }
     consensus_2pc_context_participant {
@@ -206,7 +206,7 @@ erDiagram
         Text service_id PK
         Text process PK
         BigInt epoch
-        Text vote
+        Boolean vote
         Boolean decision_ack
     }
     consensus_2pc_context }o--|| scabbard_service: contains
@@ -237,7 +237,7 @@ erDiagram
         BigInt last_commit_epoch
         Text state
         BigInt vote_timeout_start
-        Text vote
+        Boolean vote
         BigInt decision_timeout_start
         BigInt action_alarm
     }
@@ -248,7 +248,7 @@ erDiagram
         BigInt epoch
         Text receiver_service_id
         Text message_type
-        Text vote_response
+        Boolean vote_response
         Binary vote_request
     }
 
@@ -266,7 +266,7 @@ erDiagram
     consensus_2pc_update_context_action_participant {
         Int8 action_id PK
         Text process
-        Text vote
+        Boolean vote
         Boolean decision_ack
     }
 
@@ -296,7 +296,7 @@ erDiagram
         BigInt epoch
         Text receiver_service_id
         Text message_type
-        Text vote_response
+        Boolean vote_response
         Binary vote_request
     }
 
@@ -311,7 +311,7 @@ erDiagram
 
     consensus_2pc_vote_event {
         Int8 event_id PK
-        Text vote
+        Boolean vote
     }
 
     consensus_2pc_event ||--o| consensus_2pc_vote_event: is
@@ -385,7 +385,7 @@ table! {
         last_commit_epoch -> Nullable<BigInt>,
         state -> Text,
         vote_timeout_start -> Nullable<BigInt>,
-        vote -> Nullable<Text>,
+        vote -> Nullable<Bool>,
         decision_timeout_start -> Nullable<BigInt>,
     }
 }
@@ -404,13 +404,13 @@ table! {
  last_commit_epoch      | bigint        |           |          |
  state                  | context_state |           | not null |
  vote_timeout_start     | bigint        |           |          |
- vote                   | text          |           |          |
+ vote                   | boolean       |           |          |
  decision_timeout_start | bigint        |           |          |
 Indexes:
     "consensus_2pc_context_pkey" PRIMARY KEY, btree (circuit_id, service_id)
 Check constraints:
     "consensus_2pc_context_check" CHECK (vote_timeout_start IS NOT NULL OR state <> 'VOTING'::context_state)
-    "consensus_2pc_context_check1" CHECK ((vote = ANY (ARRAY['TRUE'::text, 'FALSE'::text])) OR state <> 'VOTED'::context_state)
+    "consensus_2pc_context_check1" CHECK (vote IS NOT NULL OR state <> 'VOTED'::context_state)
     "consensus_2pc_context_check2" CHECK (decision_timeout_start IS NOT NULL OR state <> 'VOTED'::context_state)
 Foreign-key constraints:
     "consensus_2pc_context_circuit_id_service_id_fkey" FOREIGN KEY (circuit_id, service_id) REFERENCES scabbard_service(circuit_id, service_id)
@@ -429,8 +429,8 @@ CREATE TABLE consensus_2pc_context (
     CHECK ( state IN ( 'WAITINGFORSTART', 'VOTING', 'WAITINGFORVOTE', 'ABORT', 'COMMIT', 'WAITINGFORVOTEREQUEST', 'VOTED', 'WAITING_FOR_DECISION_ACK') ),
     vote_timeout_start        BIGINT
     CHECK ( (vote_timeout_start IS NOT NULL) OR ( state != 'VOTING') ),
-    vote                      TEXT
-    CHECK ( (vote IN ('TRUE' , 'FALSE')) OR ( state != 'VOTED') ),
+    vote                      NUMERIC
+    CHECK ( (vote IS NOT NULL) OR ( state != 'VOTED') ),
     decision_timeout_start    BIGINT
     CHECK ( (decision_timeout_start IS NOT NULL) OR ( state != 'VOTED') ),
     PRIMARY KEY(circuit_id, service_id),
@@ -449,7 +449,7 @@ table! {
         service_id -> Text,
         epoch -> BigInt,
         process -> Text,
-        vote -> Nullable<Text>,
+        vote -> Nullable<Bool>,
         decision_ack -> Bool,
     }
 }
@@ -465,12 +465,10 @@ table! {
  service_id   | text    |           | not null |
  epoch        | bigint  |           | not null |
  process      | text    |           | not null |
- vote         | text    |           |          |
+ vote         | boolean |           |          |
  decision_ack | boolean |           | not null | false
 Indexes:
     "consensus_2pc_context_participant_pkey" PRIMARY KEY, btree (circuit_id, service_id, process)
-Check constraints:
-    "consensus_2pc_context_participant_vote_check" CHECK ((vote = ANY (ARRAY['TRUE'::text, 'FALSE'::text])) OR vote IS NULL)
 Foreign-key constraints:
     "consensus_2pc_context_participant_circuit_id_service_id_fkey" FOREIGN KEY (circuit_id, service_id) REFERENCES scabbard_service(circuit_id, service_id)
 ```
@@ -483,8 +481,7 @@ CREATE TABLE consensus_2pc_context_participant (
     service_id                TEXT NOT NULL,
     epoch                     BIGINT NOT NULL,
     process                   TEXT NOT NULL,
-    vote                      TEXT
-    CHECK ( vote IN ('TRUE' , 'FALSE') OR vote IS NULL ),
+    vote                      NUMERIC,
     decision_ack              NUMERIC NOT NULL DEFAULT 0,
     PRIMARY KEY (circuit_id, service_id, process),
     FOREIGN KEY (circuit_id, service_id) REFERENCES scabbard_service(circuit_id, service_id)
@@ -502,7 +499,7 @@ table! {
         epoch -> BigInt,
         receiver_service_id -> Text,
         message_type -> Text,
-        vote_response -> Nullable<Text>,
+        vote_response -> Nullable<Bool>,
         vote_request -> Nullable<Binary>,
     }
 }
@@ -518,12 +515,12 @@ table! {
  epoch               | bigint                     |           | not null |
  receiver_service_id | text                       |           | not null |
  message_type        | deliver_event_message_type |           | not null |
- vote_response       | text                       |           |          |
+ vote_response       | boolean                    |           |          |
  vote_request        | bytea                      |           |          |
 Indexes:
     "consensus_2pc_deliver_event_pkey" PRIMARY KEY, btree (event_id)
 Check constraints:
-    "consensus_2pc_deliver_event_check" CHECK ((vote_response = ANY (ARRAY['TRUE'::text, 'FALSE'::text])) OR message_type <> 'VOTERESPONSE'::deliver_event_message_type)
+    "consensus_2pc_deliver_event_check" CHECK ((vote_response IS NOT NULL) OR message_type <> 'VOTERESPONSE'::deliver_event_message_type)
     "consensus_2pc_deliver_event_check1" CHECK (vote_request IS NOT NULL OR message_type <> 'VOTEREQUEST'::deliver_event_message_type)
 Foreign-key constraints:
     "consensus_2pc_deliver_event_event_id_fkey" FOREIGN KEY (event_id) REFERENCES consensus_2pc_event(id) ON DELETE CASCADE
@@ -538,8 +535,8 @@ CREATE TABLE consensus_2pc_deliver_event (
     receiver_service_id       TEXT NOT NULL,
     message_type              TEXT NOT NULL
     CHECK ( message_type IN ('VOTERESPONSE', 'DECISIONREQUEST', 'VOTEREQUEST', 'COMMIT', 'ABORT', 'DECISION_ACK') ),
-    vote_response             TEXT
-    CHECK ( (vote_response IN ('TRUE', 'FALSE')) OR (message_type != 'VOTERESPONSE') ),
+    vote_response             NUMERIC
+    CHECK ( (vote_response IS NOT NULL) OR (message_type != 'VOTERESPONSE') ),
     vote_request              BINARY
     CHECK ( (vote_request IS NOT NULL) OR (message_type != 'VOTEREQUEST') ),
     FOREIGN KEY (event_id) REFERENCES consensus_2pc_event(id) ON DELETE CASCADE
@@ -659,7 +656,7 @@ table! {
         epoch -> BigInt,
         receiver_service_id -> Text,
         message_type -> Text,
-        vote_response -> Nullable<Text>,
+        vote_response -> Nullable<Bool>,
         vote_request -> Nullable<Binary>,
     }
 }
@@ -675,12 +672,12 @@ table! {
  epoch               | bigint       |           | not null |
  receiver_service_id | text         |           | not null |
  message_type        | message_type |           | not null |
- vote_response       | text         |           |          |
+ vote_response       | boolean      |           |          |
  vote_request        | bytea        |           |          |
 Indexes:
     "consensus_2pc_send_message_action_pkey" PRIMARY KEY, btree (action_id)
 Check constraints:
-    "consensus_2pc_send_message_action_check" CHECK ((vote_response = ANY (ARRAY['TRUE'::text, 'FALSE'::text])) OR message_type <> 'VOTERESPONSE'::message_type)
+    "consensus_2pc_send_message_action_check" CHECK ((vote_response IS NOT NULL) OR message_type <> 'VOTERESPONSE'::message_type)
     "consensus_2pc_send_message_action_check1" CHECK (vote_request IS NOT NULL OR message_type <> 'VOTEREQUEST'::message_type)
 Foreign-key constraints:
     "consensus_2pc_send_message_action_action_id_fkey" FOREIGN KEY (action_id) REFERENCES consensus_2pc_action(id) ON DELETE CASCADE
@@ -695,8 +692,8 @@ CREATE TABLE consensus_2pc_send_message_action (
     receiver_service_id       TEXT NOT NULL,
     message_type              TEXT NOT NULL
     CHECK ( message_type IN ('VOTERESPONSE', 'DECISIONREQUEST', 'VOTEREQUEST', 'COMMIT', 'ABORT', 'DECISION_ACK') ),
-    vote_response             TEXT
-    CHECK ( (vote_response IN ('TRUE', 'FALSE')) OR (message_type != 'VOTERESPONSE') ),
+    vote_response             NUMERIC
+    CHECK ( (vote_response IS NOT NULL) OR (message_type != 'VOTERESPONSE') ),
     vote_request              BINARY
     CHECK ( (vote_request IS NOT NULL) OR (message_type != 'VOTEREQUEST') ),
     FOREIGN KEY (action_id) REFERENCES consensus_2pc_action(id) ON DELETE CASCADE
@@ -753,7 +750,7 @@ table! {
         last_commit_epoch -> Nullable<BigInt>,
         state -> Text,
         vote_timeout_start -> Nullable<BigInt>,
-        vote -> Nullable<Text>,
+        vote -> Nullable<Bool>,
         decision_timeout_start -> Nullable<BigInt>,
         action_alarm -> Nullable<BigInt>,
     }
@@ -772,14 +769,14 @@ table! {
  last_commit_epoch      | bigint        |           |          |
  state                  | context_state |           | not null |
  vote_timeout_start     | bigint        |           |          |
- vote                   | text          |           |          |
+ vote                   | boolean       |           |          |
  decision_timeout_start | bigint        |           |          |
  action_alarm           | bigint        |           |          |
 Indexes:
     "consensus_2pc_update_context_action_pkey" PRIMARY KEY, btree (action_id)
 Check constraints:
     "consensus_2pc_update_context_action_check" CHECK (vote_timeout_start IS NOT NULL OR state <> 'VOTING'::context_state)
-    "consensus_2pc_update_context_action_check1" CHECK ((vote = ANY (ARRAY['TRUE'::text, 'FALSE'::text])) OR state <> 'VOTED'::context_state)
+    "consensus_2pc_update_context_action_check1" CHECK ((vote IS NOT NULL) OR state <> 'VOTED'::context_state)
     "consensus_2pc_update_context_action_check2" CHECK (decision_timeout_start IS NOT NULL OR state <> 'VOTED'::context_state)
 Foreign-key constraints:
     "consensus_2pc_update_context_action_action_id_fkey" FOREIGN KEY (action_id) REFERENCES consensus_2pc_action(id) ON DELETE CASCADE
@@ -797,8 +794,8 @@ CREATE TABLE consensus_2pc_update_context_action (
     CHECK ( state IN ( 'WAITINGFORSTART', 'VOTING', 'WAITINGFORVOTE', 'ABORT', 'COMMIT', 'WAITINGFORVOTEREQUEST', 'VOTED', 'WAITING_FOR_DECISION_ACK') ),
     vote_timeout_start        BIGINT
     CHECK ( (vote_timeout_start IS NOT NULL) OR ( state != 'VOTING') ),
-    vote                      TEXT
-    CHECK ( (vote IN ('TRUE' , 'FALSE')) OR ( state != 'VOTED') ),
+    vote                      NUMERIC
+    CHECK ( (vote IS NOT NULL) OR ( state != 'VOTED') ),
     decision_timeout_start    BIGINT
     CHECK ( (decision_timeout_start IS NOT NULL) OR ( state != 'VOTED') ),
     action_alarm  BIGINT,
@@ -815,7 +812,7 @@ table! {
     consensus_2pc_update_context_action_participant (action_id) {
         action_id -> Int8,
         process -> Text,
-        vote -> Nullable<Text>,
+        vote -> Nullable<Bool>,
         decision_ack -> Bool,
     }
 }
@@ -829,12 +826,10 @@ Table "public.consensus_2pc_update_context_action_participant"
 --------------+---------+-----------+----------+---------
  action_id    | integer |           | not null |
  process      | text    |           | not null |
- vote         | text    |           |          |
+ vote         | boolean |           |          |
  decision_ack | boolean |           | not null | false
 Indexes:
     "consensus_2pc_update_context_action_participant_pkey" PRIMARY KEY, btree (action_id)
-Check constraints:
-    "consensus_2pc_update_context_action_participant_vote_check" CHECK ((vote = ANY (ARRAY['TRUE'::text, 'FALSE'::text])) OR vote IS NULL)
 Foreign-key constraints:
     "consensus_2pc_update_context_action_participant_action_id_fkey" FOREIGN KEY (action_id) REFERENCES consensus_2pc_action(id) ON DELETE CASCADE
     "consensus_2pc_update_context_action_participant_action_id_fkey1" FOREIGN KEY (action_id) REFERENCES consensus_2pc_update_context_action(action_id) ON DELETE CASCADE
@@ -846,8 +841,7 @@ Foreign-key constraints:
 CREATE TABLE consensus_2pc_update_context_action_participant (
     action_id                 INTEGER PRIMARY KEY,
     process                   TEXT NOT NULL,
-    vote                      TEXT
-    CHECK ( vote IN ('TRUE' , 'FALSE') OR vote IS NULL ),
+    vote                      NUMERIC,
     decision_ack              NUMERIC NOT NULL DEFAULT 0,
     FOREIGN KEY (action_id) REFERENCES consensus_2pc_action(id) ON DELETE CASCADE,
     FOREIGN KEY (action_id) REFERENCES consensus_2pc_update_context_action(action_id) ON DELETE CASCADE
@@ -862,7 +856,7 @@ CREATE TABLE consensus_2pc_update_context_action_participant (
 table! {
     consensus_2pc_vote_event (event_id) {
         event_id -> Int8,
-        vote -> Text,
+        vote -> Bool,
     }
 }
 ```
@@ -874,11 +868,9 @@ table! {
    Column   |  Type   | Collation | Nullable | Default
 ------------+---------+-----------+----------+---------
  event_id   | integer |           | not null |
- vote       | text    |           |          |
+ vote       | boolean |           | not null |
 Indexes:
     "consensus_2pc_vote_event_pkey" PRIMARY KEY, btree (event_id)
-Check constraints:
-    "consensus_2pc_vote_event_vote_check" CHECK (vote = ANY (ARRAY['TRUE'::text, 'FALSE'::text]))
 Foreign-key constraints:
     "consensus_2pc_vote_event_event_id_fkey" FOREIGN KEY (event_id) REFERENCES consensus_2pc_event(id) ON DELETE CASCADE
 ```
@@ -888,8 +880,7 @@ Foreign-key constraints:
 ```sql
 CREATE TABLE consensus_2pc_vote_event (
     event_id                  INTEGER PRIMARY KEY,
-    vote                      TEXT
-    CHECK ( vote IN ('TRUE' , 'FALSE') ),
+    vote                      NUMERIC NOT NULL,
     FOREIGN KEY (event_id) REFERENCES consensus_2pc_event(id) ON DELETE CASCADE
 );
 ```
