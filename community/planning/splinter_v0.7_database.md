@@ -329,6 +329,7 @@ table! {
         created_at -> Timestamp,
         executed_at -> Nullable<BigInt>,
         action_type -> Text,
+        event_id -> Int8,
     }
 }
 ```
@@ -345,10 +346,12 @@ table! {
  created_at  | timestamp without time zone |           | not null | CURRENT_TIMESTAMP
  executed_at | bigint                      |           |          |
  action_type | text                        |           | not null |
+ event_id    | bigint                      |           | not null |
 Indexes:
     "consensus_2pc_action_pkey" PRIMARY KEY, btree (id)
 Foreign-key constraints:
     "consensus_2pc_action_circuit_id_service_id_fkey" FOREIGN KEY (circuit_id, service_id) REFERENCES scabbard_service(circuit_id, service_id)
+    "consensus_2pc_action_event_id_fkey" FOREIGN KEY (event_id) REFERENCES consensus_2pc_event(id)
 ```
 
 #### SQLite
@@ -361,7 +364,9 @@ CREATE TABLE consensus_2pc_action (
     created_at                TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     executed_at               BIGINT,
     action_type               TEXT,
+    event_id                  INTEGER NOT NULL,
     FOREIGN KEY (circuit_id, service_id) REFERENCES scabbard_service(circuit_id, service_id)
+    FOREIGN KEY (event_id) REFERENCES consensus_2pc_event(id)
 );
 ```
 
@@ -894,6 +899,7 @@ SELECT id,
        action_type,
        consensus_2pc_action.circuit_id,
        consensus_2pc_action.service_id,
+       consensus_2pc_action.event_id,
        consensus_2pc_notification_action.notification_type as n_notification_type,
        consensus_2pc_notification_action.dropped_message as n_dropped_message,
        consensus_2pc_notification_action.request_for_vote_value as n_request_for_vote_value,
