@@ -416,7 +416,7 @@ CREATE TABLE consensus_2pc_context (
     epoch                     BIGINT NOT NULL,
     last_commit_epoch         BIGINT,
     state                     TEXT NOT NULL
-    CHECK ( state IN ( 'WAITINGFORSTART', 'VOTING', 'WAITINGFORVOTE', 'ABORT', 'COMMIT', 'WAITINGFORVOTEREQUEST', 'VOTED') ),
+    CHECK ( state IN ( 'WAITINGFORSTART', 'VOTING', 'WAITINGFORVOTE', 'ABORT', 'COMMIT', 'WAITINGFORVOTEREQUEST', 'VOTED', 'WAITING_FOR_DECISION_ACK') ),
     vote_timeout_start        BIGINT
     CHECK ( (vote_timeout_start IS NOT NULL) OR ( state != 'VOTING') ),
     vote                      TEXT
@@ -781,7 +781,7 @@ CREATE TABLE consensus_2pc_update_context_action (
     epoch                     BIGINT NOT NULL,
     last_commit_epoch         BIGINT,
     state                     TEXT NOT NULL
-    CHECK ( state IN ( 'WAITINGFORSTART', 'VOTING', 'WAITINGFORVOTE', 'ABORT', 'COMMIT', 'WAITINGFORVOTEREQUEST', 'VOTED') ),
+    CHECK ( state IN ( 'WAITINGFORSTART', 'VOTING', 'WAITINGFORVOTE', 'ABORT', 'COMMIT', 'WAITINGFORVOTEREQUEST', 'VOTED', 'WAITING_FOR_DECISION_ACK') ),
     vote_timeout_start        BIGINT
     CHECK ( (vote_timeout_start IS NOT NULL) OR ( state != 'VOTING') ),
     vote                      TEXT
