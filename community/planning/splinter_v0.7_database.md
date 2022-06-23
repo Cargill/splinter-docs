@@ -207,6 +207,7 @@ erDiagram
         Text process PK
         BigInt epoch
         Text vote
+        Boolean decision_ack
     }
     consensus_2pc_context }o--|| scabbard_service: contains
     consensus_2pc_context_participant }o--|| scabbard_service: contains
@@ -265,6 +266,7 @@ erDiagram
         Int8 action_id PK
         Text process
         Text vote
+        Boolean decision_ack
     }
 
 consensus_2pc_action ||--o| consensus_2pc_update_context_action_participant: is
@@ -438,6 +440,7 @@ table! {
         epoch -> BigInt,
         process -> Text,
         vote -> Nullable<Text>,
+        decision_ack -> Bool,
     }
 }
 ```
@@ -446,13 +449,14 @@ table! {
 
 ```
    Table "public.consensus_2pc_context_participant"
-   Column   |  Type  | Collation | Nullable | Default
-------------+--------+-----------+----------+---------
- circuit_id | text   |           | not null |
- service_id | text   |           | not null |
- epoch      | bigint |           | not null |
- process    | text   |           | not null |
- vote       | text   |           |          |
+    Column    |  Type   | Collation | Nullable | Default
+--------------+---------+-----------+----------+---------
+ circuit_id   | text    |           | not null |
+ service_id   | text    |           | not null |
+ epoch        | bigint  |           | not null |
+ process      | text    |           | not null |
+ vote         | text    |           |          |
+ decision_ack | boolean |           | not null | false
 Indexes:
     "consensus_2pc_context_participant_pkey" PRIMARY KEY, btree (circuit_id, service_id, process)
 Check constraints:
@@ -471,6 +475,7 @@ CREATE TABLE consensus_2pc_context_participant (
     process                   TEXT NOT NULL,
     vote                      TEXT
     CHECK ( vote IN ('TRUE' , 'FALSE') OR vote IS NULL ),
+    decision_ack              NUMERIC NOT NULL DEFAULT 0,
     PRIMARY KEY (circuit_id, service_id, process),
     FOREIGN KEY (circuit_id, service_id) REFERENCES scabbard_service(circuit_id, service_id)
 );
@@ -798,6 +803,7 @@ table! {
         action_id -> Int8,
         process -> Text,
         vote -> Nullable<Text>,
+        decision_ack -> Bool,
     }
 }
 ```
@@ -806,11 +812,12 @@ table! {
 
 ```
 Table "public.consensus_2pc_update_context_action_participant"
-   Column   |  Type   | Collation | Nullable | Default
-------------+---------+-----------+----------+---------
- action_id  | integer |           | not null |
- process    | text    |           | not null |
- vote       | text    |           |          |
+    Column    |  Type   | Collation | Nullable | Default
+--------------+---------+-----------+----------+---------
+ action_id    | integer |           | not null |
+ process      | text    |           | not null |
+ vote         | text    |           |          |
+ decision_ack | boolean |           | not null | false
 Indexes:
     "consensus_2pc_update_context_action_participant_pkey" PRIMARY KEY, btree (action_id)
 Check constraints:
@@ -828,6 +835,7 @@ CREATE TABLE consensus_2pc_update_context_action_participant (
     process                   TEXT NOT NULL,
     vote                      TEXT
     CHECK ( vote IN ('TRUE' , 'FALSE') OR vote IS NULL ),
+    decision_ack              NUMERIC NOT NULL DEFAULT 0,
     FOREIGN KEY (action_id) REFERENCES consensus_2pc_action(id) ON DELETE CASCADE,
     FOREIGN KEY (action_id) REFERENCES consensus_2pc_update_context_action(action_id) ON DELETE CASCADE
 );
