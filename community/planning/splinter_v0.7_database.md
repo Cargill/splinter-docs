@@ -910,3 +910,112 @@ LEFT JOIN consensus_2pc_update_context_action ON consensus_2pc_action.id=consens
 LEFT JOIN consensus_2pc_update_context_action_participant ON consensus_2pc_action.id=consensus_2pc_update_context_action_participant.action_id
 ORDER BY id;
 ```
+
+## Scabbard v3: Supervisor
+
+<div class="mermaid">
+erDiagram
+    scabbard_services {
+    }
+
+    supervisor_notification {
+        BigInt id PK
+        Text service_id FK
+        Text circuit_id FK
+        BigInt action_id FK
+        Text notification_type
+        Binary request_for_vote_value
+        Timestamp created_at
+        Timestamp executed_at
+    }
+    scabbard_services ||--o{ supervisor_notification: contains
+
+    consensus_2pc_action {
+        BitInt id PK
+        Text circuit_id FK
+        Text service_id FK
+        Text action_type
+        Timestamp created_at
+        Timestamp executed_at
+    }
+    consensus_2pc_action ||--o| supervisor_notification: contains
+    consensus_2pc_action }o--|| scabbard_services: contains
+
+    consensus_2pc_notification_action {
+        Int8 action_id PK
+        Text notification_type
+        Text dropped_message
+        Binary request_for_vote_value
+    }
+    consensus_2pc_action ||--o| consensus_2pc_notification_action: is
+</div>
+
+### supervisor_notfication
+
+#### Diesel
+
+```rust
+table! {
+    supervisor_notification (id) {
+        id -> Int8,
+        circuit_id -> Text,
+        service_id -> Text,
+        action_id -> Int8,
+        notification_type -> Text,
+        request_for_vote_value -> Nullable<Binary>,
+        created_at -> Timestamp,
+        executed_at -> Nullable<Timestamp>,
+    }
+}
+```
+
+#### PostgreSQL
+
+```
+Table "public.supervisor_notification"
+         Column         |             Type             | Collation | Nullable |                       Default
+------------------------+------------------------------+-----------+----------+-----------------------------------------------------
+ id                     | bigint                       |           | not null | nextval('supervisor_notification_id_seq'::regclass)
+ circuit_id             | text                         |           | not null |
+ service_id             | text                         |           | not null |
+ action_id              | bigint                       |           | not null |
+ notification_type      | supervisgor_notification_type|           | not null |
+ request_for_vote_value | bytea                        |           |          |
+ created_at             | timestamp without time zone  |           | not null | CURRENT_TIMESTAMP
+ executed_at            | timestamp without time zone  |           |          | 
+Indexes:
+    "supervisor_notification_pkey" PRIMARY KEY, btree (id)
+Foreign-key constraints:
+    "supervisor_notification_action_id_fkey" FOREIGN KEY (action_id) REFERENCES consensus_2pc_action(id) ON DELETE CASCADE
+    "supervisor_notification_circuit_id_service_id_fkey" FOREIGN KEY (circuit_id, service_id) REFERENCES scabbard_service(circuit_id, service_id) ON DELETE CASCADE
+
+```
+
+
+#### SQLite
+
+```sql
+
+CREATE TABLE IF NOT EXISTS supervisor_notification (
+  id                            INTEGER PRIMARY KEY AUTOINCREMENT,
+  circuit_id                    TEXT NOT NULL,
+  service_id                    TEXT NOT NULL,
+  action_id                     INTEGER NOT NULL,
+  notification_type             TEXT NOT NULL
+  CHECK ( notification_type IN (
+      'ABORT',
+      'COMMIT',
+      'REQUEST_FOR_START',
+      'COORDINATOR_REQUEST_FOR_VOTE',
+      'PARTICIPANT_REQUEST_FOR_VOTE'
+    )
+  ),
+  request_for_vote_value        BINARY,
+  created_at                    TEXT DEFAULT (strftime('%Y-%m-%d %H:%M:%f','now')) NOT NULL,
+  executed_at                   TEXT,
+
+  FOREIGN KEY (circuit_id, service_id) REFERENCES scabbard_service(circuit_id, service_id) ON DELETE CASCADE,
+  FOREIGN KEY (action_id) REFERENCES consensus_2pc_action(id) ON DELETE CASCADE
+);
+
+```
