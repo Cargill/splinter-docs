@@ -286,6 +286,7 @@ erDiagram
          Timestamp created_at
          BigInt executed_at
          Text event_type
+         BigInt executed_epoch
     }
 
     consensus_2pc_event }o--|| scabbard_service: contains
@@ -558,6 +559,7 @@ table! {
         created_at -> Timestamp,
         executed_at -> Nullable<BigInt>,
         event_type -> Text,
+        executed_epoch -> Nullable<BigInt>,
     }
 }
 ```
@@ -566,14 +568,15 @@ table! {
 
 ```
                                          Table "public.consensus_2pc_event"
-   Column    |            Type             | Collation | Nullable |                     Default
--------------+-----------------------------+-----------+----------+-------------------------------------------------
- id          | bigint                      |           | not null | nextval('consensus_2pc_event_id_seq'::regclass)
- circuit_id  | text                        |           | not null |
- service_id  | text                        |           | not null |
- created_at  | timestamp without time zone |           | not null | CURRENT_TIMESTAMP
- executed_at | bigint                      |           |          |
- event_type  | event_type                  |           | not null |
+   Column       |            Type             | Collation | Nullable |                     Default
+----------------+-----------------------------+-----------+----------+-------------------------------------------------
+ id             | bigint                      |           | not null | nextval('consensus_2pc_event_id_seq'::regclass)
+ circuit_id     | text                        |           | not null |
+ service_id     | text                        |           | not null |
+ created_at     | timestamp without time zone |           | not null | CURRENT_TIMESTAMP
+ executed_at    | bigint                      |           |          |
+ event_type     | event_type                  |           | not null |
+ executed_epoch | bigint                      |           |          |
 Indexes:
     "consensus_2pc_event_pkey" PRIMARY KEY, btree (id)
 Foreign-key constraints:
@@ -591,6 +594,7 @@ CREATE TABLE consensus_2pc_event (
     executed_at               BIGINT,
     event_type                TEXT NOT NULL
     CHECK ( event_type IN ('ALARM', 'DELIVER', 'START', 'VOTE') ),
+    executed_epoch            BIGINT,
     FOREIGN KEY (circuit_id, service_id) REFERENCES scabbard_service(circuit_id, service_id)
 );
 ```
