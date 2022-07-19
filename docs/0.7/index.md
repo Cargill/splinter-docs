@@ -233,10 +233,6 @@ these features often change before they are stabilized. (Biome is an example of
 a Splinter component that was added as an experimental feature.) Developer
 feedback is strongly encouraged for experimental features.
 
-Splinter provides [Gameroom]({% link docs/0.7/examples/gameroom/index.md %}) as
-a complete example for building smart-contract-based applications with the
-Splinter platform.
-
 ## Event Subscription for State Changes
 
 As described earlier, the Scabbard service includes Hyperledger Transact for

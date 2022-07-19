@@ -28,7 +28,7 @@ demonstrates the following items:
 * **Hyperledger Sawtooth's XO smart contract** for the business logic of tic tac
   toe (gameplay rules)
 
-<a href ="/docs/{{ site.data.general.latest_version }}/examples/gameroom/"
+<a href ="/docs/0.6/examples/gameroom/"
 type="button" class="btn btn-primary">Try Gameroom ➜</a><br>&nbsp;<br>
 
 ## <img src="{% link assets/grid_logo.svg %}" width="32" height="32" alt="Grid logo">&nbsp;Hyperledger&nbsp;Grid
