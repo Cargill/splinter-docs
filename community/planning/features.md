@@ -22,6 +22,7 @@ forum.
 | [Canopy 0.2]({% link community/planning/canopy_0.2.md %}) | New design of the Canopy system that enables dynamic loading of saplings and improved inter-sapling communication |
 | [Capabilities Repository]({% link community/planning/capabilities-repository.md %}) | A design for a repository and all the surrounding tools and formats for Splinter artifacts. These artifacts include saplings, smart contracts, and capabilities distributions. |
 | [Circuit and Service Identifiers as Rust structs]({% link community/planning/ids_as_rust_structs.md %}) | Reduction in possible runtime errors when using identifiers |
+| [Consensus Runner]({% link community/planning/consensus_runner.md %}) | Executes consensus actions and events |
 | [Echo Service]({% link community/planning/echo_service_design.md %}) | Design for the splinter echo service |
 | [Publisher for Scabbard v3]({% link community/planning/publisher_for_scabbard_v3.md%})| A new design for the publishing component for Scabbard |
 | [RefSet for libsawtooth 0.8]({% link community/planning/ref_set.md %}) | A design for a generic reference set to replace `BlockManager` and apply the same concept to Batches. |
