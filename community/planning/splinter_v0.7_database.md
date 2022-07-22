@@ -1047,3 +1047,11 @@ CREATE TABLE IF NOT EXISTS supervisor_notification (
 );
 
 ```
+
+## Future Work
+
+A future goal for scabbard store is to be able to create a view that will allow
+for all events and the context they were executed in to be listed. There is not
+currently a good way to link these two tables so this view will require updates
+to some of the `consensus_2pc_update_context_action`, `consensus_2pc_context`,
+and `consensus_2pc_event` tables.
