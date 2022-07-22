@@ -885,44 +885,58 @@ CREATE TABLE consensus_2pc_vote_event (
 );
 ```
 
-### Example Queries
+### Views
+
+Scabbard store has 3 views that join various 2 phase commit consensus tables
+- `consensus_2pc_actions_all`
+- `consensus_2pc_events_all`
+- `consensus_2pc_actions_and_events_all`
 
 #### Listing all actions
 
 ```sql
-SELECT id,
-       action_type,
-       consensus_2pc_action.circuit_id,
-       consensus_2pc_action.service_id,
-       consensus_2pc_action.event_id,
-       consensus_2pc_notification_action.notification_type as n_notification_type,
-       consensus_2pc_notification_action.dropped_message as n_dropped_message,
-       consensus_2pc_notification_action.request_for_vote_value as n_request_for_vote_value,
-       consensus_2pc_send_message_action.epoch as s_epoch,
-       consensus_2pc_send_message_action.receiver_service_id as s_receiver_service_id,
-       consensus_2pc_send_message_action.message_type as s_message_type,
-       consensus_2pc_send_message_action.vote_response as s_vote_response,
-       consensus_2pc_send_message_action.vote_request as s_vote_request,
-       consensus_2pc_update_context_action.coordinator as uc_coordinator,
-       consensus_2pc_update_context_action.epoch as uc_epoch,
-       consensus_2pc_update_context_action.last_commit_epoch as uc_last_commit_epoch,
-       consensus_2pc_update_context_action.state as uc_state,
-       consensus_2pc_update_context_action.vote_timeout_start as uc_vote_timeout_start,
-       consensus_2pc_update_context_action.vote as uc_vote,
-       consensus_2pc_update_context_action.decision_timeout_start as uc_decision_timeout_start,
-       consensus_2pc_update_context_action.action_alarm as uc_action_alarm,
-       consensus_2pc_update_context_action.ack_timeout_start as uc_ack_timeout_start,
-       consensus_2pc_update_context_action_participant.process as ucp_process,
-       consensus_2pc_update_context_action_participant.vote as ucp_vote,
-       consensus_2pc_update_context_action_participant.decision_ack as ucp_decision_ack,
-       created_at,
-       executed_at,
-FROM consensus_2pc_action
-LEFT JOIN consensus_2pc_notification_action ON consensus_2pc_action.id=consensus_2pc_notification_action.action_id
-LEFT JOIN consensus_2pc_send_message_action ON consensus_2pc_action.id=consensus_2pc_send_message_action.action_id
-LEFT JOIN consensus_2pc_update_context_action ON consensus_2pc_action.id=consensus_2pc_update_context_action.action_id
-LEFT JOIN consensus_2pc_update_context_action_participant ON consensus_2pc_action.id=consensus_2pc_update_context_action_participant.action_id
-ORDER BY id;
+SELECT * FROM consensus_2pc_actions_all;
+```
+
+#### Listing all actions for a given epoch
+
+```sql
+SELECT consensus_2pc_actions_all.*
+FROM consensus_2pc_actions_all, consensus_2pc_event
+WHERE consensus_2pc_actions_all.event_id = consensus_2pc_event.id
+AND consensus_2pc_event.executed_epoch = <desired-epoch>;
+```
+
+#### Listing all events
+
+```sql
+SELECT * FROM consensus_2pc_events_all;
+```
+
+#### List all events for a given epoch
+
+```sql
+SELECT *
+FROM consensus_2pc_events_all
+WHERE executed_epoch = <desired-epoch>;
+```
+
+#### Listing all events and actions in the order they were executed
+
+```sql
+SELECT * FROM consensus_2pc_actions_and_events_all;
+```
+
+#### Listing all events and actions for a given epoch
+
+```sql
+SELECT consensus_2pc_actions_and_events_all.*
+FROM consensus_2pc_actions_and_events_all
+INNER JOIN consensus_2pc_event
+           ON (consensus_2pc_actions_and_events_all.a_event_id = consensus_2pc_event.id)
+           OR (consensus_2pc_actions_and_events_all.e_id = consensus_2pc_event.id)
+WHERE consensus_2pc_event.executed_epoch = <desired-epoch>
+ORDER BY consensus_2pc_actions_and_events_all.executed_at;
 ```
 
 ## Scabbard v3: Supervisor
