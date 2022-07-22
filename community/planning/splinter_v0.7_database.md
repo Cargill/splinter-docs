@@ -72,7 +72,7 @@ CREATE TABLE scabbard_alarm (
     circuit_id                TEXT NOT NULL,
     service_id                TEXT NOT NULL,
     alarm_type                TEXT NOT NULL
-    CHECK ( alarm_type IN ('TWOPHASECOMMIT')),
+    CHECK ( alarm_type IN ('TWO_PHASE_COMMIT')),
     alarm                     BIGINT NOT NULL,
     FOREIGN KEY (circuit_id, service_id) REFERENCES scabbard_service(circuit_id, service_id) ON DELETE CASCADE,
     PRIMARY KEY (circuit_id, service_id, alarm_type)
@@ -426,7 +426,7 @@ CREATE TABLE consensus_2pc_context (
     epoch                     BIGINT NOT NULL,
     last_commit_epoch         BIGINT,
     state                     TEXT NOT NULL
-    CHECK ( state IN ( 'WAITINGFORSTART', 'VOTING', 'WAITINGFORVOTE', 'ABORT', 'COMMIT', 'WAITINGFORVOTEREQUEST', 'VOTED', 'WAITING_FOR_DECISION_ACK') ),
+    CHECK ( state IN ( 'WAITING_FOR_START', 'VOTING', 'WAITING_FOR_VOTE', 'ABORT', 'COMMIT', 'WAITING_FOR_VOTE_REQUEST', 'VOTED', 'WAITING_FOR_DECISION_ACK') ),
     vote_timeout_start        BIGINT
     CHECK ( (vote_timeout_start IS NOT NULL) OR ( state != 'VOTING') ),
     vote                      NUMERIC
@@ -520,8 +520,8 @@ table! {
 Indexes:
     "consensus_2pc_deliver_event_pkey" PRIMARY KEY, btree (event_id)
 Check constraints:
-    "consensus_2pc_deliver_event_check" CHECK ((vote_response IS NOT NULL) OR message_type <> 'VOTERESPONSE'::deliver_event_message_type)
-    "consensus_2pc_deliver_event_check1" CHECK (vote_request IS NOT NULL OR message_type <> 'VOTEREQUEST'::deliver_event_message_type)
+    "consensus_2pc_deliver_event_check" CHECK ((vote_response IS NOT NULL) OR message_type <> 'VOTE_RESPONSE'::deliver_event_message_type)
+    "consensus_2pc_deliver_event_check1" CHECK (vote_request IS NOT NULL OR message_type <> 'VOTE_REQUEST'::deliver_event_message_type)
 Foreign-key constraints:
     "consensus_2pc_deliver_event_event_id_fkey" FOREIGN KEY (event_id) REFERENCES consensus_2pc_event(id) ON DELETE CASCADE
 ```
@@ -534,11 +534,11 @@ CREATE TABLE consensus_2pc_deliver_event (
     epoch                     BIGINT NOT NULL,
     receiver_service_id       TEXT NOT NULL,
     message_type              TEXT NOT NULL
-    CHECK ( message_type IN ('VOTERESPONSE', 'DECISIONREQUEST', 'VOTEREQUEST', 'COMMIT', 'ABORT', 'DECISION_ACK') ),
+    CHECK ( message_type IN ('VOTE_RESPONSE', 'DECISION_REQUEST', 'VOTE_REQUEST', 'COMMIT', 'ABORT', 'DECISION_ACK') ),
     vote_response             NUMERIC
-    CHECK ( (vote_response IS NOT NULL) OR (message_type != 'VOTERESPONSE') ),
+    CHECK ( (vote_response IS NOT NULL) OR (message_type != 'VOTE_RESPONSE') ),
     vote_request              BINARY
-    CHECK ( (vote_request IS NOT NULL) OR (message_type != 'VOTEREQUEST') ),
+    CHECK ( (vote_request IS NOT NULL) OR (message_type != 'VOTE_REQUEST') ),
     FOREIGN KEY (event_id) REFERENCES consensus_2pc_event(id) ON DELETE CASCADE
 );
 ```
@@ -624,8 +624,8 @@ table! {
 Indexes:
     "consensus_2pc_notification_action_pkey" PRIMARY KEY, btree (action_id)
 Check constraints:
-    "consensus_2pc_notification_action_check" CHECK (dropped_message IS NOT NULL OR notification_type <> 'MESSAGEDROPPED'::notification_type)
-    "consensus_2pc_notification_action_check1" CHECK (request_for_vote_value IS NOT NULL OR notification_type <> 'PARTICIPANTREQUESTFORVOTE'::notification_type)
+    "consensus_2pc_notification_action_check" CHECK (dropped_message IS NOT NULL OR notification_type <> 'MESSAGE_DROPPED'::notification_type)
+    "consensus_2pc_notification_action_check1" CHECK (request_for_vote_value IS NOT NULL OR notification_type <> 'PARTICIPANT_REQUEST_FOR_VOTE'::notification_type)
 Foreign-key constraints:
     "consensus_2pc_notification_action_action_id_fkey" FOREIGN KEY (action_id) REFERENCES consensus_2pc_action(id) ON DELETE CASCADE
 ```
@@ -636,11 +636,11 @@ Foreign-key constraints:
 CREATE TABLE consensus_2pc_notification_action (
     action_id                 INTEGER PRIMARY KEY,
     notification_type         TEXT NOT NULL
-    CHECK ( notification_type IN ('REQUESTFORSTART', 'COORDINATORREQUESTFORVOTE', 'PARTICIPANTREQUESTFORVOTE', 'COMMIT', 'ABORT', 'MESSAGEDROPPED') ),
+    CHECK ( notification_type IN ('REQUEST_FOR_START', 'COORDINATOR_REQUEST_FOR_VOTE', 'PARTICIPANT_REQUEST_FOR_VOTE', 'COMMIT', 'ABORT', 'MESSAGE_DROPPED') ),
     dropped_message           TEXT
-    CHECK ( (dropped_message IS NOT NULL) OR (notification_type != 'MESSAGEDROPPED') ),
+    CHECK ( (dropped_message IS NOT NULL) OR (notification_type != 'MESSAGE_DROPPED') ),
     request_for_vote_value    BINARY
-    CHECK ( (request_for_vote_value IS NOT NULL) OR (notification_type != 'PARTICIPANTREQUESTFORVOTE') ),
+    CHECK ( (request_for_vote_value IS NOT NULL) OR (notification_type != 'PARTICIPANT_REQUEST_FOR_VOTE') ),
     FOREIGN KEY (action_id) REFERENCES consensus_2pc_action(id) ON DELETE CASCADE
 );
 ```
@@ -677,8 +677,8 @@ table! {
 Indexes:
     "consensus_2pc_send_message_action_pkey" PRIMARY KEY, btree (action_id)
 Check constraints:
-    "consensus_2pc_send_message_action_check" CHECK ((vote_response IS NOT NULL) OR message_type <> 'VOTERESPONSE'::message_type)
-    "consensus_2pc_send_message_action_check1" CHECK (vote_request IS NOT NULL OR message_type <> 'VOTEREQUEST'::message_type)
+    "consensus_2pc_send_message_action_check" CHECK ((vote_response IS NOT NULL) OR message_type <> 'VOTE_RESPONSE'::message_type)
+    "consensus_2pc_send_message_action_check1" CHECK (vote_request IS NOT NULL OR message_type <> 'VOTE_REQUEST'::message_type)
 Foreign-key constraints:
     "consensus_2pc_send_message_action_action_id_fkey" FOREIGN KEY (action_id) REFERENCES consensus_2pc_action(id) ON DELETE CASCADE
 ```
@@ -691,11 +691,11 @@ CREATE TABLE consensus_2pc_send_message_action (
     epoch                     BIGINT NOT NULL,
     receiver_service_id       TEXT NOT NULL,
     message_type              TEXT NOT NULL
-    CHECK ( message_type IN ('VOTERESPONSE', 'DECISIONREQUEST', 'VOTEREQUEST', 'COMMIT', 'ABORT', 'DECISION_ACK') ),
+    CHECK ( message_type IN ('VOTE_RESPONSE', 'DECISION_REQUEST', 'VOTE_REQUEST', 'COMMIT', 'ABORT', 'DECISION_ACK') ),
     vote_response             NUMERIC
-    CHECK ( (vote_response IS NOT NULL) OR (message_type != 'VOTERESPONSE') ),
+    CHECK ( (vote_response IS NOT NULL) OR (message_type != 'VOTE_RESPONSE') ),
     vote_request              BINARY
-    CHECK ( (vote_request IS NOT NULL) OR (message_type != 'VOTEREQUEST') ),
+    CHECK ( (vote_request IS NOT NULL) OR (message_type != 'VOTE_REQUEST') ),
     FOREIGN KEY (action_id) REFERENCES consensus_2pc_action(id) ON DELETE CASCADE
 );
 ```
@@ -791,7 +791,7 @@ CREATE TABLE consensus_2pc_update_context_action (
     epoch                     BIGINT NOT NULL,
     last_commit_epoch         BIGINT,
     state                     TEXT NOT NULL
-    CHECK ( state IN ( 'WAITINGFORSTART', 'VOTING', 'WAITINGFORVOTE', 'ABORT', 'COMMIT', 'WAITINGFORVOTEREQUEST', 'VOTED', 'WAITING_FOR_DECISION_ACK') ),
+    CHECK ( state IN ( 'WAITING_FOR_START', 'VOTING', 'WAITING_FOR_VOTE', 'ABORT', 'COMMIT', 'WAITING_FOR_VOTE_REQUEST', 'VOTED', 'WAITING_FOR_DECISION_ACK') ),
     vote_timeout_start        BIGINT
     CHECK ( (vote_timeout_start IS NOT NULL) OR ( state != 'VOTING') ),
     vote                      NUMERIC
