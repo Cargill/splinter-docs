@@ -72,7 +72,7 @@ CREATE TABLE scabbard_alarm (
     circuit_id                TEXT NOT NULL,
     service_id                TEXT NOT NULL,
     alarm_type                TEXT NOT NULL
-    CHECK ( alarm_type IN ('TWOPHASECOMMIT')),
+    CHECK ( alarm_type IN ('TWO_PHASE_COMMIT')),
     alarm                     BIGINT NOT NULL,
     FOREIGN KEY (circuit_id, service_id) REFERENCES scabbard_service(circuit_id, service_id) ON DELETE CASCADE,
     PRIMARY KEY (circuit_id, service_id, alarm_type)
@@ -426,7 +426,7 @@ CREATE TABLE consensus_2pc_context (
     epoch                     BIGINT NOT NULL,
     last_commit_epoch         BIGINT,
     state                     TEXT NOT NULL
-    CHECK ( state IN ( 'WAITINGFORSTART', 'VOTING', 'WAITINGFORVOTE', 'ABORT', 'COMMIT', 'WAITINGFORVOTEREQUEST', 'VOTED', 'WAITING_FOR_DECISION_ACK') ),
+    CHECK ( state IN ( 'WAITING_FOR_START', 'VOTING', 'WAITING_FOR_VOTE', 'ABORT', 'COMMIT', 'WAITING_FOR_VOTE_REQUEST', 'VOTED', 'WAITING_FOR_DECISION_ACK') ),
     vote_timeout_start        BIGINT
     CHECK ( (vote_timeout_start IS NOT NULL) OR ( state != 'VOTING') ),
     vote                      NUMERIC
@@ -520,8 +520,8 @@ table! {
 Indexes:
     "consensus_2pc_deliver_event_pkey" PRIMARY KEY, btree (event_id)
 Check constraints:
-    "consensus_2pc_deliver_event_check" CHECK ((vote_response IS NOT NULL) OR message_type <> 'VOTERESPONSE'::deliver_event_message_type)
-    "consensus_2pc_deliver_event_check1" CHECK (vote_request IS NOT NULL OR message_type <> 'VOTEREQUEST'::deliver_event_message_type)
+    "consensus_2pc_deliver_event_check" CHECK ((vote_response IS NOT NULL) OR message_type <> 'VOTE_RESPONSE'::deliver_event_message_type)
+    "consensus_2pc_deliver_event_check1" CHECK (vote_request IS NOT NULL OR message_type <> 'VOTE_REQUEST'::deliver_event_message_type)
 Foreign-key constraints:
     "consensus_2pc_deliver_event_event_id_fkey" FOREIGN KEY (event_id) REFERENCES consensus_2pc_event(id) ON DELETE CASCADE
 ```
@@ -534,11 +534,11 @@ CREATE TABLE consensus_2pc_deliver_event (
     epoch                     BIGINT NOT NULL,
     receiver_service_id       TEXT NOT NULL,
     message_type              TEXT NOT NULL
-    CHECK ( message_type IN ('VOTERESPONSE', 'DECISIONREQUEST', 'VOTEREQUEST', 'COMMIT', 'ABORT', 'DECISION_ACK') ),
+    CHECK ( message_type IN ('VOTE_RESPONSE', 'DECISION_REQUEST', 'VOTE_REQUEST', 'COMMIT', 'ABORT', 'DECISION_ACK') ),
     vote_response             NUMERIC
-    CHECK ( (vote_response IS NOT NULL) OR (message_type != 'VOTERESPONSE') ),
+    CHECK ( (vote_response IS NOT NULL) OR (message_type != 'VOTE_RESPONSE') ),
     vote_request              BINARY
-    CHECK ( (vote_request IS NOT NULL) OR (message_type != 'VOTEREQUEST') ),
+    CHECK ( (vote_request IS NOT NULL) OR (message_type != 'VOTE_REQUEST') ),
     FOREIGN KEY (event_id) REFERENCES consensus_2pc_event(id) ON DELETE CASCADE
 );
 ```
@@ -624,8 +624,8 @@ table! {
 Indexes:
     "consensus_2pc_notification_action_pkey" PRIMARY KEY, btree (action_id)
 Check constraints:
-    "consensus_2pc_notification_action_check" CHECK (dropped_message IS NOT NULL OR notification_type <> 'MESSAGEDROPPED'::notification_type)
-    "consensus_2pc_notification_action_check1" CHECK (request_for_vote_value IS NOT NULL OR notification_type <> 'PARTICIPANTREQUESTFORVOTE'::notification_type)
+    "consensus_2pc_notification_action_check" CHECK (dropped_message IS NOT NULL OR notification_type <> 'MESSAGE_DROPPED'::notification_type)
+    "consensus_2pc_notification_action_check1" CHECK (request_for_vote_value IS NOT NULL OR notification_type <> 'PARTICIPANT_REQUEST_FOR_VOTE'::notification_type)
 Foreign-key constraints:
     "consensus_2pc_notification_action_action_id_fkey" FOREIGN KEY (action_id) REFERENCES consensus_2pc_action(id) ON DELETE CASCADE
 ```
@@ -636,11 +636,11 @@ Foreign-key constraints:
 CREATE TABLE consensus_2pc_notification_action (
     action_id                 INTEGER PRIMARY KEY,
     notification_type         TEXT NOT NULL
-    CHECK ( notification_type IN ('REQUESTFORSTART', 'COORDINATORREQUESTFORVOTE', 'PARTICIPANTREQUESTFORVOTE', 'COMMIT', 'ABORT', 'MESSAGEDROPPED') ),
+    CHECK ( notification_type IN ('REQUEST_FOR_START', 'COORDINATOR_REQUEST_FOR_VOTE', 'PARTICIPANT_REQUEST_FOR_VOTE', 'COMMIT', 'ABORT', 'MESSAGE_DROPPED') ),
     dropped_message           TEXT
-    CHECK ( (dropped_message IS NOT NULL) OR (notification_type != 'MESSAGEDROPPED') ),
+    CHECK ( (dropped_message IS NOT NULL) OR (notification_type != 'MESSAGE_DROPPED') ),
     request_for_vote_value    BINARY
-    CHECK ( (request_for_vote_value IS NOT NULL) OR (notification_type != 'PARTICIPANTREQUESTFORVOTE') ),
+    CHECK ( (request_for_vote_value IS NOT NULL) OR (notification_type != 'PARTICIPANT_REQUEST_FOR_VOTE') ),
     FOREIGN KEY (action_id) REFERENCES consensus_2pc_action(id) ON DELETE CASCADE
 );
 ```
@@ -677,8 +677,8 @@ table! {
 Indexes:
     "consensus_2pc_send_message_action_pkey" PRIMARY KEY, btree (action_id)
 Check constraints:
-    "consensus_2pc_send_message_action_check" CHECK ((vote_response IS NOT NULL) OR message_type <> 'VOTERESPONSE'::message_type)
-    "consensus_2pc_send_message_action_check1" CHECK (vote_request IS NOT NULL OR message_type <> 'VOTEREQUEST'::message_type)
+    "consensus_2pc_send_message_action_check" CHECK ((vote_response IS NOT NULL) OR message_type <> 'VOTE_RESPONSE'::message_type)
+    "consensus_2pc_send_message_action_check1" CHECK (vote_request IS NOT NULL OR message_type <> 'VOTE_REQUEST'::message_type)
 Foreign-key constraints:
     "consensus_2pc_send_message_action_action_id_fkey" FOREIGN KEY (action_id) REFERENCES consensus_2pc_action(id) ON DELETE CASCADE
 ```
@@ -691,11 +691,11 @@ CREATE TABLE consensus_2pc_send_message_action (
     epoch                     BIGINT NOT NULL,
     receiver_service_id       TEXT NOT NULL,
     message_type              TEXT NOT NULL
-    CHECK ( message_type IN ('VOTERESPONSE', 'DECISIONREQUEST', 'VOTEREQUEST', 'COMMIT', 'ABORT', 'DECISION_ACK') ),
+    CHECK ( message_type IN ('VOTE_RESPONSE', 'DECISION_REQUEST', 'VOTE_REQUEST', 'COMMIT', 'ABORT', 'DECISION_ACK') ),
     vote_response             NUMERIC
-    CHECK ( (vote_response IS NOT NULL) OR (message_type != 'VOTERESPONSE') ),
+    CHECK ( (vote_response IS NOT NULL) OR (message_type != 'VOTE_RESPONSE') ),
     vote_request              BINARY
-    CHECK ( (vote_request IS NOT NULL) OR (message_type != 'VOTEREQUEST') ),
+    CHECK ( (vote_request IS NOT NULL) OR (message_type != 'VOTE_REQUEST') ),
     FOREIGN KEY (action_id) REFERENCES consensus_2pc_action(id) ON DELETE CASCADE
 );
 ```
@@ -791,7 +791,7 @@ CREATE TABLE consensus_2pc_update_context_action (
     epoch                     BIGINT NOT NULL,
     last_commit_epoch         BIGINT,
     state                     TEXT NOT NULL
-    CHECK ( state IN ( 'WAITINGFORSTART', 'VOTING', 'WAITINGFORVOTE', 'ABORT', 'COMMIT', 'WAITINGFORVOTEREQUEST', 'VOTED', 'WAITING_FOR_DECISION_ACK') ),
+    CHECK ( state IN ( 'WAITING_FOR_START', 'VOTING', 'WAITING_FOR_VOTE', 'ABORT', 'COMMIT', 'WAITING_FOR_VOTE_REQUEST', 'VOTED', 'WAITING_FOR_DECISION_ACK') ),
     vote_timeout_start        BIGINT
     CHECK ( (vote_timeout_start IS NOT NULL) OR ( state != 'VOTING') ),
     vote                      NUMERIC
@@ -885,44 +885,58 @@ CREATE TABLE consensus_2pc_vote_event (
 );
 ```
 
-### Example Queries
+### Views
+
+Scabbard store has 3 views that join various 2 phase commit consensus tables
+- `consensus_2pc_actions_all`
+- `consensus_2pc_events_all`
+- `consensus_2pc_actions_and_events_all`
 
 #### Listing all actions
 
 ```sql
-SELECT id,
-       action_type,
-       consensus_2pc_action.circuit_id,
-       consensus_2pc_action.service_id,
-       consensus_2pc_action.event_id,
-       consensus_2pc_notification_action.notification_type as n_notification_type,
-       consensus_2pc_notification_action.dropped_message as n_dropped_message,
-       consensus_2pc_notification_action.request_for_vote_value as n_request_for_vote_value,
-       consensus_2pc_send_message_action.epoch as s_epoch,
-       consensus_2pc_send_message_action.receiver_service_id as s_receiver_service_id,
-       consensus_2pc_send_message_action.message_type as s_message_type,
-       consensus_2pc_send_message_action.vote_response as s_vote_response,
-       consensus_2pc_send_message_action.vote_request as s_vote_request,
-       consensus_2pc_update_context_action.coordinator as uc_coordinator,
-       consensus_2pc_update_context_action.epoch as uc_epoch,
-       consensus_2pc_update_context_action.last_commit_epoch as uc_last_commit_epoch,
-       consensus_2pc_update_context_action.state as uc_state,
-       consensus_2pc_update_context_action.vote_timeout_start as uc_vote_timeout_start,
-       consensus_2pc_update_context_action.vote as uc_vote,
-       consensus_2pc_update_context_action.decision_timeout_start as uc_decision_timeout_start,
-       consensus_2pc_update_context_action.action_alarm as uc_action_alarm,
-       consensus_2pc_update_context_action.ack_timeout_start as uc_ack_timeout_start,
-       consensus_2pc_update_context_action_participant.process as ucp_process,
-       consensus_2pc_update_context_action_participant.vote as ucp_vote,
-       consensus_2pc_update_context_action_participant.decision_ack as ucp_decision_ack,
-       created_at,
-       executed_at,
-FROM consensus_2pc_action
-LEFT JOIN consensus_2pc_notification_action ON consensus_2pc_action.id=consensus_2pc_notification_action.action_id
-LEFT JOIN consensus_2pc_send_message_action ON consensus_2pc_action.id=consensus_2pc_send_message_action.action_id
-LEFT JOIN consensus_2pc_update_context_action ON consensus_2pc_action.id=consensus_2pc_update_context_action.action_id
-LEFT JOIN consensus_2pc_update_context_action_participant ON consensus_2pc_action.id=consensus_2pc_update_context_action_participant.action_id
-ORDER BY id;
+SELECT * FROM consensus_2pc_actions_all;
+```
+
+#### Listing all actions for a given epoch
+
+```sql
+SELECT consensus_2pc_actions_all.*
+FROM consensus_2pc_actions_all, consensus_2pc_event
+WHERE consensus_2pc_actions_all.event_id = consensus_2pc_event.id
+AND consensus_2pc_event.executed_epoch = <desired-epoch>;
+```
+
+#### Listing all events
+
+```sql
+SELECT * FROM consensus_2pc_events_all;
+```
+
+#### List all events for a given epoch
+
+```sql
+SELECT *
+FROM consensus_2pc_events_all
+WHERE executed_epoch = <desired-epoch>;
+```
+
+#### Listing all events and actions in the order they were executed
+
+```sql
+SELECT * FROM consensus_2pc_actions_and_events_all;
+```
+
+#### Listing all events and actions for a given epoch
+
+```sql
+SELECT consensus_2pc_actions_and_events_all.*
+FROM consensus_2pc_actions_and_events_all
+INNER JOIN consensus_2pc_event
+           ON (consensus_2pc_actions_and_events_all.a_event_id = consensus_2pc_event.id)
+           OR (consensus_2pc_actions_and_events_all.e_id = consensus_2pc_event.id)
+WHERE consensus_2pc_event.executed_epoch = <desired-epoch>
+ORDER BY consensus_2pc_actions_and_events_all.executed_at;
 ```
 
 ## Scabbard v3: Supervisor
@@ -1033,3 +1047,11 @@ CREATE TABLE IF NOT EXISTS supervisor_notification (
 );
 
 ```
+
+## Future Work
+
+A future goal for scabbard store is to be able to create a view that will allow
+for all events and the context they were executed in to be listed. There is not
+currently a good way to link these two tables so this view will require updates
+to some of the `consensus_2pc_update_context_action`, `consensus_2pc_context`,
+and `consensus_2pc_event` tables.
