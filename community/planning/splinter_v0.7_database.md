@@ -939,6 +939,20 @@ WHERE consensus_2pc_event.executed_epoch = <desired-epoch>
 ORDER BY consensus_2pc_actions_and_events_all.executed_at;
 ```
 
+#### Listing all events and the context used to run the event
+
+```sql
+SELECT * FROM consensus_2pc_events_and_contexts_all;
+```
+
+#### Listing all events and the context used to run the event for a given epoch
+
+```sql
+SELECT *
+FROM consensus_2pc_events_and_contexts_all
+WHERE e_executed_epoch = <desired-epoch>;
+```
+
 ## Scabbard v3: Supervisor
 
 <div class="mermaid">
