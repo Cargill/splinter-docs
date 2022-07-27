@@ -265,7 +265,7 @@ erDiagram
 
     consensus_2pc_update_context_action_participant {
         Int8 action_id PK
-        Text process
+        Text process PK
         Boolean vote
         Boolean decision_ack
     }
@@ -809,7 +809,7 @@ CREATE TABLE consensus_2pc_update_context_action (
 
 ```rust
 table! {
-    consensus_2pc_update_context_action_participant (action_id) {
+    consensus_2pc_update_context_action_participant (action_id, process) {
         action_id -> Int8,
         process -> Text,
         vote -> Nullable<Bool>,
@@ -829,7 +829,7 @@ Table "public.consensus_2pc_update_context_action_participant"
  vote         | boolean |           |          |
  decision_ack | boolean |           | not null | false
 Indexes:
-    "consensus_2pc_update_context_action_participant_pkey" PRIMARY KEY, btree (action_id)
+    "consensus_2pc_update_context_action_participant_pkey" PRIMARY KEY, btree (action_id, process)
 Foreign-key constraints:
     "consensus_2pc_update_context_action_participant_action_id_fkey" FOREIGN KEY (action_id) REFERENCES consensus_2pc_action(id) ON DELETE CASCADE
     "consensus_2pc_update_context_action_participant_action_id_fkey1" FOREIGN KEY (action_id) REFERENCES consensus_2pc_update_context_action(action_id) ON DELETE CASCADE
