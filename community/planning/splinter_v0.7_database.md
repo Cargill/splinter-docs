@@ -265,7 +265,7 @@ erDiagram
 
     consensus_2pc_update_context_action_participant {
         Int8 action_id PK
-        Text process
+        Text process PK
         Boolean vote
         Boolean decision_ack
     }
@@ -809,7 +809,7 @@ CREATE TABLE consensus_2pc_update_context_action (
 
 ```rust
 table! {
-    consensus_2pc_update_context_action_participant (action_id) {
+    consensus_2pc_update_context_action_participant (action_id, process) {
         action_id -> Int8,
         process -> Text,
         vote -> Nullable<Bool>,
@@ -829,7 +829,7 @@ Table "public.consensus_2pc_update_context_action_participant"
  vote         | boolean |           |          |
  decision_ack | boolean |           | not null | false
 Indexes:
-    "consensus_2pc_update_context_action_participant_pkey" PRIMARY KEY, btree (action_id)
+    "consensus_2pc_update_context_action_participant_pkey" PRIMARY KEY, btree (action_id, process)
 Foreign-key constraints:
     "consensus_2pc_update_context_action_participant_action_id_fkey" FOREIGN KEY (action_id) REFERENCES consensus_2pc_action(id) ON DELETE CASCADE
     "consensus_2pc_update_context_action_participant_action_id_fkey1" FOREIGN KEY (action_id) REFERENCES consensus_2pc_update_context_action(action_id) ON DELETE CASCADE
@@ -937,6 +937,20 @@ INNER JOIN consensus_2pc_event
            OR (consensus_2pc_actions_and_events_all.e_id = consensus_2pc_event.id)
 WHERE consensus_2pc_event.executed_epoch = <desired-epoch>
 ORDER BY consensus_2pc_actions_and_events_all.executed_at;
+```
+
+#### Listing all events and the context used to run the event
+
+```sql
+SELECT * FROM consensus_2pc_events_and_contexts_all;
+```
+
+#### Listing all events and the context used to run the event for a given epoch
+
+```sql
+SELECT *
+FROM consensus_2pc_events_and_contexts_all
+WHERE e_executed_epoch = <desired-epoch>;
 ```
 
 ## Scabbard v3: Supervisor
@@ -1047,11 +1061,3 @@ CREATE TABLE IF NOT EXISTS supervisor_notification (
 );
 
 ```
-
-## Future Work
-
-A future goal for scabbard store is to be able to create a view that will allow
-for all events and the context they were executed in to be listed. There is not
-currently a good way to link these two tables so this view will require updates
-to some of the `consensus_2pc_update_context_action`, `consensus_2pc_context`,
-and `consensus_2pc_event` tables.
