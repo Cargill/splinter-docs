@@ -1,6 +1,6 @@
 % SPLINTER-UPGRADE(1) Cargill, Incorporated | Splinter Commands
 <!--
-  Copyright 2018-2021 Cargill Incorporated
+  Copyright 2018-2022 Cargill Incorporated
   Licensed under Creative Commons Attribution 4.0 International License
   https://creativecommons.org/licenses/by/4.0/
 -->
@@ -26,6 +26,23 @@ file will be renamed to `node_id.old`.
 
 This command will also import data from `LMDB` files for transaction receipts
 and commit hashes.
+
+FLAGS
+=====
+
+`-h`, `--help`
+: Prints help information
+
+`-q`, `--quiet`
+: Decreases verbosity (the opposite of -v). When specified, only errors or
+  warnings will be output.
+
+`-V`, `--version`
+: Prints version information
+
+`-v`
+: Increases verbosity (the opposite of -q). Specify multiple times for more
+  output.
 
 OPTIONS
 =======

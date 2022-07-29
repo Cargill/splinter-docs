@@ -1,6 +1,6 @@
 % SPLINTERD(1) Cargill, Incorporated | Splinter Commands
 <!--
-  Copyright 2018-2021 Cargill Incorporated
+  Copyright 2018-2022 Cargill Incorporated
   Licensed under Creative Commons Attribution 4.0 International License
   https://creativecommons.org/licenses/by/4.0/
 -->
@@ -32,7 +32,7 @@ TOML configuration file containing `splinterd` settings, instead of using
 command-line options. (Any options on the command line will override those in
 the configuration file.) The file name must end with a `.toml` extension, such
 as `splinterd.toml`). For an example, see
-[splinterd/packaging/splinterd.toml.example](https://github.com/Cargill/splinter/blob/main/splinterd/packaging/splinterd.toml.example)
+[splinterd/packaging/splinterd.toml.example](https://github.com/Cargill/splinter/blob/master/splinterd/packaging/splinterd.toml.example)
 in the `splinter` repository.
 
 **Connection Types**
@@ -63,6 +63,9 @@ FLAGS
 
 `--enable-biome-credentials`
 : Enables Biome credentials for REST API authentication.
+
+`--disable-scabbard-autocleanup`
+: Disable autocleanup of pruned scabbard merkle state.
 
 `-h`, `--help`
 : Prints help information.
@@ -108,7 +111,7 @@ OPTIONS
 : Specifies the path and file name for a `splinterd` configuration file, which
   is a TOML file that contains `splinterd` settings. (The file name must end
   with a `.toml` extension.) For an example, see
-  [splinterd/packaging/splinterd.toml.example](https://github.com/Cargill/splinter/blob/main/splinterd/packaging/splinterd.toml.example)
+  [splinterd/packaging/splinterd.toml.example](https://github.com/Cargill/splinter/blob/master/splinterd/packaging/splinterd.toml.example)
   in the `splinter` repository.
 
   Any options on the command line will override the settings in the
@@ -149,6 +152,10 @@ OPTIONS
 
 `--influx-username` `USERNAME`
 : The username used for authorization with the InfluxDB.
+
+`--lifecycle-executor-interval` `interval`
+: How often the lifecycle executor should be woken up to check for pending
+  services, in seconds. (Default: 30)
 
 `-n`, `--network-endpoints` `NETWORK-ENDPOINT`
 : Specifies the endpoint for daemon-to-daemon communication between Splinter
@@ -225,6 +232,10 @@ OPTIONS
 : Specifies where scabbard stores its internal state. Accepted values: `lmdb`,
   `database`
 
+`--service-timer-interval INTERVAL`
+: How often the service timer should be woken up, in seconds
+  (Default: 1)
+
 `--state-dir STATE-DIR`
 : Specifies the storage directory.
   (Default: `/var/lib/splinter`.)
@@ -269,14 +280,14 @@ OPTIONS
 : Specifies the path and file name for the REST API key.
   (Default: `/etc/splinter/certs/rest_api.key`.)
 
-`--whitelist WHITELIST` `[,...]`
+`--allow-list ALLOW_LIST` `[,...]`
 : Lists one or more trusted domains for cross-origin resource sharing (CORS).
   This option allows the specified domains to access restricted web resources
   in a Splinter application.  If this option is not specified, all domains will
   be allowed to access Splinter web resources.
 
   Specify multiple domains in a comma-separated list or with separate
-  `--whitelist` options.
+  `--allow-list` options.
 
 CERTIFICATE FILES
 =================

@@ -1,6 +1,6 @@
 % SPLINTER-STATE-MIGRATE(1) Cargill, Incorporated | Splinter Commands
 <!--
-  Copyright 2018-2021 Cargill Incorporated
+  Copyright 2018-2022 Cargill Incorporated
   Licensed under Creative Commons Attribution 4.0 International License
   https://creativecommons.org/licenses/by/4.0/
 -->
@@ -31,6 +31,10 @@ running.
 
 FLAGS
 =====
+`--dry-run`
+: Check that the in and out databases are available and that the in database
+  has a commit hash. The command will not attempt to move the state
+
 `-f`, `--force`
 : Always attempt to move state, regardless of if there is existing data in the
   out database

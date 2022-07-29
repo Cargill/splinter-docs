@@ -103,6 +103,22 @@ Displays all available circuit templates
 vote`]({% link docs/0.7/references/cli/splinter-circuit-vote.1.md %})
 Submits a vote to accept or reject a circuit proposal
 
+### Command Family
+[`splinter command`]({% link docs/0.7/references/cli/splinter-command.1.md %})
+Interacts with the command family smart contract
+
+[`splinter command
+get-state`]({% link docs/0.7/references/cli/splinter-command-get-state.1.md %})
+Submits a Sabre transaction to request a state
+
+[`splinter command
+set-state`]({% link docs/0.7/references/cli/splinter-command-set-state.1.md %})
+Submits a Sabre transaction to request a state write
+
+[`splinter command show-state`]({% link
+docs/0.7/references/cli/splinter-command-show-state.1.md %})
+Displays the state value at a given address
+
 ### Database Management Functions
 [`splinter database`]({% link docs/0.7/references/cli/splinter-database.1.md %})
 Provides database management functions
@@ -197,6 +213,11 @@ Updates a role on a Splinter node
 [`splinter user list`]({% link
 docs/0.7/references/cli/splinter-user-list.1.md %})
 Displays the existing users for this Splinter node
+
+### Workload
+[`splinter workload`]({% link
+docs/0.7/references/cli/splinter-workload.1.md %})
+Submits a workload against a circuit
 
 ## splinterd CLI
 
