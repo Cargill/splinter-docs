@@ -103,7 +103,7 @@ output or run the `splinter circuit proposals` command and copy the string in
 the ID column of the output:
 
 ```console
-$ splinter circuit proposals –url http://splinterd-beta:8080
+$ splinter circuit proposals --url http://splinterd-beta:8080
 
 ID          NAME MANAGEMENT MEMBERS     COMMENTS PROPOSAL_TYPE
 <circuit_id> echo tutorial alpha;beta -  Create
