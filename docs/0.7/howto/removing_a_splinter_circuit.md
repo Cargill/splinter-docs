@@ -277,10 +277,11 @@ administrator to purge the inactive circuit.
 
     a. As the alpha node administrator, you can view inactive circuits using
        the `splinter-circuit-list` command and specifying the `--circuit-status`
-       flag.
+       flag. For disbanded circuits replace `--circuit-status abandoned` with
+       `--circuit-status disbanded`.
 
     ```console
-    root@alpha:/# splinter circuit list --circuit-status abandoned,disbanded
+    root@alpha:/# splinter circuit list --circuit-status abandoned
     ID          NAME  MANAGEMENT MEMBERS
     01234-ABCDE -     example    beta;alpha
     ```
@@ -306,7 +307,7 @@ administrator to purge the inactive circuit.
        successfully purged from state using the `splinter-circuit-list` command.
 
     ```console
-    root@alpha:/# splinter circuit list --circuit-status abandoned,disbanded
+    root@alpha:/# splinter circuit list --circuit-status abandoned
     ID  NAME  MANAGEMENT  MEMBERS
     ```
 
