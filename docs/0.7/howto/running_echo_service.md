@@ -49,8 +49,6 @@ $ splinter circuit propose \
     --display-name "echo" \
     --node alpha::tcps://splinterd-alpha:8044 \
     --node beta::tcps://splinterd-beta:8044 \
-    --node-public-key alpha::$(cat <path_to_alpha_node_pub_key>) \
-    --node-public-key beta::$(cat <path_to_beta_node_pub_key>) \
     --service a000::alpha \
     --service b000::beta \
     --service-peer-group a000,b000 \
