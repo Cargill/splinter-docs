@@ -337,7 +337,7 @@ The request header must contain the user's current access token, and the request
 body is empty. For example:
 
 ```
-    POST /biome/logout
+    PATCH /biome/logout
     Authorization: bearer eyJ0eXAiOikZjBjOGE0I...aXNzIjoic2PEUXY70Ehc
     {}
 ```
