@@ -71,7 +71,7 @@ for details on how to create and compile a smart contract
     ``` console
     $ splinter circuit vote $CIRCUIT_ID --accept \
         --key <path_to_beta_private_key> \
-        --url http://splinterd-beta:8080 \
+        --url http://splinterd-beta:8080
     ```
 
     You have now established a circuit between node alpha and node beta based
@@ -125,7 +125,8 @@ for details on how to create and compile a smart contract
 4. Upload the smart contract.
 
    ``` console
-   $ scabbard contract upload ./my_contract.scar \
+   $ scabbard contract upload my_contract:1.0
+       --path ./my_contract.scar \
        --key <path_to_alpha_node_private_key> \
        --url http://splinterd-alpha:8080 \
        --service-id $CIRCUIT_ID::a000
@@ -177,12 +178,12 @@ for details on how to create and compile a smart contract
         --url 'http://splinterd-beta:8080' \
         --service-id $CIRCUIT_ID::b000
 
-    name: my_contract
-    version: '1.0'
-    inputs:
-      - '5b7349'
-    outputs:
-      - '5b7349'
+    my_contract 1.0
+      inputs:
+      - 5b7349
+      outputs:
+      - 5b7349
+      creator: <alpha_node_public_key>
     ```
 
 ## For More Information
